@@ -2,6 +2,12 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.0.3-alpha.4](https://github.com/icey0126/epub-app-lib/compare/v0.0.3-alpha.3...v0.0.3-alpha.4) (2020-12-21)
+
+### Bug Fixes
+
+- 🐛 fix JSX problem ([b02cd26](https://github.com/icey0126/epub-app-lib/commit/b02cd263fcc0dc3e531123632b930b35585cdbbb))
+
 ### [0.0.3-alpha.3](https://github.com/icey0126/epub-app-lib/compare/v0.0.3-alpha.2...v0.0.3-alpha.3) (2020-12-21)
 
 ### Bug Fixes
