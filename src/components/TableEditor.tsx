@@ -45,7 +45,7 @@ const columns = [
   }
 ]
 
-const data = []
+const data: any = []
 const TableEditor = ({ url }: Props) => {
   return (
     <div>
