@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.0.3-alpha.0](https://github.com/icey0126/epub-app-lib/compare/v0.0.2...v0.0.3-alpha.0) (2020-12-21)
+
+### Bug Fixes
+
+- 🐛 fix ci ([756c5b2](https://github.com/icey0126/epub-app-lib/commit/756c5b2624269fba1e8b931da34ec25928f6f5d9))
+- 🐛 fix turntable stories ([e9485ef](https://github.com/icey0126/epub-app-lib/commit/e9485ef72286bff726f5a361d7f9bb0a47fab501))
+
 ### 0.0.2 (2020-12-21)
 
 ### Features
