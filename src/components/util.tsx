@@ -1,0 +1,90 @@
+function getLineTextList(
+  context: CanvasRenderingContext2D,
+  text: any,
+  maxLineWidth: number
+) {
+  let maxLineWidthLocal = maxLineWidth
+  const wordList = text.split('')
+  let tempLine = ''
+  const lineList = []
+  for (let i = 0; i < wordList.length; i++) {
+    if (context.measureText(tempLine).width >= maxLineWidthLocal) {
+      lineList.push(tempLine)
+      maxLineWidthLocal -= context.measureText(text[0]).width
+      tempLine = ''
+    }
+    tempLine += wordList[i]
+  }
+  lineList.push(tempLine)
+  return lineList
+}
+
+function drawPrizeBlock(
+  ctx: CanvasRenderingContext2D,
+  awards: any,
+  startR: number
+) {
+  const context = ctx
+  let startRadian = startR
+  const RadianGap = (Math.PI * 2) / awards.length
+  let endRadian = startRadian + RadianGap
+  for (let i = 0; i < awards.length; i++) {
+    context.save()
+    context.beginPath()
+    context.fillStyle = awards[i].color
+    context.moveTo(217.5, 217.5) // 起点
+    context.arc(217.5, 217.5, 217.5, startRadian, endRadian, false)
+    context.fill()
+    context.restore()
+
+    context.save()
+    context.fillStyle = 'black'
+    context.font = '14px Arial'
+
+    context.translate(
+      217.5 + Math.cos(startRadian + RadianGap / 2) * 217.5,
+      217.5 + Math.sin(startRadian + RadianGap / 2) * 217.5
+    )
+    context.rotate(startRadian + RadianGap / 2 + Math.PI / 2)
+    getLineTextList(context, awards[i].title, 70).forEach((line, index) => {
+      let indexLocal = index
+      context.fillText(
+        line,
+        -context.measureText(line).width / 2,
+        ++indexLocal * 25
+      )
+    })
+    context.restore()
+
+    startRadian += RadianGap
+    endRadian += RadianGap
+  }
+}
+
+const prizeToAngle = (prizeIndex: number, prizeLength: number) => {
+  // prizeIndex 从0开始
+  const min =
+    (3 * Math.PI) / 2 - ((2 * Math.PI) / prizeLength) * (prizeIndex + 1)
+  const max = (3 * Math.PI) / 2 - ((2 * Math.PI) / prizeLength) * prizeIndex
+  let target = Math.random() * (max - min) + min
+  if (target === min) target = target + 0.0001 // 如果为边界值则加上0.0001
+  return target
+}
+
+const getRandomInt = (min: number, max: number) => {
+  return Math.round(Math.random() * (max - min) + min)
+}
+
+const getPrizeIndex = (prize: any, prizeList: any) => {
+  const prizeIndex = prizeList.findIndex(
+    (e: { id: string }) => e.id === prize.id
+  )
+  return prizeIndex
+}
+export {
+  getLineTextList,
+  drawPrizeBlock,
+  prizeToAngle,
+  getRandomInt,
+  getPrizeIndex
+}

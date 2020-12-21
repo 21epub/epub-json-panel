@@ -1,0 +1,32 @@
+.turntableWrap {
+  position: relative;
+  width: 548px;
+  height: 548px;
+  // border: 2px solid red;
+
+  :global {
+    #turnTableCircle {
+      position: absolute;
+      top: 10%;
+      left: 10%;
+      // border-radius: 50%;
+      z-index: 100;
+      border: 1px solid transparent;
+      // transform: rotate(20deg)
+    }
+
+    .point {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      z-index: 110;
+      -ms-transform: translateX(-50%, -60%);
+      -moz-transform: translateX(-50%, -60%);
+      -webkit-transform: translateX(-50%, -60%);
+      -o-transform: translateX(-50%, -60%);
+      transform: translate(-50%, -60%);
+      cursor: pointer;
+      // border: 2px solid red;
+    }
+  }
+}
