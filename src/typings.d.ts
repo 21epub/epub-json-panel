@@ -14,18 +14,11 @@ declare module '*.less' {
   const content: { [className: string]: string }
   export default content
 }
-declare module '*.jpg' {
-  const content: { [className: string]: string }
-  export default content
-}
-declare module '*.png' {
-  const content: { [className: string]: string }
-  export default content
-}
-declare module '*.jpeg' {
-  const content: { [className: string]: string }
-  export default content
-}
+
+declare module '*.jpg'
+declare module '*.png'
+declare module '*.jpeg'
+
 interface SvgrComponent
   extends React.StatelessComponent<React.SVGAttributes<SVGElement>> {}
 

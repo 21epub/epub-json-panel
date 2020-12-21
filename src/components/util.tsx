@@ -77,7 +77,7 @@ const getRandomInt = (min: number, max: number) => {
 
 const getPrizeIndex = (prize: any, prizeList: any) => {
   const prizeIndex = prizeList.findIndex(
-    (e: { id: string }) => e.id === prize.id
+    (e: { id: string }) => e.id === prize.objective.id
   )
   return prizeIndex
 }

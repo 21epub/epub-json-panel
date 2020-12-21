@@ -7,17 +7,22 @@ import {
   getRandomInt,
   getPrizeIndex
 } from './util'
+import { SingleLotteryProps } from './types'
 import Point from './img/point.png'
 import TurntablePic from './img/turntable.png'
 import styles from './turnTable.less'
 import 'antd/dist/antd.css'
 
+//     "color": '#fef8e6'
 interface Props {
   prizeListUrl: string
   prizeUrl: string
   singleLotteryUrl: string
 }
-//     "color": '#fef8e6'
+// interface Result{
+//   status:string,
+//   prize:SinglePrizeProps
+// }
 
 const Turntable = ({ prizeListUrl, prizeUrl, singleLotteryUrl }: Props) => {
   const canvasRef = useRef<HTMLCanvasElement>(null)
@@ -25,6 +30,7 @@ const Turntable = ({ prizeListUrl, prizeUrl, singleLotteryUrl }: Props) => {
   const [startRadian, setStartRadian] = useState(0)
   const [renew, setRenew] = useState(false)
   const [isModalShow, setIsModalShow] = useState(false)
+  // const [lotteryResult, setLotteryResult] = useState(false)
   // const [confirmLoading, setConfirmLoading] = useState(false)
 
   const singlePrizeClient = useMemo(() => {
@@ -41,18 +47,15 @@ const Turntable = ({ prizeListUrl, prizeUrl, singleLotteryUrl }: Props) => {
   }, [prizeListUrl])
 
   const singleLotteryClient = useMemo(() => {
-    const client = new DataClient(singleLotteryUrl)
+    const client = new DataClient<SingleLotteryProps>(singleLotteryUrl)
     return client
   }, [singleLotteryUrl])
 
   useEffect(() => {
-    singlePrizeClient.post().then((res) => {
-      singlePrizeClient.updateLocal(res)
-    })
     prizeListClient.getAll()
     singleLotteryClient.getAll()
-    setRenew(false)
-  }, [prizeUrl, prizeListUrl, singleLotteryUrl, renew])
+    if (renew) setRenew(false)
+  }, [prizeUrl, prizeListUrl, renew])
 
   const prizeList = prizeListClient.useData()
   const prizes = singlePrizeClient.useData()
@@ -66,7 +69,7 @@ const Turntable = ({ prizeListUrl, prizeUrl, singleLotteryUrl }: Props) => {
         drawPrizeBlock(ctx, prizeList, startRadian)
       }
     }
-    if (!singleLottery[0]?.need_user_info) {
+    if (singleLottery[0]?.need_user_info) {
       setIsModalShow(true)
     }
   }, [prizeList, singleLottery])
@@ -80,11 +83,14 @@ const Turntable = ({ prizeListUrl, prizeUrl, singleLotteryUrl }: Props) => {
     }
   }, [ctx, startRadian])
 
-  const testFunc = (prizeList: any) => {
+  const rotate = (prizeList: any) => {
     return new Promise((resolve) => {
-      if (prizes.length !== 0) {
+      singlePrizeClient.post().then((res: any) => {
+        singlePrizeClient.updateLocal(res)
+      })
+
+      if (prizes?.length) {
         const prize = prizes[0]
-        // debugger
         const prizeIndex = getPrizeIndex(prize, prizeList)
         const target = prizeToAngle(prizeIndex, prizeList.length) // prize对应第几个，prize总数
         const turns = getRandomInt(5, 15)
@@ -107,10 +113,10 @@ const Turntable = ({ prizeListUrl, prizeUrl, singleLotteryUrl }: Props) => {
   }
 
   const lottery = (prizeList: any, singleLottery: any) => {
+    console.log('click')
     if (singleLottery[0].remain_times > 0) {
-      testFunc(prizeList).then((res) => {
+      rotate(prizeList).then((res: any) => {
         if (res.status === 'success') {
-          // console.log('res', res.prize.objective)
           setTimeout(() => {
             Modal.info({
               title: res.prize.objective.title,
@@ -158,6 +164,26 @@ const Turntable = ({ prizeListUrl, prizeUrl, singleLotteryUrl }: Props) => {
       else Object.defineProperty(prizeList[i], 'color', { value: '#fff' })
     }
 
+    const infoFields =
+      singleLottery[0]?.info_fields === null ? (
+        <></>
+      ) : (
+        <Row gutter={[16, 16]}>
+          {singleLottery[0]?.info_fields.map((el: any) => {
+            return (
+              <Col span={24} key={singleLottery[0].id}>
+                <Input placeholder={el} />
+              </Col>
+              // <Form name="importWorks" form={form}>
+              //   <Form.Item label="作品网址" name="workUrl">
+              //     <Input />
+              //   </Form.Item>
+              // </Form>
+            )
+          })}
+        </Row>
+      )
+
     return (
       <div>
         <div className={styles.turntableWrap}>
@@ -183,20 +209,7 @@ const Turntable = ({ prizeListUrl, prizeUrl, singleLotteryUrl }: Props) => {
           onCancel={handleCancel}
           // confirmLoading={confirmLoading}
         >
-          <Row gutter={[16, 16]}>
-            {singleLottery[0]?.info_fields.map((el: any) => {
-              return (
-                <Col span={24} key={singleLottery[0].id}>
-                  <Input placeholder={el} />
-                </Col>
-              )
-            })}
-          </Row>
-          {/* <Form name="importWorks" form={form}>
-            <Form.Item label="作品网址" name="workUrl">
-              <Input />
-            </Form.Item>
-          </Form> */}
+          {infoFields}
         </Modal>
       </div>
     )
