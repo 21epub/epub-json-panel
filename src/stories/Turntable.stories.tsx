@@ -9,15 +9,15 @@ export default {
   argTypes: {
     prizeListUrl: {
       name: 'prizeListUrl',
-      type: { name: 'string', required: false }
+      type: { name: 'string', required: true }
     },
     prizeUrl: {
       name: 'prizeUrl',
-      type: { name: 'string', required: false }
+      type: { name: 'string', required: true }
     },
     singleLotteryUrl: {
       name: 'singleLotteryUrl',
-      type: { name: 'string', required: false }
+      type: { name: 'string', required: true }
     }
   }
 } as Meta
