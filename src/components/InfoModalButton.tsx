@@ -6,10 +6,10 @@ import { info } from './InfoModal'
 
 const InfoModalButton = () => {
   const content = (
-    <>
+    <div>
       <p>1.规则说明</p>
       <p>2.规则说明</p>
-    </>
+    </div>
   )
 
   const modalContent = {
