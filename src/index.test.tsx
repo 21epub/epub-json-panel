@@ -1,7 +1,7 @@
-import Turntable from './components/Turntable'
+import InfoModalButton from './components/InfoModalButton'
 
-describe('Turntable', () => {
+describe('InfoModalButton', () => {
   it('is truthy', () => {
-    expect(Turntable).toBeTruthy()
+    expect(InfoModalButton).toBeTruthy()
   })
 })
