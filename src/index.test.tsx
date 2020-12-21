@@ -1,7 +1,7 @@
-import ExampleComponent from './components/ExampleComponent'
+import Turntable from './components/Turntable'
 
-describe('ExampleComponent', () => {
+describe('Turntable', () => {
   it('is truthy', () => {
-    expect(ExampleComponent).toBeTruthy()
+    expect(Turntable).toBeTruthy()
   })
 })

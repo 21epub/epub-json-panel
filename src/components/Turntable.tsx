@@ -19,7 +19,7 @@ interface Props {
 }
 //     "color": '#fef8e6'
 
-const TestCanvas = ({ prizeListUrl, prizeUrl, singleLotteryUrl }: Props) => {
+const Turntable = ({ prizeListUrl, prizeUrl, singleLotteryUrl }: Props) => {
   const canvasRef = useRef<HTMLCanvasElement>(null)
   const [ctx, setCtx] = useState<CanvasRenderingContext2D | null>(null)
   const [startRadian, setStartRadian] = useState(0)
@@ -205,4 +205,4 @@ const TestCanvas = ({ prizeListUrl, prizeUrl, singleLotteryUrl }: Props) => {
   }
 }
 
-export default TestCanvas
+export default Turntable
