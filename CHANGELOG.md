@@ -2,6 +2,12 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.0.3-alpha.3](https://github.com/icey0126/epub-app-lib/compare/v0.0.3-alpha.2...v0.0.3-alpha.3) (2020-12-21)
+
+### Bug Fixes
+
+- 🐛 fix npm publish err ([621da49](https://github.com/icey0126/epub-app-lib/commit/621da49de34420ad9cf81a6a0ebf6bc8b7d9264d))
+
 ### [0.0.3-alpha.2](https://github.com/icey0126/epub-app-lib/compare/v0.0.3-alpha.1...v0.0.3-alpha.2) (2020-12-21)
 
 ### Bug Fixes
