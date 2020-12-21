@@ -166,7 +166,7 @@ const Turntable = ({ prizeListUrl, prizeUrl, singleLotteryUrl }: Props) => {
 
     const infoFields =
       singleLottery[0]?.info_fields === null ? (
-        <></>
+        <div />
       ) : (
         <Row gutter={[16, 16]}>
           {singleLottery[0]?.info_fields.map((el: any) => {
@@ -214,7 +214,7 @@ const Turntable = ({ prizeListUrl, prizeUrl, singleLotteryUrl }: Props) => {
       </div>
     )
   } else {
-    return <></>
+    return <div />
   }
 }
 
