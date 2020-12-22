@@ -2,6 +2,12 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.0.3-alpha.9](https://github.com/icey0126/epub-app-lib/compare/v0.0.3-alpha.8...v0.0.3-alpha.9) (2020-12-22)
+
+### Bug Fixes
+
+- 🐛 fix npm build ([8568c48](https://github.com/icey0126/epub-app-lib/commit/8568c48113515667c71802b51469b4c8d7696ac1))
+
 ### [0.0.3-alpha.8](https://github.com/icey0126/epub-app-lib/compare/v0.0.3-alpha.7...v0.0.3-alpha.8) (2020-12-22)
 
 ### Bug Fixes
