@@ -15,9 +15,9 @@ declare module '*.less' {
   export default content
 }
 
-declare module '*.jpg'
-declare module '*.png'
-declare module '*.jpeg'
+// declare module '*.jpg'
+// declare module '*.png'
+// declare module '*.jpeg'
 
 interface SvgrComponent
   extends React.StatelessComponent<React.SVGAttributes<SVGElement>> {}
