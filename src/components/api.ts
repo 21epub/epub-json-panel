@@ -1,8 +1,21 @@
-const prizeListUrl =
-  'https://yapi.epub360.com/mock/26/api/lottery/%7Bslug%7D/prize/'
-const prizeUrl =
-  'https://yapi.epub360.com/mock/26/api/lottery/%7Blottery_slug%7D/draw/'
-const singleLotteryUrl =
-  'https://yapi.epub360.com/mock/26/api/lottery/%7Bslug%7D'
+import axios from 'axios'
 
-export { prizeListUrl, prizeUrl, singleLotteryUrl }
+const instance = axios.create()
+instance.defaults.headers = {
+  'Content-type': 'application/x-www-form-urlencoded'
+}
+
+const getLotteryResult = (prizeUrl: string) => {
+  return new Promise((resolve, reject) => {
+    instance
+      .post(prizeUrl)
+      .then((response) => {
+        resolve(response)
+      })
+      .catch((error) => {
+        reject(error)
+      })
+  })
+}
+
+export { getLotteryResult }

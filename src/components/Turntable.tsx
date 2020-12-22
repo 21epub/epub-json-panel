@@ -7,9 +7,10 @@ import {
   getRandomInt,
   getPrizeIndex
 } from './util'
+import { getLotteryResult } from './api'
 import { SingleLotteryProps } from './types'
-import Point from './img/point.png'
-import TurntablePic from './img/turntable.png'
+// import Point from './img/point.png'
+// import TurntablePic from './img/turntable.png'
 import styles from './turnTable.less'
 import 'antd/dist/antd.css'
 
@@ -33,14 +34,6 @@ const Turntable = ({ prizeListUrl, prizeUrl, singleLotteryUrl }: Props) => {
   // const [lotteryResult, setLotteryResult] = useState(false)
   // const [confirmLoading, setConfirmLoading] = useState(false)
 
-  const singlePrizeClient = useMemo(() => {
-    const opt = {
-      contentType: 'application/x-www-form-urlencoded' as 'application/x-www-form-urlencoded'
-    }
-    const client = new DataClient(prizeUrl, opt)
-    return client
-  }, [prizeUrl])
-
   const prizeListClient = useMemo(() => {
     const client = new DataClient(prizeListUrl)
     return client
@@ -55,10 +48,9 @@ const Turntable = ({ prizeListUrl, prizeUrl, singleLotteryUrl }: Props) => {
     prizeListClient.getAll()
     singleLotteryClient.getAll()
     if (renew) setRenew(false)
-  }, [prizeUrl, prizeListUrl, renew])
+  }, [prizeListUrl, renew])
 
   const prizeList = prizeListClient.useData()
-  const prizes = singlePrizeClient.useData()
   const singleLottery = singleLotteryClient.useData()
   // console.log(prizeList, prizes, singleLottery)
 
@@ -83,14 +75,11 @@ const Turntable = ({ prizeListUrl, prizeUrl, singleLotteryUrl }: Props) => {
     }
   }, [ctx, startRadian])
 
-  const rotate = (prizeList: any) => {
+  const rotate = (prizeList: any, prizeUrl: string) => {
     return new Promise((resolve) => {
-      singlePrizeClient.post().then((res: any) => {
-        singlePrizeClient.updateLocal(res)
-      })
-
-      if (prizes?.length) {
-        const prize = prizes[0]
+      getLotteryResult(prizeUrl).then((res: any) => {
+        // console.log("res",res?.data?.data?.results[0])
+        const prize = res?.data?.data?.results[0]
         const prizeIndex = getPrizeIndex(prize, prizeList)
         const target = prizeToAngle(prizeIndex, prizeList.length) // prize对应第几个，prize总数
         const turns = getRandomInt(5, 15)
@@ -108,14 +97,13 @@ const Turntable = ({ prizeListUrl, prizeUrl, singleLotteryUrl }: Props) => {
             if (i === frame) resolve(result)
           }, 100)
         }
-      }
+      })
     })
   }
 
-  const lottery = (prizeList: any, singleLottery: any) => {
-    console.log('click')
+  const lottery = (prizeList: any, singleLottery: any, prizeUrl: string) => {
     if (singleLottery[0].remain_times > 0) {
-      rotate(prizeList).then((res: any) => {
+      rotate(prizeList, prizeUrl).then((res: any) => {
         if (res.status === 'success') {
           setTimeout(() => {
             Modal.info({
@@ -183,11 +171,10 @@ const Turntable = ({ prizeListUrl, prizeUrl, singleLotteryUrl }: Props) => {
           })}
         </Row>
       )
-
     return (
       <div>
         <div className={styles.turntableWrap}>
-          <img src={TurntablePic} />
+          <img src={require('./img/turntable.png')} />
           <canvas
             id='turnTableCircle'
             ref={canvasRef}
@@ -198,8 +185,8 @@ const Turntable = ({ prizeListUrl, prizeUrl, singleLotteryUrl }: Props) => {
           </canvas>
           <img
             className='point'
-            src={Point}
-            onClick={() => lottery(prizeList, singleLottery)}
+            src={require('./img/point.png')}
+            onClick={() => lottery(prizeList, singleLottery, prizeUrl)}
           />
         </div>
         <Modal

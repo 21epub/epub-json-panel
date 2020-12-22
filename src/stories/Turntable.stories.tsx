@@ -1,7 +1,7 @@
 import React from 'react'
 import { Story, Meta } from '@storybook/react/types-6-0'
 import Turntable from '../components/Turntable'
-import { prizeListUrl, prizeUrl, singleLotteryUrl } from '../components/api'
+import { prizeListUrl, singleLotteryUrl, prizeUrl } from '../components/apiUrl'
 
 export default {
   title: '测试转盘',
