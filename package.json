@@ -59,6 +59,7 @@
   },
   "dependencies": {
     "@21epub/epub-data-client": "^0.3.0",
+    "antd": "^4.9.2",
     "axios": "^0.21.0",
     "moment": "^2.29.1",
     "qs": "^6.9.4"
