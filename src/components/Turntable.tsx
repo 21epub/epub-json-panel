@@ -174,18 +174,21 @@ const Turntable = ({ prizeListUrl, prizeUrl, singleLotteryUrl }: Props) => {
     return (
       <div>
         <div className={styles.turntableWrap}>
-          <img src={require('./img/turntable.png')} />
+          <img
+            src='http://dev.epub360.com/staticfs2/diazo/images/lottery/turntable.png'
+            className='turntableImg'
+          />
           <canvas
             id='turnTableCircle'
             ref={canvasRef}
-            width='435px'
-            height='435px'
+            width='280px'
+            height='280px'
           >
             您的浏览器不支持canvas。
           </canvas>
           <img
             className='point'
-            src={require('./img/point.png')}
+            src='http://dev.epub360.com/staticfs2/diazo/images/lottery/point.png'
             onClick={() => lottery(prizeList, singleLottery, prizeUrl)}
           />
         </div>

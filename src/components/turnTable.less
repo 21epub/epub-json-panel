@@ -1,7 +1,39 @@
+// .turntableWrap {
+//   position: relative;
+//   width: 548px;
+//   height: 548px;
+//   // border: 2px solid red;
+
+//   :global {
+//     #turnTableCircle {
+//       position: absolute;
+//       top: 10%;
+//       left: 10%;
+//       // border-radius: 50%;
+//       z-index: 1000;
+//       border: 1px solid transparent;
+//       // transform: rotate(20deg)
+//     }
+
+//     .point {
+//       position: absolute;
+//       top: 50%;
+//       left: 50%;
+//       z-index: 1110;
+//       -ms-transform: translateX(-50%, -60%);
+//       -moz-transform: translateX(-50%, -60%);
+//       -webkit-transform: translateX(-50%, -60%);
+//       -o-transform: translateX(-50%, -60%);
+//       transform: translate(-50%, -60%);
+//       cursor: pointer;
+//       // border: 2px solid red;
+//     }
+//   }
+// }
 .turntableWrap {
   position: relative;
-  width: 548px;
-  height: 548px;
+  width: 300px;
+  height: 300px;
   // border: 2px solid red;
 
   :global {
@@ -10,16 +42,57 @@
       top: 10%;
       left: 10%;
       // border-radius: 50%;
-      z-index: 100;
+      z-index: 1000;
       border: 1px solid transparent;
       // transform: rotate(20deg)
     }
-
+    .turntableImg {
+      width: 300px;
+      height: 300px;
+    }
     .point {
       position: absolute;
       top: 50%;
       left: 50%;
-      z-index: 110;
+      z-index: 1000;
+      width: 60px;
+      -ms-transform: translateX(-50%, -60%);
+      -moz-transform: translateX(-50%, -60%);
+      -webkit-transform: translateX(-50%, -60%);
+      -o-transform: translateX(-50%, -60%);
+      transform: translate(-50%, -60%);
+      cursor: pointer;
+      // border: 2px solid red;
+    }
+  }
+}
+
+.turntableEditorWrap {
+  position: relative;
+  width: 300px;
+  height: 300px;
+  // border: 2px solid red;
+
+  :global {
+    #turnTableCircle {
+      position: absolute;
+      top: 10%;
+      left: 10%;
+      // border-radius: 50%;
+      z-index: 1000;
+      border: 1px solid transparent;
+      // transform: rotate(20deg)
+    }
+    .turntableImg {
+      width: 300px;
+      height: 300px;
+    }
+    .point {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      z-index: 1000;
+      width: 60px;
       -ms-transform: translateX(-50%, -60%);
       -moz-transform: translateX(-50%, -60%);
       -webkit-transform: translateX(-50%, -60%);

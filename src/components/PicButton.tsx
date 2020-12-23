@@ -12,7 +12,7 @@ const PicButton = ({ remainTimes }: Props) => {
     <div className={styles.PicButton}>
       <img
         className='buttonImg'
-        src={require('./img/myPrize.png')}
+        src='http://dev.epub360.com/staticfs2/diazo/images/lottery/myPrize.png'
         onClick={() => console.log('111')}
       />
     </div>

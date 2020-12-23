@@ -32,8 +32,10 @@ function drawPrizeBlock(
     context.save()
     context.beginPath()
     context.fillStyle = awards[i].color
-    context.moveTo(217.5, 217.5) // 起点
-    context.arc(217.5, 217.5, 217.5, startRadian, endRadian, false)
+    // context.moveTo(217.5, 217.5) // 起点
+    // context.arc(217.5, 217.5, 217.5, startRadian, endRadian, false)
+    context.moveTo(120, 120) // 起点
+    context.arc(120, 120, 120, startRadian, endRadian, false)
     context.fill()
     context.restore()
 
@@ -42,8 +44,10 @@ function drawPrizeBlock(
     context.font = '14px Arial'
 
     context.translate(
-      217.5 + Math.cos(startRadian + RadianGap / 2) * 217.5,
-      217.5 + Math.sin(startRadian + RadianGap / 2) * 217.5
+      // 217.5 + Math.cos(startRadian + RadianGap / 2) * 217.5,
+      // 217.5 + Math.sin(startRadian + RadianGap / 2) * 217.5
+      120 + Math.cos(startRadian + RadianGap / 2) * 120,
+      120 + Math.sin(startRadian + RadianGap / 2) * 120
     )
     context.rotate(startRadian + RadianGap / 2 + Math.PI / 2)
     getLineTextList(context, awards[i].title, 70).forEach((line, index) => {
