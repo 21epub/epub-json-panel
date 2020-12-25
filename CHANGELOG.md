@@ -2,6 +2,12 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.0.3-alpha.15](https://github.com/icey0126/epub-app-lib/compare/v0.0.3-alpha.14...v0.0.3-alpha.15) (2020-12-25)
+
+### Bug Fixes
+
+- 🐛 fix turntable editor not renew ([ef04fcf](https://github.com/icey0126/epub-app-lib/commit/ef04fcfdc1f3de61545c935d35f8a16d0c68dba6))
+
 ### [0.0.3-alpha.14](https://github.com/icey0126/epub-app-lib/compare/v0.0.3-alpha.13...v0.0.3-alpha.14) (2020-12-25)
 
 ### Bug Fixes
