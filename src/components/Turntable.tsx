@@ -62,7 +62,7 @@ const Turntable = ({
     prizeListClient.getAll()
     singleLotteryClient.getAll()
     myPrizeListClient.getAll()
-  }, [prizeListUrl, renew, isDataChanged, myPrizeListUrl])
+  }, [renew, isDataChanged, myPrizeListUrl, singleLotteryUrl, prizeListUrl])
 
   const prizeList = prizeListClient.useData()
   const singleLottery = singleLotteryClient.useData()

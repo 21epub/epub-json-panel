@@ -23,7 +23,7 @@ const TurntableEditor = ({ prizeList }: Props) => {
         drawPrizeBlock(ctx, prizeList, 0)
       }
     }
-  }, [ctx])
+  }, [ctx, prizeList])
 
   // useEffect(() => {
   //     if (canvasRef && canvasRef.current) {
