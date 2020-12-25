@@ -7,16 +7,15 @@ import styles from '../turnTable.less'
 import 'antd/dist/antd.css'
 
 interface Props {
-  state: any
+  prizeList: any
 }
 
-const TurntableEditor = ({ state }: Props) => {
+const TurntableEditor = ({ prizeList }: Props) => {
   const canvasRef = useRef<HTMLCanvasElement>(null)
   const [ctx, setCtx] = useState<CanvasRenderingContext2D | null>(null)
   // const [startRadian, setStartRadian] = useState(0)
   // const [prizeList, setPrizeList] = useState(state.prizeList)
 
-  const prizeList = state.prizeList
   useEffect(() => {
     if (canvasRef && canvasRef.current) {
       setCtx(canvasRef?.current?.getContext('2d'))

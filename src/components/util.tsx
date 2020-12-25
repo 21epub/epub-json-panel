@@ -1,3 +1,5 @@
+import moment from 'moment'
+
 function getLineTextList(
   context: CanvasRenderingContext2D,
   text: any,
@@ -85,10 +87,26 @@ const getPrizeIndex = (prize: any, prizeList: any) => {
   )
   return prizeIndex
 }
+
+const getNow = () => {
+  return moment().locale('zh-cn').format('YYYY-MM-DD HH:mm')
+}
+
+const getToday = () => {
+  return moment().locale('zh-cn').format('YYYY-MM-DD')
+}
+
+const getDate = (days: number) => {
+  return moment().add(days, 'days').locale('zh-cn').format('YYYY-MM-DD')
+}
+
 export {
   getLineTextList,
   drawPrizeBlock,
   prizeToAngle,
   getRandomInt,
-  getPrizeIndex
+  getPrizeIndex,
+  getNow,
+  getDate,
+  getToday
 }

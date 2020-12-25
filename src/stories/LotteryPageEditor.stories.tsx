@@ -1,6 +1,11 @@
 import React from 'react'
 import { Story, Meta } from '@storybook/react/types-6-0'
-
+import {
+  prizeListUrl,
+  singleLotteryUrl,
+  prizeUrl,
+  myPrizeListUrl
+} from '../components/apiUrl'
 import { LotteryPageEditor } from '../index'
 
 export default {
@@ -14,11 +19,19 @@ export default {
   }
 } as Meta
 
-const Template: Story<{ remainTimes: number }> = (args) => (
-  <LotteryPageEditor {...args} />
-)
+const Template: Story<{
+  prizeListUrl: string
+  singleLotteryUrl: string
+  prizeUrl: string
+  myPrizeListUrl: string
+  isDataChanged: boolean
+}> = (args) => <LotteryPageEditor {...args} />
 
 export const Yapi = Template.bind({})
 Yapi.args = {
-  remainTimes: 5
+  prizeListUrl: prizeListUrl,
+  singleLotteryUrl: singleLotteryUrl,
+  prizeUrl: prizeUrl,
+  myPrizeListUrl: myPrizeListUrl,
+  isDataChanged: true
 }

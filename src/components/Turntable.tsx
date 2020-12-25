@@ -9,8 +9,7 @@ import {
 } from './util'
 import { getLotteryResult } from './api'
 import { SingleLotteryProps } from './types'
-// import Point from './img/point.png'
-// import TurntablePic from './img/turntable.png'
+import { useDispatch } from 'react-redux'
 import styles from './turnTable.less'
 import 'antd/dist/antd.css'
 
@@ -19,13 +18,23 @@ interface Props {
   prizeListUrl: string
   prizeUrl: string
   singleLotteryUrl: string
+  isDataChanged: boolean
+  myPrizeListUrl: string
 }
 // interface Result{
 //   status:string,
 //   prize:SinglePrizeProps
 // }
 
-const Turntable = ({ prizeListUrl, prizeUrl, singleLotteryUrl }: Props) => {
+const Turntable = ({
+  prizeListUrl,
+  prizeUrl,
+  singleLotteryUrl,
+  isDataChanged,
+  myPrizeListUrl
+}: Props) => {
+  const dispatch = useDispatch()
+
   const canvasRef = useRef<HTMLCanvasElement>(null)
   const [ctx, setCtx] = useState<CanvasRenderingContext2D | null>(null)
   const [startRadian, setStartRadian] = useState(0)
@@ -44,15 +53,28 @@ const Turntable = ({ prizeListUrl, prizeUrl, singleLotteryUrl }: Props) => {
     return client
   }, [singleLotteryUrl])
 
+  const myPrizeListClient = useMemo(() => {
+    const client = new DataClient(myPrizeListUrl)
+    return client
+  }, [myPrizeListUrl])
+
   useEffect(() => {
     prizeListClient.getAll()
     singleLotteryClient.getAll()
-    if (renew) setRenew(false)
-  }, [prizeListUrl, renew])
+    myPrizeListClient.getAll()
+  }, [prizeListUrl, renew, isDataChanged, myPrizeListUrl])
 
   const prizeList = prizeListClient.useData()
   const singleLottery = singleLotteryClient.useData()
-  // console.log(prizeList, prizes, singleLottery)
+  const myPrizeList = myPrizeListClient.useData()
+
+  useEffect(() => {
+    dispatch({ type: 'ChangeSingleLotteryInfo', value: singleLottery })
+  }, [singleLottery])
+
+  useEffect(() => {
+    dispatch({ type: 'ChangeMyPrizeList', value: myPrizeList })
+  }, [myPrizeList])
 
   useEffect(() => {
     if (canvasRef && canvasRef.current) {
@@ -116,7 +138,10 @@ const Turntable = ({ prizeListUrl, prizeUrl, singleLotteryUrl }: Props) => {
               ),
               onOk() {
                 setStartRadian(0)
-                setRenew(true)
+
+                // 完成抽奖后重新获取奖品list与抽奖信息
+                if (renew) setRenew(false)
+                else setRenew(true)
               }
             })
           }, 1000)
