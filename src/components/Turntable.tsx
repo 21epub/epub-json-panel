@@ -43,7 +43,7 @@ const Turntable = ({
   const [form] = Form.useForm()
   // const [lotteryResult, setLotteryResult] = useState(false)
   const [confirmLoading, setConfirmLoading] = useState(false)
-  const [tips, setTips] = useState(<></>) // 填写用户信息时的提示信息
+  const [tips, setTips] = useState(<div />) // 填写用户信息时的提示信息
 
   const prizeListClient = useMemo(() => {
     const client = new DataClient(prizeListUrl)
