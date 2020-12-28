@@ -18,11 +18,11 @@ interface SinglePrizeProps {
 
 interface SingleLotteryProps {
   type: string
-  info_fields: string[] | null
+  info_fields_list: string[] | null
   title: string
   id: string
-  start_time: null
-  end_time: null
+  start_time: null | string
+  end_time: null | string
   book_slug: string
   created: string
   total_draw_num_each_one: number

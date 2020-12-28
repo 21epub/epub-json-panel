@@ -1,4 +1,4 @@
-import { Modal, Input, Row, Col } from 'antd'
+import { Modal, Input, Row, Form } from 'antd'
 import React, { useRef, useEffect, useState, useMemo } from 'react'
 import { DataClient } from '@21epub/epub-data-client'
 import {
@@ -40,8 +40,10 @@ const Turntable = ({
   const [startRadian, setStartRadian] = useState(0)
   const [renew, setRenew] = useState(false)
   const [isModalShow, setIsModalShow] = useState(false)
+  const [form] = Form.useForm()
   // const [lotteryResult, setLotteryResult] = useState(false)
-  // const [confirmLoading, setConfirmLoading] = useState(false)
+  const [confirmLoading, setConfirmLoading] = useState(false)
+  const [tips, setTips] = useState(<></>) // 填写用户信息时的提示信息
 
   const prizeListClient = useMemo(() => {
     const client = new DataClient(prizeListUrl)
@@ -163,11 +165,29 @@ const Turntable = ({
   }
 
   const handleOk = () => {
-    setIsModalShow(false)
+    setConfirmLoading(true)
+    // if(singleLottery[0]?.info_fields!==null)
+    const address: string = form.getFieldInstance('address').props.value
+    const phone: string = form.getFieldInstance('phone').props.value
+    const email: string = form.getFieldInstance('email').props.value
+    const name: string = form.getFieldInstance('name').props.value
+    let info
+    if (address && phone && email && name) {
+      info = {
+        address: address,
+        phone: phone,
+        email: email,
+        name: name
+      }
+      console.log('info', info)
+      setIsModalShow(false)
+    } else {
+      setTips(<p style={{ color: 'red' }}>请填写正确的用户信息</p>)
+    }
   }
 
   const handleCancel = () => {
-    setIsModalShow(false)
+    setTips(<p style={{ color: 'red' }}>请填写正确的用户信息</p>)
   }
 
   if (prizeList?.length && singleLottery?.length) {
@@ -178,22 +198,25 @@ const Turntable = ({
     }
 
     const infoFields =
-      singleLottery[0]?.info_fields === null ? (
+      singleLottery[0]?.info_fields_list === null ? (
         <div />
       ) : (
         <Row gutter={[16, 16]}>
-          {singleLottery[0]?.info_fields.map((el: any) => {
-            return (
-              <Col span={24} key={singleLottery[0].id}>
-                <Input placeholder={el} />
-              </Col>
-              // <Form name="importWorks" form={form}>
-              //   <Form.Item label="作品网址" name="workUrl">
-              //     <Input />
-              //   </Form.Item>
-              // </Form>
-            )
-          })}
+          <Form name='addUserInfo' form={form}>
+            {singleLottery[0]?.info_fields_list.map(
+              (el: any, index: number) => {
+                return (
+                  // <Col span={24} key={singleLottery[0].id}>
+                  //   <Input placeholder={el} />
+                  // </Col>
+
+                  <Form.Item name={el} key={index}>
+                    <Input placeholder={el} />
+                  </Form.Item>
+                )
+              }
+            )}
+          </Form>
         </Row>
       )
     return (
@@ -222,9 +245,10 @@ const Turntable = ({
           visible={isModalShow}
           onOk={handleOk}
           onCancel={handleCancel}
-          // confirmLoading={confirmLoading}
+          confirmLoading={confirmLoading}
         >
           {infoFields}
+          {tips}
         </Modal>
       </div>
     )

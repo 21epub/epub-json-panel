@@ -49,7 +49,7 @@ const LotteryPage = ({
                 </div>
               )
             else {
-              return <p>{item}</p>
+              return <p key='noPrize'>{item}</p>
             }
           })}
         </div>
@@ -79,7 +79,14 @@ const LotteryPage = ({
         />
         <div className='topTime'>
           <p className='remainTimes'>
-            活动时间：{getToday()}～{getDate(7)}
+            活动时间：
+            {state?.lotteryInfo[0]?.start_time
+              ? state?.lotteryInfo[0]?.start_time
+              : getToday()}
+            ～
+            {state?.lotteryInfo[0]?.end_time
+              ? state?.lotteryInfo[0]?.end_time
+              : getDate(7)}
           </p>
         </div>
         <div className='turntableWrap'>

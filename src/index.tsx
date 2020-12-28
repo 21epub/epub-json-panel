@@ -1,5 +1,4 @@
 export { default as Turntable } from './components/Turntable'
-export { default as TableEditor } from './components/TableEditor'
 export { default as InfoModalButton } from './components/InfoModalButton'
 export { default as BottomInfo } from './components/BottomInfo'
 export { default as PicButton } from './components/PicButton'

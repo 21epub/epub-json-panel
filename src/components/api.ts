@@ -18,4 +18,17 @@ const getLotteryResult = (prizeUrl: string) => {
   })
 }
 
-export { getLotteryResult }
+const addUserInfo = (addUserInfoUrl: string) => {
+  return new Promise((resolve, reject) => {
+    instance
+      .post(addUserInfoUrl)
+      .then((response) => {
+        resolve(response)
+      })
+      .catch((error) => {
+        reject(error)
+      })
+  })
+}
+
+export { getLotteryResult, addUserInfo }

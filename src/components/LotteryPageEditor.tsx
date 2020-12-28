@@ -51,7 +51,14 @@ const LotteryPageEditor = ({
           />
           <div className='topTime'>
             <p className='remainTimes'>
-              活动时间：{getToday()}～{getDate(7)}
+              活动时间：
+              {singleLottery[0]?.start_time
+                ? singleLottery[0]?.start_time
+                : getToday()}
+              ～
+              {singleLottery[0]?.end_time
+                ? singleLottery[0]?.end_time
+                : getDate(7)}
             </p>
           </div>
           <div className='turntableWrap'>
