@@ -4,7 +4,9 @@ import {
   prizeListUrl,
   singleLotteryUrl,
   prizeUrl,
-  myPrizeListUrl
+  myPrizeListUrl,
+  addUserInfoUrl,
+  queryUserInfoUrl
 } from '../components/apiUrl'
 import { LotteryPageView } from '../index'
 export default {
@@ -24,6 +26,8 @@ const Template: Story<{
   prizeUrl: string
   myPrizeListUrl: string
   isDataChanged: boolean
+  addUserInfoUrl: string
+  queryUserInfoUrl: string
 }> = (args) => <LotteryPageView {...args} />
 
 export const Yapi = Template.bind({})
@@ -32,5 +36,7 @@ Yapi.args = {
   singleLotteryUrl: singleLotteryUrl,
   prizeUrl: prizeUrl,
   myPrizeListUrl: myPrizeListUrl,
-  isDataChanged: true
+  isDataChanged: true,
+  addUserInfoUrl: addUserInfoUrl,
+  queryUserInfoUrl: queryUserInfoUrl
 }

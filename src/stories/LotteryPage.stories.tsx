@@ -4,7 +4,9 @@ import {
   prizeListUrl,
   singleLotteryUrl,
   prizeUrl,
-  myPrizeListUrl
+  myPrizeListUrl,
+  addUserInfoUrl,
+  queryUserInfoUrl
 } from '../components/apiUrl'
 import { LotteryPage } from '../index'
 import { Provider } from 'react-redux'
@@ -26,6 +28,8 @@ const Template: Story<{
   prizeUrl: string
   myPrizeListUrl: string
   isDataChanged: boolean
+  addUserInfoUrl: string
+  queryUserInfoUrl: string
 }> = (args) => (
   <Provider store={store}>
     <LotteryPage {...args} />
@@ -38,5 +42,7 @@ Yapi.args = {
   singleLotteryUrl: singleLotteryUrl,
   prizeUrl: prizeUrl,
   myPrizeListUrl: myPrizeListUrl,
-  isDataChanged: true
+  isDataChanged: true,
+  addUserInfoUrl: addUserInfoUrl,
+  queryUserInfoUrl: queryUserInfoUrl
 }

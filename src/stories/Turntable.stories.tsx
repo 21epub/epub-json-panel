@@ -5,7 +5,9 @@ import {
   prizeListUrl,
   singleLotteryUrl,
   prizeUrl,
-  myPrizeListUrl
+  myPrizeListUrl,
+  addUserInfoUrl,
+  queryUserInfoUrl
 } from '../components/apiUrl'
 
 export default {
@@ -31,6 +33,14 @@ export default {
     myPrizeListUrl: {
       name: 'myPrizeListUrl',
       type: { name: 'string', required: true }
+    },
+    addUserInfoUrl: {
+      name: 'addUserInfoUrl',
+      type: { name: 'string', required: true }
+    },
+    queryUserInfoUrl: {
+      name: 'queryUserInfoUrl',
+      type: { name: 'string', required: true }
     }
   }
 } as Meta
@@ -41,6 +51,8 @@ const Template: Story<{
   singleLotteryUrl: string
   isDataChanged: boolean
   myPrizeListUrl: string
+  addUserInfoUrl: string
+  queryUserInfoUrl: string
 }> = (args) => <Turntable {...args} />
 
 export const Primary = Template.bind({})
@@ -49,5 +61,7 @@ Primary.args = {
   prizeUrl: prizeUrl,
   singleLotteryUrl: singleLotteryUrl,
   isDataChanged: true,
-  myPrizeListUrl: myPrizeListUrl
+  myPrizeListUrl: myPrizeListUrl,
+  addUserInfoUrl: addUserInfoUrl,
+  queryUserInfoUrl: queryUserInfoUrl
 }

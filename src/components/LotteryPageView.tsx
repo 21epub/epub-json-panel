@@ -9,6 +9,8 @@ interface Props {
   prizeUrl: string
   singleLotteryUrl: string
   myPrizeListUrl: string
+  addUserInfoUrl: string
+  queryUserInfoUrl: string
 }
 
 const LotteryPageView = ({
@@ -16,7 +18,9 @@ const LotteryPageView = ({
   prizeListUrl,
   prizeUrl,
   singleLotteryUrl,
-  myPrizeListUrl
+  myPrizeListUrl,
+  addUserInfoUrl,
+  queryUserInfoUrl
 }: Props) => {
   return (
     <Provider store={store}>
@@ -26,6 +30,8 @@ const LotteryPageView = ({
         prizeUrl={prizeUrl}
         singleLotteryUrl={singleLotteryUrl}
         myPrizeListUrl={myPrizeListUrl}
+        addUserInfoUrl={addUserInfoUrl}
+        queryUserInfoUrl={queryUserInfoUrl}
       />
     </Provider>
   )

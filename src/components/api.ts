@@ -1,4 +1,5 @@
 import axios from 'axios'
+import qs from 'qs'
 
 const instance = axios.create()
 instance.defaults.headers = {
@@ -18,10 +19,10 @@ const getLotteryResult = (prizeUrl: string) => {
   })
 }
 
-const addUserInfo = (addUserInfoUrl: string) => {
+const addUserInfo = (addUserInfoUrl: string, data: any) => {
   return new Promise((resolve, reject) => {
     instance
-      .post(addUserInfoUrl)
+      .post(addUserInfoUrl, qs.stringify(data))
       .then((response) => {
         resolve(response)
       })
@@ -31,4 +32,17 @@ const addUserInfo = (addUserInfoUrl: string) => {
   })
 }
 
-export { getLotteryResult, addUserInfo }
+const queryUserInfo = (queryUserInfo: string) => {
+  return new Promise((resolve, reject) => {
+    instance
+      .get(queryUserInfo)
+      .then((response) => {
+        resolve(response)
+      })
+      .catch((error) => {
+        reject(error)
+      })
+  })
+}
+
+export { getLotteryResult, addUserInfo, queryUserInfo }

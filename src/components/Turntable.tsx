@@ -7,7 +7,7 @@ import {
   getRandomInt,
   getPrizeIndex
 } from './util'
-import { getLotteryResult } from './api'
+import { getLotteryResult, addUserInfo, queryUserInfo } from './api'
 import { SingleLotteryProps } from './types'
 import { useDispatch } from 'react-redux'
 import styles from './turnTable.less'
@@ -20,18 +20,18 @@ interface Props {
   singleLotteryUrl: string
   isDataChanged: boolean
   myPrizeListUrl: string
+  addUserInfoUrl: string
+  queryUserInfoUrl: string
 }
-// interface Result{
-//   status:string,
-//   prize:SinglePrizeProps
-// }
 
 const Turntable = ({
   prizeListUrl,
   prizeUrl,
   singleLotteryUrl,
   isDataChanged,
-  myPrizeListUrl
+  myPrizeListUrl,
+  addUserInfoUrl,
+  queryUserInfoUrl
 }: Props) => {
   const dispatch = useDispatch()
 
@@ -85,9 +85,15 @@ const Turntable = ({
         drawPrizeBlock(ctx, prizeList, startRadian)
       }
     }
-    if (singleLottery[0]?.need_user_info) {
-      setIsModalShow(true)
-    }
+    queryUserInfo(queryUserInfoUrl).then((res: any) => {
+      console.log(res, 'userInfo')
+      if (
+        res.data.data.results.length === 0 &&
+        singleLottery[0]?.need_user_info
+      ) {
+        setIsModalShow(true)
+      }
+    })
   }, [prizeList, singleLottery])
 
   useEffect(() => {
@@ -105,7 +111,7 @@ const Turntable = ({
         // console.log("res",res?.data?.data?.results[0])
         const prize = res?.data?.data?.results[0]
         const prizeIndex = getPrizeIndex(prize, prizeList)
-        const target = prizeToAngle(prizeIndex, prizeList.length) // prize对应第几个，prize总数
+        const target = prizeToAngle(prizeIndex, prizeList.length) // prizeIndex:prize对应第几个，prizeList.length:prize总数
         const turns = getRandomInt(5, 15)
         const frame = getRandomInt(100, 400)
 
@@ -171,7 +177,7 @@ const Turntable = ({
     const phone: string = form.getFieldInstance('phone').props.value
     const email: string = form.getFieldInstance('email').props.value
     const name: string = form.getFieldInstance('name').props.value
-    let info
+    let info: any
     if (address && phone && email && name) {
       info = {
         address: address,
@@ -179,10 +185,19 @@ const Turntable = ({
         email: email,
         name: name
       }
-      console.log('info', info)
-      setIsModalShow(false)
+      addUserInfo(addUserInfoUrl, info).then((res: any) => {
+        if (res.data.code === 200) {
+          setConfirmLoading(false)
+          setIsModalShow(false)
+          form.resetFields()
+        } else {
+          setTips(<p style={{ color: 'red' }}>请求失败，请重新尝试</p>)
+          setConfirmLoading(false)
+        }
+      })
     } else {
       setTips(<p style={{ color: 'red' }}>请填写正确的用户信息</p>)
+      setConfirmLoading(false)
     }
   }
 
@@ -206,10 +221,6 @@ const Turntable = ({
             {singleLottery[0]?.info_fields_list.map(
               (el: any, index: number) => {
                 return (
-                  // <Col span={24} key={singleLottery[0].id}>
-                  //   <Input placeholder={el} />
-                  // </Col>
-
                   <Form.Item name={el} key={index}>
                     <Input placeholder={el} />
                   </Form.Item>

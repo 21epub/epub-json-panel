@@ -11,6 +11,8 @@ interface Props {
   prizeUrl: string
   singleLotteryUrl: string
   myPrizeListUrl: string
+  addUserInfoUrl: string
+  queryUserInfoUrl: string
 }
 
 const LotteryPage = ({
@@ -18,7 +20,9 @@ const LotteryPage = ({
   prizeListUrl,
   prizeUrl,
   singleLotteryUrl,
-  myPrizeListUrl
+  myPrizeListUrl,
+  addUserInfoUrl,
+  queryUserInfoUrl
 }: Props) => {
   const state = useSelector((state: any) => state) // 获取保存的状态
   console.log('抽奖信息:', state?.lotteryInfo)
@@ -96,6 +100,8 @@ const LotteryPage = ({
             singleLotteryUrl={singleLotteryUrl}
             isDataChanged={isDataChanged}
             myPrizeListUrl={myPrizeListUrl}
+            addUserInfoUrl={addUserInfoUrl}
+            queryUserInfoUrl={queryUserInfoUrl}
           />
         </div>
         <div className='bottomInfo'>
