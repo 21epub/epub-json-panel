@@ -36,12 +36,13 @@ const LotteryPage = ({
       title: '我的奖品',
       content: (
         <div>
-          {myPrize.map((item: any) => {
+          {myPrize.map((item: any, index: number) => {
             if (state?.myPrizeList?.length)
               return (
-                <div key={item.objective.id}>
+                <div key={index}>
                   <p>奖项：{item.objective.ranking}</p>
                   <p>奖品名：{item.objective.title}</p>
+                  <hr />
                 </div>
               )
             else {
@@ -57,7 +58,11 @@ const LotteryPage = ({
   const getRules = () => {
     const msg = {
       title: '活动规则',
-      content: <div>规则</div>
+      content: (
+        <div
+          dangerouslySetInnerHTML={{ __html: state?.lotteryInfo[0].rules }}
+        />
+      )
     }
     info(msg)
   }
@@ -74,16 +79,20 @@ const LotteryPage = ({
           src='http://dev.epub360.com/staticfs2/diazo/images/lottery/head.png'
         />
         <div className='topTime'>
-          <p className='remainTimes'>
-            活动时间：
-            {state?.lotteryInfo[0]?.start_time
-              ? state?.lotteryInfo[0]?.start_time
-              : getToday()}
-            ～
-            {state?.lotteryInfo[0]?.end_time
-              ? state?.lotteryInfo[0]?.end_time
-              : getDate(7)}
-          </p>
+          活动时间：
+          {state?.lotteryInfo[0]?.start_time
+            ? state?.lotteryInfo[0]?.start_time.substr(
+                0,
+                state?.lotteryInfo[0]?.start_time.length - 3
+              )
+            : getToday()}
+          ～
+          {state?.lotteryInfo[0]?.end_time
+            ? state?.lotteryInfo[0]?.end_time.substr(
+                0,
+                state?.lotteryInfo[0]?.end_time.length - 3
+              )
+            : getDate(7)}
         </div>
         <div className='turntableWrap'>
           <Turntable
@@ -97,13 +106,13 @@ const LotteryPage = ({
           />
         </div>
         <div className='bottomInfo'>
-          <p className='remainTimes'>
+          <div className='remainTimes'>
             您还剩余
             {state?.lotteryInfo[0]?.remain_times
               ? state?.lotteryInfo[0]?.remain_times
               : '?'}
             次抽奖机会
-          </p>
+          </div>
           <img
             className='prize'
             src='http://dev.epub360.com/staticfs2/diazo/images/lottery/myPrize.png'
@@ -115,7 +124,7 @@ const LotteryPage = ({
             onClick={getRules}
           />
         </div>
-        <p className='award'>恭喜小李抽中一等奖 {getNow()}</p>
+        <div className='award'>恭喜小李抽中一等奖 {getNow()}</div>
       </div>
     </div>
   )

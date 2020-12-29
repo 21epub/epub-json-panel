@@ -50,28 +50,34 @@ const LotteryPageEditor = ({
             src='http://dev.epub360.com/staticfs2/diazo/images/lottery/head.png'
           />
           <div className='topTime'>
-            <p className='remainTimes'>
+            <div className='remainTimes'>
               活动时间：
               {singleLottery[0]?.start_time
-                ? singleLottery[0]?.start_time
+                ? singleLottery[0]?.start_time.substr(
+                    0,
+                    singleLottery[0]?.start_time.length - 3
+                  )
                 : getToday()}
               ～
               {singleLottery[0]?.end_time
-                ? singleLottery[0]?.end_time
+                ? singleLottery[0]?.end_time.substr(
+                    0,
+                    singleLottery[0]?.end_time.length - 3
+                  )
                 : getDate(7)}
-            </p>
+            </div>
           </div>
           <div className='turntableWrap'>
             <TurntableEditor prizeList={prizeList} />
           </div>
           <div className='bottomInfo'>
-            <p className='remainTimes'>
+            <div className='remainTimes'>
               您还剩余
               {singleLottery[0].remain_times
                 ? singleLottery[0].remain_times
                 : '?'}
               次抽奖机会
-            </p>
+            </div>
             <img
               className='prize'
               src='http://dev.epub360.com/staticfs2/diazo/images/lottery/myPrize.png'
@@ -81,7 +87,7 @@ const LotteryPageEditor = ({
               src='http://dev.epub360.com/staticfs2/diazo/images/lottery/rule.png'
             />
           </div>
-          <p className='award'>恭喜小李抽中一等奖 {getNow()}</p>
+          <div className='award'>恭喜小李抽中一等奖 {getNow()}</div>
         </div>
       </div>
     )
@@ -166,21 +172,19 @@ const LotteryPageEditor = ({
             src='http://dev.epub360.com/staticfs2/diazo/images/lottery/head.png'
           />
           <div className='topTime'>
-            <p className='remainTimes'>
-              活动时间：{getToday()}～{getDate(7)}
-            </p>
+            活动时间：{getToday()}～{getDate(7)}
           </div>
           <div className='turntableWrap'>
             <TurntableEditor prizeList={prizeList} />
           </div>
           <div className='bottomInfo'>
-            <p className='remainTimes'>
+            <div className='remainTimes'>
               您还剩余
               {singleLottery[0]?.remain_times
                 ? singleLottery[0]?.remain_times
                 : '?'}
               次抽奖机会
-            </p>
+            </div>
             <img
               className='prize'
               src='http://dev.epub360.com/staticfs2/diazo/images/lottery/myPrize.png'
@@ -190,7 +194,7 @@ const LotteryPageEditor = ({
               src='http://dev.epub360.com/staticfs2/diazo/images/lottery/rule.png'
             />
           </div>
-          <p className='award'>恭喜小李抽中一等奖 {getNow()}</p>
+          <div className='award'>恭喜小李抽中一等奖 {getNow()}</div>
         </div>
       </div>
     )
