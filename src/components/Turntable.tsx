@@ -88,7 +88,7 @@ const Turntable = ({
     queryUserInfo(queryUserInfoUrl).then((res: any) => {
       console.log(res, 'userInfo')
       if (
-        res.data.data.results.length === 0 &&
+        res.data.data.results[0].user_id === null &&
         singleLottery[0]?.need_user_info
       ) {
         setIsModalShow(true)
@@ -137,11 +137,11 @@ const Turntable = ({
         if (res.status === 'success') {
           setTimeout(() => {
             Modal.info({
-              title: res.prize.objective.title,
+              title: res.prize.objective.ranking,
               content: (
                 <div>
                   <hr />
-                  {res.prize.objective.description}
+                  奖项名:{res.prize.objective.title}
                 </div>
               ),
               onOk() {

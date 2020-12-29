@@ -28,14 +28,6 @@ const LotteryPage = ({
   console.log('抽奖信息:', state?.lotteryInfo)
   console.log('我的奖品信息:', state?.myPrizeList)
 
-  // const [isDataChanged, setIsDataChanged] = useState(false)
-  // useEffect(() => {
-  //   setTimeout(() => {
-  //     setIsDataChanged(true)
-  //     console.log("重新请求")
-  //   }, 10000)
-  // }, [])
-
   const getMyPrize = () => {
     const myPrize = state?.myPrizeList?.length
       ? state?.myPrizeList
