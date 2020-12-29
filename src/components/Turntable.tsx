@@ -132,7 +132,11 @@ const Turntable = ({
   }
 
   const lottery = (prizeList: any, singleLottery: any, prizeUrl: string) => {
-    if (singleLottery[0].remain_times > 0) {
+    // null的时候为不限
+    if (
+      singleLottery[0].remain_times > 0 ||
+      singleLottery[0].remain_times === null
+    ) {
       rotate(prizeList, prizeUrl).then((res: any) => {
         if (res.status === 'success') {
           setTimeout(() => {
