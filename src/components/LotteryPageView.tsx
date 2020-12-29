@@ -1,6 +1,8 @@
 import * as React from 'react'
 import { Provider } from 'react-redux'
+import { ConfigProvider } from 'antd'
 import store from '../components/store/store'
+import zhCN from 'antd/lib/locale/zh_CN'
 import { LotteryPage } from '..'
 
 interface Props {
@@ -24,15 +26,17 @@ const LotteryPageView = ({
 }: Props) => {
   return (
     <Provider store={store}>
-      <LotteryPage
-        isDataChanged={isDataChanged}
-        prizeListUrl={prizeListUrl}
-        prizeUrl={prizeUrl}
-        singleLotteryUrl={singleLotteryUrl}
-        myPrizeListUrl={myPrizeListUrl}
-        addUserInfoUrl={addUserInfoUrl}
-        queryUserInfoUrl={queryUserInfoUrl}
-      />
+      <ConfigProvider locale={zhCN}>
+        <LotteryPage
+          isDataChanged={isDataChanged}
+          prizeListUrl={prizeListUrl}
+          prizeUrl={prizeUrl}
+          singleLotteryUrl={singleLotteryUrl}
+          myPrizeListUrl={myPrizeListUrl}
+          addUserInfoUrl={addUserInfoUrl}
+          queryUserInfoUrl={queryUserInfoUrl}
+        />
+      </ConfigProvider>
     </Provider>
   )
 }

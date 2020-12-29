@@ -100,6 +100,21 @@ const getDate = (days: number) => {
   return moment().add(days, 'days').locale('zh-cn').format('YYYY-MM-DD')
 }
 
+function translateTitle(name: string) {
+  switch (name) {
+    case 'name':
+      return '姓名'
+    case 'email':
+      return '邮箱'
+    case 'phone':
+      return '电话'
+    case 'address':
+      return '地址'
+    default:
+      return 'err'
+  }
+}
+
 export {
   getLineTextList,
   drawPrizeBlock,
@@ -108,5 +123,6 @@ export {
   getPrizeIndex,
   getNow,
   getDate,
-  getToday
+  getToday,
+  translateTitle
 }

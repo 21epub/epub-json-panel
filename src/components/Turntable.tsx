@@ -1,11 +1,12 @@
-import { Modal, Input, Row, Form } from 'antd'
+import { Modal, Input, Row, Form, Col } from 'antd'
 import React, { useRef, useEffect, useState, useMemo } from 'react'
 import { DataClient } from '@21epub/epub-data-client'
 import {
   drawPrizeBlock,
   prizeToAngle,
   getRandomInt,
-  getPrizeIndex
+  getPrizeIndex,
+  translateTitle
 } from './util'
 import { getLotteryResult, addUserInfo, queryUserInfo } from './api'
 import { SingleLotteryProps } from './types'
@@ -86,7 +87,6 @@ const Turntable = ({
       }
     }
     queryUserInfo(queryUserInfoUrl).then((res: any) => {
-      console.log(res, 'userInfo')
       if (
         res.data.data.results[0].user_id === null &&
         singleLottery[0]?.need_user_info
@@ -186,7 +186,7 @@ const Turntable = ({
         name: name
       }
       addUserInfo(addUserInfoUrl, info).then((res: any) => {
-        if (res.data.code === 200) {
+        if (res.status === 201) {
           setConfirmLoading(false)
           setIsModalShow(false)
           form.resetFields()
@@ -206,6 +206,15 @@ const Turntable = ({
   }
 
   if (prizeList?.length && singleLottery?.length) {
+    // let startTime
+    // let endTime
+    // if(singleLottery[0].start_time && singleLottery[0].end_time){
+    //   startTime = new Date(singleLottery[0].start_time)
+    //   endTime = new Date(singleLottery[0].end_time)
+    //   console.log(singleLottery[0].start_time,singleLottery[0].end_time,"时间")
+    //   console.log(startTime,endTime,"时间2")
+    // }
+
     for (let i = 0; i < prizeList.length; i++) {
       if (i % 2 === 0)
         Object.defineProperty(prizeList[i], 'color', { value: '#fef8e6' })
@@ -217,17 +226,19 @@ const Turntable = ({
         <div />
       ) : (
         <Row gutter={[16, 16]}>
-          <Form name='addUserInfo' form={form}>
-            {singleLottery[0]?.info_fields_list.map(
-              (el: any, index: number) => {
-                return (
-                  <Form.Item name={el} key={index}>
-                    <Input placeholder={el} />
-                  </Form.Item>
-                )
-              }
-            )}
-          </Form>
+          <Col span={24}>
+            <Form name='addUserInfo' form={form}>
+              {singleLottery[0]?.info_fields_list.map(
+                (el: any, index: number) => {
+                  return (
+                    <Form.Item name={el} key={index}>
+                      <Input placeholder={translateTitle(el)} />
+                    </Form.Item>
+                  )
+                }
+              )}
+            </Form>
+          </Col>
         </Row>
       )
     return (
