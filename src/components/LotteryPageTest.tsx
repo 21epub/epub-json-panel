@@ -2,7 +2,7 @@ import React, { useEffect, useMemo } from 'react'
 import styles from './index.module.less'
 import { useDispatch, useSelector } from 'react-redux'
 import { DataClient } from '@21epub/epub-data-client'
-import { SingleLotteryProps } from './types'
+import { SingleLotteryProps, UserInfo } from './types'
 import ActivityTime from './activityInfo/ActivityTime'
 import RemainTime from './activityInfo/RemainTime'
 import MyPrizeButton from './activityInfo/MyPrizeButton'
@@ -55,7 +55,7 @@ const LotteryPageTest = ({
   }, [winnersUrl])
 
   const userInfoClient = useMemo(() => {
-    const client = new DataClient(queryUserInfoUrl)
+    const client = new DataClient<UserInfo>(queryUserInfoUrl)
     return client
   }, [queryUserInfoUrl])
 

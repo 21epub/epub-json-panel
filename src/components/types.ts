@@ -13,6 +13,7 @@ interface SinglePrizeProps {
   initiator_name: string
   initiator_avatar: string
   created: string
+  received: 0 | 1
   objective: ObjectiveProps
 }
 
@@ -36,5 +37,12 @@ interface SingleLotteryProps {
   show_contact_info: boolean
   contact_info: any
 }
+
+interface UserInfo {
+  id: string
+  user_id: string | null
+}
+
+interface Prize {}
 /* eslint-enable */
-export { SinglePrizeProps, SingleLotteryProps }
+export { SinglePrizeProps, SingleLotteryProps, UserInfo }

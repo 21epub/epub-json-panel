@@ -3,6 +3,7 @@ import { Button, Col, Row } from 'antd'
 import Modal from 'antd/lib/modal/Modal'
 import React, { useMemo, useState, useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
+import { SinglePrizeProps } from '../types'
 import styles from './index.module.less'
 
 interface Props {
@@ -18,7 +19,7 @@ const MyPrizeButton = ({ myPrizeListUrl, isDataChange }: Props) => {
   const [content, setContent] = useState(<div key='noPrize'>暂无奖品</div>)
 
   const myPrizeListClient = useMemo(() => {
-    const client = new DataClient(myPrizeListUrl)
+    const client = new DataClient<SinglePrizeProps>(myPrizeListUrl)
     return client
   }, [myPrizeListUrl])
 
