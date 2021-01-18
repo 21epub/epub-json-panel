@@ -7,7 +7,7 @@ interface Props {
   isShow: boolean
 }
 
-const RollingList = ({ winnerList, isShow }: Props) => {
+const RollingList = ({ winnerList, isShow = true }: Props) => {
   // const [content,setContent] =useState(`恭喜小李抽中一等奖 ${getNow()}`)
   console.log(winnerList)
   const data = `恭喜小李抽中一等奖 ${getNow()}`

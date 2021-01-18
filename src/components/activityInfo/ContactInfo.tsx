@@ -6,7 +6,7 @@ interface Props {
   isShow: boolean
 }
 
-const ContactInfo = ({ contactInfo, isShow }: Props) => {
+const ContactInfo = ({ contactInfo, isShow = true }: Props) => {
   if (isShow) {
     return (
       <div className={styles.contactInfo}>

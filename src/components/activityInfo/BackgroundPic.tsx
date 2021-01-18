@@ -6,7 +6,7 @@ interface Props {
   isShow: boolean
 }
 
-const BackgroundPic = ({ url, isShow }: Props) => {
+const BackgroundPic = ({ url, isShow = true }: Props) => {
   return (
     <div className={styles.bgImg}>
       {isShow ? (
