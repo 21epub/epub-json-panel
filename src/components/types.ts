@@ -28,9 +28,13 @@ interface SingleLotteryProps {
   total_draw_num_each_one: number
   can_draw_num_everyday: number
   need_user_info: true
-  picture: string
+  _picture: any
   rules: null
   remain_times: number
+  show_background_image: boolean
+  show_rolling_list: boolean
+  show_contact_info: boolean
+  contact_info: any
 }
 /* eslint-enable */
 export { SinglePrizeProps, SingleLotteryProps }

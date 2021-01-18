@@ -52,7 +52,7 @@ function drawPrizeBlock(
       120 + Math.sin(startRadian + RadianGap / 2) * 120
     )
     context.rotate(startRadian + RadianGap / 2 + Math.PI / 2)
-    getLineTextList(context, awards[i].title, 70).forEach((line, index) => {
+    getLineTextList(context, awards[i].ranking, 70).forEach((line, index) => {
       let indexLocal = index
       context.fillText(
         line,
@@ -68,11 +68,12 @@ function drawPrizeBlock(
 }
 
 const prizeToAngle = (prizeIndex: number, prizeLength: number) => {
-  // prizeIndex 从0开始
+  // prizeIndex 从0开始 算出奖品min~max的范围
   const min =
     (3 * Math.PI) / 2 - ((2 * Math.PI) / prizeLength) * (prizeIndex + 1)
   const max = (3 * Math.PI) / 2 - ((2 * Math.PI) / prizeLength) * prizeIndex
-  let target = Math.random() * (max - min) + min
+
+  let target = Math.random() * (max - min) + min // [min,max)
   if (target === min) target = target + 0.0001 // 如果为边界值则加上0.0001
   return target
 }

@@ -1,9 +1,9 @@
-import * as React from 'react'
+import React, { useEffect, useMemo } from 'react'
 import styles from './index.module.less'
 import TurntableEditor from './editor/TurntableEditor'
 import { getNow, getDate, getToday } from './util'
 import { DataClient } from '@21epub/epub-data-client'
-import { useEffect, useMemo } from 'react'
+
 import { SingleLotteryProps } from './types'
 import { Spin } from 'antd'
 // import { useSelector } from 'react-redux'
@@ -19,11 +19,13 @@ const LotteryPageEditor = ({
   prizeListUrl,
   singleLotteryUrl
 }: Props) => {
+  // 奖品list
   const prizeListClient = useMemo(() => {
     const client = new DataClient(prizeListUrl)
     return client
   }, [prizeListUrl])
 
+  // 抽奖信息
   const singleLotteryClient = useMemo(() => {
     const client = new DataClient<SingleLotteryProps>(singleLotteryUrl)
     return client
@@ -32,6 +34,7 @@ const LotteryPageEditor = ({
   useEffect(() => {
     prizeListClient.getAll()
     singleLotteryClient.getAll()
+    // isDataChanged 监听变化重新发送请求拉取新数据
   }, [prizeListUrl, singleLotteryUrl, isDataChanged])
 
   const prizeList = prizeListClient.useData()
@@ -92,6 +95,7 @@ const LotteryPageEditor = ({
       </div>
     )
   } else if (prizeList?.length === 0) {
+    // 没有奖品时定义初始值
     const prizeList = [
       {
         remain_nums: 5,

@@ -36,26 +36,28 @@ const Turntable = ({
 }: Props) => {
   const dispatch = useDispatch()
 
-  const canvasRef = useRef<HTMLCanvasElement>(null)
+  const canvasRef = useRef<HTMLCanvasElement>(null) // 获取canvas元素
   const [ctx, setCtx] = useState<CanvasRenderingContext2D | null>(null)
-  const [startRadian, setStartRadian] = useState(0)
+  const [startRadian, setStartRadian] = useState(0) // 定义圆的角度
   const [renew, setRenew] = useState(false)
   const [isModalShow, setIsModalShow] = useState(false)
-  const [form] = Form.useForm()
-  // const [lotteryResult, setLotteryResult] = useState(false)
+  const [form] = Form.useForm() // 用户信息
   const [confirmLoading, setConfirmLoading] = useState(false)
   const [tips, setTips] = useState(<div />) // 填写用户信息时的提示信息
 
+  // 奖品list
   const prizeListClient = useMemo(() => {
     const client = new DataClient(prizeListUrl)
     return client
   }, [prizeListUrl])
 
+  // 抽奖信息
   const singleLotteryClient = useMemo(() => {
     const client = new DataClient<SingleLotteryProps>(singleLotteryUrl)
     return client
   }, [singleLotteryUrl])
 
+  // 我的奖品list
   const myPrizeListClient = useMemo(() => {
     const client = new DataClient(myPrizeListUrl)
     return client
@@ -65,37 +67,45 @@ const Turntable = ({
     prizeListClient.getAll()
     singleLotteryClient.getAll()
     myPrizeListClient.getAll()
+    // renew 重新抽奖时更新这个值，从而重新获取奖品list、抽奖信息（剩余抽奖次数）、我的奖品信息
   }, [renew, isDataChanged, myPrizeListUrl, singleLotteryUrl, prizeListUrl])
 
   const prizeList = prizeListClient.useData()
   const singleLottery = singleLotteryClient.useData()
   const myPrizeList = myPrizeListClient.useData()
 
+  // 监听到更新抽奖信息后dispatch
   useEffect(() => {
     dispatch({ type: 'ChangeSingleLotteryInfo', value: singleLottery })
   }, [singleLottery])
 
+  // 监听到更新我的奖品后dispatch
   useEffect(() => {
     dispatch({ type: 'ChangeMyPrizeList', value: myPrizeList })
   }, [myPrizeList])
 
+  // 渲染初始抽奖盘
   useEffect(() => {
     if (canvasRef && canvasRef.current) {
+      // 当canvas元素存在时，定义canvas的上下文进行绘制
       setCtx(canvasRef?.current?.getContext('2d'))
       if (ctx && prizeList.length !== 0) {
         drawPrizeBlock(ctx, prizeList, startRadian)
       }
     }
+    // 获取用户list判断用户是否已经填写信息
     queryUserInfo(queryUserInfoUrl).then((res: any) => {
       if (
         res.data.data.results[0].user_id === null &&
         singleLottery[0]?.need_user_info
       ) {
+        // 如果用户未填写信息并且必填为true则显示Modal
         setIsModalShow(true)
       }
     })
   }, [prizeList, singleLottery])
 
+  // 监听startRadian旋转角度，绘制旋转对应度数的抽奖盘
   useEffect(() => {
     if (canvasRef && canvasRef.current) {
       setCtx(canvasRef?.current?.getContext('2d'))
@@ -107,23 +117,37 @@ const Turntable = ({
 
   const rotate = (prizeList: any, prizeUrl: string) => {
     return new Promise((resolve) => {
+      // 抽奖post
       getLotteryResult(prizeUrl).then((res: any) => {
         // console.log("res",res?.data?.data?.results[0])
+
+        // 获取抽奖结果
         const prize = res?.data?.data?.results[0]
+
+        // 获取抽奖结果在奖品list中对应的index
         const prizeIndex = getPrizeIndex(prize, prizeList)
-        const target = prizeToAngle(prizeIndex, prizeList.length) // prizeIndex:prize对应第几个，prizeList.length:prize总数
+
+        // 获取目标角度： prizeIndex:prize对应第几个，prizeList.length:prize总数
+        const target = prizeToAngle(prizeIndex, prizeList.length)
+
+        // 获取随机圈数
         const turns = getRandomInt(5, 15)
+
+        // 将总旋转度数切割为多少份
         const frame = getRandomInt(100, 400)
 
         const result = {
           status: 'success',
-          prize: prize
+          prize: prize // 获得的奖品
         }
 
         for (let i = 1; i <= frame; i += 1) {
+          // target为目标角度， 2 * Math.PI 为一圈 ，获取每份度数的大小
           const interval = (target + 2 * Math.PI * turns) / frame
           setTimeout(() => {
+            // 设定每次相对原点的旋转度数
             setStartRadian(interval * i)
+            // 当到达目标度数时返回结果
             if (i === frame) resolve(result)
           }, 100)
         }
@@ -132,13 +156,16 @@ const Turntable = ({
   }
 
   const lottery = (prizeList: any, singleLottery: any, prizeUrl: string) => {
-    // null的时候为不限
+    // null的时候为不限，还有次数时可以抽奖否则显示抽奖次数用完
     if (
       singleLottery[0].remain_times > 0 ||
       singleLottery[0].remain_times === null
     ) {
+      // prizeList为奖品list,prizeUrl为抽奖url
       rotate(prizeList, prizeUrl).then((res: any) => {
+        // 当promise返回成功时
         if (res.status === 'success') {
+          // 延时1000毫秒弹出获奖结果
           setTimeout(() => {
             Modal.info({
               title: res.prize.objective.ranking,
@@ -189,42 +216,39 @@ const Turntable = ({
         email: email,
         name: name
       }
+      // 添加用户信息
       addUserInfo(addUserInfoUrl, info).then((res: any) => {
         if (res.status === 201) {
           setConfirmLoading(false)
           setIsModalShow(false)
           form.resetFields()
+          // 成功则清除内容
         } else {
           setTips(<p style={{ color: 'red' }}>请求失败，请重新尝试</p>)
           setConfirmLoading(false)
         }
       })
     } else {
+      // 用户信息填写不完整
       setTips(<p style={{ color: 'red' }}>请填写正确的用户信息</p>)
       setConfirmLoading(false)
     }
   }
 
   const handleCancel = () => {
+    // 不允许用户取消
     setTips(<p style={{ color: 'red' }}>请填写正确的用户信息</p>)
   }
 
   if (prizeList?.length && singleLottery?.length) {
-    // let startTime
-    // let endTime
-    // if(singleLottery[0].start_time && singleLottery[0].end_time){
-    //   startTime = new Date(singleLottery[0].start_time)
-    //   endTime = new Date(singleLottery[0].end_time)
-    //   console.log(singleLottery[0].start_time,singleLottery[0].end_time,"时间")
-    //   console.log(startTime,endTime,"时间2")
-    // }
-
+    // 给奖品list定扇形颜色
     for (let i = 0; i < prizeList.length; i++) {
       if (i % 2 === 0)
         Object.defineProperty(prizeList[i], 'color', { value: '#fef8e6' })
       else Object.defineProperty(prizeList[i], 'color', { value: '#fff' })
     }
 
+    // 用户信息填写框，如果不为null则渲染对应内容
     const infoFields =
       singleLottery[0]?.info_fields_list === null ? (
         <div />

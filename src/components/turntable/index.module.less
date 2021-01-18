@@ -1,0 +1,39 @@
+.pointer {
+  :global {
+    .point {
+      width: 60px;
+    }
+  }
+}
+
+.turntableWrap {
+  position: relative;
+
+  :global {
+    .turntablePic {
+      width: 300px;
+      height: 300px;
+    }
+
+    #turnTableCircle {
+      position: absolute;
+      top: 10%;
+      left: 10%;
+      // border-radius: 50%;
+      z-index: 1000;
+      border: 1px solid transparent;
+    }
+
+    .point {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      z-index: 1000;
+      -ms-transform: translateX(-50%, -60%);
+      -moz-transform: translateX(-50%, -60%);
+      -webkit-transform: translateX(-50%, -60%);
+      -o-transform: translateX(-50%, -60%);
+      transform: translate(-50%, -60%);
+    }
+  }
+}

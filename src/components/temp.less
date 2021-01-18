@@ -1,0 +1,75 @@
+.rollList {
+  :global {
+    @keyframes rolling {
+      0% {
+        background-color: red;
+      }
+      50% {
+        background-color: green;
+      }
+      100% {
+        background-color: blue;
+      }
+    }
+    .animation(@animation-name,@animation-duration,@animation-timing-function) {
+      & :local {
+        animation: @arguments;
+      }
+    }
+
+    .rollingContainer {
+      width: 100px;
+      height: 28px;
+      background-color: red;
+      .animation(rolling,5s,infinite);
+    }
+  }
+}
+
+// .rollList{
+//   :global{
+//       overflow:hidden;
+//       width:100px;
+//       height:50px;
+//       border:1px solid #000;
+//       margin:50px auto;
+
+//     .list {
+//       position:relative;
+//       top:0px;
+//       left:0px;
+//       width:100%;
+//       height:100%;
+//       border:1px solid #f00;
+//       list-style:none;
+//       animation:mymove 10s infinite linear;
+//     }
+//     .list li {
+//       width:100px;
+//       height:50px;
+//       border:1px solid white;
+//       background:blue;
+//       float:left;
+//       vertical-align:middle;
+//       text-align:center;
+//       line-height:50px;
+//       color:white;
+//     }
+//       @keyframes mymove {
+//           from {
+//           top:0px;
+//         }
+//         to {
+//           top:-100px;
+//         }
+//       }
+//       @-webkit-keyframes mymove {
+//           from {
+//           top:0px;
+//         }
+//         to {
+//           top:-100px;
+//         }
+//       }
+//   }
+// }

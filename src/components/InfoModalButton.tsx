@@ -7,13 +7,13 @@ import { info } from './InfoModal'
 const InfoModalButton = () => {
   const content = (
     <div>
-      <p>1.规则说明</p>
-      <p>2.规则说明</p>
+      <div>1.规则说明</div>
+      <div>2.规则说明</div>
     </div>
   )
 
   const modalContent = {
-    title: '规则说明',
+    // title: '规则说明',
     content: content
   }
 

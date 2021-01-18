@@ -1,11 +1,11 @@
 import React from 'react'
 import { Story, Meta } from '@storybook/react/types-6-0'
 
-import { PicButton } from '../index'
+import { RollingList } from '../index'
 
 export default {
-  title: '图片按钮',
-  component: PicButton,
+  title: '奖品滚动',
+  component: RollingList,
   argTypes: {
     remainTimes: {
       name: '剩余次数',
@@ -14,11 +14,6 @@ export default {
   }
 } as Meta
 
-const Template: Story<{ remainTimes: number }> = (args) => (
-  <PicButton {...args} />
-)
+const Template: Story = (args) => <RollingList {...args} />
 
 export const Yapi = Template.bind({})
-Yapi.args = {
-  remainTimes: 5
-}
