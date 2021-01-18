@@ -46,14 +46,14 @@ const LotteryPageTestEditor = ({
     const startTime = singleLottery[0].start_time
     const endTime = singleLottery[0].end_time
     const remainTime = singleLottery[0].remain_times
-    const headUrl = singleLottery[0]._picture.head
-    const backgroundUrl = singleLottery[0]._picture.background
-    const pointerUrl = singleLottery[0]._picture.pointer
-    const turntableUrl = singleLottery[0]._picture.turntable
-    const isBgShow = singleLottery[0].show_background_image
-    const isContactInfoShow = singleLottery[0].show_contact_info
-    const isWinnerListShow = singleLottery[0].show_rolling_list
-    const contactInfo = singleLottery[0].contact_info
+    const headUrl = singleLottery[0]?._picture?.head
+    const backgroundUrl = singleLottery[0]?._picture?.background
+    const pointerUrl = singleLottery[0]?._picture?.pointer
+    const turntableUrl = singleLottery[0]?._picture?.turntable
+    const isBgShow = singleLottery[0]?.show_background_image
+    const isContactInfoShow = singleLottery[0]?.show_contact_info
+    const isWinnerListShow = singleLottery[0]?.show_rolling_list
+    const contactInfo = singleLottery[0]?.contact_info
 
     return (
       <div className={styles.lotteryPageWrap}>
