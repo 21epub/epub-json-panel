@@ -38,7 +38,7 @@ const LotteryPageTest = ({
 }: Props) => {
   const state = useSelector((state: any) => state) // 获取保存的状态
   const dispatch = useDispatch()
-
+  console.log(state.isRotate, 'isRotate')
   const prizeListClient = useMemo(() => {
     const client = new DataClient(prizeListUrl)
     return client

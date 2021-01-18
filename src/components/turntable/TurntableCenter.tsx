@@ -21,7 +21,7 @@ const TurntableCenter = ({ prizeList, isRotate, prize }: Props) => {
   const [startRadian, setStartRadian] = useState(0) // 定义圆的角度
   const dispatch = useDispatch()
   const state = useSelector((state: any) => state) // 获取保存的状态
-
+  console.log(isRotate, 'TurntableCenter')
   // 渲染抽奖盘
   useEffect(() => {
     if (canvasRef?.current) {
