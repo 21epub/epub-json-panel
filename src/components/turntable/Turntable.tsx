@@ -11,8 +11,6 @@ interface Props {
   singleLottery: any
   prizeUrl: string
   userInfo: any
-  isRotate: boolean
-  prize: any
   isClickable: boolean
 }
 
@@ -23,18 +21,12 @@ const Turntable = ({
   userInfo,
   singleLottery,
   prizeUrl,
-  isRotate,
-  prize,
   isClickable
 }: Props) => {
   return (
     <div className={styles.turntableWrap}>
       <TurntableBackground url={turntableUrl} />
-      <TurntableCenter
-        prizeList={prizeList}
-        isRotate={isRotate}
-        prize={prize}
-      />
+      <TurntableCenter prizeList={prizeList} />
       <Pointer
         url={pointerUrl}
         isClickable={isClickable}
@@ -42,7 +34,6 @@ const Turntable = ({
         singleLottery={singleLottery}
         prizeUrl={prizeUrl}
         userInfo={userInfo}
-        isRotate={isRotate}
       />
     </div>
   )

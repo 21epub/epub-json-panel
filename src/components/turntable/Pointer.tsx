@@ -1,6 +1,7 @@
 import { Modal } from 'antd'
 import React from 'react'
 import { useDispatch } from 'react-redux'
+import { AppBus } from '../event-bus/event'
 import { getLotteryResult } from '../api'
 import styles from './index.module.less'
 
@@ -11,7 +12,6 @@ interface Props {
   singleLottery: any
   prizeUrl: string
   userInfo: any
-  isRotate: boolean
 }
 
 const Pointer = ({
@@ -19,17 +19,11 @@ const Pointer = ({
   isClickable,
   singleLottery,
   prizeUrl,
-  userInfo,
-  isRotate
+  userInfo
 }: Props) => {
   const dispatch = useDispatch()
 
-  const lottery = (
-    singleLottery: any,
-    prizeUrl: string,
-    userInfo: any,
-    isRotate: boolean
-  ) => {
+  const lottery = (singleLottery: any, prizeUrl: string, userInfo: any) => {
     // console.log(userInfo[0].user_id,singleLottery[0].need_user_info)
     // 先判断是否需要填写信息
     if (userInfo[0].user_id === null && singleLottery[0].need_user_info) {
@@ -43,11 +37,9 @@ const Pointer = ({
       getLotteryResult(prizeUrl).then((res: any) => {
         // 获取抽奖结果
         const prize = res?.data?.data?.results[0]
-        dispatch({ type: 'prize', value: prize })
 
         // 通知旋转
-        if (isRotate) dispatch({ type: 'isRotate', value: false })
-        else dispatch({ type: 'isRotate', value: true })
+        AppBus.subject('Rotate$').next(prize)
       })
     } else {
       dispatch({ type: 'isClickable', value: false })
@@ -75,7 +67,7 @@ const Pointer = ({
               url ||
               'http://dev.epub360.com/staticfs2/diazo/images/lottery/point.png'
             }
-            onClick={() => lottery(singleLottery, prizeUrl, userInfo, isRotate)}
+            onClick={() => lottery(singleLottery, prizeUrl, userInfo)}
           />
         </a>
       ) : (

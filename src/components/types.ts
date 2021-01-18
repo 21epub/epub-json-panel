@@ -43,6 +43,5 @@ interface UserInfo {
   user_id: string | null
 }
 
-interface Prize {}
 /* eslint-enable */
 export { SinglePrizeProps, SingleLotteryProps, UserInfo }

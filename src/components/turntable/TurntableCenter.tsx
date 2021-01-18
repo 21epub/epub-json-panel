@@ -1,6 +1,7 @@
 import { Modal } from 'antd'
-import React, { useEffect, useRef, useState } from 'react'
+import React, { useCallback, useEffect, useRef, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
+import { AppBus } from '../event-bus/event'
 import {
   drawPrizeBlock,
   getPrizeIndex,
@@ -11,17 +12,15 @@ import styles from './index.module.less'
 
 interface Props {
   prizeList: any
-  isRotate: boolean
-  prize: any
 }
 
-const TurntableCenter = ({ prizeList, isRotate, prize }: Props) => {
+const TurntableCenter = ({ prizeList }: Props) => {
   const canvasRef = useRef<HTMLCanvasElement>(null)
   const [ctx, setCtx] = useState<CanvasRenderingContext2D | null>(null)
   const [startRadian, setStartRadian] = useState(0) // 定义圆的角度
   const dispatch = useDispatch()
   const state = useSelector((state: any) => state) // 获取保存的状态
-  console.log(isRotate, 'TurntableCenter')
+
   // 渲染抽奖盘
   useEffect(() => {
     if (canvasRef?.current) {
@@ -32,8 +31,7 @@ const TurntableCenter = ({ prizeList, isRotate, prize }: Props) => {
     }
   }, [ctx, prizeList, startRadian])
 
-  // 监听抽奖动作
-  useEffect(() => {
+  const doRotate = useCallback((prize) => {
     if (prize) {
       rotate(prize).then((res: any) => {
         // 当promise返回成功时
@@ -62,7 +60,17 @@ const TurntableCenter = ({ prizeList, isRotate, prize }: Props) => {
         }
       })
     }
-  }, [isRotate])
+  }, [])
+
+  // 监听抽奖动作
+  useEffect(() => {
+    const subscription = AppBus.subject('Rotate$').subscribe((prize) => {
+      doRotate(prize)
+    })
+    return () => {
+      subscription.unsubscribe()
+    }
+  }, [])
 
   // 旋转函数
   const rotate = (prize: any) => {
