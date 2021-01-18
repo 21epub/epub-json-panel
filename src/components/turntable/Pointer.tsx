@@ -38,9 +38,7 @@ const Pointer = ({
       singleLottery[0].remain_times > 0 ||
       singleLottery[0].remain_times === null
     ) {
-      dispatch({ type: 'isClickable', value: false })
       // 抽奖
-      console.log('抽奖')
       getLotteryResult(prizeUrl).then((res: any) => {
         // 获取抽奖结果
         const prize = res?.data?.data?.results[0]
