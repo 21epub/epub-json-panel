@@ -29,7 +29,7 @@ interface SingleLotteryProps {
   total_draw_num_each_one: number
   can_draw_num_everyday: number
   need_user_info: true
-  _picture: any
+  picture: any
   rules: null
   remain_times: number
   show_background_image: boolean

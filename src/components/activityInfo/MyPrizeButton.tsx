@@ -8,12 +8,12 @@ import styles from './index.module.less'
 
 interface Props {
   myPrizeListUrl: string
-  isDataChange: boolean
 }
 
-const MyPrizeButton = ({ myPrizeListUrl, isDataChange }: Props) => {
+const MyPrizeButton = ({ myPrizeListUrl }: Props) => {
   const dispatch = useDispatch()
   const state = useSelector((state: any) => state) // 获取保存的状态
+  const [renew, setRenew] = useState(true)
 
   const [isModalShow, setIsModalShow] = useState(false)
   const [content, setContent] = useState(<div key='noPrize'>暂无奖品</div>)
@@ -25,11 +25,14 @@ const MyPrizeButton = ({ myPrizeListUrl, isDataChange }: Props) => {
 
   useEffect(() => {
     myPrizeListClient.getAll()
-  }, [myPrizeListUrl, isDataChange])
+  }, [myPrizeListUrl, renew])
 
   const myPrizeList = myPrizeListClient.useData()
 
   const getMyPrize = () => {
+    if (renew) setRenew(false)
+    else setRenew(true)
+
     if (myPrizeList?.length) {
       const prize = (
         <div key='myPrizeList'>

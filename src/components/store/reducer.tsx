@@ -12,14 +12,14 @@ const reducer = (state: any, action: any) => {
       return Object.assign({}, state, {
         IsUserInfoModalShow: action.value
       })
-    case 'prize': // 抽奖结果
-      return Object.assign({}, state, {
-        prize: action.value
-      })
-    case 'isRotate': // 控制旋转
-      return Object.assign({}, state, {
-        isRotate: action.value
-      })
+    // case 'prize': // 抽奖结果
+    //   return Object.assign({}, state, {
+    //     prize: action.value
+    //   })
+    // case 'isRotate': // 控制旋转
+    //   return Object.assign({}, state, {
+    //     isRotate: action.value
+    //   })
     case 'stateChange': // 控制重新获取信息
       return Object.assign({}, state, {
         stateChange: action.value

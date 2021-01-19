@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo } from 'react'
+import React, { useCallback, useEffect, useMemo } from 'react'
 import styles from './index.module.less'
 import { useDispatch, useSelector } from 'react-redux'
 import { DataClient } from '@21epub/epub-data-client'
@@ -14,6 +14,7 @@ import Turntable from './turntable/Turntable'
 import UserInfoModal from './activityInfo/UserInfoModal'
 import RollingList from './activityInfo/RollingList'
 import ActivityTimeModal from './activityInfo/ActivityTimeModal'
+import { AppBus } from './event-bus/event'
 
 interface Props {
   isDataChanged: boolean
@@ -38,7 +39,7 @@ const LotteryPageTest = ({
 }: Props) => {
   const state = useSelector((state: any) => state) // 获取保存的状态
   const dispatch = useDispatch()
-  console.log(state.isRotate, 'isRotate')
+
   const prizeListClient = useMemo(() => {
     const client = new DataClient(prizeListUrl)
     return client
@@ -64,14 +65,24 @@ const LotteryPageTest = ({
     singleLotteryClient.getAll()
     winnersClient.getAll()
     userInfoClient.getAll()
-  }, [
-    state.stateChange,
-    isDataChanged,
-    prizeListUrl,
-    singleLotteryUrl,
-    winnersUrl,
-    queryUserInfoUrl
-  ])
+  }, [isDataChanged])
+
+  const getData = useCallback(() => {
+    prizeListClient.getAll()
+    singleLotteryClient.getAll()
+    winnersClient.getAll()
+    userInfoClient.getAll()
+  }, [])
+
+  // 监听抽奖动作
+  useEffect(() => {
+    const subscription = AppBus.subject('RequestAgain$').subscribe(() => {
+      getData()
+    })
+    return () => {
+      subscription.unsubscribe()
+    }
+  }, [])
 
   const prizeList = prizeListClient.useData()
   const singleLottery = singleLotteryClient.useData()
@@ -91,10 +102,10 @@ const LotteryPageTest = ({
     const endTime = singleLottery[0].end_time
     const remainTime = singleLottery[0].remain_times
     const rules = singleLottery[0].rules
-    const headUrl = singleLottery[0]?._picture?.head
-    const backgroundUrl = singleLottery[0]?._picture?.background
-    const pointerUrl = singleLottery[0]?._picture?.pointer
-    const turntableUrl = singleLottery[0]?._picture?.turntable
+    const headUrl = singleLottery[0]?.picture?.head
+    const backgroundUrl = singleLottery[0]?.picture?.background
+    const pointerUrl = singleLottery[0]?.picture?.pointer
+    const turntableUrl = singleLottery[0]?.picture?.turntable
     const isBgShow = singleLottery[0]?.show_background_image
     const isContactInfoShow = singleLottery[0]?.show_contact_info
     const isWinnerListShow = singleLottery[0]?.show_rolling_list
@@ -116,10 +127,7 @@ const LotteryPageTest = ({
           />
         </div>
         <RemainTime remainTimes={remainTime} />
-        <MyPrizeButton
-          myPrizeListUrl={myPrizeListUrl}
-          isDataChange={state.stateChange}
-        />
+        <MyPrizeButton myPrizeListUrl={myPrizeListUrl} />
         <RulesButton rules={rules} isButtonClickable />
         <RollingList winnerList={winnerList} isShow={isWinnerListShow} />
         <ContactInfo contactInfo={contactInfo} isShow={isContactInfoShow} />

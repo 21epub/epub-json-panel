@@ -24,7 +24,6 @@ const Pointer = ({
   const dispatch = useDispatch()
 
   const lottery = (singleLottery: any, prizeUrl: string, userInfo: any) => {
-    // console.log(userInfo[0].user_id,singleLottery[0].need_user_info)
     // 先判断是否需要填写信息
     if (userInfo[0].user_id === null && singleLottery[0].need_user_info) {
       dispatch({ type: 'IsUserInfoModalShow', value: true })

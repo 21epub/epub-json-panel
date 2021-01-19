@@ -36,7 +36,7 @@ const LotteryPageTestEditor = ({
   useEffect(() => {
     prizeListClient.getAll()
     singleLotteryClient.getAll()
-  }, [isDataChanged, prizeListUrl, singleLotteryUrl])
+  }, [isDataChanged])
 
   const prizeList = prizeListClient.useData()
   const singleLottery = singleLotteryClient.useData()
@@ -46,10 +46,10 @@ const LotteryPageTestEditor = ({
     const startTime = singleLottery[0].start_time
     const endTime = singleLottery[0].end_time
     const remainTime = singleLottery[0].remain_times
-    const headUrl = singleLottery[0]?._picture?.head
-    const backgroundUrl = singleLottery[0]?._picture?.background
-    const pointerUrl = singleLottery[0]?._picture?.pointer
-    const turntableUrl = singleLottery[0]?._picture?.turntable
+    const headUrl = singleLottery[0]?.picture?.head
+    const backgroundUrl = singleLottery[0]?.picture?.background
+    const pointerUrl = singleLottery[0]?.picture?.pointer
+    const turntableUrl = singleLottery[0]?.picture?.turntable
     const isBgShow = singleLottery[0]?.show_background_image
     const isContactInfoShow = singleLottery[0]?.show_contact_info
     const isWinnerListShow = singleLottery[0]?.show_rolling_list
