@@ -79,16 +79,17 @@ const LotteryPageTest = ({
   useEffect(() => {
     const subscription = AppBus.subject('RequestAgain$').subscribe(() => {
       getData()
-      subscription.unsubscribe()
     })
-    // return () => {
-    //   subscription.unsubscribe()
-    // }
+    return () => {
+      subscription.unsubscribe()
+    }
   }, [])
 
   const prizeList = prizeListClient.useData()
   const singleLottery = singleLotteryClient.useData()
   const userInfo = userInfoClient.useData()
+
+  console.log('prizeList', prizeList)
 
   useEffect(() => {
     if (singleLottery?.length && userInfo?.length) {

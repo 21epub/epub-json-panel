@@ -26,15 +26,19 @@ const Turntable = ({
   return (
     <div className={styles.turntableWrap}>
       <TurntableBackground url={turntableUrl} />
-      <TurntableCenter prizeList={prizeList} />
-      <Pointer
-        url={pointerUrl}
-        isClickable={isClickable}
-        prizeList={prizeList}
-        singleLottery={singleLottery}
-        prizeUrl={prizeUrl}
-        userInfo={userInfo}
-      />
+      {prizeList?.length && (
+        <div>
+          <TurntableCenter prizeList={prizeList} />
+          <Pointer
+            url={pointerUrl}
+            isClickable={isClickable}
+            prizeList={prizeList}
+            singleLottery={singleLottery}
+            prizeUrl={prizeUrl}
+            userInfo={userInfo}
+          />
+        </div>
+      )}
     </div>
   )
 }

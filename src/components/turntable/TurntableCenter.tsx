@@ -31,8 +31,9 @@ const TurntableCenter = ({ prizeList }: Props) => {
   }, [ctx, prizeList, startRadian])
 
   const doRotate = useCallback((prize) => {
-    if (prize) {
+    if (prize && prizeList?.length) {
       rotate(prize).then((res: any) => {
+        console.log('res.status', res.status)
         // 当promise返回成功时
         if (res.status === 'success') {
           // 延时1000毫秒弹出获奖结果
@@ -64,11 +65,10 @@ const TurntableCenter = ({ prizeList }: Props) => {
   useEffect(() => {
     const subscription = AppBus.subject('Rotate$').subscribe((prize) => {
       doRotate(prize)
-      subscription.unsubscribe()
     })
-    // return () => {
-    //   subscription.unsubscribe()
-    // }
+    return () => {
+      subscription.unsubscribe()
+    }
   }, [])
 
   // 旋转函数
