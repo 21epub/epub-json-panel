@@ -89,8 +89,6 @@ const LotteryPageTest = ({
   const singleLottery = singleLotteryClient.useData()
   const userInfo = userInfoClient.useData()
 
-  console.log('prizeList', prizeList)
-
   useEffect(() => {
     if (singleLottery?.length && userInfo?.length) {
       if (userInfo[0].user_id === null && singleLottery[0].need_user_info) {
