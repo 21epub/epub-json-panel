@@ -1,5 +1,5 @@
 import React from 'react'
-import LotteryPageTest from './LotteryPageTest'
+import TurntablePage from './TurntablePage'
 import { Provider } from 'react-redux'
 import store from './store/store'
 
@@ -14,7 +14,7 @@ interface Props {
   winnersUrl: string
 }
 
-const LotteryPageTestView = ({
+const TurntablePageView = ({
   isDataChanged,
   prizeListUrl,
   prizeUrl,
@@ -26,7 +26,7 @@ const LotteryPageTestView = ({
 }: Props) => {
   return (
     <Provider store={store}>
-      <LotteryPageTest
+      <TurntablePage
         prizeListUrl={prizeListUrl}
         singleLotteryUrl={singleLotteryUrl}
         prizeUrl={prizeUrl}
@@ -40,4 +40,4 @@ const LotteryPageTestView = ({
   )
 }
 
-export default LotteryPageTestView
+export default TurntablePageView

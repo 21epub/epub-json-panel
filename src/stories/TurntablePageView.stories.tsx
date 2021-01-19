@@ -6,14 +6,13 @@ import {
   prizeUrl,
   myPrizeListUrl,
   addUserInfoUrl,
-  queryUserInfoUrl
+  queryUserInfoUrl,
+  winnersUrl
 } from '../components/apiUrl'
-import { LotteryPage } from '../index'
-import { Provider } from 'react-redux'
-import store from '../components/store/store'
+import { TurntablePageView } from '../index'
 export default {
-  title: '抽奖页',
-  component: LotteryPage,
+  title: '大转盘播放器',
+  component: TurntablePageView,
   argTypes: {
     remainTimes: {
       name: 'test',
@@ -30,11 +29,8 @@ const Template: Story<{
   isDataChanged: boolean
   addUserInfoUrl: string
   queryUserInfoUrl: string
-}> = (args) => (
-  <Provider store={store}>
-    <LotteryPage {...args} />
-  </Provider>
-)
+  winnersUrl: string
+}> = (args) => <TurntablePageView {...args} />
 
 export const Yapi = Template.bind({})
 Yapi.args = {
@@ -44,5 +40,6 @@ Yapi.args = {
   myPrizeListUrl: myPrizeListUrl,
   isDataChanged: true,
   addUserInfoUrl: addUserInfoUrl,
-  queryUserInfoUrl: queryUserInfoUrl
+  queryUserInfoUrl: queryUserInfoUrl,
+  winnersUrl: winnersUrl
 }

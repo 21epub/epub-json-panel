@@ -8,13 +8,12 @@ import {
   queryUserInfoUrl,
   winnersUrl
 } from '../components/apiUrl'
-// import LotteryPageTestEditor from './LotteryPageTestEditor'
-import LotteryPageTestView from './LotteryPageTestView'
+import TurntablePageView from './TurntablePageView'
 
 const Test = () => {
   return (
     <div>
-      <LotteryPageTestView
+      <TurntablePageView
         prizeListUrl={prizeListUrl}
         singleLotteryUrl={singleLotteryUrl}
         prizeUrl={prizeUrl}

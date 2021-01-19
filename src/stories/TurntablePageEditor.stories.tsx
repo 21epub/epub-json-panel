@@ -1,16 +1,11 @@
 import React from 'react'
 import { Story, Meta } from '@storybook/react/types-6-0'
-import {
-  prizeListUrl,
-  singleLotteryUrl,
-  prizeUrl,
-  myPrizeListUrl
-} from '../components/apiUrl'
-import { LotteryPageEditor } from '../index'
+import { prizeListUrl, singleLotteryUrl } from '../components/apiUrl'
+import { TurntablePageEditor } from '../index'
 
 export default {
-  title: '抽奖页编辑器',
-  component: LotteryPageEditor,
+  title: '大转盘编辑器',
+  component: TurntablePageEditor,
   argTypes: {
     remainTimes: {
       name: 'test',
@@ -22,16 +17,12 @@ export default {
 const Template: Story<{
   prizeListUrl: string
   singleLotteryUrl: string
-  prizeUrl: string
-  myPrizeListUrl: string
   isDataChanged: boolean
-}> = (args) => <LotteryPageEditor {...args} />
+}> = (args) => <TurntablePageEditor {...args} />
 
 export const Yapi = Template.bind({})
 Yapi.args = {
   prizeListUrl: prizeListUrl,
   singleLotteryUrl: singleLotteryUrl,
-  prizeUrl: prizeUrl,
-  myPrizeListUrl: myPrizeListUrl,
   isDataChanged: true
 }
