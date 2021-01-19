@@ -27,7 +27,7 @@ interface Props {
   winnersUrl: string
 }
 
-const LotteryPageTest = ({
+const TurntablePage = ({
   isDataChanged,
   prizeListUrl,
   prizeUrl,
@@ -145,4 +145,4 @@ const LotteryPageTest = ({
   }
 }
 
-export default LotteryPageTest
+export default TurntablePage

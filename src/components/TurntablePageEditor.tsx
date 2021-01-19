@@ -18,7 +18,7 @@ interface Props {
   singleLotteryUrl: string
 }
 
-const LotteryPageTestEditor = ({
+const TurntablePageEditor = ({
   isDataChanged,
   prizeListUrl,
   singleLotteryUrl
@@ -79,4 +79,4 @@ const LotteryPageTestEditor = ({
   }
 }
 
-export default LotteryPageTestEditor
+export default TurntablePageEditor
