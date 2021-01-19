@@ -60,6 +60,7 @@ const LotteryPageTest = ({
     return client
   }, [queryUserInfoUrl])
 
+  // 初始，以及预留监听外部修改状态
   useEffect(() => {
     prizeListClient.getAll()
     singleLotteryClient.getAll()
@@ -74,14 +75,15 @@ const LotteryPageTest = ({
     userInfoClient.getAll()
   }, [])
 
-  // 监听抽奖动作
+  // 监听是否重新获取数据
   useEffect(() => {
     const subscription = AppBus.subject('RequestAgain$').subscribe(() => {
       getData()
-    })
-    return () => {
       subscription.unsubscribe()
-    }
+    })
+    // return () => {
+    //   subscription.unsubscribe()
+    // }
   }, [])
 
   const prizeList = prizeListClient.useData()

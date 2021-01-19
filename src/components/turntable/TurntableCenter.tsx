@@ -64,10 +64,11 @@ const TurntableCenter = ({ prizeList }: Props) => {
   useEffect(() => {
     const subscription = AppBus.subject('Rotate$').subscribe((prize) => {
       doRotate(prize)
-    })
-    return () => {
       subscription.unsubscribe()
-    }
+    })
+    // return () => {
+    //   subscription.unsubscribe()
+    // }
   }, [])
 
   // 旋转函数
