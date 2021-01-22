@@ -60,11 +60,13 @@
   "dependencies": {
     "@21epub/epub-data-client": "^0.3.0",
     "@21epub/rxjs-event-bus": "^0.1.1",
+    "@types/styled-components": "^4.4.1",
     "axios": "^0.21.0",
     "moment": "^2.29.1",
     "qs": "^6.9.4",
     "react-redux": "^7.2.2",
-    "redux": "^4.0.5"
+    "redux": "^4.0.5",
+    "styled-components": "^4.4.1"
   },
   "devDependencies": {
     "@babel/core": "7.11.6",

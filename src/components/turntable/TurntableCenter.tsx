@@ -1,6 +1,6 @@
 import { Modal } from 'antd'
 import React, { useCallback, useEffect, useRef, useState } from 'react'
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { AppBus } from '../event-bus/event'
 import {
   drawPrizeBlock,
@@ -19,6 +19,7 @@ const TurntableCenter = ({ prizeList }: Props) => {
   const [ctx, setCtx] = useState<CanvasRenderingContext2D | null>(null)
   const [startRadian, setStartRadian] = useState(0) // 定义圆的角度
   const dispatch = useDispatch()
+  const state = useSelector((state: any) => state) // 获取保存的状态
 
   // 渲染抽奖盘
   useEffect(() => {
@@ -33,7 +34,6 @@ const TurntableCenter = ({ prizeList }: Props) => {
   const doRotate = useCallback((prize) => {
     if (prize && prizeList?.length) {
       rotate(prize).then((res: any) => {
-        console.log('res.status', res.status)
         // 当promise返回成功时
         if (res.status === 'success') {
           // 延时1000毫秒弹出获奖结果
@@ -53,6 +53,13 @@ const TurntableCenter = ({ prizeList }: Props) => {
                 AppBus.subject('RequestAgain$').next(prize)
 
                 dispatch({ type: 'isClickable', value: true })
+
+                if (
+                  !res.prize.objective.is_empty &&
+                  state.shouldUserInfoModalShow
+                ) {
+                  dispatch({ type: 'IsUserInfoModalShow', value: true })
+                }
               }
             })
           }, 1000)

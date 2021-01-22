@@ -88,29 +88,35 @@ const TurntablePage = ({
   const prizeList = prizeListClient.useData()
   const singleLottery = singleLotteryClient.useData()
   const userInfo = userInfoClient.useData()
+  const winnerList = winnersClient.useData()
 
   useEffect(() => {
     if (singleLottery?.length && userInfo?.length) {
       if (userInfo[0].user_id === null && singleLottery[0].need_user_info) {
+        dispatch({ type: 'IsUserInfoModalShow', value: true })
+      } else if (userInfo[0].user_id === null) {
         dispatch({ type: 'shouldUserInfoModalShow', value: true })
       }
     }
   }, [userInfo, singleLottery])
 
   if (singleLottery?.length && userInfo?.length) {
-    const winnerList = 'test'
-    const startTime = singleLottery[0].start_time
-    const endTime = singleLottery[0].end_time
-    const remainTime = singleLottery[0].remain_times
-    const rules = singleLottery[0].rules
+    const {
+      start_time: startTime,
+      end_time: endTime,
+      remain_times: remainTime,
+      show_background_image: isBgShow,
+      show_contact_info: isContactInfoShow,
+      show_rolling_list: isWinnerListShow,
+      contact_info: contactInfo,
+      rules
+    } = singleLottery[0]
+
     const headUrl = singleLottery[0]?.picture?.head
     const backgroundUrl = singleLottery[0]?.picture?.background
     const pointerUrl = singleLottery[0]?.picture?.pointer
     const turntableUrl = singleLottery[0]?.picture?.turntable
-    const isBgShow = singleLottery[0]?.show_background_image
-    const isContactInfoShow = singleLottery[0]?.show_contact_info
-    const isWinnerListShow = singleLottery[0]?.show_rolling_list
-    const contactInfo = singleLottery[0]?.contact_info
+
     return (
       <div className={styles.lotteryPageWrap}>
         <BackgroundPic url={backgroundUrl} isShow={isBgShow} />

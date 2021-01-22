@@ -1,4 +1,6 @@
 import React from 'react'
+import { ConfigProvider } from 'antd'
+import zhCN from 'antd/lib/locale/zh_CN'
 import TurntablePage from './TurntablePage'
 import { Provider } from 'react-redux'
 import store from './store/store'
@@ -25,18 +27,20 @@ const TurntablePageView = ({
   winnersUrl
 }: Props) => {
   return (
-    <Provider store={store}>
-      <TurntablePage
-        prizeListUrl={prizeListUrl}
-        singleLotteryUrl={singleLotteryUrl}
-        prizeUrl={prizeUrl}
-        myPrizeListUrl={myPrizeListUrl}
-        isDataChanged={isDataChanged}
-        addUserInfoUrl={addUserInfoUrl}
-        queryUserInfoUrl={queryUserInfoUrl}
-        winnersUrl={winnersUrl}
-      />
-    </Provider>
+    <ConfigProvider locale={zhCN}>
+      <Provider store={store}>
+        <TurntablePage
+          prizeListUrl={prizeListUrl}
+          singleLotteryUrl={singleLotteryUrl}
+          prizeUrl={prizeUrl}
+          myPrizeListUrl={myPrizeListUrl}
+          isDataChanged={isDataChanged}
+          addUserInfoUrl={addUserInfoUrl}
+          queryUserInfoUrl={queryUserInfoUrl}
+          winnersUrl={winnersUrl}
+        />
+      </Provider>
+    </ConfigProvider>
   )
 }
 
