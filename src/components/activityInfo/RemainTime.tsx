@@ -9,7 +9,7 @@ const RemainTime = ({ remainTimes }: Props) => {
   return (
     <div className={styles.remainTime}>
       <div className='remainTimesWrap'>
-        {remainTimes && remainTimes > 0 ? (
+        {(remainTimes && remainTimes > 0) || remainTimes === 0 ? (
           `您还剩余${remainTimes}次抽奖机会`
         ) : (
           <div />

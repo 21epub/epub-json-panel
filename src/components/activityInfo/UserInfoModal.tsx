@@ -1,4 +1,4 @@
-import { Col, Form, Input, Row } from 'antd'
+import { Col, Form, Input, Row, Button } from 'antd'
 import Modal from 'antd/lib/modal/Modal'
 import React, { useState } from 'react'
 import { useDispatch } from 'react-redux'
@@ -71,8 +71,19 @@ const UserInfoModal = ({
       <Modal
         title='请填写信息'
         visible={isModalShow}
-        onOk={handleOk}
         onCancel={handleCancel}
+        footer={[
+          <Button
+            onClick={handleCancel}
+            type='default'
+            key='userInfoCancelButton'
+          >
+            取消
+          </Button>,
+          <Button onClick={handleOk} type='primary' key='userInfoOkButton'>
+            确定
+          </Button>
+        ]}
         confirmLoading={confirmLoading}
       >
         {singleLottery[0]?.info_fields_list ? (
@@ -82,7 +93,12 @@ const UserInfoModal = ({
                 {singleLottery[0]?.info_fields_list.map(
                   (el: any, index: number) => {
                     return (
-                      <Form.Item name={el} key={index}>
+                      <Form.Item
+                        name={el}
+                        key={index}
+                        label={translateTitle(el)}
+                        rules={[{ required: true }]}
+                      >
                         <Input
                           placeholder={translateTitle(el)}
                           onChange={onChange}
