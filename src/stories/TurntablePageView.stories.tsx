@@ -30,6 +30,7 @@ const Template: Story<{
   addUserInfoUrl: string
   queryUserInfoUrl: string
   winnersUrl: string
+  prefix: string
 }> = (args) => <TurntablePageView {...args} />
 
 export const Yapi = Template.bind({})
@@ -41,5 +42,6 @@ Yapi.args = {
   isDataChanged: true,
   addUserInfoUrl: addUserInfoUrl,
   queryUserInfoUrl: queryUserInfoUrl,
-  winnersUrl: winnersUrl
+  winnersUrl: winnersUrl,
+  prefix: 'test'
 }

@@ -6,9 +6,10 @@ import styles from './index.module.less'
 interface Props {
   rules?: any
   isButtonClickable: boolean
+  prefix: string
 }
 
-const RulesButton = ({ rules, isButtonClickable }: Props) => {
+const RulesButton = ({ rules, isButtonClickable, prefix }: Props) => {
   const [isModalShow, setIsModalShow] = useState(false)
 
   const getRules = () => {
@@ -25,13 +26,13 @@ const RulesButton = ({ rules, isButtonClickable }: Props) => {
         <img
           className='ruleButton'
           // 'http://dev.epub360.com/staticfs2/diazo/images/lottery/rule.png'
-          src={`${window.web_url}diazo/images/lottery/rule.png`}
+          src={`${prefix}diazo/images/lottery/rule.png`}
           onClick={getRules}
         />
       ) : (
         <img
           className='ruleButton'
-          src={`${window.web_url}diazo/images/lottery/rule.png`}
+          src={`${prefix}diazo/images/lottery/rule.png`}
         />
       )}
 

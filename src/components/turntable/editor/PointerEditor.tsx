@@ -3,16 +3,17 @@ import styles from '../index.module.less'
 
 interface Props {
   url: string
+  prefix: string
 }
 
-const PointerEditor = ({ url }: Props) => {
+const PointerEditor = ({ url, prefix }: Props) => {
   return (
     <div className={styles.pointer}>
       <a>
         <img
           className='point'
           src={
-            url || `${window.web_url}diazo/images/lottery/point.png`
+            url || `${prefix}diazo/images/lottery/point.png`
             // 'http://dev.epub360.com/staticfs2/diazo/images/lottery/point.png'
           }
         />
