@@ -14,6 +14,7 @@ interface Props {
   addUserInfoUrl: string
   queryUserInfoUrl: string
   winnersUrl: string
+  prefix: string
 }
 
 const TurntablePageView = ({
@@ -24,7 +25,8 @@ const TurntablePageView = ({
   myPrizeListUrl,
   addUserInfoUrl,
   queryUserInfoUrl,
-  winnersUrl
+  winnersUrl,
+  prefix
 }: Props) => {
   return (
     <ConfigProvider locale={zhCN}>
@@ -38,6 +40,7 @@ const TurntablePageView = ({
           addUserInfoUrl={addUserInfoUrl}
           queryUserInfoUrl={queryUserInfoUrl}
           winnersUrl={winnersUrl}
+          prefix={prefix}
         />
       </Provider>
     </ConfigProvider>

@@ -12,6 +12,7 @@ interface Props {
   prizeUrl: string
   userInfo: any
   isClickable: boolean
+  prefix: string
 }
 
 const Turntable = ({
@@ -21,11 +22,12 @@ const Turntable = ({
   userInfo,
   singleLottery,
   prizeUrl,
-  isClickable
+  isClickable,
+  prefix
 }: Props) => {
   return (
     <div className={styles.turntableWrap}>
-      <TurntableBackground url={turntableUrl} />
+      <TurntableBackground url={turntableUrl} prefix={prefix} />
       {prizeList?.length && (
         <div>
           <TurntableCenter prizeList={prizeList} />
@@ -36,6 +38,7 @@ const Turntable = ({
             singleLottery={singleLottery}
             prizeUrl={prizeUrl}
             userInfo={userInfo}
+            prefix={prefix}
           />
         </div>
       )}

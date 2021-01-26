@@ -8,9 +8,10 @@ import styles from './index.module.less'
 
 interface Props {
   myPrizeListUrl: string
+  prefix: string
 }
 
-const MyPrizeButton = ({ myPrizeListUrl }: Props) => {
+const MyPrizeButton = ({ myPrizeListUrl, prefix }: Props) => {
   const dispatch = useDispatch()
   const state = useSelector((state: any) => state) // 获取保存的状态
 
@@ -42,7 +43,7 @@ const MyPrizeButton = ({ myPrizeListUrl }: Props) => {
                     <img
                       src={
                         item.objective.picture ||
-                        `${window.web_url}diazo/images/lottery/prize.png`
+                        `${prefix}diazo/images/lottery/prize.png`
                       }
                       alt='err'
                       width='100%'
@@ -92,7 +93,7 @@ const MyPrizeButton = ({ myPrizeListUrl }: Props) => {
     <div className={styles.myPrize}>
       <img
         className='prizeButton'
-        src={`${window.web_url}diazo/images/lottery/myPrize.png`}
+        src={`${prefix}diazo/images/lottery/myPrize.png`}
         onClick={getMyPrize}
       />
       <Modal

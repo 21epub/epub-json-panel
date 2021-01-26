@@ -16,12 +16,14 @@ interface Props {
   isDataChanged: boolean
   prizeListUrl: string
   singleLotteryUrl: string
+  prefix: string
 }
 
 const TurntablePageEditor = ({
   isDataChanged,
   prizeListUrl,
-  singleLotteryUrl
+  singleLotteryUrl,
+  prefix
 }: Props) => {
   const prizeListClient = useMemo(() => {
     const client = new DataClient(prizeListUrl)
@@ -60,19 +62,20 @@ const TurntablePageEditor = ({
 
     return (
       <div className={styles.lotteryPageWrap}>
-        <BackgroundPic url={backgroundUrl} isShow={isBgShow} />
-        <HeadPic url={headUrl} />
+        <BackgroundPic url={backgroundUrl} isShow={isBgShow} prefix={prefix} />
+        <HeadPic url={headUrl} prefix={prefix} />
         <ActivityTime startTime={startTime} endTime={endTime} />
         <div className='turntableWrap'>
           <TurntableEditor
             pointerUrl={pointerUrl}
             turntableUrl={turntableUrl}
             prizeList={prizeList}
+            prefix={prefix}
           />
         </div>
         <RemainTime remainTimes={remainTime} />
-        <MyPrizeButtonEditor />
-        <RulesButton isButtonClickable={false} />
+        <MyPrizeButtonEditor prefix={prefix} />
+        <RulesButton isButtonClickable={false} prefix={prefix} />
         <RollingList winnerList={winnerList} isShow={isWinnerListShow} />
         <ContactInfo contactInfo={contactInfo} isShow={isContactInfoShow} />
       </div>

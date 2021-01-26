@@ -12,6 +12,7 @@ interface Props {
   singleLottery: any
   prizeUrl: string
   userInfo: any
+  prefix: string
 }
 
 const Pointer = ({
@@ -19,7 +20,8 @@ const Pointer = ({
   isClickable,
   singleLottery,
   prizeUrl,
-  userInfo
+  userInfo,
+  prefix
 }: Props) => {
   const dispatch = useDispatch()
 
@@ -63,7 +65,7 @@ const Pointer = ({
           <img
             className='point'
             src={
-              url || `${window.web_url}diazo/images/lottery/point.png`
+              url || `${prefix}diazo/images/lottery/point.png`
               // 'http://dev.epub360.com/staticfs2/diazo/images/lottery/point.png'
             }
             onClick={() => lottery(singleLottery, prizeUrl, userInfo)}
@@ -74,7 +76,7 @@ const Pointer = ({
           <img
             className='point'
             src={
-              url || `${window.web_url}diazo/images/lottery/point.png`
+              url || `${prefix}diazo/images/lottery/point.png`
               // 'http://dev.epub360.com/staticfs2/diazo/images/lottery/point.png'
             }
           />

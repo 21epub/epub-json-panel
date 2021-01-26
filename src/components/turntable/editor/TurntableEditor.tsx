@@ -8,14 +8,20 @@ interface Props {
   pointerUrl: string
   turntableUrl: string
   prizeList: any
+  prefix: string
 }
 
-const TurntableEditor = ({ pointerUrl, turntableUrl, prizeList }: Props) => {
+const TurntableEditor = ({
+  pointerUrl,
+  turntableUrl,
+  prizeList,
+  prefix
+}: Props) => {
   return (
     <div className={styles.turntableWrap}>
-      <TurntableBackground url={turntableUrl} />
+      <TurntableBackground url={turntableUrl} prefix={prefix} />
       <TurntableCenterEditor prizeList={prizeList} />
-      <PointerEditor url={pointerUrl} />
+      <PointerEditor url={pointerUrl} prefix={prefix} />
     </div>
   )
 }

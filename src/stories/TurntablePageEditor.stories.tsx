@@ -18,11 +18,13 @@ const Template: Story<{
   prizeListUrl: string
   singleLotteryUrl: string
   isDataChanged: boolean
+  prefix: string
 }> = (args) => <TurntablePageEditor {...args} />
 
 export const Yapi = Template.bind({})
 Yapi.args = {
   prizeListUrl: prizeListUrl,
   singleLotteryUrl: singleLotteryUrl,
-  isDataChanged: true
+  isDataChanged: true,
+  prefix: 'test'
 }

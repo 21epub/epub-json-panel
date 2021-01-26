@@ -25,6 +25,7 @@ interface Props {
   addUserInfoUrl: string
   queryUserInfoUrl: string
   winnersUrl: string
+  prefix: string
 }
 
 const TurntablePage = ({
@@ -35,7 +36,8 @@ const TurntablePage = ({
   myPrizeListUrl,
   addUserInfoUrl,
   queryUserInfoUrl,
-  winnersUrl
+  winnersUrl,
+  prefix
 }: Props) => {
   const state = useSelector((state: any) => state) // 获取保存的状态
   const dispatch = useDispatch()
@@ -119,8 +121,8 @@ const TurntablePage = ({
 
     return (
       <div className={styles.lotteryPageWrap}>
-        <BackgroundPic url={backgroundUrl} isShow={isBgShow} />
-        <HeadPic url={headUrl} />
+        <BackgroundPic url={backgroundUrl} isShow={isBgShow} prefix={prefix} />
+        <HeadPic url={headUrl} prefix={prefix} />
         <ActivityTime startTime={startTime} endTime={endTime} />
         <div className='turntableWrap'>
           <Turntable
@@ -131,11 +133,12 @@ const TurntablePage = ({
             singleLottery={singleLottery}
             prizeUrl={prizeUrl}
             isClickable={state.isClickable}
+            prefix={prefix}
           />
         </div>
         <RemainTime remainTimes={remainTime} />
-        <MyPrizeButton myPrizeListUrl={myPrizeListUrl} />
-        <RulesButton rules={rules} isButtonClickable />
+        <MyPrizeButton myPrizeListUrl={myPrizeListUrl} prefix={prefix} />
+        <RulesButton rules={rules} isButtonClickable prefix={prefix} />
         <RollingList winnerList={winnerList} isShow={isWinnerListShow} />
         <ContactInfo contactInfo={contactInfo} isShow={isContactInfoShow} />
         <UserInfoModal
