@@ -12,8 +12,8 @@ const PointerEditor = ({ url }: Props) => {
         <img
           className='point'
           src={
-            url ||
-            'http://dev.epub360.com/staticfs2/diazo/images/lottery/point.png'
+            url || `${window.web_url}diazo/images/lottery/point.png`
+            // 'http://dev.epub360.com/staticfs2/diazo/images/lottery/point.png'
           }
         />
       </a>

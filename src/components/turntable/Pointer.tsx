@@ -63,8 +63,8 @@ const Pointer = ({
           <img
             className='point'
             src={
-              url ||
-              'http://dev.epub360.com/staticfs2/diazo/images/lottery/point.png'
+              url || `${window.web_url}diazo/images/lottery/point.png`
+              // 'http://dev.epub360.com/staticfs2/diazo/images/lottery/point.png'
             }
             onClick={() => lottery(singleLottery, prizeUrl, userInfo)}
           />
@@ -74,8 +74,8 @@ const Pointer = ({
           <img
             className='point'
             src={
-              url ||
-              'http://dev.epub360.com/staticfs2/diazo/images/lottery/point.png'
+              url || `${window.web_url}diazo/images/lottery/point.png`
+              // 'http://dev.epub360.com/staticfs2/diazo/images/lottery/point.png'
             }
           />
         </a>
