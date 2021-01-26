@@ -22,6 +22,7 @@ const Test = () => {
         addUserInfoUrl={addUserInfoUrl}
         queryUserInfoUrl={queryUserInfoUrl}
         winnersUrl={winnersUrl}
+        prefix='test'
       />
       {/* <LotteryPageTestEditor 
               singleLotteryUrl={singleLotteryUrl}

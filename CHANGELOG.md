@@ -2,6 +2,12 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.0.3-alpha.40](https://github.com/icey0126/epub-app-lib/compare/v0.0.3-alpha.39...v0.0.3-alpha.40) (2021-01-26)
+
+### Bug Fixes
+
+- 🐛 fix pic url ([399b43b](https://github.com/icey0126/epub-app-lib/commit/399b43b82e258a0aade15de0eae0b81be2fbf3db))
+
 ### [0.0.3-alpha.39](https://github.com/icey0126/epub-app-lib/compare/v0.0.3-alpha.38...v0.0.3-alpha.39) (2021-01-26)
 
 ### Bug Fixes
