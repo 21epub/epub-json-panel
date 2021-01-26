@@ -1,5 +1,5 @@
 import React from 'react'
-// import NoticeBoard from './NoticeBoard'
+import NoticeBoard from './NoticeBoard'
 import { getNow } from '../util'
 import styles from './index.module.less'
 
@@ -28,13 +28,12 @@ const RollingList = ({ winnerList, isShow = true }: Props) => {
       <div className={styles.rollList}>
         {isShow && (
           <div className='rollingContainer'>
-            {/* <NoticeBoard
+            <NoticeBoard
               className='rollingList'
               textClassName='textContent'
               stepDuration={2000}
               dataSource={winner}
-            /> */}
-            {data}
+            />
           </div>
         )}
       </div>

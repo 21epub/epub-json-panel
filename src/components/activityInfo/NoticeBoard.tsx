@@ -1,37 +1,14 @@
-import * as React from 'react'
-import styled, { keyframes, Keyframes } from 'styled-components'
+import React, { useState, useEffect } from 'react'
+import styled, { keyframes } from 'styled-components'
 
-interface IProps {
-  dataSource: string[]
-  stepDuration?: number
-  width?: number
-  height?: number
-  extra?: React.ReactElement | null | false
-  textClassName?: string | undefined
-}
-interface IState {
-  dataSource: string[]
-  keyframesValue: string
-}
-
-/* eslint-disable */
-interface IContent extends IProps {
-  animation: Keyframes | null
-  duration: number
-}
-/* eslint-enable */
-
-const Wrapper = styled.div<IProps>`
+const Wrapper = styled.div<any>`
   width: ${(props) => (props.width ? `${props.width}px` : '100%')};
   height: ${(props) => (props.height ? `${props.height}px` : '44px')};
-  background: rgba(255, 255, 255, 1);
-  box-shadow: 0px 0px 2px 0px rgba(0, 0, 0, 0.1);
-  border-radius: 2px;
   overflow: hidden;
   display: flex;
 `
 
-const Content = styled.div<IContent>`
+const Content = styled.div<any>`
   overflow: hidden;
   animation: ${(props) => (props.animation ? props.animation : '')}
     ${(props) => props.duration}s linear infinite;
@@ -39,7 +16,7 @@ const Content = styled.div<IContent>`
   margin-left: 12px;
 `
 
-const Text = styled.p<IProps>`
+const Text = styled.p<any>`
   color: white;
   line-height: ${(props) => (props.height ? `${props.height}px` : '44px')};
   margin: 0;
@@ -48,72 +25,42 @@ const Text = styled.p<IProps>`
   white-space: nowrap;
 `
 
-const ExtraWrapper = styled.div`
-  float: right;
-  display: flex;
-  align-items: center;
-`
+interface Props {
+  stepDuration: any
+  height?: any
+  className: string
+  width?: any
+  textClassName?: string
+  dataSource: any
+}
 
-export default class NoticeBoard extends React.PureComponent<IProps, IState> {
-  static defaultProps = {
-    stepDuration: 1000,
-    height: 44,
-    className: ''
-  }
+const NoticeBoard = ({
+  stepDuration = 1000,
+  height = 44,
+  textClassName,
+  width,
+  dataSource,
+  className
+}: Props) => {
+  const [dataSourceL, setDataSourceL] = useState(dataSource)
+  const [keyframesValue, setKeyframesValue] = useState('')
 
-  constructor(props: IProps) {
-    super(props)
-    this.state = {
-      dataSource: [],
-      keyframesValue: ``
+  useEffect(() => {
+    handleDataSource()
+    if (dataSourceL.length >= 2) {
+      createKeyFrames()
     }
-  }
+  }, [])
 
-  componentDidMount = () => {
-    this.init()
-  }
-
-  componentWillReceiveProps(nextProps: any) {
-    if (
-      JSON.stringify(nextProps.dataSource) !==
-      JSON.stringify(this.props.dataSource)
-    ) {
-      this.init()
-    }
-  }
-
-  handleDataSource = () => {
-    const { dataSource = [] } = this.props
-    return new Promise((resolve, reject) => {
-      if (dataSource.length > 0) {
-        this.setState(
-          {
-            dataSource: dataSource.concat(dataSource[0])
-          },
-          () => {
-            resolve()
-          }
-        )
-      } else {
-        reject(new Error('dataSource.length must >= 1'))
-        throw new Error('dataSource.length must >= 1')
-      }
-    })
-  }
-
-  get stepLen() {
-    const { dataSource = [] } = this.props
+  const getStepLen = () => {
     return dataSource.length * 2
   }
 
-  get duration() {
-    const { stepDuration = 1000, dataSource } = this.props
-
+  const getDuration = () => {
     return (dataSource.length * stepDuration) / 1000
   }
 
-  get scrollKeyFrames() {
-    const { keyframesValue } = this.state
+  const getScrollKeyFrames = () => {
     if (keyframesValue) {
       return keyframes`
         ${keyframesValue}
@@ -122,17 +69,22 @@ export default class NoticeBoard extends React.PureComponent<IProps, IState> {
     return null
   }
 
-  init = async () => {
-    await this.handleDataSource()
-    this.createKeyFrames()
+  const handleDataSource = () => {
+    return new Promise((resolve, reject) => {
+      if (dataSource.length > 0) {
+        setDataSourceL(dataSource.concat(dataSource[0]))
+      } else {
+        reject(new Error('dataSource.length must >= 1'))
+        throw new Error('dataSource.length must >= 1')
+      }
+    })
   }
 
-  createKeyFrames = () => {
-    const { height = 0 } = this.props
-    const per = 100 / this.stepLen
+  const createKeyFrames = () => {
+    const per = 100 / getStepLen()
     let offset = 0
     const cssStr: string[] = []
-    for (let i = 0; i <= this.stepLen; i++) {
+    for (let i = 0; i <= getStepLen(); i++) {
       const even = i % 2 === 0
       if (i !== 0 && even) {
         offset += height
@@ -145,33 +97,29 @@ export default class NoticeBoard extends React.PureComponent<IProps, IState> {
       cssStr.push(v)
     }
     const css = cssStr.join('')
-    this.setState({ keyframesValue: css })
+    setKeyframesValue(css)
   }
 
-  render() {
-    const { dataSource } = this.state
-    const { extra, textClassName } = this.props
-    return (
-      <div>
-        <Wrapper {...this.props}>
-          <Content
-            {...this.props}
-            animation={this.stepLen > 2 ? this.scrollKeyFrames : null}
-            duration={this.duration}
-          >
-            {dataSource.map((item, index) => (
-              <Text
-                {...this.props}
-                className={textClassName}
-                key={`${index}-${item}`}
-              >
-                {item}
-              </Text>
-            ))}
-          </Content>
-          {extra && <ExtraWrapper>{extra}</ExtraWrapper>}
-        </Wrapper>
-      </div>
-    )
-  }
+  return (
+    <div>
+      <Wrapper width={width} height={height} className={className}>
+        <Content
+          animation={getStepLen() > 2 ? getScrollKeyFrames() : null}
+          duration={getDuration()}
+        >
+          {dataSourceL.map((item: any, index: number) => (
+            <Text
+              height={height}
+              className={textClassName}
+              key={`${index}-${item}`}
+            >
+              {item}
+            </Text>
+          ))}
+        </Content>
+      </Wrapper>
+    </div>
+  )
 }
+
+export default NoticeBoard
