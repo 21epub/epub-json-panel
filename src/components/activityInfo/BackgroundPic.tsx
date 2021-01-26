@@ -13,8 +13,8 @@ const BackgroundPic = ({ url, isShow = true }: Props) => {
         <img
           className='bgPic'
           src={
-            url ||
-            'http://dev.epub360.com/staticfs2/diazo/images/lottery/bg.png'
+            url || `${window.web_url}diazo/images/lottery/bg.png`
+            // 'http://dev.epub360.com/staticfs2/diazo/images/lottery/bg.png'
           }
           alt='图片加载失败'
         />

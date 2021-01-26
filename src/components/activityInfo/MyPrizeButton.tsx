@@ -13,7 +13,6 @@ interface Props {
 const MyPrizeButton = ({ myPrizeListUrl }: Props) => {
   const dispatch = useDispatch()
   const state = useSelector((state: any) => state) // 获取保存的状态
-  const [renew, setRenew] = useState(true)
 
   const [isModalShow, setIsModalShow] = useState(false)
   const [content, setContent] = useState(<div key='noPrize'>暂无奖品</div>)
@@ -25,13 +24,12 @@ const MyPrizeButton = ({ myPrizeListUrl }: Props) => {
 
   useEffect(() => {
     myPrizeListClient.getAll()
-  }, [myPrizeListUrl, renew])
+  }, [myPrizeListUrl])
 
   const myPrizeList = myPrizeListClient.useData()
 
   const getMyPrize = () => {
-    if (renew) setRenew(false)
-    else setRenew(true)
+    myPrizeListClient.getAll()
 
     if (myPrizeList?.length) {
       const prize = (
@@ -41,7 +39,14 @@ const MyPrizeButton = ({ myPrizeListUrl }: Props) => {
               <div key={item.id}>
                 <Row>
                   <Col span={8}>
-                    <img src={item.objective.picture} alt='err' width='100%' />
+                    <img
+                      src={
+                        item.objective.picture ||
+                        `${window.web_url}diazo/images/lottery/prize.png`
+                      }
+                      alt='err'
+                      width='100%'
+                    />
                   </Col>
                   <Col span={15} offset={1}>
                     <div>
@@ -87,7 +92,7 @@ const MyPrizeButton = ({ myPrizeListUrl }: Props) => {
     <div className={styles.myPrize}>
       <img
         className='prizeButton'
-        src='http://dev.epub360.com/staticfs2/diazo/images/lottery/myPrize.png'
+        src={`${window.web_url}diazo/images/lottery/myPrize.png`}
         onClick={getMyPrize}
       />
       <Modal

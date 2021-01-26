@@ -24,13 +24,14 @@ const RulesButton = ({ rules, isButtonClickable }: Props) => {
       {isButtonClickable ? (
         <img
           className='ruleButton'
-          src='http://dev.epub360.com/staticfs2/diazo/images/lottery/rule.png'
+          // 'http://dev.epub360.com/staticfs2/diazo/images/lottery/rule.png'
+          src={`${window.web_url}diazo/images/lottery/rule.png`}
           onClick={getRules}
         />
       ) : (
         <img
           className='ruleButton'
-          src='http://dev.epub360.com/staticfs2/diazo/images/lottery/rule.png'
+          src={`${window.web_url}diazo/images/lottery/rule.png`}
         />
       )}
 

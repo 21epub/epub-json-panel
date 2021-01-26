@@ -11,8 +11,8 @@ const HeadPic = ({ url }: Props) => {
       <img
         className='headPic'
         src={
-          url ||
-          'http://dev.epub360.com/staticfs2/diazo/images/lottery/head.png'
+          url || `${window.web_url}diazo/images/lottery/head.png`
+          // 'http://dev.epub360.com/staticfs2/diazo/images/lottery/head.png'
         }
         alt='图片加载失败'
       />

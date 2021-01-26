@@ -6,7 +6,7 @@ const MyPrizeButtonEditor = () => {
     <div className={styles.myPrize}>
       <img
         className='prizeButton'
-        src='http://dev.epub360.com/staticfs2/diazo/images/lottery/myPrize.png'
+        src={`${window.web_url}diazo/images/lottery/myPrize.png`}
       />
     </div>
   )

@@ -9,8 +9,8 @@ const TurntableBackground = ({ url }: Props) => {
     <img
       className='turntablePic'
       src={
-        url ||
-        'http://dev.epub360.com/staticfs2/diazo/images/lottery/turntable.png'
+        url || `${window.web_url}diazo/images/lottery/turntable.png`
+        // 'http://dev.epub360.com/staticfs2/diazo/images/lottery/turntable.png'
       }
     />
   )
