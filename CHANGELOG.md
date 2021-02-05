@@ -2,6 +2,18 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.0.3-alpha.42](https://github.com/icey0126/epub-app-lib/compare/v0.0.3-alpha.41...v0.0.3-alpha.42) (2021-02-05)
+
+### Bug Fixes
+
+- 🐛 fix prize style ([2adcc76](https://github.com/icey0126/epub-app-lib/commit/2adcc76276284fa3b5802dcb47615b951dcf2e81))
+
+### [0.0.3-alpha.41](https://github.com/icey0126/epub-app-lib/compare/v0.0.3-alpha.40...v0.0.3-alpha.41) (2021-02-05)
+
+### Bug Fixes
+
+- 🐛 fix company info style and add lottery id button ([34a9a53](https://github.com/icey0126/epub-app-lib/commit/34a9a535584f38c0b7fc3aac91f96eb13be79b81))
+
 ### [0.0.3-alpha.40](https://github.com/icey0126/epub-app-lib/compare/v0.0.3-alpha.39...v0.0.3-alpha.40) (2021-01-26)
 
 ### Bug Fixes
