@@ -35,7 +35,12 @@
 .contactInfo {
   :global {
     font-size: 12px;
+    white-space: nowrap;
     text-align: center;
+    transform: scale(0.7);
+    .contactInfoWrap {
+      width: 375px;
+    }
   }
 }
 
@@ -46,11 +51,15 @@
       height: 19px;
       .rollingList {
         margin-top: -12px;
-        .textContent {
-          color: white;
-        }
       }
     }
+  }
+}
+
+.myPrizeContent {
+  :global {
+    height: 200px;
+    overflow: auto;
   }
 }
 

@@ -1,6 +1,7 @@
 import { DataClient } from '@21epub/epub-data-client'
-import { Button, Col, Row } from 'antd'
+import { Button, Col, Row, Space } from 'antd'
 import Modal from 'antd/lib/modal/Modal'
+import copy from 'copy-to-clipboard'
 import React, { useMemo, useState, useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { SinglePrizeProps } from '../types'
@@ -29,8 +30,13 @@ const MyPrizeButton = ({ myPrizeListUrl, prefix }: Props) => {
 
   const myPrizeList = myPrizeListClient.useData()
 
+  const copyContent = (id: string) => {
+    copy(id)
+  }
+
   const getMyPrize = () => {
     myPrizeListClient.getAll()
+    console.log('myPrizeList', myPrizeList)
 
     if (myPrizeList?.length) {
       const prize = (
@@ -66,6 +72,12 @@ const MyPrizeButton = ({ myPrizeListUrl, prefix }: Props) => {
                         `已领取：${item.received === 0 ? '否' : '是'}`}
                     </div>
                     <div>{item.created && `中奖时间：${item.created}`}</div>
+                    <Space size='large'>
+                      {item.id && `中奖码：${item.id}`}
+                      <Button onClick={() => copyContent(item.id)} size='small'>
+                        复制中奖码
+                      </Button>
+                    </Space>
                   </Col>
                 </Row>
                 <br />
@@ -106,7 +118,7 @@ const MyPrizeButton = ({ myPrizeListUrl, prefix }: Props) => {
         ]}
         closable={false}
       >
-        {content}
+        <div className={styles.myPrizeContent}>{content}</div>
       </Modal>
     </div>
   )
