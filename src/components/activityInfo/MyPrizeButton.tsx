@@ -73,11 +73,12 @@ const MyPrizeButton = ({ myPrizeListUrl, prefix }: Props) => {
                     </div>
                     <div>{item.created && `中奖时间：${item.created}`}</div>
                     <Space size='large'>
-                      {item.id && `中奖码：${item.id}`}
+                      中奖码：
                       <Button onClick={() => copyContent(item.id)} size='small'>
                         复制中奖码
                       </Button>
                     </Space>
+                    <div>{item.id}</div>
                   </Col>
                 </Row>
                 <br />
