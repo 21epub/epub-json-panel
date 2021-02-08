@@ -29,7 +29,6 @@ const MyPrizeButton = ({ myPrizeListUrl, prefix }: Props) => {
 
   const myPrizeList = myPrizeListClient.useData()
 
-  console.log('myPrizeButton', myPrizeList)
   const getMyPrize = () => {
     myPrizeListClient.getAll()
     setIsModalShow(true)
@@ -37,7 +36,6 @@ const MyPrizeButton = ({ myPrizeListUrl, prefix }: Props) => {
 
   const handleOk = (myPrizeList: any) => {
     setIsModalShow(false)
-    console.log('handleOk', myPrizeList)
     if (state.shouldUserInfoModalShow && myPrizeList?.length) {
       dispatch({ type: 'IsUserInfoModalShow', value: true })
     }

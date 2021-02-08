@@ -9,7 +9,6 @@ interface Props {
 }
 
 const MyPrizeContent = ({ myPrizeList, prefix }: Props) => {
-  console.log('MyPrizeContent', myPrizeList)
   const copyContent = (id: string) => {
     copy(id)
   }
