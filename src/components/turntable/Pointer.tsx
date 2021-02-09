@@ -43,7 +43,6 @@ const Pointer = ({
         AppBus.subject('Rotate$').next(prize)
       })
     } else {
-      dispatch({ type: 'isClickable', value: false })
       Modal.info({
         title: '抽奖次数用完啦',
         content: (
@@ -64,10 +63,7 @@ const Pointer = ({
         <a>
           <img
             className='point'
-            src={
-              url || `${prefix}diazo/images/lottery/point.png`
-              // 'http://dev.epub360.com/staticfs2/diazo/images/lottery/point.png'
-            }
+            src={url || `${prefix}diazo/images/lottery/point.png`}
             onClick={() => lottery(singleLottery, prizeUrl, userInfo)}
           />
         </a>
@@ -75,10 +71,7 @@ const Pointer = ({
         <a style={{ cursor: 'default' }}>
           <img
             className='point'
-            src={
-              url || `${prefix}diazo/images/lottery/point.png`
-              // 'http://dev.epub360.com/staticfs2/diazo/images/lottery/point.png'
-            }
+            src={url || `${prefix}diazo/images/lottery/point.png`}
           />
         </a>
       )}
