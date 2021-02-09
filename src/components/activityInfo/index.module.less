@@ -1,3 +1,76 @@
+.bgImg {
+  :global {
+    display: flex;
+    align-items: center; /* 垂直居中 */
+    justify-content: center; /* 水平居中 */
+    width: 375px;
+    height: 603px;
+    overflow: hidden;
+    .bgPic {
+      max-width: 375px;
+    }
+  }
+}
+
+.headImg {
+  :global {
+    display: flex;
+    align-items: center; /* 垂直居中 */
+    justify-content: center; /* 水平居中 */
+    width: 375px;
+    .headPic {
+      max-width: 300px;
+    }
+  }
+}
+
+.activityTime {
+  :global {
+    display: flex;
+    align-items: center; /* 垂直居中 */
+    justify-content: center; /* 水平居中 */
+    width: 375px;
+  }
+}
+
+.remainTime {
+  :global {
+    display: flex;
+    align-items: center; /* 垂直居中 */
+    justify-content: center; /* 水平居中 */
+    width: 375px;
+  }
+}
+
+.rollList {
+  :global {
+    display: flex;
+    align-items: center; /* 垂直居中 */
+    justify-content: center; /* 水平居中 */
+    width: 375px;
+    .rollingContainer {
+      width: 280px;
+      height: 19px;
+    }
+  }
+}
+
+.contactInfo {
+  :global {
+    display: flex;
+    align-items: center; /* 垂直居中 */
+    justify-content: center; /* 水平居中 */
+    width: 375px;
+    font-size: 12px;
+    // white-space: nowrap;
+    // text-align: center;
+    transform: scale(0.7);
+    .contactInfoWrap {
+      width: 375px;
+    }
+  }
+}
+
 .myPrize {
   :global {
     .prizeButton {
@@ -7,59 +80,19 @@
   }
 }
 
+.myPrizeContent {
+  :global {
+    max-height: 200px;
+    overflow: auto;
+  }
+}
+
 .rulesButton {
   :global {
     .ruleButton {
       width: 110px;
       cursor: pointer;
     }
-  }
-}
-
-.headImg {
-  :global {
-    .headPic {
-      width: 300px;
-    }
-  }
-}
-
-.bgImg {
-  :global {
-    .bgPic {
-      width: 375px;
-    }
-  }
-}
-
-.contactInfo {
-  :global {
-    font-size: 12px;
-    white-space: nowrap;
-    text-align: center;
-    transform: scale(0.7);
-    .contactInfoWrap {
-      width: 375px;
-    }
-  }
-}
-
-.rollList {
-  :global {
-    .rollingContainer {
-      width: 280px;
-      height: 19px;
-      .rollingList {
-        margin-top: -12px;
-      }
-    }
-  }
-}
-
-.myPrizeContent {
-  :global {
-    max-height: 200px;
-    overflow: auto;
   }
 }
 

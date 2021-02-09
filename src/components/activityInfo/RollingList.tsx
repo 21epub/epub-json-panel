@@ -13,7 +13,7 @@ const RollingList = ({ winnerList, isShow = true }: Props) => {
   if (winnerList === 'editor') {
     return (
       <div className={styles.rollList}>
-        {isShow && <div className='rollingContainer'>{data}</div>}
+        {isShow && <div className='rollingContainerEditor'>{data}</div>}
       </div>
     )
   } else if (winnerList?.length !== 0) {
