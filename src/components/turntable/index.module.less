@@ -8,6 +8,10 @@
 
 .turntableWrap {
   position: relative;
+  display: flex;
+  align-items: center; /* 垂直居中 */
+  justify-content: center; /* 水平居中 */
+  width: 375px;
 
   :global {
     .turntablePic {
@@ -18,10 +22,10 @@
     #turnTableCircle {
       position: absolute;
       top: 10%;
-      left: 10%;
-      // border-radius: 50%;
+      left: 18%;
       z-index: 1000;
       border: 1px solid transparent;
+      border-radius: 50%;
     }
 
     .point {
@@ -29,6 +33,7 @@
       top: 50%;
       left: 50%;
       z-index: 1000;
+      max-width: 60px;
       -ms-transform: translateX(-50%, -60%);
       -moz-transform: translateX(-50%, -60%);
       -webkit-transform: translateX(-50%, -60%);
