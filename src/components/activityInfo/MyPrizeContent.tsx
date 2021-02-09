@@ -20,7 +20,7 @@ const MyPrizeContent = ({ myPrizeList, prefix }: Props) => {
           return (
             <div key={item.id}>
               <Row>
-                <Col span={8}>
+                <Col span={6} offset={2}>
                   <img
                     src={
                       item.objective.picture ||
@@ -30,7 +30,7 @@ const MyPrizeContent = ({ myPrizeList, prefix }: Props) => {
                     width='100%'
                   />
                 </Col>
-                <Col span={15} offset={1}>
+                <Col span={14} offset={2}>
                   <div>
                     {item.initiator_username &&
                       `姓名：${item.initiator_username}`}
@@ -44,7 +44,7 @@ const MyPrizeContent = ({ myPrizeList, prefix }: Props) => {
                   </div>
                   <div>
                     {String(item.received) &&
-                      `已领取：${item.received === 0 ? '否' : '是'}`}
+                      `已领取：${item.received === 0 ? '是' : '否'}`}
                   </div>
                   <div>{item.created && `中奖时间：${item.created}`}</div>
                   <Space size='large'>
