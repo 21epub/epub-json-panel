@@ -1,5 +1,5 @@
 import { DataClient } from '@21epub/epub-data-client'
-import { Button } from 'antd'
+import { Button, Col, Row } from 'antd'
 import Modal from 'antd/lib/modal/Modal'
 import React, { useMemo, useState, useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
@@ -49,7 +49,22 @@ const MyPrizeButton = ({ myPrizeListUrl, prefix }: Props) => {
         onClick={getMyPrize}
       />
       <Modal
-        title='我的奖品'
+        title={
+          <Row style={{ height: '20px' }}>
+            <Col span={10}>我的奖品</Col>
+            <Col>
+              {state.isCopySuccess && (
+                <Button
+                  type='primary'
+                  size='small'
+                  style={{ cursor: 'default' }}
+                >
+                  复制成功！
+                </Button>
+              )}
+            </Col>
+          </Row>
+        }
         visible={isModalShow}
         footer={[
           <Button

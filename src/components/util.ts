@@ -42,7 +42,7 @@ function drawPrizeBlock(
     context.restore()
 
     context.save()
-    context.fillStyle = 'black'
+    context.fillStyle = '#1e1e1e'
     context.font = '14px Arial'
 
     context.translate(
