@@ -1,6 +1,7 @@
 import { Button, Col, Row, Space } from 'antd'
 import React from 'react'
 import copy from 'copy-to-clipboard'
+import { useDispatch } from 'react-redux'
 import styles from './index.module.less'
 
 interface Props {
@@ -9,8 +10,14 @@ interface Props {
 }
 
 const MyPrizeContent = ({ myPrizeList, prefix }: Props) => {
+  const dispatch = useDispatch()
   const copyContent = (id: string) => {
-    copy(id)
+    if (copy(id)) {
+      dispatch({ type: 'isCopySuccess', value: true })
+      setTimeout(() => {
+        dispatch({ type: 'isCopySuccess', value: false })
+      }, 800)
+    }
   }
 
   if (myPrizeList?.length) {
@@ -27,14 +34,11 @@ const MyPrizeContent = ({ myPrizeList, prefix }: Props) => {
                       `${prefix}diazo/images/lottery/prize.png`
                     }
                     alt='err'
-                    width='100%'
+                    width='80%'
                   />
                 </Col>
                 <Col span={14} offset={2}>
-                  <div>
-                    {item.initiator_username &&
-                      `姓名：${item.initiator_username}`}
-                  </div>
+                  <div>{item.name && `姓名：${item.name}`}</div>
                   <div>
                     {item.objective.ranking &&
                       `奖项：${item.objective.ranking}`}

@@ -7,7 +7,6 @@ import ActivityTime from './activityInfo/ActivityTime'
 import RemainTime from './activityInfo/RemainTime'
 import MyPrizeButton from './activityInfo/MyPrizeButton'
 import RulesButton from './activityInfo/RulesButton'
-import HeadPic from './activityInfo/HeadPic'
 import BackgroundPic from './activityInfo/BackgroundPic'
 import ContactInfo from './activityInfo/ContactInfo'
 import Turntable from './turntable/Turntable'
@@ -114,7 +113,6 @@ const TurntablePage = ({
       rules
     } = singleLottery[0]
 
-    const headUrl = singleLottery[0]?.picture?.head
     const backgroundUrl = singleLottery[0]?.picture?.background
     const pointerUrl = singleLottery[0]?.picture?.pointer
     const turntableUrl = singleLottery[0]?.picture?.turntable
@@ -122,7 +120,6 @@ const TurntablePage = ({
     return (
       <div className={styles.lotteryPageWrap}>
         <BackgroundPic url={backgroundUrl} isShow={isBgShow} prefix={prefix} />
-        <HeadPic url={headUrl} prefix={prefix} />
         <ActivityTime startTime={startTime} endTime={endTime} />
         <div className='turntableWrap'>
           <Turntable

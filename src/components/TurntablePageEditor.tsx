@@ -5,7 +5,6 @@ import { SingleLotteryProps } from './types'
 import ActivityTime from './activityInfo/ActivityTime'
 import RemainTime from './activityInfo/RemainTime'
 import RulesButton from './activityInfo/RulesButton'
-import HeadPic from './activityInfo/HeadPic'
 import BackgroundPic from './activityInfo/BackgroundPic'
 import ContactInfo from './activityInfo/ContactInfo'
 import RollingList from './activityInfo/RollingList'
@@ -55,7 +54,6 @@ const TurntablePageEditor = ({
       contact_info: contactInfo
     } = singleLottery[0]
 
-    const headUrl = singleLottery[0]?.picture?.head
     const backgroundUrl = singleLottery[0]?.picture?.background
     const pointerUrl = singleLottery[0]?.picture?.pointer
     const turntableUrl = singleLottery[0]?.picture?.turntable
@@ -63,7 +61,6 @@ const TurntablePageEditor = ({
     return (
       <div className={styles.lotteryPageWrap}>
         <BackgroundPic url={backgroundUrl} isShow={isBgShow} prefix={prefix} />
-        <HeadPic url={headUrl} prefix={prefix} />
         <ActivityTime startTime={startTime} endTime={endTime} />
         <div className='turntableWrap'>
           <TurntableEditor

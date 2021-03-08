@@ -7,9 +7,9 @@ const singleLotteryUrl =
 // const myPrizeListUrl =
 //   'https://yapi.epub360.com/mock/26/api/lottery/%7Blottery_slug%7D/draw/%7Bdraw_slug%7D'
 const addUserInfoUrl =
-  'https://yapi.epub360.com/mock/26/api/lottery/core/userinfo/'
+  'https://yapi.epub360.com/mock/26/api/lottery/core/%7Bbook_slug%7D/userinfo/'
 const queryUserInfoUrl =
-  'https://yapi.epub360.com/mock/26/api/lottery/core/userinfo/'
+  'https://yapi.epub360.com/mock/26/api/lottery/core/%7Bbook_slug%7D/userinfo/'
 const winnersUrl =
   'https://yapi.epub360.com/mock/26/api/lottery/%7Bslug%7D/winning/'
 

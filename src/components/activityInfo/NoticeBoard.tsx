@@ -16,21 +16,14 @@ const Content = styled.div<any>`
   margin-left: 12px;
 `
 
-// const Text = styled.p<any>`
-//   color: white;
-//   line-height: ${(props) => (props.height ? `${props.height}px` : '44px')};
-//   margin: 0;
-//   overflow: hidden;
-//   text-overflow: ellipsis;
-//   white-space: nowrap;
-// `
-
 const Text = styled.p<any>`
   line-height: ${(props) => (props.height ? `${props.height}px` : '44px')};
   margin: 0;
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
+  color: white;
+  text-shadow: grey 0.1em 0.1em 0.2em;
 `
 
 interface Props {

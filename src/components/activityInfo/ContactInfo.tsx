@@ -12,8 +12,8 @@ const ContactInfo = ({ contactInfo, isShow = true }: Props) => {
       <div className={styles.contactInfo}>
         <div className='contactInfoWrap'>
           {contactInfo.name && `举办方名称：${contactInfo.name} `}
-          {contactInfo.phone && `联系方式：${contactInfo.phone} `}
-          {contactInfo.address && `地址：${contactInfo.address}`}
+          {/* {contactInfo.phone && `联系方式：${contactInfo.phone} `}
+          {contactInfo.address && `地址：${contactInfo.address}`} */}
         </div>
       </div>
     )
