@@ -116,6 +116,8 @@ const TurntablePage = ({
     const backgroundUrl = singleLottery[0]?.picture?.background
     const pointerUrl = singleLottery[0]?.picture?.pointer
     const turntableUrl = singleLottery[0]?.picture?.turntable
+    const myPrizeUrl = singleLottery[0]?.picture?.myPrize
+    const ruleUrl = singleLottery[0]?.picture?.rule
 
     return (
       <div className={styles.lotteryPageWrap}>
@@ -134,8 +136,17 @@ const TurntablePage = ({
           />
         </div>
         <RemainTime remainTimes={remainTime} />
-        <MyPrizeButton myPrizeListUrl={myPrizeListUrl} prefix={prefix} />
-        <RulesButton rules={rules} isButtonClickable prefix={prefix} />
+        <MyPrizeButton
+          url={myPrizeUrl}
+          myPrizeListUrl={myPrizeListUrl}
+          prefix={prefix}
+        />
+        <RulesButton
+          url={ruleUrl}
+          rules={rules}
+          isButtonClickable
+          prefix={prefix}
+        />
         <RollingList winnerList={winnerList} isShow={isWinnerListShow} />
         <ContactInfo contactInfo={contactInfo} isShow={isContactInfoShow} />
         <UserInfoModal

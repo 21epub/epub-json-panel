@@ -7,9 +7,10 @@ interface Props {
   rules?: any
   isButtonClickable: boolean
   prefix: string
+  url: string
 }
 
-const RulesButton = ({ rules, isButtonClickable, prefix }: Props) => {
+const RulesButton = ({ rules, isButtonClickable, prefix, url }: Props) => {
   const [isModalShow, setIsModalShow] = useState(false)
 
   const getRules = () => {
@@ -25,14 +26,13 @@ const RulesButton = ({ rules, isButtonClickable, prefix }: Props) => {
       {isButtonClickable ? (
         <img
           className='ruleButton'
-          // 'http://dev.epub360.com/staticfs2/diazo/images/lottery/rule.png'
-          src={`${prefix}diazo/images/lottery/rule.png`}
+          src={url || `${prefix}diazo/images/lottery/rule.png`}
           onClick={getRules}
         />
       ) : (
         <img
           className='ruleButton'
-          src={`${prefix}diazo/images/lottery/rule.png`}
+          src={url || `${prefix}diazo/images/lottery/rule.png`}
         />
       )}
 
