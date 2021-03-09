@@ -1,6 +1,6 @@
 import { Modal } from 'antd'
 import React from 'react'
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { AppBus } from '../event-bus/event'
 import { getLotteryResult } from '../api'
 import styles from './index.module.less'
@@ -24,10 +24,15 @@ const Pointer = ({
   prefix
 }: Props) => {
   const dispatch = useDispatch()
+  const state = useSelector((state: any) => state) // 获取保存的状态
 
   const lottery = (singleLottery: any, prizeUrl: string, userInfo: any) => {
     // 先判断是否需要填写信息
-    if (userInfo[0].user_id === null && singleLottery[0].need_user_info) {
+    if (
+      userInfo[0].user_id === null &&
+      singleLottery[0].need_user_info &&
+      state.shouldUserInfoModalShow
+    ) {
       dispatch({ type: 'IsUserInfoModalShow', value: true })
     } else if (
       singleLottery[0].remain_times > 0 ||
