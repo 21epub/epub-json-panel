@@ -10,9 +10,10 @@ import MyPrizeContent from './MyPrizeContent'
 interface Props {
   myPrizeListUrl: string
   prefix: string
+  url: string
 }
 
-const MyPrizeButton = ({ myPrizeListUrl, prefix }: Props) => {
+const MyPrizeButton = ({ myPrizeListUrl, prefix, url }: Props) => {
   const dispatch = useDispatch()
   const state = useSelector((state: any) => state) // 获取保存的状态
 
@@ -45,7 +46,7 @@ const MyPrizeButton = ({ myPrizeListUrl, prefix }: Props) => {
     <div className={styles.myPrize}>
       <img
         className='prizeButton'
-        src={`${prefix}diazo/images/lottery/myPrize.png`}
+        src={url || `${prefix}diazo/images/lottery/myPrize.png`}
         onClick={getMyPrize}
       />
       <Modal
