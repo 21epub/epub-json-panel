@@ -1,4 +1,4 @@
-import InfoModalButton from './components/InfoModalButton'
+import InfoModalButton from './EpubApp/Lottery/Components/InfoModalButton'
 
 describe('InfoModalButton', () => {
   it('is truthy', () => {
