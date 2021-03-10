@@ -43,10 +43,10 @@ const RankingList: FC<RankingListProps> = (props) => {
                 </tr>
               </thead>
               <tbody>
-                {RankingListValue.map((item: any, index: number) => {
-                  if (index >= 10) return // 用于限制显示的条数
-                  if (item) {
-                    return (
+                {RankingListValue?.map((item: any, index: number) => {
+                  if (index >= 10) return null // 用于限制显示的条数
+                  return (
+                    item && (
                       <tr className='TR_4Sk8Ik' key={index}>
                         <th scope='row'>{index + 1}</th>
                         <td>
@@ -69,7 +69,7 @@ const RankingList: FC<RankingListProps> = (props) => {
                         <td>{item.real_score}</td>
                       </tr>
                     )
-                  }
+                  )
                 })}
               </tbody>
             </Fragment>

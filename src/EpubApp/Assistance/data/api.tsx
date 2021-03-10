@@ -22,7 +22,7 @@ axios.defaults.headers = {
 // const portal_url = 'http://test.epub360.com/';
 // const portal_url = 'http://www.epub360.com/v2/';
 // const portal_url = window.location.protocol + "//" + window.location.host;
-// const portal_url = '/';
+const portal_url = '/'
 
 // **-------------------------------------------------------------------------------------------助力活动接口'api/assistance/'
 // 新建助力，并设置初始值；

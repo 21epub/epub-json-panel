@@ -67,6 +67,7 @@
     "copy-to-clipboard": "^3.3.1",
     "moment": "^2.29.1",
     "qs": "^6.9.4",
+    "ramda": "^0.21.0",
     "react-redux": "^7.2.2",
     "redux": "^4.0.5",
     "styled-components": "^4.4.1"
@@ -84,6 +85,7 @@
     "@testing-library/react": "^9.5.0",
     "@testing-library/user-event": "^7.2.1",
     "@types/jest": "26.0.14",
+    "@types/ramda": "^0.27.38",
     "@types/react": "16.9.50",
     "@types/react-dom": "16.9.8",
     "@types/react-redux": "^7.1.14",
