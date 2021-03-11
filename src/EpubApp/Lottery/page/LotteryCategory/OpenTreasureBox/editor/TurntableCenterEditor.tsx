@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react'
-import { drawPrizeBlock } from '../../../util'
+import { drawPrizeBlock } from '../../../../util'
 import styles from '../index.module.less'
 
 interface Props {
@@ -30,7 +30,7 @@ const TurntableCenterEditor = ({ prizeList }: Props) => {
     return (
       <div className={styles.turntableRotateWrap}>
         <canvas
-          id='turnTableCircle'
+          id='turntableCircle'
           ref={canvasRef}
           width='280px'
           height='280px'

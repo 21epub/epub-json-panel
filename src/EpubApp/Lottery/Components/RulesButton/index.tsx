@@ -26,13 +26,13 @@ const RulesButton = ({ rules, isButtonClickable, prefix, url }: Props) => {
       {isButtonClickable ? (
         <img
           className='ruleButton'
-          src={url || `${prefix}diazo/images/lottery/rule.png`}
+          src={url || `${prefix}diazo/images/lottery/common/rule.png`}
           onClick={getRules}
         />
       ) : (
         <img
           className='ruleButton'
-          src={url || `${prefix}diazo/images/lottery/rule.png`}
+          src={url || `${prefix}diazo/images/lottery/common/rule.png`}
         />
       )}
 

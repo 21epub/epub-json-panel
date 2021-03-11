@@ -8,12 +8,13 @@ import {
   addUserInfoUrl,
   queryUserInfoUrl,
   winnersUrl
-} from '../../data/apiUrl'
-import LotteryPageView from './LotteryPageView'
+} from '../../EpubApp/Lottery/data/apiUrl'
+import { LotteryPageRender } from '../../EpubApp/Lottery/page'
+import type { LotteryPageRenderProps } from '../../EpubApp/Lottery/page'
 
 export default {
   title: 'Lottery/大转盘播放器',
-  component: LotteryPageView,
+  component: LotteryPageRender,
   argTypes: {
     remainTimes: {
       name: 'test',
@@ -22,20 +23,13 @@ export default {
   }
 } as Meta
 
-const Template: Story<{
-  prizeListUrl: string
-  singleLotteryUrl: string
-  prizeUrl: string
-  myPrizeListUrl: string
-  isDataChanged: boolean
-  addUserInfoUrl: string
-  queryUserInfoUrl: string
-  winnersUrl: string
-  prefix: string
-}> = (args) => <LotteryPageView {...args} />
+const Template: Story<LotteryPageRenderProps> = (args) => (
+  <LotteryPageRender {...args} />
+)
 
 export const Yapi = Template.bind({})
 Yapi.args = {
+  lotteryType: 'turntable',
   prizeListUrl: prizeListUrl,
   singleLotteryUrl: singleLotteryUrl,
   prizeUrl: prizeUrl,

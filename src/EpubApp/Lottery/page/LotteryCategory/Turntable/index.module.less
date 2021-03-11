@@ -1,0 +1,43 @@
+.pointer {
+  :global {
+    .point {
+      width: 60px;
+    }
+  }
+}
+
+.turntableWrap {
+  position: relative;
+  display: flex;
+  align-items: center; /* 垂直居中 */
+  justify-content: center; /* 水平居中 */
+  width: 422px;
+
+  :global {
+    .turntablePic {
+      width: 300px;
+      height: 300px;
+    }
+
+    #turntableCircle {
+      position: absolute;
+      top: 9.5%;
+      left: 21%;
+      z-index: 1000;
+      border: 1px solid transparent;
+    }
+
+    .point {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      z-index: 1000;
+      max-width: 60px;
+      -ms-transform: translateX(-50%, -60%);
+      -moz-transform: translateX(-50%, -60%);
+      -webkit-transform: translateX(-50%, -60%);
+      -o-transform: translateX(-50%, -60%);
+      transform: translate(-50%, -60%);
+    }
+  }
+}

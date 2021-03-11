@@ -1,13 +1,13 @@
 import { Modal } from 'antd'
 import React, { useCallback, useEffect, useRef, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { AppBus } from '../../event-bus/event'
+import { AppBus } from '../../../event-bus/event'
 import {
   drawPrizeBlock,
   getPrizeIndex,
   getRandomInt,
   prizeToAngle
-} from '../../util'
+} from '../../../util'
 import styles from './index.module.less'
 
 interface Props {
@@ -121,7 +121,7 @@ const TurntableCenter = ({ prizeList }: Props) => {
     return (
       <div className={styles.turntableRotateWrap}>
         <canvas
-          id='turnTableCircle'
+          id='turntableCircle'
           ref={canvasRef}
           width='280px'
           height='280px'

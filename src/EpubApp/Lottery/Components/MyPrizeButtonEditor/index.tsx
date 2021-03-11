@@ -11,7 +11,7 @@ const MyPrizeButtonEditor = ({ prefix, url }: Props) => {
     <div className={styles.myPrize}>
       <img
         className='prizeButton'
-        src={url || `${prefix}diazo/images/lottery/myPrize.png`}
+        src={url || `${prefix}diazo/images/lottery/common/myPrize.png`}
       />
     </div>
   )

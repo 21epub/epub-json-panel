@@ -4,8 +4,8 @@ import React from 'react'
 import styles from './index.module.less'
 
 interface Props {
-  startTime: string | null
-  endTime: string | null
+  startTime?: string | null
+  endTime?: string | null
 }
 
 // 活动时间组件
@@ -14,8 +14,8 @@ const ActivityTime = ({ startTime, endTime }: Props) => {
     return (
       <div className={styles.activityTime}>
         <div className='activityTime'>
-          活动时间：{startTime.substr(0, startTime.length - 3)}~
-          {endTime.substr(0, endTime.length - 3)}
+          活动时间：{startTime?.substr(0, startTime?.length - 3)}~
+          {endTime?.substr(0, endTime?.length - 3)}
         </div>
       </div>
     )

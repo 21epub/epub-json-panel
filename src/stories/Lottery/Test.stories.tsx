@@ -1,7 +1,7 @@
 import React from 'react'
 import { Story, Meta } from '@storybook/react/types-6-0'
 
-import { Test } from '../../index'
+import Test from '../../EpubApp/Lottery/Test'
 
 export default {
   title: 'Lottery/测试组件',

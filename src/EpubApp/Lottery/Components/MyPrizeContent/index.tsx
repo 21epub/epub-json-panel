@@ -31,7 +31,7 @@ const MyPrizeContent = ({ myPrizeList, prefix }: Props) => {
                   <img
                     src={
                       item.objective.picture ||
-                      `${prefix}diazo/images/lottery/prize.png`
+                      `${prefix}diazo/images/lottery/common/prize.png`
                     }
                     alt='err'
                     width='80%'

@@ -1,31 +1,30 @@
+import React, { FC, useMemo, useState, useEffect } from 'react'
 import { DataClient } from '@21epub/epub-data-client'
 import { Button, Col, Row } from 'antd'
 import Modal from 'antd/lib/modal/Modal'
-import React, { useMemo, useState, useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { SinglePrizeProps } from '../../type'
 import styles from './index.module.less'
 import MyPrizeContent from '../MyPrizeContent'
 
-interface Props {
-  myPrizeListUrl: string
+interface MyPrizeButtonProps {
+  myPrizeListUrl?: string
   prefix: string
   url: string
 }
 
-const MyPrizeButton = ({ myPrizeListUrl, prefix, url }: Props) => {
+const MyPrizeButton: FC<MyPrizeButtonProps> = (props) => {
+  const { myPrizeListUrl = '', prefix, url } = props
   const dispatch = useDispatch()
   const state = useSelector((state: any) => state) // 获取保存的状态
-
   const [isModalShow, setIsModalShow] = useState(false)
 
   const myPrizeListClient = useMemo(() => {
-    const client = new DataClient<SinglePrizeProps>(myPrizeListUrl)
-    return client
+    return new DataClient<SinglePrizeProps>(myPrizeListUrl)
   }, [myPrizeListUrl])
 
   useEffect(() => {
-    myPrizeListClient.getAll()
+    myPrizeListUrl && myPrizeListClient.getAll()
   }, [myPrizeListUrl])
 
   const myPrizeList = myPrizeListClient.useData()
@@ -46,7 +45,7 @@ const MyPrizeButton = ({ myPrizeListUrl, prefix, url }: Props) => {
     <div className={styles.myPrize}>
       <img
         className='prizeButton'
-        src={url || `${prefix}diazo/images/lottery/myPrize.png`}
+        src={url || `${prefix}diazo/images/lottery/common/myPrize.png`}
         onClick={getMyPrize}
       />
       <Modal

@@ -1,21 +1,18 @@
+import React, { FC, useState } from 'react'
 import { Col, Form, Input, Row, Button } from 'antd'
 import Modal from 'antd/lib/modal/Modal'
-import React, { useState } from 'react'
 import { useDispatch } from 'react-redux'
 import { addUserInfo } from '../../data/api'
 import { translateTitle } from '../../util'
 
-interface Props {
+interface UserInfoModalProps {
   isModalShow: boolean
   singleLottery: any
-  addUserInfoUrl: string
+  addUserInfoUrl?: string
 }
 
-const UserInfoModal = ({
-  isModalShow,
-  singleLottery,
-  addUserInfoUrl
-}: Props) => {
+const UserInfoModal: FC<UserInfoModalProps> = (props) => {
+  const { isModalShow, singleLottery, addUserInfoUrl } = props
   const dispatch = useDispatch()
 
   const [confirmLoading, setConfirmLoading] = useState(false)
@@ -34,7 +31,7 @@ const UserInfoModal = ({
     const email: string = form.getFieldInstance('email').props.value
     const name: string = form.getFieldInstance('name').props.value
     let info: any
-    if (address && phone && email && name) {
+    if (address && phone && email && name && addUserInfoUrl) {
       info = {
         address: address,
         phone: phone,

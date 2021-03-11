@@ -1,12 +1,15 @@
-interface ObjectiveProps {
+export type LotteryType = 'eggFrenzy' | 'openTreasureBox' | 'turntable'
+
+export interface ObjectiveProps {
   id: string
   title: string
   description: string
   picture: string
   ranking: string
 }
+
 /* eslint-disable */
-interface SinglePrizeProps {
+export interface SinglePrizeProps {
   id: string
   initiator_id: number
   initiator_username: string
@@ -17,7 +20,7 @@ interface SinglePrizeProps {
   objective: ObjectiveProps
 }
 
-interface SingleLotteryProps {
+export interface SingleLotteryProps {
   type: string
   info_fields_list: string[] | null
   title: string
@@ -38,10 +41,7 @@ interface SingleLotteryProps {
   contact_info: any
 }
 
-interface UserInfo {
+export interface UserInfo {
   id: string
   user_id: string | null
 }
-
-/* eslint-enable */
-export { SinglePrizeProps, SingleLotteryProps, UserInfo }
