@@ -3,9 +3,12 @@ import styles from './index.module.less'
 import Pointer from './Pointer'
 import TurntableBackground from './TurntableBackground'
 import TurntableCenter from './TurntableCenter'
+import { ActivityTime } from '../../../Components'
 
 interface TurntableProps {
-  pointerUrl: string
+  startTime: string
+  endTime: string
+  pointUrl: string
   turntableUrl: string
   prizeList: any
   singleLottery: any
@@ -18,7 +21,9 @@ interface TurntableProps {
 // 大转盘抽奖
 const Turntable: FC<TurntableProps> = (props) => {
   const {
-    pointerUrl,
+    startTime,
+    endTime,
+    pointUrl,
     turntableUrl,
     prizeList,
     userInfo,
@@ -30,12 +35,13 @@ const Turntable: FC<TurntableProps> = (props) => {
 
   return (
     <div className={styles.turntableWrap}>
+      <ActivityTime startTime={startTime} endTime={endTime} />
       <TurntableBackground url={turntableUrl} prefix={prefix} />
       {prizeList?.length && (
         <div>
           <TurntableCenter prizeList={prizeList} />
           <Pointer
-            url={pointerUrl}
+            url={pointUrl}
             isClickable={isClickable}
             prizeList={prizeList}
             singleLottery={singleLottery}

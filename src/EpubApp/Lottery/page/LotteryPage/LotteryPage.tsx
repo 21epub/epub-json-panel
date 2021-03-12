@@ -4,14 +4,12 @@ import { useDispatch, useSelector } from 'react-redux'
 import { DataClient } from '@21epub/epub-data-client'
 import { AppBus } from '../../event-bus/event'
 import { SingleLotteryProps, UserInfo, LotteryType } from '../../type'
-import Turntable from '../LotteryCategory/Turntable'
+import { getLotteryComponent } from '../LotteryCategory'
 
 import {
-  ActivityTime,
   RemainTime,
   MyPrizeButton,
   RulesButton,
-  BackgroundPic,
   ContactInfo,
   UserInfoModal,
   RollingList,
@@ -33,7 +31,7 @@ export interface LotteryPageProps {
 
 const LotteryPage: FC<LotteryPageProps> = (props) => {
   const {
-    // lotteryType,
+    lotteryType,
     prefix,
     isDataChanged,
     prizeListUrl,
@@ -47,6 +45,7 @@ const LotteryPage: FC<LotteryPageProps> = (props) => {
 
   const state = useSelector((stateValue: any) => stateValue) // 获取保存的状态
   const dispatch = useDispatch()
+  const LotteryComponent = getLotteryComponent(lotteryType)
 
   const prizeListClient = useMemo(() => {
     return new DataClient(prizeListUrl)
@@ -70,7 +69,7 @@ const LotteryPage: FC<LotteryPageProps> = (props) => {
     singleLotteryUrl && singleLotteryClient.getAll()
     winnersUrl && winnersClient.getAll()
     queryUserInfoUrl && userInfoClient.getAll()
-  }, [isDataChanged])
+  }, [isDataChanged, lotteryType])
 
   const getData = useCallback(() => {
     prizeListUrl && prizeListClient.getAll()
@@ -115,29 +114,32 @@ const LotteryPage: FC<LotteryPageProps> = (props) => {
     rules
   } = singleLottery?.[0] ?? {}
 
-  const { background, pointer, turntable, myPrize, rule } =
+  const { background, myPrize, rule, ...rest } =
     singleLottery?.[0]?.picture ?? {}
 
   return (
-    <div className={styles.lotteryPageWrap}>
-      <BackgroundPic
-        url={background}
-        isShow={show_background_image}
+    <div
+      className={styles.lotteryPageWrap}
+      style={{
+        backgroundImage: show_background_image
+          ? `url(${
+              background || prefix + 'diazo/images/lottery/turntable/bg.png'
+            })`
+          : '',
+        backgroundSize: '100% 100%'
+      }}
+    >
+      <LotteryComponent
+        startTime={start_time}
+        endTime={end_time}
+        prizeList={prizeList}
+        userInfo={userInfo}
+        singleLottery={singleLottery}
+        prizeUrl={prizeUrl}
+        isClickable={state.isClickable}
         prefix={prefix}
+        {...rest}
       />
-      <ActivityTime startTime={start_time} endTime={end_time} />
-      <div className='turntableWrap'>
-        <Turntable
-          pointerUrl={pointer}
-          turntableUrl={turntable}
-          prizeList={prizeList}
-          userInfo={userInfo}
-          singleLottery={singleLottery}
-          prizeUrl={prizeUrl}
-          isClickable={state.isClickable}
-          prefix={prefix}
-        />
-      </div>
       <RemainTime remainTimes={remain_times} />
       <MyPrizeButton
         url={myPrize}

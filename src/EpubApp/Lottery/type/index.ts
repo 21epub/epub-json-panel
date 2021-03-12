@@ -1,4 +1,4 @@
-export type LotteryType = 'eggFrenzy' | 'openTreasureBox' | 'turntable'
+export type LotteryType = 'Turntable' | 'EggFrenzy' | 'LotteryBox'
 
 export interface ObjectiveProps {
   id: string

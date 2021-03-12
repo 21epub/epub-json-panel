@@ -1,17 +1,18 @@
+import React, { FC, useEffect, useState } from 'react'
 import { Button } from 'antd'
 import Modal from 'antd/lib/modal/Modal'
 import moment from 'moment'
-import React, { useEffect, useState } from 'react'
 import { getNow } from '../../util'
 import { useDispatch } from 'react-redux'
 import styles from './index.module.less'
 
-interface Props {
+interface ActivityTimeModalProps {
   startTime: string | null
   endTime: string | null
 }
 
-const ActivityTimeModal = ({ startTime, endTime }: Props) => {
+const ActivityTimeModal: FC<ActivityTimeModalProps> = (props) => {
+  const { startTime, endTime } = props
   const dispatch = useDispatch()
   const [isModalShow, setIsModalShow] = useState(false)
   const [content, setContent] = useState('')

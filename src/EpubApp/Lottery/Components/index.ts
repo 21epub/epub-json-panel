@@ -1,6 +1,5 @@
 export { default as ActivityTime } from './ActivityTime'
 export { default as ActivityTimeModal } from './ActivityTimeModal'
-export { default as BackgroundPic } from './BackgroundPic'
 export { default as ContactInfo } from './ContactInfo'
 export { default as InfoModalButton } from './InfoModalButton'
 export { default as MyPrizeButton } from './MyPrizeButton'
