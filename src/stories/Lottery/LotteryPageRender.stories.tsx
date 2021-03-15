@@ -29,7 +29,7 @@ const Template: Story<LotteryPageRenderProps> = (args) => (
 
 export const Yapi = Template.bind({})
 Yapi.args = {
-  lotteryType: 'turntable',
+  lotteryType: 'Turntable',
   prizeListUrl: prizeListUrl,
   singleLotteryUrl: singleLotteryUrl,
   prizeUrl: prizeUrl,

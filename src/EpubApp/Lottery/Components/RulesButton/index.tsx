@@ -1,16 +1,17 @@
+import React, { FC, useState } from 'react'
 import { Button } from 'antd'
 import Modal from 'antd/lib/modal/Modal'
-import React, { useState } from 'react'
 import styles from './index.module.less'
 
-interface Props {
+interface RulesButtonProps {
   rules?: any
   isButtonClickable: boolean
   prefix: string
   url: string
 }
 
-const RulesButton = ({ rules, isButtonClickable, prefix, url }: Props) => {
+const RulesButton: FC<RulesButtonProps> = (props) => {
+  const { rules, isButtonClickable, prefix, url } = props
   const [isModalShow, setIsModalShow] = useState(false)
 
   const getRules = () => {

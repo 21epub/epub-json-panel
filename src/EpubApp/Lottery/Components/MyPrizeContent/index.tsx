@@ -1,15 +1,16 @@
+import React, { FC } from 'react'
 import { Button, Col, Row, Space } from 'antd'
-import React from 'react'
 import copy from 'copy-to-clipboard'
 import { useDispatch } from 'react-redux'
 import styles from './index.module.less'
 
-interface Props {
+interface MyPrizeContentProps {
   myPrizeList: any
   prefix: string
 }
 
-const MyPrizeContent = ({ myPrizeList, prefix }: Props) => {
+const MyPrizeContent: FC<MyPrizeContentProps> = (props) => {
+  const { myPrizeList, prefix } = props
   const dispatch = useDispatch()
   const copyContent = (id: string) => {
     if (copy(id)) {

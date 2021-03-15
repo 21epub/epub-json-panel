@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { FC, useState, useEffect } from 'react'
 import styled, { keyframes } from 'styled-components'
 
 const Wrapper = styled.div<any>`
@@ -26,7 +26,7 @@ const Text = styled.p<any>`
   text-shadow: grey 0.1em 0.1em 0.2em;
 `
 
-interface Props {
+interface NoticeBoardProps {
   stepDuration: any
   height?: any
   className: string
@@ -35,14 +35,15 @@ interface Props {
   dataSource: any
 }
 
-const NoticeBoard = ({
-  stepDuration = 1000,
-  height = 44,
-  textClassName,
-  width,
-  dataSource,
-  className
-}: Props) => {
+const NoticeBoard: FC<NoticeBoardProps> = (props) => {
+  const {
+    stepDuration = 1000,
+    height = 44,
+    textClassName,
+    width,
+    dataSource,
+    className
+  } = props
   const [dataSourceL, setDataSourceL] = useState(dataSource)
   const [keyframesValue, setKeyframesValue] = useState('')
 

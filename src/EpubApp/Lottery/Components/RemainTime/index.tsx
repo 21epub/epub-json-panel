@@ -1,11 +1,12 @@
-import React from 'react'
+import React, { FC } from 'react'
 import styles from './index.module.less'
 
-interface Props {
+interface RemainTimeProps {
   remainTimes: number | null
 }
 
-const RemainTime = ({ remainTimes }: Props) => {
+const RemainTime: FC<RemainTimeProps> = (props) => {
+  const { remainTimes } = props
   return (
     <div className={styles.remainTime}>
       <div className='remainTimesWrap'>

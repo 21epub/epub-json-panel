@@ -1,12 +1,13 @@
-import React from 'react'
+import React, { FC } from 'react'
 import styles from './index.module.less'
 
-interface Props {
+interface ContactInfoProps {
   contactInfo?: any
   isShow: boolean
 }
 
-const ContactInfo = ({ contactInfo, isShow = true }: Props) => {
+const ContactInfo: FC<ContactInfoProps> = (props) => {
+  const { contactInfo, isShow = true } = props
   if (isShow) {
     return (
       <div className={styles.contactInfo}>

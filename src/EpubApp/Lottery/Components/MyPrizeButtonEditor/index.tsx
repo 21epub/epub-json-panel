@@ -1,12 +1,13 @@
-import React from 'react'
+import React, { FC } from 'react'
 import styles from './index.module.less'
 
-interface Props {
+interface MyPrizeButtonEditorProps {
   prefix: string
   url: string
 }
 
-const MyPrizeButtonEditor = ({ prefix, url }: Props) => {
+const MyPrizeButtonEditor: FC<MyPrizeButtonEditorProps> = (props) => {
+  const { prefix, url } = props
   return (
     <div className={styles.myPrize}>
       <img

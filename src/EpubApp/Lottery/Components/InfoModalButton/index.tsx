@@ -1,10 +1,10 @@
+import React, { FC } from 'react'
 import { Button } from 'antd'
-import * as React from 'react'
 import 'antd/dist/antd.css'
 import { info } from './InfoModal'
 // import content from 'antd/dist/antd.css'
 
-const InfoModalButton = () => {
+const InfoModalButton: FC = () => {
   const content = (
     <div>
       <div>1.规则说明</div>

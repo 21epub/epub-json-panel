@@ -1,14 +1,15 @@
-import React from 'react'
+import React, { FC } from 'react'
 import NoticeBoard from '../NoticeBoard'
 import { getNow } from '../../util'
 import styles from './index.module.less'
 
-interface Props {
+interface RollingListProps {
   winnerList: any
   isShow: boolean
 }
 
-const RollingList = ({ winnerList, isShow = true }: Props) => {
+const RollingList: FC<RollingListProps> = (props) => {
+  const { winnerList, isShow = true } = props
   const data = `恭喜小李抽中一等奖 ${getNow()}`
   if (winnerList === 'editor') {
     return (
