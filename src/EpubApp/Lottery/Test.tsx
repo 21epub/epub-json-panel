@@ -14,22 +14,17 @@ const Test = () => {
   return (
     <div>
       <LotteryPageRender
-        lotteryType='turntable'
+        lotteryType='Turntable'
+        isDataChanged
         prizeListUrl={prizeListUrl}
         singleLotteryUrl={singleLotteryUrl}
         prizeUrl={prizeUrl}
         myPrizeListUrl={myPrizeListUrl}
-        isDataChanged
         addUserInfoUrl={addUserInfoUrl}
         queryUserInfoUrl={queryUserInfoUrl}
         winnersUrl={winnersUrl}
         prefix='test'
       />
-      {/* <LotteryPageTestEditor 
-              singleLotteryUrl={singleLotteryUrl}
-              prizeListUrl={prizeListUrl}
-              isDataChanged
-            /> */}
     </div>
   )
 }

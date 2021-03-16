@@ -21,7 +21,9 @@ const RollingList: FC<RollingListProps> = (props) => {
     const winner = []
     for (let i = 0; i < winnerList.length; i++) {
       winner.push(
-        `恭喜${winnerList[i]?.initiator_name}抽中${winnerList[i]?.objective?.ranking} ${winnerList[i]?.created}`
+        `恭喜${winnerList[i]?.initiator_name || `User${i + 1}`}抽中${
+          winnerList[i]?.objective?.ranking
+        } ${winnerList[i]?.created}`
       )
     }
 

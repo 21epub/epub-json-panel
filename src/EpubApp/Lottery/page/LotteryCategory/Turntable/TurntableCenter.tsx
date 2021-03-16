@@ -1,5 +1,5 @@
+import React, { FC, useCallback, useEffect, useRef, useState } from 'react'
 import { Modal } from 'antd'
-import React, { useCallback, useEffect, useRef, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { AppBus } from '../../../event-bus/event'
 import {
@@ -8,13 +8,30 @@ import {
   getRandomInt,
   prizeToAngle
 } from '../../../util'
-import styles from './index.module.less'
+import Pointer from './Pointer'
 
-interface Props {
+interface TurntableCenterProps {
   prizeList: any
+  turntable: string
+  prefix: string
+  pointer: string
+  isClickable: boolean
+  singleLottery: any
+  prizeUrl?: string
+  userInfo: any
 }
 
-const TurntableCenter = ({ prizeList }: Props) => {
+const TurntableCenter: FC<TurntableCenterProps> = (props) => {
+  const {
+    prizeList,
+    turntable,
+    prefix,
+    pointer,
+    isClickable,
+    singleLottery,
+    prizeUrl,
+    userInfo
+  } = props
   const canvasRef = useRef<HTMLCanvasElement>(null)
   const [ctx, setCtx] = useState<CanvasRenderingContext2D | null>(null)
   const [startRadian, setStartRadian] = useState(0) // 定义圆的角度
@@ -68,16 +85,6 @@ const TurntableCenter = ({ prizeList }: Props) => {
     }
   }, [])
 
-  // 监听抽奖动作
-  useEffect(() => {
-    const subscription = AppBus.subject('Rotate$').subscribe((prize) => {
-      doRotate(prize)
-    })
-    return () => {
-      subscription.unsubscribe()
-    }
-  }, [])
-
   // 旋转函数
   const rotate = (prize: any) => {
     return new Promise((resolve) => {
@@ -119,7 +126,15 @@ const TurntableCenter = ({ prizeList }: Props) => {
     }
 
     return (
-      <div className={styles.turntableRotateWrap}>
+      <div
+        className='turntableCenterWrap'
+        style={{
+          backgroundImage: `url(${
+            turntable || prefix + 'diazo/images/lottery/turntable/turntable.png'
+          })`,
+          backgroundSize: '100% 100%'
+        }}
+      >
         <canvas
           id='turntableCircle'
           ref={canvasRef}
@@ -128,6 +143,16 @@ const TurntableCenter = ({ prizeList }: Props) => {
         >
           您的浏览器不支持canvas。
         </canvas>
+        <Pointer
+          pointer={pointer}
+          isClickable={isClickable}
+          prizeList={prizeList}
+          singleLottery={singleLottery}
+          userInfo={userInfo}
+          prefix={prefix}
+          prizeUrl={prizeUrl}
+          doRotate={doRotate}
+        />
       </div>
     )
   } else {
