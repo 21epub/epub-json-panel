@@ -5,16 +5,7 @@ import { DataClient } from '@21epub/epub-data-client'
 import { AppBus } from '../../event-bus/event'
 import { SingleLotteryProps, UserInfo, LotteryType } from '../../type'
 import { getLotteryComponent } from '../LotteryCategory'
-
-import {
-  RemainTime,
-  MyPrizeButton,
-  RulesButton,
-  ContactInfo,
-  UserInfoModal,
-  RollingList,
-  ActivityTimeModal
-} from '../../Components'
+import { UserInfoModal, ActivityTimeModal } from '../../Components'
 
 export interface LotteryPageProps {
   lotteryType: LotteryType
@@ -103,19 +94,9 @@ const LotteryPage: FC<LotteryPageProps> = (props) => {
     }
   }, [userInfo, singleLottery])
 
-  const {
-    start_time,
-    end_time,
-    remain_times,
-    show_background_image,
-    show_contact_info,
-    show_rolling_list,
-    contact_info,
-    rules
-  } = singleLottery?.[0] ?? {}
-
-  const { background, myPrize, rule, ...rest } =
-    singleLottery?.[0]?.picture ?? {}
+  const { start_time, end_time, show_background_image, picture = {} } =
+    singleLottery?.[0] ?? {}
+  const { background, myPrize, ...picRest } = picture
 
   return (
     <div
@@ -130,25 +111,16 @@ const LotteryPage: FC<LotteryPageProps> = (props) => {
       }}
     >
       <LotteryComponent
-        startTime={start_time}
-        endTime={end_time}
+        singleLottery={singleLottery}
+        winnerList={winnerList}
         prizeList={prizeList}
         userInfo={userInfo}
-        singleLottery={singleLottery}
-        prizeUrl={prizeUrl}
         isClickable={state.isClickable}
         prefix={prefix}
-        {...rest}
-      />
-      <RemainTime remainTimes={remain_times} />
-      <MyPrizeButton
-        url={myPrize}
         myPrizeListUrl={myPrizeListUrl}
-        prefix={prefix}
+        prizeUrl={prizeUrl}
+        {...picRest}
       />
-      <RulesButton url={rule} rules={rules} isButtonClickable prefix={prefix} />
-      <RollingList winnerList={winnerList} isShow={show_rolling_list} />
-      <ContactInfo contactInfo={contact_info} isShow={show_contact_info} />
       <UserInfoModal
         isModalShow={state.IsUserInfoModalShow}
         singleLottery={singleLottery}

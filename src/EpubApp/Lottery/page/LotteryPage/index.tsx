@@ -39,11 +39,11 @@ export const LotteryPageRender: FC<LotteryPageRenderProps> = (props) => {
       <Provider store={store}>
         <LotteryPage
           lotteryType={lotteryType}
-          prizeListUrl={prizeListUrl}
-          singleLotteryUrl={singleLotteryUrl}
           isDataChanged={isDataChanged}
           prefix={prefix}
           prizeUrl={prizeUrl}
+          prizeListUrl={prizeListUrl}
+          singleLotteryUrl={singleLotteryUrl}
           myPrizeListUrl={myPrizeListUrl}
           addUserInfoUrl={addUserInfoUrl}
           queryUserInfoUrl={queryUserInfoUrl}

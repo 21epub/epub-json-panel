@@ -1,11 +1,17 @@
 import React, { FC } from 'react'
 import styles from './index.module.less'
 import TreasureBox from './TreasureBox'
-import { ActivityTime } from '../../../Components'
+import {
+  ActivityTime,
+  RemainTime,
+  MyPrizeButton,
+  RulesButton,
+  RollingList,
+  ContactInfo
+} from '../../../Components'
 
 interface LotteryBoxProps {
-  startTime?: string
-  endTime?: string
+  winnerList: any
   pointerUrl: string
   prizeList: any
   singleLottery: any
@@ -13,13 +19,14 @@ interface LotteryBoxProps {
   isClickable: boolean
   prefix: string
   prizeUrl?: string
+  myPrizeListUrl: string
 }
 
 // 抽奖箱
 const LotteryBox: FC<LotteryBoxProps> = (props) => {
   const {
-    startTime,
-    endTime,
+    myPrizeListUrl,
+    winnerList,
     pointerUrl,
     prizeList,
     userInfo,
@@ -28,11 +35,23 @@ const LotteryBox: FC<LotteryBoxProps> = (props) => {
     prefix,
     prizeUrl
   } = props
-  // console.log(props);
+
+  const {
+    start_time,
+    end_time,
+    remain_times,
+    show_contact_info,
+    show_rolling_list,
+    contact_info,
+    rules,
+    picture = {}
+  } = singleLottery?.[0] ?? {}
+
+  const { myPrize, rule } = picture
 
   return (
     <div className={styles.lotteryBoxWrap}>
-      <ActivityTime startTime={startTime} endTime={endTime} />
+      <ActivityTime startTime={start_time} endTime={end_time} />
       <TreasureBox
         url={pointerUrl}
         isClickable={isClickable}
@@ -42,6 +61,15 @@ const LotteryBox: FC<LotteryBoxProps> = (props) => {
         prefix={prefix}
         prizeUrl={prizeUrl}
       />
+      <RemainTime remainTimes={remain_times} />
+      <MyPrizeButton
+        url={myPrize}
+        myPrizeListUrl={myPrizeListUrl}
+        prefix={prefix}
+      />
+      <RulesButton url={rule} rules={rules} isButtonClickable prefix={prefix} />
+      <RollingList winnerList={winnerList} isShow={show_rolling_list} />
+      <ContactInfo contactInfo={contact_info} isShow={show_contact_info} />
     </div>
   )
 }

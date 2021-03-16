@@ -1,5 +1,5 @@
+import React, { FC, useCallback, useEffect, useRef, useState } from 'react'
 import { Modal } from 'antd'
-import React, { useCallback, useEffect, useRef, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { AppBus } from '../../../event-bus/event'
 import {
@@ -8,13 +8,15 @@ import {
   getRandomInt,
   prizeToAngle
 } from '../../../util'
-import styles from './index.module.less'
 
-interface Props {
+interface TurntableCenterProps {
   prizeList: any
+  turntableUrl: string
+  prefix: string
 }
 
-const TurntableCenter = ({ prizeList }: Props) => {
+const TurntableCenter: FC<TurntableCenterProps> = (props) => {
+  const { prizeList, turntableUrl, prefix } = props
   const canvasRef = useRef<HTMLCanvasElement>(null)
   const [ctx, setCtx] = useState<CanvasRenderingContext2D | null>(null)
   const [startRadian, setStartRadian] = useState(0) // 定义圆的角度
@@ -119,7 +121,16 @@ const TurntableCenter = ({ prizeList }: Props) => {
     }
 
     return (
-      <div className={styles.turntableRotateWrap}>
+      <div
+        className='turntableRotateWrap'
+        style={{
+          backgroundImage: `url(${
+            turntableUrl ||
+            prefix + 'diazo/images/lottery/turntable/turntable.png'
+          })`,
+          backgroundSize: '100% 100%'
+        }}
+      >
         <canvas
           id='turntableCircle'
           ref={canvasRef}
