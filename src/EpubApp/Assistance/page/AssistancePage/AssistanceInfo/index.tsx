@@ -7,7 +7,6 @@ import type {
   ActivityDetailType,
   SupporterDetailType
 } from '../../../type'
-import { onSuccess } from '../../../index'
 import store from '../../../store'
 
 interface AssistanceInfoProps {
@@ -34,7 +33,6 @@ const AssistanceInfo: FC<AssistanceInfoProps> = (props) => {
   const { run: RunAddSupporter } = useRequest(AddSupporter, {
     manual: true,
     onSuccess: () => {
-      onSuccess() // 帮TA助力成功时触发器
       onOpenPopUp() // 打开提示弹框
       setCanInitOrSupport(true)
     }

@@ -100,18 +100,18 @@ const Initialization = (el: Element, urlKey: string, aslug: string) => {
 //* **----------------------------------------------------------------------------------绑定触发器与暴露相关参数 */
 
 // 绑定事件触发器
-let onSuccess: () => void
-let onInitiate: () => void
-const bind = (customType: string, callback: () => void) => {
-  switch (customType) {
-    case 'epubApp_assistance_onsuccess':
-      onSuccess = callback
-      break
-    case 'epubApp_assistance_oninitiate':
-      onInitiate = callback
-      break
-  }
-}
+// let onSuccess: () => void
+// let onInitiate: () => void
+// const bind = (customType: string, callback: () => void) => {
+//   switch (customType) {
+//     case 'epubApp_assistance_onsuccess':
+//       onSuccess = callback
+//       break
+//     case 'epubApp_assistance_oninitiate':
+//       onInitiate = callback
+//       break
+//   }
+// }
 
 // 用于定义暴露事件
 const Actions = [
@@ -132,13 +132,4 @@ const Params = [
   ['助力值规则', 'app_assistance_value_rule']
 ]
 
-export {
-  Assistance,
-  Initialization,
-  Error,
-  Actions,
-  Params,
-  bind,
-  onSuccess,
-  onInitiate
-}
+export { Assistance, Initialization, Error, Actions, Params }
