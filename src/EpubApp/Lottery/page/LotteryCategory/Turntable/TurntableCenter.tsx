@@ -8,15 +8,30 @@ import {
   getRandomInt,
   prizeToAngle
 } from '../../../util'
+import Pointer from './Pointer'
 
 interface TurntableCenterProps {
   prizeList: any
-  turntableUrl: string
+  turntable: string
   prefix: string
+  pointer: string
+  isClickable: boolean
+  singleLottery: any
+  prizeUrl?: string
+  userInfo: any
 }
 
 const TurntableCenter: FC<TurntableCenterProps> = (props) => {
-  const { prizeList, turntableUrl, prefix } = props
+  const {
+    prizeList,
+    turntable,
+    prefix,
+    pointer,
+    isClickable,
+    singleLottery,
+    prizeUrl,
+    userInfo
+  } = props
   const canvasRef = useRef<HTMLCanvasElement>(null)
   const [ctx, setCtx] = useState<CanvasRenderingContext2D | null>(null)
   const [startRadian, setStartRadian] = useState(0) // 定义圆的角度
@@ -122,11 +137,10 @@ const TurntableCenter: FC<TurntableCenterProps> = (props) => {
 
     return (
       <div
-        className='turntableRotateWrap'
+        className='turntableCenterWrap'
         style={{
           backgroundImage: `url(${
-            turntableUrl ||
-            prefix + 'diazo/images/lottery/turntable/turntable.png'
+            turntable || prefix + 'diazo/images/lottery/turntable/turntable.png'
           })`,
           backgroundSize: '100% 100%'
         }}
@@ -139,6 +153,16 @@ const TurntableCenter: FC<TurntableCenterProps> = (props) => {
         >
           您的浏览器不支持canvas。
         </canvas>
+        <Pointer
+          pointer={pointer}
+          isClickable={isClickable}
+          prizeList={prizeList}
+          singleLottery={singleLottery}
+          userInfo={userInfo}
+          prefix={prefix}
+          prizeUrl={prizeUrl}
+          doRotate={doRotate}
+        />
       </div>
     )
   } else {

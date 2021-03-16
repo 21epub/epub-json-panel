@@ -1,6 +1,5 @@
 import React, { FC } from 'react'
 import styles from './index.module.less'
-import Pointer from './Pointer'
 import TurntableCenter from './TurntableCenter'
 import {
   ActivityTime,
@@ -18,8 +17,8 @@ interface TurntableProps {
   userInfo: any
   isClickable: boolean
   prefix: string
-  pointUrl: string
-  turntableUrl: string
+  pointer: string
+  turntable: string
   myPrizeListUrl: string
   prizeUrl?: string
 }
@@ -28,13 +27,13 @@ interface TurntableProps {
 const Turntable: FC<TurntableProps> = (props) => {
   const {
     winnerList,
-    pointUrl,
+    pointer,
     prizeList,
     userInfo,
     singleLottery,
     isClickable,
     prefix,
-    turntableUrl,
+    turntable,
     myPrizeListUrl,
     prizeUrl
   } = props
@@ -56,22 +55,16 @@ const Turntable: FC<TurntableProps> = (props) => {
     <div className={styles.turntableWrap}>
       <ActivityTime startTime={start_time} endTime={end_time} />
       {prizeList?.length && (
-        <div className='turntableCenterWrap'>
-          <TurntableCenter
-            turntableUrl={turntableUrl}
-            prefix={prefix}
-            prizeList={prizeList}
-          />
-          <Pointer
-            url={pointUrl}
-            isClickable={isClickable}
-            prizeList={prizeList}
-            singleLottery={singleLottery}
-            userInfo={userInfo}
-            prefix={prefix}
-            prizeUrl={prizeUrl}
-          />
-        </div>
+        <TurntableCenter
+          pointer={pointer}
+          isClickable={isClickable}
+          prizeList={prizeList}
+          singleLottery={singleLottery}
+          userInfo={userInfo}
+          prefix={prefix}
+          prizeUrl={prizeUrl}
+          turntable={turntable}
+        />
       )}
       <RemainTime remainTimes={remain_times} />
       <MyPrizeButton
