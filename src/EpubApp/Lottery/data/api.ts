@@ -6,7 +6,7 @@ instance.defaults.headers = {
   'Content-type': 'application/x-www-form-urlencoded'
 }
 
-const getLotteryResult = (prizeUrl: string) => {
+export const getLotteryResult = (prizeUrl: string) => {
   return new Promise((resolve, reject) => {
     instance
       .post(prizeUrl)
@@ -19,7 +19,7 @@ const getLotteryResult = (prizeUrl: string) => {
   })
 }
 
-const addUserInfo = (addUserInfoUrl: string, data: any) => {
+export const addUserInfo = (addUserInfoUrl: string, data: any) => {
   return new Promise((resolve, reject) => {
     instance
       .post(addUserInfoUrl, qs.stringify(data))
@@ -32,7 +32,7 @@ const addUserInfo = (addUserInfoUrl: string, data: any) => {
   })
 }
 
-const queryUserInfo = (queryUserInfo: string) => {
+export const queryUserInfo = (queryUserInfo: string) => {
   return new Promise((resolve, reject) => {
     instance
       .get(queryUserInfo)
@@ -44,5 +44,3 @@ const queryUserInfo = (queryUserInfo: string) => {
       })
   })
 }
-
-export { getLotteryResult, addUserInfo, queryUserInfo }

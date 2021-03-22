@@ -36,7 +36,7 @@ const TurntableCenter: FC<TurntableCenterProps> = (props) => {
   const [ctx, setCtx] = useState<CanvasRenderingContext2D | null>(null)
   const [startRadian, setStartRadian] = useState(0) // 定义圆的角度
   const dispatch = useDispatch()
-  const state = useSelector((state: any) => state) // 获取保存的状态
+  const states = useSelector((state: any) => state) // 获取保存的状态
 
   // 渲染抽奖盘
   useEffect(() => {
@@ -47,6 +47,39 @@ const TurntableCenter: FC<TurntableCenterProps> = (props) => {
       }
     }
   }, [ctx, prizeList, startRadian])
+
+  // 旋转函数
+  const rotate = (prize: any) => {
+    return new Promise((resolve) => {
+      // 获取抽奖结果在奖品list中对应的index
+      const prizeIndex = getPrizeIndex(prize, prizeList)
+
+      // 获取目标角度： prizeIndex:prize对应第几个，prizeList.length:prize总数
+      const target = prizeToAngle(prizeIndex, prizeList.length)
+
+      const result = {
+        status: 'success',
+        prize // 获得的奖品
+      }
+
+      // 获取随机圈数
+      const turns = getRandomInt(5, 15)
+
+      // 将总旋转度数切割为多少份
+      const frame = getRandomInt(100, 400)
+
+      for (let i = 1; i <= frame; i += 1) {
+        // target为目标角度， 2 * Math.PI 为一圈 ，获取每份度数的大小
+        const interval = (target + 2 * Math.PI * turns) / frame
+        setTimeout(() => {
+          // 设定每次相对原点的旋转度数
+          setStartRadian(interval * i)
+          // 当到达目标度数时返回结果
+          if (i === frame) resolve(result)
+        }, 100)
+      }
+    })
+  }
 
   const doRotate = useCallback((prize) => {
     if (prize && prizeList?.length) {
@@ -73,7 +106,7 @@ const TurntableCenter: FC<TurntableCenterProps> = (props) => {
 
                 if (
                   !res.prize.objective.is_empty &&
-                  state.shouldUserInfoModalShow
+                  states.shouldUserInfoModalShow
                 ) {
                   dispatch({ type: 'IsUserInfoModalShow', value: true })
                 }
@@ -85,41 +118,8 @@ const TurntableCenter: FC<TurntableCenterProps> = (props) => {
     }
   }, [])
 
-  // 旋转函数
-  const rotate = (prize: any) => {
-    return new Promise((resolve) => {
-      // 获取抽奖结果在奖品list中对应的index
-      const prizeIndex = getPrizeIndex(prize, prizeList)
-
-      // 获取目标角度： prizeIndex:prize对应第几个，prizeList.length:prize总数
-      const target = prizeToAngle(prizeIndex, prizeList.length)
-
-      const result = {
-        status: 'success',
-        prize: prize // 获得的奖品
-      }
-
-      // 获取随机圈数
-      const turns = getRandomInt(5, 15)
-
-      // 将总旋转度数切割为多少份
-      const frame = getRandomInt(100, 400)
-
-      for (let i = 1; i <= frame; i += 1) {
-        // target为目标角度， 2 * Math.PI 为一圈 ，获取每份度数的大小
-        const interval = (target + 2 * Math.PI * turns) / frame
-        setTimeout(() => {
-          // 设定每次相对原点的旋转度数
-          setStartRadian(interval * i)
-          // 当到达目标度数时返回结果
-          if (i === frame) resolve(result)
-        }, 100)
-      }
-    })
-  }
-
   if (prizeList?.length) {
-    for (let i = 0; i < prizeList.length; i++) {
+    for (let i = 0; i < prizeList.length; i += 1) {
       if (i % 2 === 0)
         Object.defineProperty(prizeList[i], 'color', { value: '#fef8e6' })
       else Object.defineProperty(prizeList[i], 'color', { value: '#fff' })
@@ -130,7 +130,7 @@ const TurntableCenter: FC<TurntableCenterProps> = (props) => {
         className='turntableCenterWrap'
         style={{
           backgroundImage: `url(${
-            turntable || prefix + 'diazo/images/lottery/turntable/turntable.png'
+            turntable || `${prefix}diazo/images/lottery/turntable/turntable.png`
           })`,
           backgroundSize: '100% 100%'
         }}
@@ -155,9 +155,8 @@ const TurntableCenter: FC<TurntableCenterProps> = (props) => {
         />
       </div>
     )
-  } else {
-    return <div />
   }
+  return <div />
 }
 
 export default TurntableCenter

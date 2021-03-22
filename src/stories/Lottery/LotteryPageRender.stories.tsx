@@ -4,13 +4,11 @@ import {
   prizeListUrl,
   singleLotteryUrl,
   prizeUrl,
-  myPrizeListUrl,
-  addUserInfoUrl,
-  queryUserInfoUrl,
+  userInfoUrl,
   winnersUrl
 } from '../../EpubApp/Lottery/data/apiUrl'
 import { LotteryPageRender } from '../../EpubApp/Lottery/page'
-import type { LotteryPageRenderProps } from '../../EpubApp/Lottery/page'
+import type { LotteryPageRenderProps, LotteryUrlListType } from '../../index'
 
 export default {
   title: 'Lottery/大转盘',
@@ -28,15 +26,25 @@ const Template: Story<LotteryPageRenderProps> = (args) => (
 )
 
 export const Yapi = Template.bind({})
+
+// 抽奖各接口请求地址
+const lotteryUrlList: LotteryUrlListType = {
+  // 获取单个抽奖活动信息
+  singleLotteryUrl: singleLotteryUrl,
+  // 获取奖品信息列表
+  prizeListUrl: prizeListUrl,
+  // 默认图片链接地址头
+  picturePrefix: 'test',
+  // 抽奖与获取我的奖品信息
+  prizeUrl: prizeUrl,
+  // 获取与查询用户信息
+  userInfoUrl: userInfoUrl,
+  // 获取中奖用户滚动信息
+  winnersUrl: winnersUrl
+}
+
 Yapi.args = {
   lotteryType: 'Turntable',
-  prizeListUrl: prizeListUrl,
-  singleLotteryUrl: singleLotteryUrl,
-  prizeUrl: prizeUrl,
-  myPrizeListUrl: myPrizeListUrl,
-  isDataChanged: true,
-  addUserInfoUrl: addUserInfoUrl,
-  queryUserInfoUrl: queryUserInfoUrl,
-  winnersUrl: winnersUrl,
-  prefix: 'test'
+  lotteryUrlList: lotteryUrlList,
+  isDataChanged: true
 }

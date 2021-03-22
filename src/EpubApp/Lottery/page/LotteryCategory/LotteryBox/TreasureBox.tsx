@@ -6,7 +6,8 @@ import { getLotteryResult } from '../../../data/api'
 import styles from './index.module.less'
 
 interface TreasureBoxProps {
-  url: string
+  openBox: string
+  closeBox: string
   isClickable: boolean
   prizeList: any
   singleLottery: any
@@ -16,7 +17,15 @@ interface TreasureBoxProps {
 }
 
 const TreasureBox: FC<TreasureBoxProps> = (props) => {
-  const { url, isClickable, singleLottery, prizeUrl, userInfo, prefix } = props
+  const {
+    openBox,
+    closeBox,
+    isClickable,
+    singleLottery,
+    prizeUrl,
+    userInfo,
+    prefix
+  } = props
   const dispatch = useDispatch()
   const state = useSelector((state: any) => state) // 获取保存的状态
   const [modalVisible, setModalVisible] = useState(false)
@@ -88,10 +97,12 @@ const TreasureBox: FC<TreasureBoxProps> = (props) => {
         <img
           className='lotteryBoxPic'
           src={
-            url ||
-            `${prefix}diazo/images/lottery/lotteryBox/${
-              isClickable ? 'closeBox' : 'openBox'
-            }.png`
+            isClickable
+              ? closeBox
+              : openBox ||
+                `${prefix}diazo/images/lottery/lotteryBox/${
+                  isClickable ? 'closeBox' : 'openBox'
+                }.png`
           }
           onClick={() => lottery(singleLottery, userInfo, prizeUrl)}
         />

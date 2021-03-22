@@ -31,7 +31,7 @@ const MyPrizeContent: FC<MyPrizeContentProps> = (props) => {
                 <Col span={6} offset={2}>
                   <img
                     src={
-                      item.objective.picture ||
+                      item.objective?.picture ||
                       `${prefix}diazo/images/lottery/common/prize.png`
                     }
                     alt='err'

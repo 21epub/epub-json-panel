@@ -1,6 +1,6 @@
 import moment from 'moment'
 
-function getLineTextList(
+export function getLineTextList(
   context: CanvasRenderingContext2D,
   text: any,
   maxLineWidth: number
@@ -21,7 +21,7 @@ function getLineTextList(
   return lineList
 }
 
-function drawPrizeBlock(
+export function drawPrizeBlock(
   ctx: CanvasRenderingContext2D,
   awards: any,
   startR: number
@@ -67,7 +67,7 @@ function drawPrizeBlock(
   }
 }
 
-const prizeToAngle = (prizeIndex: number, prizeLength: number) => {
+export const prizeToAngle = (prizeIndex: number, prizeLength: number) => {
   // prizeIndex 从0开始 算出奖品min~max的范围
   const min =
     (3 * Math.PI) / 2 - ((2 * Math.PI) / prizeLength) * (prizeIndex + 1)
@@ -78,30 +78,30 @@ const prizeToAngle = (prizeIndex: number, prizeLength: number) => {
   return target
 }
 
-const getRandomInt = (min: number, max: number) => {
+export const getRandomInt = (min: number, max: number) => {
   return Math.round(Math.random() * (max - min) + min)
 }
 
-const getPrizeIndex = (prize: any, prizeList: any) => {
+export const getPrizeIndex = (prize: any, prizeList: any) => {
   const prizeIndex = prizeList.findIndex(
     (e: { id: string }) => e.id === prize.objective.id
   )
   return prizeIndex
 }
 
-const getNow = () => {
+export const getNow = () => {
   return moment().locale('zh-cn').format('YYYY-MM-DD HH:mm')
 }
 
-const getToday = () => {
+export const getToday = () => {
   return moment().locale('zh-cn').format('YYYY-MM-DD')
 }
 
-const getDate = (days: number) => {
+export const getDate = (days: number) => {
   return moment().add(days, 'days').locale('zh-cn').format('YYYY-MM-DD')
 }
 
-function translateTitle(name: string) {
+export function translateTitle(name: string) {
   switch (name) {
     case 'name':
       return '姓名'
@@ -114,16 +114,4 @@ function translateTitle(name: string) {
     default:
       return 'err'
   }
-}
-
-export {
-  getLineTextList,
-  drawPrizeBlock,
-  prizeToAngle,
-  getRandomInt,
-  getPrizeIndex,
-  getNow,
-  getDate,
-  getToday,
-  translateTitle
 }

@@ -12,22 +12,18 @@ import {
 
 interface LotteryBoxProps {
   winnerList: any
-  pointerUrl: string
   prizeList: any
   singleLottery: any
   userInfo: any
   isClickable: boolean
   prefix: string
   prizeUrl?: string
-  myPrizeListUrl: string
 }
 
 // 抽奖箱
 const LotteryBox: FC<LotteryBoxProps> = (props) => {
   const {
-    myPrizeListUrl,
     winnerList,
-    pointerUrl,
     prizeList,
     userInfo,
     singleLottery,
@@ -47,13 +43,14 @@ const LotteryBox: FC<LotteryBoxProps> = (props) => {
     picture = {}
   } = singleLottery?.[0] ?? {}
 
-  const { myPrize, rule } = picture
+  const { myPrize, rule, openBox, closeBox } = picture
 
   return (
     <div className={styles.lotteryBoxWrap}>
       <ActivityTime startTime={start_time} endTime={end_time} />
       <TreasureBox
-        url={pointerUrl}
+        openBox={openBox}
+        closeBox={closeBox}
         isClickable={isClickable}
         prizeList={prizeList}
         singleLottery={singleLottery}
@@ -62,11 +59,7 @@ const LotteryBox: FC<LotteryBoxProps> = (props) => {
         prizeUrl={prizeUrl}
       />
       <RemainTime remainTimes={remain_times} />
-      <MyPrizeButton
-        url={myPrize}
-        myPrizeListUrl={myPrizeListUrl}
-        prefix={prefix}
-      />
+      <MyPrizeButton url={myPrize} myPrizeListUrl={prizeUrl} prefix={prefix} />
       <RulesButton url={rule} rules={rules} isButtonClickable prefix={prefix} />
       <RollingList winnerList={winnerList} isShow={show_rolling_list} />
       <ContactInfo contactInfo={contact_info} isShow={show_contact_info} />

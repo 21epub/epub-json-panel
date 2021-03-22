@@ -1,38 +1,33 @@
 import React, { FC, useCallback, useEffect, useMemo } from 'react'
-import styles from './index.module.less'
 import { useDispatch, useSelector } from 'react-redux'
 import { DataClient } from '@21epub/epub-data-client'
 import { AppBus } from '../../event-bus/event'
-import { SingleLotteryProps, UserInfo, LotteryType } from '../../type'
+import {
+  SingleLotteryProps,
+  UserInfo,
+  LotteryType,
+  LotteryUrlListType
+} from '../../type'
 import { getLotteryComponent } from '../LotteryCategory'
 import { UserInfoModal, ActivityTimeModal } from '../../Components'
+import styles from './index.module.less'
 
 export interface LotteryPageProps {
   lotteryType: LotteryType
+  lotteryUrlList: LotteryUrlListType
   isDataChanged: boolean
-  prizeListUrl: string
-  singleLotteryUrl: string
-  prefix: string
-  prizeUrl?: string
-  myPrizeListUrl?: string
-  addUserInfoUrl?: string
-  queryUserInfoUrl?: string
-  winnersUrl?: string
 }
 
 const LotteryPage: FC<LotteryPageProps> = (props) => {
+  const { lotteryType, lotteryUrlList, isDataChanged } = props
   const {
-    lotteryType,
-    prefix,
-    isDataChanged,
     prizeListUrl,
-    singleLotteryUrl,
     prizeUrl,
-    myPrizeListUrl,
-    addUserInfoUrl,
-    queryUserInfoUrl = '',
+    singleLotteryUrl,
+    picturePrefix,
+    userInfoUrl = '',
     winnersUrl = ''
-  } = props
+  } = lotteryUrlList
 
   const state = useSelector((stateValue: any) => stateValue) // 获取保存的状态
   const dispatch = useDispatch()
@@ -51,22 +46,22 @@ const LotteryPage: FC<LotteryPageProps> = (props) => {
   }, [winnersUrl])
 
   const userInfoClient = useMemo(() => {
-    return new DataClient<UserInfo>(queryUserInfoUrl)
-  }, [queryUserInfoUrl])
+    return new DataClient<UserInfo>(userInfoUrl)
+  }, [userInfoUrl])
 
   // 初始，以及预留监听外部修改状态
   useEffect(() => {
     prizeListUrl && prizeListClient.getAll()
     singleLotteryUrl && singleLotteryClient.getAll()
     winnersUrl && winnersClient.getAll()
-    queryUserInfoUrl && userInfoClient.getAll()
+    userInfoUrl && userInfoClient.getAll()
   }, [isDataChanged, lotteryType])
 
   const getData = useCallback(() => {
     prizeListUrl && prizeListClient.getAll()
     singleLotteryUrl && singleLotteryClient.getAll()
     winnersUrl && winnersClient.getAll()
-    queryUserInfoUrl && userInfoClient.getAll()
+    userInfoUrl && userInfoClient.getAll()
   }, [])
 
   // 监听是否重新获取数据
@@ -96,7 +91,7 @@ const LotteryPage: FC<LotteryPageProps> = (props) => {
 
   const { start_time, end_time, show_background_image, picture = {} } =
     singleLottery?.[0] ?? {}
-  const { background, myPrize, ...picRest } = picture
+  const { background } = picture
 
   return (
     <div
@@ -104,10 +99,10 @@ const LotteryPage: FC<LotteryPageProps> = (props) => {
       style={{
         backgroundImage: show_background_image
           ? `url(${
-              background || prefix + 'diazo/images/lottery/turntable/bg.png'
+              background ||
+              picturePrefix + 'diazo/images/lottery/turntable/bg.png'
             })`
-          : '',
-        backgroundSize: '100% 100%'
+          : ''
       }}
     >
       <LotteryComponent
@@ -116,15 +111,13 @@ const LotteryPage: FC<LotteryPageProps> = (props) => {
         prizeList={prizeList}
         userInfo={userInfo}
         isClickable={state.isClickable}
-        prefix={prefix}
-        myPrizeListUrl={myPrizeListUrl}
+        prefix={picturePrefix}
         prizeUrl={prizeUrl}
-        {...picRest}
       />
       <UserInfoModal
         isModalShow={state.IsUserInfoModalShow}
         singleLottery={singleLottery}
-        addUserInfoUrl={addUserInfoUrl}
+        addUserInfoUrl={userInfoUrl}
       />
       <ActivityTimeModal startTime={start_time} endTime={end_time} />
     </div>

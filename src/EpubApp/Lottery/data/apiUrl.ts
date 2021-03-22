@@ -1,26 +1,19 @@
-const prizeListUrl =
+// 奖品列表
+export const prizeListUrl =
   'https://yapi.epub360.com/mock/26/api/lottery/%7Bslug%7D/prize/'
-const prizeUrl =
+
+// 抽奖和获取我的奖品列表
+export const prizeUrl =
   'https://yapi.epub360.com/mock/26/api/lottery/%7Blottery_slug%7D/draw/'
-const singleLotteryUrl =
+
+// 单次抽奖信息
+export const singleLotteryUrl =
   'https://yapi.epub360.com/mock/26/api/lottery/%7Bslug%7D'
-// const myPrizeListUrl =
-//   'https://yapi.epub360.com/mock/26/api/lottery/%7Blottery_slug%7D/draw/%7Bdraw_slug%7D'
-const addUserInfoUrl =
+
+// 添加和查询用户信息
+export const userInfoUrl =
   'https://yapi.epub360.com/mock/26/api/lottery/core/%7Bbook_slug%7D/userinfo/'
-const queryUserInfoUrl =
-  'https://yapi.epub360.com/mock/26/api/lottery/core/%7Bbook_slug%7D/userinfo/'
-const winnersUrl =
+
+// 查询获奖信息
+export const winnersUrl =
   'https://yapi.epub360.com/mock/26/api/lottery/%7Bslug%7D/winning/'
-
-const myPrizeListUrl = 'https://yapi.epub360.com/mock/132/test'
-
-export {
-  prizeListUrl,
-  singleLotteryUrl,
-  prizeUrl,
-  myPrizeListUrl,
-  addUserInfoUrl,
-  queryUserInfoUrl,
-  winnersUrl
-}

@@ -4,50 +4,25 @@ import { ConfigProvider } from 'antd'
 import zhCN from 'antd/lib/locale/zh_CN'
 import LotteryPage from './LotteryPage'
 import store from '../../store/store'
-import { LotteryType } from '../../type'
+import { LotteryType, LotteryUrlListType } from '../../type'
 
 export interface LotteryPageRenderProps {
   lotteryType: LotteryType
+  lotteryUrlList: LotteryUrlListType
   isDataChanged: boolean
-  prizeListUrl: string
-  singleLotteryUrl: string
-  prefix: string
-  prizeUrl?: string
-  myPrizeListUrl?: string
-  addUserInfoUrl?: string
-  queryUserInfoUrl?: string
-  winnersUrl?: string
 }
 
 // 抽奖页面渲染
 export const LotteryPageRender: FC<LotteryPageRenderProps> = (props) => {
-  const {
-    lotteryType,
-    isDataChanged,
-    prizeListUrl,
-    prizeUrl,
-    singleLotteryUrl,
-    myPrizeListUrl,
-    addUserInfoUrl,
-    queryUserInfoUrl,
-    winnersUrl,
-    prefix
-  } = props
+  const { lotteryUrlList, lotteryType, isDataChanged } = props
 
   return (
     <ConfigProvider locale={zhCN}>
       <Provider store={store}>
         <LotteryPage
+          lotteryUrlList={lotteryUrlList}
           lotteryType={lotteryType}
           isDataChanged={isDataChanged}
-          prefix={prefix}
-          prizeUrl={prizeUrl}
-          prizeListUrl={prizeListUrl}
-          singleLotteryUrl={singleLotteryUrl}
-          myPrizeListUrl={myPrizeListUrl}
-          addUserInfoUrl={addUserInfoUrl}
-          queryUserInfoUrl={queryUserInfoUrl}
-          winnersUrl={winnersUrl}
         />
       </Provider>
     </ConfigProvider>
