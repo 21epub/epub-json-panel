@@ -5,7 +5,7 @@ import type {
   ObjectiveDetailType,
   SupporterDetailType
 } from '../../../type'
-import { statusMap } from '../index'
+import { statusMap } from '../../../type'
 // import { parseLinkArgs } from '../../../util'
 
 interface MyAssistanceInfoProps {
@@ -16,11 +16,6 @@ interface MyAssistanceInfoProps {
   onOpenPopUp: () => void
   onOpenSingUp: () => void
 }
-
-// interface argsType {
-//   key: string
-//   value: string
-// }
 
 const MyAssistanceInfo: FC<MyAssistanceInfoProps> = (
   props: MyAssistanceInfoProps

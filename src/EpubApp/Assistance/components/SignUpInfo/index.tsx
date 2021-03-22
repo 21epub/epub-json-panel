@@ -9,8 +9,7 @@ import {
   QueryActivityList
 } from '../../data/api'
 import type { AssistanceDetailType, ObjectiveDetailType } from '../../type'
-import { ErrorPrompt } from '../index'
-import { onInitiate } from '../../index'
+import ErrorPrompt from '../ErrorPrompt'
 import store from '../../store'
 
 interface SignUpInfoProps {
@@ -47,8 +46,6 @@ const SignUpInfo: FC<SignUpInfoProps> = (props) => {
   const { run: RunAddActivity } = useRequest(AddActivity, {
     manual: true,
     onSuccess: (ActivityDetail) => {
-      // 新建助力成功触发器
-      onInitiate()
       store.reducers.SetActivityDetail(ActivityDetail)
       store.reducers.ChangePage('MyAssistancePage')
     }

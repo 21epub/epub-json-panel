@@ -1,23 +1,10 @@
-import ActivityRules from './ActivityRules'
-import AssistanceProgress from './AssistanceProgress'
-import ContactInfo from './ContactInfo'
-import CountDown from './CountDown'
-import ErrorPrompt from './ErrorPrompt'
-import GoBack from './GoBack'
-import HeadImage from './HeadImage'
-import PopUpInfo from './PopUpInfo'
-import RankingList from './RankingList'
-import SignUpInfo from './SignUpInfo'
-
-export {
-  ActivityRules,
-  AssistanceProgress,
-  ContactInfo,
-  CountDown,
-  ErrorPrompt,
-  GoBack,
-  HeadImage,
-  PopUpInfo,
-  RankingList,
-  SignUpInfo
-}
+export { default as ActivityRules } from './ActivityRules'
+export { default as AssistanceProgress } from './AssistanceProgress'
+export { default as ContactInfo } from './ContactInfo'
+export { default as CountDown } from './CountDown'
+export { default as ErrorPrompt } from './ErrorPrompt'
+export { default as GoBack } from './GoBack'
+export { default as HeadImage } from './HeadImage'
+export { default as PopUpInfo } from './PopUpInfo'
+export { default as RankingList } from './RankingList'
+export { default as SignUpInfo } from './SignUpInfo'

@@ -85,16 +85,6 @@ const TurntableCenter: FC<TurntableCenterProps> = (props) => {
     }
   }, [])
 
-  // 监听抽奖动作
-  useEffect(() => {
-    const subscription = AppBus.subject('Rotate$').subscribe((prize) => {
-      doRotate(prize)
-    })
-    return () => {
-      subscription.unsubscribe()
-    }
-  }, [])
-
   // 旋转函数
   const rotate = (prize: any) => {
     return new Promise((resolve) => {

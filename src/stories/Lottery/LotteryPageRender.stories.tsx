@@ -13,7 +13,7 @@ import { LotteryPageRender } from '../../EpubApp/Lottery/page'
 import type { LotteryPageRenderProps } from '../../EpubApp/Lottery/page'
 
 export default {
-  title: 'Lottery/大转盘播放器',
+  title: 'Lottery/大转盘',
   component: LotteryPageRender,
   argTypes: {
     remainTimes: {

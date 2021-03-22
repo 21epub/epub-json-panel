@@ -23,12 +23,6 @@ interface MyAssistancePageProps {
   urlKey: string
 }
 
-export const statusMap = {
-  1: '进行中',
-  2: '已完成',
-  3: '已过期'
-}
-
 // 助力目标详情页
 const MyAssistancePage: FC<MyAssistancePageProps> = (props) => {
   const { AssistanceDetail, urlKey } = props
