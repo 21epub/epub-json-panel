@@ -1,22 +1,30 @@
 import React, { FC } from 'react'
 import { Modal } from 'antd'
 import { useDispatch, useSelector } from 'react-redux'
-import { AppBus } from '../../../event-bus/event'
 import { getLotteryResult } from '../../../data/api'
 import styles from './index.module.less'
 
 interface PointerProps {
-  url: string
+  pointer: string
   isClickable: boolean
   prizeList: any
   singleLottery: any
   prizeUrl?: string
   userInfo: any
   prefix: string
+  doRotate: (prize: any) => void
 }
 
 const Pointer: FC<PointerProps> = (props) => {
-  const { url, isClickable, singleLottery, prizeUrl, userInfo, prefix } = props
+  const {
+    pointer,
+    isClickable,
+    singleLottery,
+    prizeUrl,
+    userInfo,
+    prefix,
+    doRotate
+  } = props
   const dispatch = useDispatch()
   const state = useSelector((state: any) => state) // 获取保存的状态
 
@@ -39,7 +47,7 @@ const Pointer: FC<PointerProps> = (props) => {
         // 获取抽奖结果
         const prize = res?.data?.data?.results[0]
         // 通知旋转
-        AppBus.subject('Rotate$').next(prize)
+        doRotate(prize)
       })
     } else {
       Modal.info({
@@ -62,7 +70,9 @@ const Pointer: FC<PointerProps> = (props) => {
         <a>
           <img
             className='point'
-            src={url || `${prefix}diazo/images/lottery/turntable/point.png`}
+            src={
+              pointer || `${prefix}diazo/images/lottery/turntable/pointer.png`
+            }
             onClick={() => lottery(singleLottery, userInfo, prizeUrl)}
           />
         </a>
@@ -70,7 +80,9 @@ const Pointer: FC<PointerProps> = (props) => {
         <a style={{ cursor: 'default' }}>
           <img
             className='point'
-            src={url || `${prefix}diazo/images/lottery/turntable/point.png`}
+            src={
+              pointer || `${prefix}diazo/images/lottery/turntable/pointer.png`
+            }
           />
         </a>
       )}

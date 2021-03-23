@@ -6,7 +6,7 @@ import type {
   ActivityDetailType,
   SupporterDetailType
 } from '../../type'
-import { statusMap } from '../../page/MyAssistancePage'
+import { statusMap } from '../../type'
 import ErrorPrompt from '../ErrorPrompt'
 import { getEndTime } from '../../util'
 import 'antd/dist/antd.css'

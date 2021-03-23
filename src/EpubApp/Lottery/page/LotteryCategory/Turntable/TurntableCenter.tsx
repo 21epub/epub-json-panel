@@ -1,25 +1,44 @@
+import React, { FC, useEffect, useRef, useState } from 'react'
 import { Modal } from 'antd'
-import React, { useCallback, useEffect, useRef, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { AppBus } from '../../../event-bus/event'
+// import { AppBus } from '../../../event-bus/event';
 import {
   drawPrizeBlock,
   getPrizeIndex,
   getRandomInt,
   prizeToAngle
 } from '../../../util'
-import styles from './index.module.less'
+import Pointer from './Pointer'
 
-interface Props {
+interface TurntableCenterProps {
   prizeList: any
+  turntable: string
+  prefix: string
+  pointer: string
+  isClickable: boolean
+  singleLottery: any
+  prizeUrl?: string
+  userInfo: any
+  getData: Function
 }
 
-const TurntableCenter = ({ prizeList }: Props) => {
+const TurntableCenter: FC<TurntableCenterProps> = (props) => {
+  const {
+    prizeList,
+    turntable,
+    prefix,
+    pointer,
+    isClickable,
+    singleLottery,
+    prizeUrl,
+    userInfo,
+    getData
+  } = props
   const canvasRef = useRef<HTMLCanvasElement>(null)
   const [ctx, setCtx] = useState<CanvasRenderingContext2D | null>(null)
   const [startRadian, setStartRadian] = useState(0) // 定义圆的角度
   const dispatch = useDispatch()
-  const state = useSelector((state: any) => state) // 获取保存的状态
+  const states = useSelector((state: any) => state) // 获取保存的状态
 
   // 渲染抽奖盘
   useEffect(() => {
@@ -30,53 +49,6 @@ const TurntableCenter = ({ prizeList }: Props) => {
       }
     }
   }, [ctx, prizeList, startRadian])
-
-  const doRotate = useCallback((prize) => {
-    if (prize && prizeList?.length) {
-      rotate(prize).then((res: any) => {
-        // 当promise返回成功时
-        if (res.status === 'success') {
-          // 延时1000毫秒弹出获奖结果
-          setTimeout(() => {
-            Modal.info({
-              title: res.prize.objective.ranking,
-              content: (
-                <div>
-                  <hr />
-                  奖项名:{res.prize.objective.title}
-                </div>
-              ),
-              onOk() {
-                setStartRadian(0)
-
-                // 通知重新获取后台的值
-                AppBus.subject('RequestAgain$').next(prize)
-
-                dispatch({ type: 'isClickable', value: true })
-
-                if (
-                  !res.prize.objective.is_empty &&
-                  state.shouldUserInfoModalShow
-                ) {
-                  dispatch({ type: 'IsUserInfoModalShow', value: true })
-                }
-              }
-            })
-          }, 1000)
-        }
-      })
-    }
-  }, [])
-
-  // 监听抽奖动作
-  useEffect(() => {
-    const subscription = AppBus.subject('Rotate$').subscribe((prize) => {
-      doRotate(prize)
-    })
-    return () => {
-      subscription.unsubscribe()
-    }
-  }, [])
 
   // 旋转函数
   const rotate = (prize: any) => {
@@ -89,7 +61,7 @@ const TurntableCenter = ({ prizeList }: Props) => {
 
       const result = {
         status: 'success',
-        prize: prize // 获得的奖品
+        prize // 获得的奖品
       }
 
       // 获取随机圈数
@@ -111,15 +83,62 @@ const TurntableCenter = ({ prizeList }: Props) => {
     })
   }
 
+  const doRotate = (prize: any) => {
+    if (prize && prizeList?.length) {
+      rotate(prize).then((res: any) => {
+        // 当promise返回成功时
+        if (res.status === 'success') {
+          // 延时1000毫秒弹出获奖结果
+
+          setTimeout(() => {
+            Modal.info({
+              title: res.prize.objective.ranking,
+              content: (
+                <div>
+                  <hr />
+                  奖项名:{res.prize.objective.title}
+                </div>
+              ),
+              onOk() {
+                setStartRadian(0)
+
+                if (
+                  !res.prize.objective.is_empty &&
+                  states.shouldUserInfoModalShow
+                ) {
+                  dispatch({ type: 'IsUserInfoModalShow', value: true })
+                }
+                dispatch({ type: 'isClickable', value: true })
+
+                // 重新获取后台的值
+                getData()
+                // 通知
+                // AppBus.subject('RequestAgain$').next();
+              }
+            })
+          }, 1000)
+        }
+      })
+    }
+  }
+
   if (prizeList?.length) {
-    for (let i = 0; i < prizeList.length; i++) {
+    for (let i = 0; i < prizeList.length; i += 1) {
       if (i % 2 === 0)
         Object.defineProperty(prizeList[i], 'color', { value: '#fef8e6' })
       else Object.defineProperty(prizeList[i], 'color', { value: '#fff' })
     }
 
     return (
-      <div className={styles.turntableRotateWrap}>
+      <div
+        className='turntableCenterWrap'
+        style={{
+          backgroundImage: `url(${
+            turntable || `${prefix}diazo/images/lottery/turntable/turntable.png`
+          })`,
+          backgroundSize: '100% 100%'
+        }}
+      >
         <canvas
           id='turntableCircle'
           ref={canvasRef}
@@ -128,11 +147,20 @@ const TurntableCenter = ({ prizeList }: Props) => {
         >
           您的浏览器不支持canvas。
         </canvas>
+        <Pointer
+          pointer={pointer}
+          isClickable={isClickable}
+          prizeList={prizeList}
+          singleLottery={singleLottery}
+          userInfo={userInfo}
+          prefix={prefix}
+          prizeUrl={prizeUrl}
+          doRotate={doRotate}
+        />
       </div>
     )
-  } else {
-    return <div />
   }
+  return <div />
 }
 
 export default TurntableCenter

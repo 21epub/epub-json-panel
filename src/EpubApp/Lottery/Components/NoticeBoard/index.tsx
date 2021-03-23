@@ -13,11 +13,11 @@ const Content = styled.div<any>`
   animation: ${(props) => (props.animation ? props.animation : '')}
     ${(props) => props.duration}s linear infinite;
   margin-right: auto;
-  margin-left: 12px;
+  margin-left: 22px;
 `
 
 const Text = styled.p<any>`
-  line-height: ${(props) => (props.height ? `${props.height}px` : '44px')};
+  line-height: ${(props) => (props.height ? `${props.height}px` : '30px')};
   margin: 0;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -38,7 +38,7 @@ interface NoticeBoardProps {
 const NoticeBoard: FC<NoticeBoardProps> = (props) => {
   const {
     stepDuration = 1000,
-    height = 44,
+    height = 30,
     textClassName,
     width,
     dataSource,

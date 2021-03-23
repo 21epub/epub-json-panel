@@ -1,4 +1,12 @@
+// 活动状态
+export const statusMap = {
+  1: '进行中',
+  2: '已完成',
+  3: '已过期'
+}
+
 // 新增助力初始值类型
+
 export interface AssistanceInitialValueType {
   // 助力标题
   title: string

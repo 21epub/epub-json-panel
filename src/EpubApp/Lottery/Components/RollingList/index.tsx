@@ -17,11 +17,14 @@ const RollingList: FC<RollingListProps> = (props) => {
         {isShow && <div className='rollingContainerEditor'>{data}</div>}
       </div>
     )
-  } else if (winnerList?.length !== 0) {
+  }
+  if (winnerList?.length !== 0) {
     const winner = []
-    for (let i = 0; i < winnerList.length; i++) {
+    for (let i = 0; i < winnerList.length; i += 1) {
       winner.push(
-        `恭喜${winnerList[i]?.initiator_name}抽中${winnerList[i]?.objective?.ranking} ${winnerList[i]?.created}`
+        `恭喜${winnerList[i]?.initiator_name || `User${i + 1}`}抽中${
+          winnerList[i]?.objective?.ranking
+        } ${winnerList[i]?.created}`
       )
     }
 
@@ -39,9 +42,8 @@ const RollingList: FC<RollingListProps> = (props) => {
         )}
       </div>
     )
-  } else {
-    return <div />
   }
+  return <div />
 }
 
 export default RollingList

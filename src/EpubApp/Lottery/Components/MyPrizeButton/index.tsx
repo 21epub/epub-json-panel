@@ -36,6 +36,7 @@ const MyPrizeButton: FC<MyPrizeButtonProps> = (props) => {
 
   const handleOk = (myPrizeList: any) => {
     setIsModalShow(false)
+
     if (state.shouldUserInfoModalShow && myPrizeList?.length) {
       dispatch({ type: 'IsUserInfoModalShow', value: true })
     }

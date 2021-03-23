@@ -1,19 +1,21 @@
 import React from 'react'
 import { Story, Meta } from '@storybook/react/types-6-0'
 import {
-  prizeListUrl,
-  singleLotteryUrl,
-  prizeUrl,
-  myPrizeListUrl,
+  LotteryPageRender,
+  LotteryPageRenderProps
+} from '../../EpubApp/Lottery'
+import {
   addUserInfoUrl,
+  myPrizeListUrl,
+  prizeListUrl,
+  prizeUrl,
   queryUserInfoUrl,
+  singleLotteryUrl,
   winnersUrl
 } from '../../EpubApp/Lottery/data/apiUrl'
-import { LotteryPageRender } from '../../EpubApp/Lottery/page'
-import type { LotteryPageRenderProps } from '../../EpubApp/Lottery/page'
 
 export default {
-  title: 'Lottery/大转盘播放器',
+  title: 'Lottery/大转盘',
   component: LotteryPageRender,
   argTypes: {
     remainTimes: {
