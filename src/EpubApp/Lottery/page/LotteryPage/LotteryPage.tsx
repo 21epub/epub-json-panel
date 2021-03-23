@@ -60,7 +60,6 @@ const LotteryPage: FC<LotteryPageProps> = (props) => {
     prizeListUrl && prizeListClient.getAll()
     singleLotteryUrl && singleLotteryClient.getAll()
     winnersUrl && winnersClient.getAll()
-    userInfoUrl && userInfoClient.getAll()
   }, [])
 
   const getUser = useCallback(() => {
@@ -114,15 +113,16 @@ const LotteryPage: FC<LotteryPageProps> = (props) => {
         getData={getData}
       />
       {userInfoUrl && (
-        <UserInfoModal
-          isModalShow={state.IsUserInfoModalShow}
-          singleLottery={singleLottery}
-          addUserInfoUrl={userInfoUrl}
-          getUser={getUser}
-        />
+        <div>
+          <UserInfoModal
+            isModalShow={state.IsUserInfoModalShow}
+            singleLottery={singleLottery}
+            addUserInfoUrl={userInfoUrl}
+            getUser={getUser}
+          />
+          <ActivityTimeModal startTime={start_time} endTime={end_time} />
+        </div>
       )}
-
-      <ActivityTimeModal startTime={start_time} endTime={end_time} />
     </div>
   )
 }
