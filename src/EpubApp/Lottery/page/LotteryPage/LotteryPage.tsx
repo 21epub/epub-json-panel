@@ -2,7 +2,7 @@ import React, { FC, useCallback, useEffect, useMemo } from 'react'
 import styles from './index.module.less'
 import { useDispatch, useSelector } from 'react-redux'
 import { DataClient } from '@21epub/epub-data-client'
-import { AppBus } from '../../event-bus/event'
+// import { AppBus } from '../../event-bus/event';
 import { SingleLotteryProps, UserInfo, LotteryType } from '../../type'
 import { getLotteryComponent } from '../LotteryCategory'
 import { UserInfoModal, ActivityTimeModal } from '../../Components'
@@ -66,18 +66,25 @@ const LotteryPage: FC<LotteryPageProps> = (props) => {
     prizeListUrl && prizeListClient.getAll()
     singleLotteryUrl && singleLotteryClient.getAll()
     winnersUrl && winnersClient.getAll()
+    // queryUserInfoUrl && userInfoClient.getAll();
+  }, [])
+
+  const getUser = useCallback(() => {
+    // prizeListUrl && prizeListClient.getAll();
+    // singleLotteryUrl && singleLotteryClient.getAll();
+    // winnersUrl && winnersClient.getAll();
     queryUserInfoUrl && userInfoClient.getAll()
   }, [])
 
-  // 监听是否重新获取数据
-  useEffect(() => {
-    const subscription = AppBus.subject('RequestAgain$').subscribe(() => {
-      getData()
-    })
-    return () => {
-      subscription.unsubscribe()
-    }
-  }, [])
+  // // 监听是否重新获取数据
+  // useEffect(() => {
+  //   const subscription = AppBus.subject('RequestAgain$').subscribe(() => {
+  //     getData();
+  //   });
+  //   return () => {
+  //     subscription.unsubscribe();
+  //   };
+  // }, []);
 
   const prizeList = prizeListClient.useData()
   const singleLottery = singleLotteryClient.useData()
@@ -90,6 +97,11 @@ const LotteryPage: FC<LotteryPageProps> = (props) => {
         dispatch({ type: 'IsUserInfoModalShow', value: true })
       } else if (userInfo[0].user_id === null) {
         dispatch({ type: 'shouldUserInfoModalShow', value: true })
+      } else if (
+        userInfo[0].user_id !== null &&
+        state.shouldUserInfoModalShow
+      ) {
+        dispatch({ type: 'shouldUserInfoModalShow', value: false })
       }
     }
   }, [userInfo, singleLottery])
@@ -119,13 +131,18 @@ const LotteryPage: FC<LotteryPageProps> = (props) => {
         prefix={prefix}
         myPrizeListUrl={myPrizeListUrl}
         prizeUrl={prizeUrl}
+        getData={getData}
         {...picRest}
       />
-      <UserInfoModal
-        isModalShow={state.IsUserInfoModalShow}
-        singleLottery={singleLottery}
-        addUserInfoUrl={addUserInfoUrl}
-      />
+      {addUserInfoUrl && (
+        <UserInfoModal
+          isModalShow={state.IsUserInfoModalShow}
+          singleLottery={singleLottery}
+          addUserInfoUrl={addUserInfoUrl}
+          getUser={getUser}
+        />
+      )}
+
       <ActivityTimeModal startTime={start_time} endTime={end_time} />
     </div>
   )

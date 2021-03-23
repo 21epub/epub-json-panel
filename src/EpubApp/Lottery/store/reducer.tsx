@@ -1,13 +1,5 @@
 const reducer = (state: any, action: any) => {
   switch (action.type) {
-    case 'ChangeSingleLotteryInfo': // 修改单个抽奖信息list
-      return Object.assign({}, state, {
-        lotteryInfo: action.value
-      })
-    case 'ChangeMyPrizeList': // 修改我的奖品信息list
-      return Object.assign({}, state, {
-        myPrizeList: action.value
-      })
     case 'IsUserInfoModalShow': // 是否展示用户填写窗口
       return Object.assign({}, state, {
         IsUserInfoModalShow: action.value

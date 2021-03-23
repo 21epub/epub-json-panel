@@ -9,10 +9,11 @@ interface UserInfoModalProps {
   isModalShow: boolean
   singleLottery: any
   addUserInfoUrl?: string
+  getUser: any
 }
 
 const UserInfoModal: FC<UserInfoModalProps> = (props) => {
-  const { isModalShow, singleLottery, addUserInfoUrl } = props
+  const { isModalShow, singleLottery, addUserInfoUrl, getUser } = props
   const dispatch = useDispatch()
 
   const [confirmLoading, setConfirmLoading] = useState(false)
@@ -42,9 +43,10 @@ const UserInfoModal: FC<UserInfoModalProps> = (props) => {
       addUserInfo(addUserInfoUrl, info).then((res: any) => {
         if (res.status === 201) {
           setConfirmLoading(false)
+          getUser()
           dispatch({ type: 'IsUserInfoModalShow', value: false })
-          dispatch({ type: 'shouldUserInfoModalShow', value: false })
           form.resetFields()
+
           // 成功则清除内容
         } else {
           setTips(<p style={{ color: 'red' }}>请求失败，请重新尝试</p>)

@@ -1,5 +1,6 @@
 import React, { FC } from 'react'
 import styles from './index.module.less'
+// import Pointer from './Pointer';
 import TurntableCenter from './TurntableCenter'
 import {
   ActivityTime,
@@ -21,6 +22,7 @@ interface TurntableProps {
   turntable: string
   myPrizeListUrl: string
   prizeUrl?: string
+  getData: Function
 }
 
 // 大转盘抽奖
@@ -35,7 +37,8 @@ const Turntable: FC<TurntableProps> = (props) => {
     prefix,
     turntable,
     myPrizeListUrl,
-    prizeUrl
+    prizeUrl,
+    getData
   } = props
 
   const {
@@ -64,6 +67,7 @@ const Turntable: FC<TurntableProps> = (props) => {
           prefix={prefix}
           prizeUrl={prizeUrl}
           turntable={turntable}
+          getData={getData}
         />
       )}
       <RemainTime remainTimes={remain_times} />
