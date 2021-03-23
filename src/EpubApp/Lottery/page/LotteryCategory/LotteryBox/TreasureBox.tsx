@@ -1,7 +1,6 @@
 import React, { FC, useState } from 'react'
 import { Modal } from 'antd'
 import { useDispatch, useSelector } from 'react-redux'
-import { AppBus } from '../../../event-bus/event'
 import { getLotteryResult } from '../../../data/api'
 import styles from './index.module.less'
 
@@ -14,6 +13,7 @@ interface TreasureBoxProps {
   prizeUrl?: string
   userInfo: any
   prefix: string
+  getData: Function
 }
 
 const TreasureBox: FC<TreasureBoxProps> = (props) => {
@@ -24,7 +24,8 @@ const TreasureBox: FC<TreasureBoxProps> = (props) => {
     singleLottery,
     prizeUrl,
     userInfo,
-    prefix
+    prefix,
+    getData
   } = props
   const dispatch = useDispatch()
   const state = useSelector((state: any) => state) // 获取保存的状态
@@ -62,8 +63,8 @@ const TreasureBox: FC<TreasureBoxProps> = (props) => {
               </div>
             ),
             onOk() {
-              // 通知重新获取后台的值
-              AppBus.subject('RequestAgain$').next(prize)
+              // 重新获取后台的值
+              getData()
               dispatch({ type: 'isClickable', value: true })
               setModalVisible(false)
               if (

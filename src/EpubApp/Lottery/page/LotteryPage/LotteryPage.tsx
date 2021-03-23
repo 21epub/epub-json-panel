@@ -1,7 +1,6 @@
 import React, { FC, useCallback, useEffect, useMemo } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { DataClient } from '@21epub/epub-data-client'
-import { AppBus } from '../../event-bus/event'
 import {
   SingleLotteryProps,
   UserInfo,
@@ -64,14 +63,8 @@ const LotteryPage: FC<LotteryPageProps> = (props) => {
     userInfoUrl && userInfoClient.getAll()
   }, [])
 
-  // 监听是否重新获取数据
-  useEffect(() => {
-    const subscription = AppBus.subject('RequestAgain$').subscribe(() => {
-      getData()
-    })
-    return () => {
-      subscription.unsubscribe()
-    }
+  const getUser = useCallback(() => {
+    userInfoUrl && userInfoClient.getAll()
   }, [])
 
   const prizeList = prizeListClient.useData()
@@ -85,6 +78,11 @@ const LotteryPage: FC<LotteryPageProps> = (props) => {
         dispatch({ type: 'IsUserInfoModalShow', value: true })
       } else if (userInfo[0].user_id === null) {
         dispatch({ type: 'shouldUserInfoModalShow', value: true })
+      } else if (
+        userInfo[0].user_id !== null &&
+        state.shouldUserInfoModalShow
+      ) {
+        dispatch({ type: 'shouldUserInfoModalShow', value: false })
       }
     }
   }, [userInfo, singleLottery])
@@ -113,12 +111,17 @@ const LotteryPage: FC<LotteryPageProps> = (props) => {
         isClickable={state.isClickable}
         prefix={picturePrefix}
         prizeUrl={prizeUrl}
+        getData={getData}
       />
-      <UserInfoModal
-        isModalShow={state.IsUserInfoModalShow}
-        singleLottery={singleLottery}
-        addUserInfoUrl={userInfoUrl}
-      />
+      {userInfoUrl && (
+        <UserInfoModal
+          isModalShow={state.IsUserInfoModalShow}
+          singleLottery={singleLottery}
+          addUserInfoUrl={userInfoUrl}
+          getUser={getUser}
+        />
+      )}
+
       <ActivityTimeModal startTime={start_time} endTime={end_time} />
     </div>
   )

@@ -1,7 +1,6 @@
-import React, { FC, useCallback, useEffect, useRef, useState } from 'react'
+import React, { FC, useEffect, useRef, useState } from 'react'
 import { Modal } from 'antd'
 import { useDispatch, useSelector } from 'react-redux'
-import { AppBus } from '../../../event-bus/event'
 import {
   drawPrizeBlock,
   getPrizeIndex,
@@ -19,6 +18,7 @@ interface TurntableCenterProps {
   singleLottery: any
   prizeUrl?: string
   userInfo: any
+  getData: Function
 }
 
 const TurntableCenter: FC<TurntableCenterProps> = (props) => {
@@ -30,7 +30,8 @@ const TurntableCenter: FC<TurntableCenterProps> = (props) => {
     isClickable,
     singleLottery,
     prizeUrl,
-    userInfo
+    userInfo,
+    getData
   } = props
   const canvasRef = useRef<HTMLCanvasElement>(null)
   const [ctx, setCtx] = useState<CanvasRenderingContext2D | null>(null)
@@ -81,7 +82,7 @@ const TurntableCenter: FC<TurntableCenterProps> = (props) => {
     })
   }
 
-  const doRotate = useCallback((prize) => {
+  const doRotate = (prize: any) => {
     if (prize && prizeList?.length) {
       rotate(prize).then((res: any) => {
         // 当promise返回成功时
@@ -99,24 +100,23 @@ const TurntableCenter: FC<TurntableCenterProps> = (props) => {
               onOk() {
                 setStartRadian(0)
 
-                // 通知重新获取后台的值
-                AppBus.subject('RequestAgain$').next(prize)
-
-                dispatch({ type: 'isClickable', value: true })
-
                 if (
                   !res.prize.objective.is_empty &&
                   states.shouldUserInfoModalShow
                 ) {
                   dispatch({ type: 'IsUserInfoModalShow', value: true })
                 }
+                dispatch({ type: 'isClickable', value: true })
+
+                // 重新获取后台的值
+                getData()
               }
             })
           }, 1000)
         }
       })
     }
-  }, [])
+  }
 
   if (prizeList?.length) {
     for (let i = 0; i < prizeList.length; i += 1) {

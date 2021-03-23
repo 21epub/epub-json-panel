@@ -18,6 +18,7 @@ interface LotteryBoxProps {
   isClickable: boolean
   prefix: string
   prizeUrl?: string
+  getData: Function
 }
 
 // 抽奖箱
@@ -29,7 +30,8 @@ const LotteryBox: FC<LotteryBoxProps> = (props) => {
     singleLottery,
     isClickable,
     prefix,
-    prizeUrl
+    prizeUrl,
+    getData
   } = props
 
   const {
@@ -57,6 +59,7 @@ const LotteryBox: FC<LotteryBoxProps> = (props) => {
         userInfo={userInfo}
         prefix={prefix}
         prizeUrl={prizeUrl}
+        getData={getData}
       />
       <RemainTime remainTimes={remain_times} />
       <MyPrizeButton url={myPrize} myPrizeListUrl={prizeUrl} prefix={prefix} />

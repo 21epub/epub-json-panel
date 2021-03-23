@@ -18,6 +18,7 @@ interface TurntableProps {
   isClickable: boolean
   prefix: string
   prizeUrl?: string
+  getData: Function
 }
 
 // 大转盘抽奖
@@ -29,7 +30,8 @@ const Turntable: FC<TurntableProps> = (props) => {
     singleLottery,
     isClickable,
     prefix,
-    prizeUrl
+    prizeUrl,
+    getData
   } = props
 
   const {
@@ -58,6 +60,7 @@ const Turntable: FC<TurntableProps> = (props) => {
           prefix={prefix}
           prizeUrl={prizeUrl}
           turntable={turntable}
+          getData={getData}
         />
       )}
       <RemainTime remainTimes={remain_times} />
