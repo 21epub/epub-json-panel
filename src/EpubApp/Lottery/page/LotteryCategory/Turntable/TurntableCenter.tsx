@@ -72,11 +72,14 @@ const TurntableCenter: FC<TurntableCenterProps> = (props) => {
       for (let i = 1; i <= frame; i += 1) {
         // target为目标角度， 2 * Math.PI 为一圈 ，获取每份度数的大小
         const interval = (target + 2 * Math.PI * turns) / frame
-        setTimeout(() => {
+        const timeId = setTimeout(() => {
           // 设定每次相对原点的旋转度数
           setStartRadian(interval * i)
           // 当到达目标度数时返回结果
-          if (i === frame) resolve(result)
+          if (i === frame) {
+            resolve(result)
+            clearTimeout(timeId)
+          }
         }, 100)
       }
     })
