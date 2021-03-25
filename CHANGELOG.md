@@ -2,6 +2,18 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.0.3-alpha.58](https://github.com/icey0126/epub-app-lib/compare/v0.0.3-alpha.56...v0.0.3-alpha.58) (2021-03-25)
+
+### Features
+
+- 更新版本 ([3f2aeba](https://github.com/icey0126/epub-app-lib/commit/3f2aebaee3614cc73f9181a6fd4b975f436d7915))
+
+### Bug Fixes
+
+- 🐛 change prefix ([bc981fe](https://github.com/icey0126/epub-app-lib/commit/bc981fef2f2debc16bc4b869f157e1b96fa256b5))
+- 🐛 fix conflict ([f6a61dd](https://github.com/icey0126/epub-app-lib/commit/f6a61dd0a09c242c1b1a5cb7ae36ea13c3b3d24e))
+- 🐛 fix setTimeout ([107b6eb](https://github.com/icey0126/epub-app-lib/commit/107b6eb2c54df256192fb88c2e0c6bc89011d153))
+
 ### [0.0.3-alpha.56](https://github.com/icey0126/epub-app-lib/compare/v0.0.3-alpha.50...v0.0.3-alpha.56) (2021-03-23)
 
 ### Features
