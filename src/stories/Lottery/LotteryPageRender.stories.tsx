@@ -22,7 +22,9 @@ export default {
 } as Meta
 
 const Template: Story<LotteryPageRenderProps> = (args) => (
-  <LotteryPageRender {...args} />
+  <div style={{ width: '422px', height: '748px' }}>
+    <LotteryPageRender {...args} />
+  </div>
 )
 
 export const Yapi = Template.bind({})
