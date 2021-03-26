@@ -18,7 +18,7 @@ interface EggFrenzyProps {
   isClickable: boolean
   prefix: string
   prizeUrl?: string
-  getData: Function
+  getData: () => void
 }
 
 // 抽奖箱
@@ -28,7 +28,6 @@ const EggFrenzy: FC<EggFrenzyProps> = (props) => {
     prizeList,
     userInfo,
     singleLottery,
-    isClickable,
     prefix,
     prizeUrl,
     getData
@@ -51,7 +50,6 @@ const EggFrenzy: FC<EggFrenzyProps> = (props) => {
     <div className={styles.eggFrenzyWrap}>
       <ActivityTime startTime={start_time} endTime={end_time} />
       <GoldenEggs
-        isClickable={isClickable}
         prizeList={prizeList}
         singleLottery={singleLottery}
         userInfo={userInfo}

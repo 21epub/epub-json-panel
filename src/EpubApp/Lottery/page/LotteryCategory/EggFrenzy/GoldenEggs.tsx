@@ -5,7 +5,6 @@ import { getLotteryResult } from '../../../data/api'
 import SmashEgg from './SmashEgg'
 
 interface GoldenEggsProps {
-  isClickable: boolean
   prizeList: any
   singleLottery: any
   prizeUrl?: string
@@ -15,45 +14,41 @@ interface GoldenEggsProps {
 }
 
 const GoldenEggs: FC<GoldenEggsProps> = (props) => {
-  const {
-    isClickable,
-    singleLottery,
-    prizeUrl,
-    userInfo,
-    prefix,
-    getData
-  } = props
+  const { singleLottery, prizeUrl, userInfo, prefix, getData } = props
   const dispatch = useDispatch()
-  const state = useSelector((state: any) => state) // 获取保存的状态
-  const [modalVisible, setModalVisible] = useState(false)
+  const state = useSelector((stateValue: any) => stateValue) // 获取保存的状态
+  const [isLotterySuccess, setIsLotterySuccess] = useState(false)
   const { picture = {} } = singleLottery?.[0] ?? {}
   const { goodEgg, badEgg, hammer } = picture
 
-  const lottery = (singleLottery: any, userInfo: any, prizeUrl?: string) => {
+  const lottery = (
+    singleLotteryValue: any,
+    userInfoValue: any,
+    prizeUrlValue?: string
+  ) => {
     // 先判断是否需要填写信息
     if (
-      userInfo[0]?.user_id === null &&
-      singleLottery[0].need_user_info &&
+      userInfoValue[0]?.user_id === null &&
+      singleLotteryValue[0].need_user_info &&
       state.shouldUserInfoModalShow
     ) {
       dispatch({ type: 'IsUserInfoModalShow', value: true })
     } else if (
-      prizeUrl &&
-      (singleLottery[0].remain_times > 0 ||
-        singleLottery[0].remain_times === null)
+      prizeUrlValue &&
+      (singleLotteryValue[0].remain_times > 0 ||
+        singleLotteryValue[0].remain_times === null)
     ) {
       dispatch({ type: 'isClickable', value: false })
       // 抽奖
-      getLotteryResult(prizeUrl).then((res: any) => {
+      getLotteryResult(prizeUrlValue).then((res: any) => {
         // 获取抽奖结果
         const prize = res?.data?.data?.results[0]
-        setModalVisible(true)
+        setIsLotterySuccess(true)
         // 延时1000毫秒弹出获奖结果
         setTimeout(() => {
-          console.log(modalVisible)
           Modal.info({
             title: prize.objective.ranking,
-            visible: modalVisible,
+            visible: isLotterySuccess,
             content: (
               <div>
                 <hr />
@@ -64,7 +59,7 @@ const GoldenEggs: FC<GoldenEggsProps> = (props) => {
               // 重新获取后台的值
               getData()
               dispatch({ type: 'isClickable', value: true })
-              setModalVisible(false)
+              setIsLotterySuccess(false)
               if (
                 !prize?.objective?.is_empty &&
                 state.shouldUserInfoModalShow
@@ -95,7 +90,7 @@ const GoldenEggs: FC<GoldenEggsProps> = (props) => {
     goodEgg,
     badEgg,
     hammer,
-    isClickable,
+    isLotterySuccess,
     onClick: () => lottery(singleLottery, userInfo, prizeUrl)
   }
 
