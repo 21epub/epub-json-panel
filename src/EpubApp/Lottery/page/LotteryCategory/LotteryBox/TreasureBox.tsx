@@ -7,7 +7,6 @@ import styles from './index.module.less'
 interface TreasureBoxProps {
   openBox: string
   closeBox: string
-  isClickable: boolean
   prizeList: any
   singleLottery: any
   prizeUrl?: string
@@ -20,7 +19,6 @@ const TreasureBox: FC<TreasureBoxProps> = (props) => {
   const {
     openBox,
     closeBox,
-    isClickable,
     singleLottery,
     prizeUrl,
     userInfo,
@@ -30,6 +28,10 @@ const TreasureBox: FC<TreasureBoxProps> = (props) => {
   const dispatch = useDispatch()
   const state = useSelector((state: any) => state) // 获取保存的状态
   const [modalVisible, setModalVisible] = useState(false)
+  const openBoxUrl =
+    openBox || `${prefix}diazo/images/lottery/lotteryBox/openBox.png`
+  const closeBoxUrl =
+    closeBox || `${prefix}diazo/images/lottery/lotteryBox/closeBox.png`
 
   const lottery = (singleLottery: any, userInfo: any, prizeUrl?: string) => {
     // 先判断是否需要填写信息
@@ -94,20 +96,15 @@ const TreasureBox: FC<TreasureBoxProps> = (props) => {
 
   return (
     <div className={styles.lotteryBoxPic}>
-      <a>
+      {modalVisible ? (
+        <img className='lotteryBoxPic' src={openBoxUrl} />
+      ) : (
         <img
           className='lotteryBoxPic'
-          src={
-            isClickable
-              ? closeBox
-              : openBox ||
-                `${prefix}diazo/images/lottery/lotteryBox/${
-                  isClickable ? 'closeBox' : 'openBox'
-                }.png`
-          }
+          src={closeBoxUrl}
           onClick={() => lottery(singleLottery, userInfo, prizeUrl)}
         />
-      </a>
+      )}
     </div>
   )
 }

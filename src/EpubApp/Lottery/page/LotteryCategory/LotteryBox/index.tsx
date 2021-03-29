@@ -28,7 +28,6 @@ const LotteryBox: FC<LotteryBoxProps> = (props) => {
     prizeList,
     userInfo,
     singleLottery,
-    isClickable,
     prefix,
     prizeUrl,
     getData
@@ -53,7 +52,6 @@ const LotteryBox: FC<LotteryBoxProps> = (props) => {
       <TreasureBox
         openBox={openBox}
         closeBox={closeBox}
-        isClickable={isClickable}
         prizeList={prizeList}
         singleLottery={singleLottery}
         userInfo={userInfo}

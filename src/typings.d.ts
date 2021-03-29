@@ -19,8 +19,9 @@ declare module '*.less' {
 // declare module '*.png'
 // declare module '*.jpeg'
 
-interface SvgrComponent
-  extends React.StatelessComponent<React.SVGAttributes<SVGElement>> {}
+interface SvgrComponent {}
+
+declare module 'rc-tween-one/*'
 
 declare module '*.svg' {
   const svgUrl: string

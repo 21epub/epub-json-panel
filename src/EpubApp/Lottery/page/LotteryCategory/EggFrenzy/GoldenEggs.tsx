@@ -35,8 +35,8 @@ const GoldenEggs: FC<GoldenEggsProps> = (props) => {
       dispatch({ type: 'IsUserInfoModalShow', value: true })
     } else if (
       prizeUrlValue &&
-      (singleLotteryValue[0].remain_times > 0 ||
-        singleLotteryValue[0].remain_times === null)
+      (singleLotteryValue[0]?.remain_times > 0 ||
+        singleLotteryValue[0]?.remain_times === null)
     ) {
       dispatch({ type: 'isClickable', value: false })
       // 抽奖
