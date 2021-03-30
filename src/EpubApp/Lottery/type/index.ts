@@ -1,5 +1,9 @@
 // 抽奖类型
-export type LotteryType = 'Turntable' | 'EggFrenzy' | 'LotteryBox'
+export type LotteryType =
+  | 'Turntable'
+  | 'EggFrenzy'
+  | 'LotteryBox'
+  | 'LotteryGrid'
 
 // api接口Url
 export interface LotteryUrlListType {

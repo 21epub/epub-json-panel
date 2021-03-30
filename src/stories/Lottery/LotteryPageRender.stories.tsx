@@ -11,7 +11,7 @@ import { LotteryPageRender } from '../../EpubApp/Lottery/page'
 import type { LotteryPageRenderProps, LotteryUrlListType } from '../../index'
 
 export default {
-  title: 'Lottery/大转盘',
+  title: 'Lottery/抽奖页面',
   component: LotteryPageRender,
   argTypes: {
     remainTimes: {
@@ -36,7 +36,7 @@ const lotteryUrlList: LotteryUrlListType = {
   // 获取奖品信息列表
   prizeListUrl: prizeListUrl,
   // 默认图片链接地址头
-  picturePrefix: 'test',
+  picturePrefix: 'http://dev.epub360.com/staticfs2/',
   // 抽奖与获取我的奖品信息
   prizeUrl: prizeUrl,
   // 获取与查询用户信息
@@ -46,7 +46,7 @@ const lotteryUrlList: LotteryUrlListType = {
 }
 
 Yapi.args = {
-  lotteryType: 'Turntable',
+  lotteryType: 'LotteryGrid',
   lotteryUrlList: lotteryUrlList,
   isDataChanged: true
 }
