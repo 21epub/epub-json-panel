@@ -2,6 +2,12 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.0.3-alpha.60](https://github.com/icey0126/epub-app-lib/compare/v0.0.3-alpha.59...v0.0.3-alpha.60) (2021-04-02)
+
+### Bug Fixes
+
+- 🐛 fix prize list and egg modal ([6808355](https://github.com/icey0126/epub-app-lib/commit/6808355392f4e6de8d989ba343d442e5cb2c545b))
+
 ### [0.0.3-alpha.59](https://github.com/icey0126/epub-app-lib/compare/v0.0.3-alpha.58...v0.0.3-alpha.59) (2021-04-02)
 
 ### Features
