@@ -89,6 +89,22 @@ export const getPrizeIndex = (prize: any, prizeList: any) => {
   return prizeIndex
 }
 
+export const getIndexList = (prizeIndex: number, turnList: any) => {
+  const destination = turnList.findIndex((ele: number) => ele === prizeIndex)
+
+  // 获取随机圈数
+  const turns = getRandomInt(2, 4)
+
+  let turnsList: any = []
+  for (let i = 0; i < turns; i++) {
+    turnsList = turnsList.concat(turnList)
+  }
+  const lastTurn = turnList.slice(0, destination + 1)
+
+  const indexList = turnsList.concat(lastTurn)
+  return indexList
+}
+
 export const getNow = () => {
   return moment().locale('zh-cn').format('YYYY-MM-DD HH:mm')
 }

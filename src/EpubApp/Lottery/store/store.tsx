@@ -7,7 +7,8 @@ const initialState = {
   isClickable: true, // 抽奖按钮是否可以点击
   shouldUserInfoModalShow: false, // 是否应该显示用户窗
   IsWin: false, // 是否中奖
-  isCopySuccess: false
+  isCopySuccess: false,
+  isPrizeModalShow: false // 我的奖品窗口
 }
 const store = createStore(reducer, initialState)
 

@@ -28,7 +28,11 @@ const Pointer: FC<PointerProps> = (props) => {
   const dispatch = useDispatch()
   const state = useSelector((state: any) => state) // 获取保存的状态
 
-  const lottery = (singleLottery: any, userInfo: any, prizeUrl?: string) => {
+  const lottery = async (
+    singleLottery: any,
+    userInfo: any,
+    prizeUrl?: string
+  ) => {
     // 先判断是否需要填写信息
     if (
       userInfo[0]?.user_id === null &&
@@ -43,12 +47,20 @@ const Pointer: FC<PointerProps> = (props) => {
     ) {
       dispatch({ type: 'isClickable', value: false })
       // 抽奖
-      getLotteryResult(prizeUrl).then((res: any) => {
-        // 获取抽奖结果
-        const prize = res?.data?.data?.results[0]
+      try {
+        const response = await getLotteryResult(prizeUrl)
+        const prize = response?.data?.data?.results[0]
         // 通知旋转
         doRotate(prize)
-      })
+      } catch (error) {
+        Modal.info({
+          title: error.response.data,
+          okText: '查看我的奖品',
+          onOk() {
+            dispatch({ type: 'isPrizeModalShow', value: true })
+          }
+        })
+      }
     } else {
       Modal.info({
         title: '抽奖次数用完啦',

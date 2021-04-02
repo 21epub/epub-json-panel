@@ -33,7 +33,11 @@ const TreasureBox: FC<TreasureBoxProps> = (props) => {
   const closeBoxUrl =
     closeBox || `${prefix}diazo/images/lottery/lotteryBox/closeBox.png`
 
-  const lottery = (singleLottery: any, userInfo: any, prizeUrl?: string) => {
+  const lottery = async (
+    singleLottery: any,
+    userInfo: any,
+    prizeUrl?: string
+  ) => {
     // 先判断是否需要填写信息
     if (
       userInfo[0]?.user_id === null &&
@@ -48,13 +52,12 @@ const TreasureBox: FC<TreasureBoxProps> = (props) => {
     ) {
       dispatch({ type: 'isClickable', value: false })
       // 抽奖
-      getLotteryResult(prizeUrl).then((res: any) => {
-        // 获取抽奖结果
-        const prize = res?.data?.data?.results[0]
+      try {
+        const response = await getLotteryResult(prizeUrl)
+        const prize = response?.data?.data?.results[0]
         setModalVisible(true)
         // 延时1000毫秒弹出获奖结果
         setTimeout(() => {
-          console.log(modalVisible)
           Modal.info({
             title: prize.objective.ranking,
             visible: modalVisible,
@@ -78,7 +81,15 @@ const TreasureBox: FC<TreasureBoxProps> = (props) => {
             }
           })
         }, 500)
-      })
+      } catch (error) {
+        Modal.info({
+          title: error.response.data,
+          okText: '查看我的奖品',
+          onOk() {
+            dispatch({ type: 'isPrizeModalShow', value: true })
+          }
+        })
+      }
     } else {
       Modal.info({
         title: '抽奖次数用完啦',

@@ -7,16 +7,7 @@ instance.defaults.headers = {
 }
 
 export const getLotteryResult = (prizeUrl: string) => {
-  return new Promise((resolve, reject) => {
-    instance
-      .post(prizeUrl)
-      .then((response) => {
-        resolve(response)
-      })
-      .catch((error) => {
-        reject(error)
-      })
-  })
+  return instance.post(prizeUrl)
 }
 
 export const addUserInfo = (addUserInfoUrl: string, data: any) => {
