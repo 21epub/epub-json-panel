@@ -21,7 +21,7 @@ const GoldenEggs: FC<GoldenEggsProps> = (props) => {
   const { picture = {} } = singleLottery?.[0] ?? {}
   const { goodEgg, badEgg, hammer } = picture
 
-  const lottery = (
+  const lottery = async (
     singleLotteryValue: any,
     userInfoValue: any,
     prizeUrlValue?: string
@@ -40,9 +40,9 @@ const GoldenEggs: FC<GoldenEggsProps> = (props) => {
     ) {
       dispatch({ type: 'isClickable', value: false })
       // 抽奖
-      getLotteryResult(prizeUrlValue).then((res: any) => {
-        // 获取抽奖结果
-        const prize = res?.data?.data?.results[0]
+      try {
+        const response = await getLotteryResult(prizeUrlValue)
+        const prize = response?.data?.data?.results[0]
         setIsLotterySuccess(true)
         // 延时1000毫秒弹出获奖结果
         setTimeout(() => {
@@ -69,7 +69,15 @@ const GoldenEggs: FC<GoldenEggsProps> = (props) => {
             }
           })
         }, 500)
-      })
+      } catch (error) {
+        Modal.info({
+          title: error.response.data,
+          okText: '查看我的奖品',
+          onOk() {
+            dispatch({ type: 'isPrizeModalShow', value: true })
+          }
+        })
+      }
     } else {
       Modal.info({
         title: '抽奖次数用完啦',

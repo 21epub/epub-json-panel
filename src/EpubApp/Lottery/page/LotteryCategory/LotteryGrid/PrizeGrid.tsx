@@ -1,9 +1,10 @@
-import React, { FC, useState } from 'react'
+import React, { FC, useEffect, useState } from 'react'
 import { Modal } from 'antd'
 import { useDispatch, useSelector } from 'react-redux'
 import { getIndexList, getPrizeIndex } from '../../../util'
 import { getLotteryResult } from '../../../data/api'
 import styles from './index.module.less'
+import { clone } from 'ramda'
 
 interface PrizeGridProps {
   prizeList: any
@@ -30,6 +31,12 @@ const PrizeGrid: FC<PrizeGridProps> = (props) => {
   const { gridBg1, prizeBg, startBg } = picture
   // const [borderActive, setBorderActive] = useState(false)
   const [activeIndex, setActiveIndex] = useState<undefined | number>()
+  const [itemList, setItemList] = useState<any>([])
+
+  useEffect(() => {
+    const temp = clone(prizeList)
+    setItemList(temp)
+  }, [prizeList])
 
   const dispatch = useDispatch()
   const states = useSelector((state: any) => state)
@@ -119,8 +126,9 @@ const PrizeGrid: FC<PrizeGridProps> = (props) => {
     }
   }
 
-  if (prizeList?.length) {
-    prizeList?.length === 8 && prizeList.splice(4, 0, { id: 'lotteryButton' })
+  if (itemList?.length) {
+    itemList?.length === 8 &&
+      itemList.splice(4, 0, { id: 'lotteryButton', ranking: 'lotteryButton' })
 
     const prizeBackground = `url(${
       prizeBg || `${prefix}diazo/images/lottery/lotteryGrid/prizeBg.png`
@@ -147,7 +155,7 @@ const PrizeGrid: FC<PrizeGridProps> = (props) => {
             gridTemplateRows: '83px 83px 83px'
           }}
         >
-          {prizeList.map((it: any, index: number) => {
+          {itemList.map((it: any, index: number) => {
             return (
               <div
                 key={it.id}
