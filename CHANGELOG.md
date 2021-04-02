@@ -2,6 +2,12 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.0.3-alpha.59](https://github.com/icey0126/epub-app-lib/compare/v0.0.3-alpha.58...v0.0.3-alpha.59) (2021-04-02)
+
+### Features
+
+- 🎸 add lottery grid ([051c8d4](https://github.com/icey0126/epub-app-lib/commit/051c8d47081b45aeb606ed20460d88b9e66b224c))
+
 ### [0.0.3-alpha.58](https://github.com/icey0126/epub-app-lib/compare/v0.0.3-alpha.56...v0.0.3-alpha.58) (2021-03-25)
 
 ### Features
