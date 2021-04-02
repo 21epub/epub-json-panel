@@ -1,15 +1,9 @@
-import React, { FC, useState, useEffect } from 'react'
+import React, { FC, useState } from 'react'
 import { Modal } from 'antd'
 import { useDispatch, useSelector } from 'react-redux'
-import {
-  drawPrizeBlock,
-  getPrizeIndex,
-  getRandomInt,
-  prizeToAngle
-} from '../../../util'
+import { getIndexList, getPrizeIndex } from '../../../util'
 import { getLotteryResult } from '../../../data/api'
 import styles from './index.module.less'
-import { clone } from 'ramda'
 
 interface PrizeGridProps {
   prizeList: any
@@ -33,70 +27,106 @@ const PrizeGrid: FC<PrizeGridProps> = (props) => {
     userInfo,
     getData
   } = props
-  const { gridBg1, gridBg2, prizeBg } = picture
-  const [borderActive, setBorderActive] = useState(false)
+  const { gridBg1, prizeBg, startBg } = picture
+  // const [borderActive, setBorderActive] = useState(false)
+  const [activeIndex, setActiveIndex] = useState<undefined | number>()
+
   const dispatch = useDispatch()
   const states = useSelector((state: any) => state)
-  const [itemList, setItemList] = useState(prizeList)
-  const [start, setStart] = useState(false)
 
-  useEffect(() => {
-    setItemList(prizeList)
-  }, [prizeList])
-
-  const handleOnClick = (prizeUrl: string | undefined) => {
-    if (prizeUrl)
-      getLotteryResult(prizeUrl).then((res: any) => {
-        // 获取抽奖结果
-        const prize = res?.data?.data?.results[0]
-
+  const handleOnClick = async (prizeUrl: string | undefined) => {
+    if (
+      userInfo[0]?.user_id === null &&
+      singleLottery[0].need_user_info &&
+      states.shouldUserInfoModalShow
+    ) {
+      dispatch({ type: 'IsUserInfoModalShow', value: true })
+    } else if (
+      prizeUrl &&
+      (singleLottery[0].remain_times > 0 ||
+        singleLottery[0].remain_times === null)
+    ) {
+      try {
+        const respones = await getLotteryResult(prizeUrl)
+        const prize = respones?.data?.data?.results[0]
         if (prize) {
+          dispatch({ type: 'isClickable', value: false })
+
           let prizeIndex = getPrizeIndex(prize, prizeList)
-          //跳过开始抽奖按钮
+          // 跳过开始抽奖按钮
           if (prizeIndex > 3) prizeIndex = prizeIndex + 1
-          console.log('prizeIndex', prizeIndex)
-          setStart(true)
+          const turnList = [0, 1, 2, 5, 8, 7, 6, 3]
+          const indexList = getIndexList(prizeIndex, turnList)
+          let i = 0
+          const timeId = setInterval(() => {
+            setActiveIndex(indexList[i])
+            i += 1
+
+            if (i >= indexList.length) {
+              clearInterval(timeId)
+              // 延时1000毫秒弹出获奖结果
+              setTimeout(() => {
+                Modal.info({
+                  title: prize.objective.ranking,
+                  content: (
+                    <div>
+                      <hr />
+                      奖项名:{prize.objective.title}
+                    </div>
+                  ),
+                  onOk() {
+                    setActiveIndex(undefined)
+
+                    if (
+                      !prize.objective.is_empty &&
+                      states.shouldUserInfoModalShow
+                    ) {
+                      dispatch({ type: 'IsUserInfoModalShow', value: true })
+                    }
+                    dispatch({ type: 'isClickable', value: true })
+
+                    // 重新获取后台的值
+                    getData()
+                  }
+                })
+              }, 1000)
+            }
+          }, 100)
 
           // setBorderActive((b) => !b)
-          // prizeList.forEach((item: any, index: number) => {
-          //   if (index === 4)
-          //     Object.defineProperty(item, 'active', { value: false })
-          // })
         }
+      } catch (error) {
+        Modal.info({
+          title: error.response.data,
+          okText: '查看我的奖品',
+          onOk() {
+            dispatch({ type: 'isPrizeModalShow', value: true })
+          }
+        })
+      }
+    } else {
+      Modal.info({
+        title: '抽奖次数用完啦',
+        content: (
+          <div>
+            <hr />
+            <p>您的抽奖次数用完啦！</p>
+            <p>无法抽奖，感谢您的参与！</p>
+          </div>
+        ),
+        onOk() {}
       })
+    }
   }
 
-  useEffect(() => {
-    if (start) {
-      const temp = clone(itemList)
-
-      for (let i = 0; i < 9; i++) {
-        setTimeout(() => {
-          console.log(i, 'ssss')
-          temp.forEach((ite: any, index: number) => {
-            if (index === i) ite.active = true
-          })
-          setItemList(temp)
-        }, 1000)
-      }
-    }
-  }, [start, itemList])
-
-  console.log('itemList', itemList)
-
   if (prizeList?.length) {
-    prizeList?.length === 8 && itemList.splice(4, 0, { id: 'lotteryButton' })
-    if (!start) {
-      itemList.forEach((item: any) => {
-        item['active'] = false
-      })
-    }
+    prizeList?.length === 8 && prizeList.splice(4, 0, { id: 'lotteryButton' })
 
     const prizeBackground = `url(${
       prizeBg || `${prefix}diazo/images/lottery/lotteryGrid/prizeBg.png`
     })`
     const startBackground = `url(${
-      prizeBg || `${prefix}diazo/images/lottery/lotteryGrid/start.png`
+      startBg || `${prefix}diazo/images/lottery/lotteryGrid/startBg.png`
     })`
 
     return (
@@ -105,11 +135,7 @@ const PrizeGrid: FC<PrizeGridProps> = (props) => {
           className='gridBg'
           style={{
             backgroundImage: `url(${
-              borderActive
-                ? gridBg1 ||
-                  `${prefix}diazo/images/lottery/lotteryGrid/gridBg1.png`
-                : gridBg2 ||
-                  `${prefix}diazo/images/lottery/lotteryGrid/gridBg2.png`
+              gridBg1 || `${prefix}diazo/images/lottery/lotteryGrid/gridBg1.png`
             })`,
             backgroundSize: '100% 100%',
             height: '300px',
@@ -121,11 +147,11 @@ const PrizeGrid: FC<PrizeGridProps> = (props) => {
             gridTemplateRows: '83px 83px 83px'
           }}
         >
-          {itemList.map((it: any, index: number) => {
+          {prizeList.map((it: any, index: number) => {
             return (
               <div
                 key={it.id}
-                className={it.active ? 'test' : 'test2'}
+                className={index === activeIndex ? 'active' : ''}
                 style={{
                   backgroundImage: `${
                     index === 4 ? startBackground : prizeBackground

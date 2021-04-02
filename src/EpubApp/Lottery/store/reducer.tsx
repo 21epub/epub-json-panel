@@ -16,6 +16,10 @@ const reducer = (state: any, action: any) => {
       return Object.assign({}, state, {
         isClickable: action.value
       })
+    case 'isPrizeModalShow': // 我的奖品窗口
+      return Object.assign({}, state, {
+        isPrizeModalShow: action.value
+      })
     default:
       return state
   }

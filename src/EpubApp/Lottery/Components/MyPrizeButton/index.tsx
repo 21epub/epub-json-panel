@@ -1,4 +1,4 @@
-import React, { FC, useMemo, useState, useEffect } from 'react'
+import React, { FC, useMemo, useEffect } from 'react'
 import { DataClient } from '@21epub/epub-data-client'
 import { Button, Col, Row } from 'antd'
 import Modal from 'antd/lib/modal/Modal'
@@ -17,7 +17,6 @@ const MyPrizeButton: FC<MyPrizeButtonProps> = (props) => {
   const { myPrizeListUrl = '', prefix, url } = props
   const dispatch = useDispatch()
   const state = useSelector((state: any) => state) // 获取保存的状态
-  const [isModalShow, setIsModalShow] = useState(false)
 
   const myPrizeListClient = useMemo(() => {
     return new DataClient<SinglePrizeProps>(myPrizeListUrl)
@@ -31,11 +30,11 @@ const MyPrizeButton: FC<MyPrizeButtonProps> = (props) => {
 
   const getMyPrize = () => {
     myPrizeListClient.getAll()
-    setIsModalShow(true)
+    dispatch({ type: 'isPrizeModalShow', value: true })
   }
 
   const handleOk = (myPrizeList: any) => {
-    setIsModalShow(false)
+    dispatch({ type: 'isPrizeModalShow', value: false })
 
     if (state.shouldUserInfoModalShow && myPrizeList?.length) {
       dispatch({ type: 'IsUserInfoModalShow', value: true })
@@ -66,7 +65,7 @@ const MyPrizeButton: FC<MyPrizeButtonProps> = (props) => {
             </Col>
           </Row>
         }
-        visible={isModalShow}
+        visible={state.isPrizeModalShow}
         footer={[
           <Button
             onClick={() => handleOk(myPrizeList)}
