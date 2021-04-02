@@ -26,7 +26,6 @@ interface LotteryGridProps {
 // 抽奖箱
 const LotteryGrid: FC<LotteryGridProps> = (props) => {
   const {
-    myPrizeListUrl,
     winnerList,
     prizeList,
     userInfo,
@@ -64,11 +63,7 @@ const LotteryGrid: FC<LotteryGridProps> = (props) => {
         getData={getData}
       />
       <RemainTime remainTimes={remain_times} />
-      <MyPrizeButton
-        url={myPrize}
-        myPrizeListUrl={myPrizeListUrl}
-        prefix={prefix}
-      />
+      <MyPrizeButton url={myPrize} myPrizeListUrl={prizeUrl} prefix={prefix} />
       <RulesButton url={rule} rules={rules} isButtonClickable prefix={prefix} />
       <RollingList winnerList={winnerList} isShow={show_rolling_list} />
       <ContactInfo contactInfo={contact_info} isShow={show_contact_info} />
