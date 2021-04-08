@@ -4,6 +4,7 @@ export type LotteryType =
   | 'EggFrenzy'
   | 'LotteryBox'
   | 'LotteryGrid'
+  | 'Gashapon'
 
 // api接口Url
 export interface LotteryUrlListType {
