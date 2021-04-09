@@ -1,14 +1,28 @@
 import React, { FC, useState, useEffect } from 'react'
 import styled, { keyframes } from 'styled-components'
 
-const Wrapper = styled.div<any>`
+export interface WrapperDivProps {
+  width?: number
+  height?: number
+}
+
+export interface ContentDivProps {
+  animation: Any
+  duration: number
+}
+
+export interface TextPProps {
+  height: number
+}
+
+const Wrapper = styled.div<WrapperDivProps>`
   width: ${(props) => (props.width ? `${props.width}px` : '100%')};
   height: ${(props) => (props.height ? `${props.height}px` : '44px')};
   overflow: hidden;
   display: flex;
 `
 
-const Content = styled.div<any>`
+const Content = styled.div<ContentDivProps>`
   overflow: hidden;
   animation: ${(props) => (props.animation ? props.animation : '')}
     ${(props) => props.duration}s linear infinite;
@@ -16,7 +30,7 @@ const Content = styled.div<any>`
   margin-left: 22px;
 `
 
-const Text = styled.p<any>`
+const Text = styled.p<TextPProps>`
   line-height: ${(props) => (props.height ? `${props.height}px` : '30px')};
   margin: 0;
   overflow: hidden;
@@ -27,12 +41,12 @@ const Text = styled.p<any>`
 `
 
 interface NoticeBoardProps {
-  stepDuration: any
-  height?: any
+  stepDuration: number
+  height?: number
   className: string
-  width?: any
+  width?: number
   textClassName?: string
-  dataSource: any
+  dataSource: string[]
 }
 
 const NoticeBoard: FC<NoticeBoardProps> = (props) => {
@@ -46,13 +60,6 @@ const NoticeBoard: FC<NoticeBoardProps> = (props) => {
   } = props
   const [dataSourceL, setDataSourceL] = useState(dataSource)
   const [keyframesValue, setKeyframesValue] = useState('')
-
-  useEffect(() => {
-    handleDataSource()
-    if (dataSourceL.length >= 2) {
-      createKeyFrames()
-    }
-  }, [])
 
   const getStepLen = () => {
     return dataSource.length * 2
@@ -75,9 +82,6 @@ const NoticeBoard: FC<NoticeBoardProps> = (props) => {
     return new Promise((resolve, reject) => {
       if (dataSource.length > 0) {
         setDataSourceL(dataSource.concat(dataSource[0]))
-      } else {
-        reject(new Error('dataSource.length must >= 1'))
-        throw new Error('dataSource.length must >= 1')
       }
     })
   }
@@ -102,6 +106,13 @@ const NoticeBoard: FC<NoticeBoardProps> = (props) => {
     setKeyframesValue(css)
   }
 
+  useEffect(() => {
+    handleDataSource()
+    if (dataSourceL.length >= 2) {
+      createKeyFrames()
+    }
+  }, [])
+
   return (
     <div>
       <Wrapper width={width} height={height} className={className}>
@@ -109,7 +120,7 @@ const NoticeBoard: FC<NoticeBoardProps> = (props) => {
           animation={getStepLen() > 2 ? getScrollKeyFrames() : null}
           duration={getDuration()}
         >
-          {dataSourceL.map((item: any, index: number) => (
+          {dataSourceL.map((item: string, index: number) => (
             <Text
               height={height}
               className={textClassName}

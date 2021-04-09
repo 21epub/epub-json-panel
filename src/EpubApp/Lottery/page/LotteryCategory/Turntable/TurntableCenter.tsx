@@ -8,16 +8,28 @@ import {
   prizeToAngle
 } from '../../../util'
 import Pointer from './Pointer'
+import {
+  SingleLotteryType,
+  UserInfoType,
+  PrizeType,
+  WinnerListType
+} from '../../../type'
+import { StateType } from '../../../store/reducer'
+
+interface ResultType {
+  status: 'success'
+  prize: WinnerListType
+}
 
 interface TurntableCenterProps {
-  prizeList: any
-  turntable: string
+  prizeList: PrizeType[]
+  turntable?: string
   prefix: string
-  pointer: string
+  pointer?: string
   isClickable: boolean
-  singleLottery: any
+  singleLottery: SingleLotteryType
   prizeUrl?: string
-  userInfo: any
+  userInfo?: UserInfoType
   getData: Function
 }
 
@@ -37,7 +49,7 @@ const TurntableCenter: FC<TurntableCenterProps> = (props) => {
   const [ctx, setCtx] = useState<CanvasRenderingContext2D | null>(null)
   const [startRadian, setStartRadian] = useState(0) // 定义圆的角度
   const dispatch = useDispatch()
-  const states = useSelector((state: any) => state) // 获取保存的状态
+  const states = useSelector((state: StateType) => state) // 获取保存的状态
 
   // 渲染抽奖盘
   useEffect(() => {
@@ -50,15 +62,15 @@ const TurntableCenter: FC<TurntableCenterProps> = (props) => {
   }, [ctx, prizeList, startRadian])
 
   // 旋转函数
-  const rotate = (prize: any) => {
-    return new Promise((resolve) => {
+  const rotate = (prize: WinnerListType) => {
+    return new Promise<ResultType>((resolve) => {
       // 获取抽奖结果在奖品list中对应的index
       const prizeIndex = getPrizeIndex(prize, prizeList)
 
       // 获取目标角度： prizeIndex:prize对应第几个，prizeList.length:prize总数
       const target = prizeToAngle(prizeIndex, prizeList.length)
 
-      const result = {
+      const result: ResultType = {
         status: 'success',
         prize // 获得的奖品
       }
@@ -85,9 +97,9 @@ const TurntableCenter: FC<TurntableCenterProps> = (props) => {
     })
   }
 
-  const doRotate = (prize: any) => {
+  const doRotate = (prize: WinnerListType) => {
     if (prize && prizeList?.length) {
-      rotate(prize).then((res: any) => {
+      rotate(prize).then((res) => {
         // 当promise返回成功时
         if (res.status === 'success') {
           // 延时1000毫秒弹出获奖结果
@@ -104,7 +116,7 @@ const TurntableCenter: FC<TurntableCenterProps> = (props) => {
                 setStartRadian(0)
 
                 if (
-                  !res.prize.objective.is_empty &&
+                  !res.prize.objective.is_default &&
                   states.shouldUserInfoModalShow
                 ) {
                   dispatch({ type: 'IsUserInfoModalShow', value: true })
@@ -149,7 +161,6 @@ const TurntableCenter: FC<TurntableCenterProps> = (props) => {
         <Pointer
           pointer={pointer}
           isClickable={isClickable}
-          prizeList={prizeList}
           singleLottery={singleLottery}
           userInfo={userInfo}
           prefix={prefix}

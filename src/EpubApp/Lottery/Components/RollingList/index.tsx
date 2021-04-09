@@ -1,49 +1,50 @@
 import React, { FC } from 'react'
-import NoticeBoard from '../NoticeBoard'
+import { isEmpty } from 'lodash'
+import NoticeBoard from './NoticeBoard'
 import { getNow } from '../../util'
+import { WinnerListType } from '../../type'
 import styles from './index.module.less'
 
 interface RollingListProps {
-  winnerList: any
+  winnerList: WinnerListType[]
   isShow: boolean
+  prizeUrl?: string
 }
 
+// 中奖轮播列表
 const RollingList: FC<RollingListProps> = (props) => {
-  const { winnerList, isShow = true } = props
+  const { winnerList, isShow = true, prizeUrl } = props
   const data = `恭喜小李抽中一等奖 ${getNow()}`
-  if (winnerList === 'editor') {
-    return (
-      <div className={styles.rollList}>
-        {isShow && <div className='rollingContainerEditor'>{data}</div>}
-      </div>
+  // 中奖者轮播列表
+  const winner: string[] = winnerList.reduce((prev: string[], curr, index) => {
+    prev.push(
+      `恭喜${
+        curr.initiator_name || curr.initiator_username || `User${index + 1}`
+      }抽中${curr.objective?.ranking} ${curr?.created}`
     )
-  }
-  if (winnerList?.length !== 0) {
-    const winner = []
-    for (let i = 0; i < winnerList.length; i += 1) {
-      winner.push(
-        `恭喜${winnerList[i]?.initiator_name || `User${i + 1}`}抽中${
-          winnerList[i]?.objective?.ranking
-        } ${winnerList[i]?.created}`
-      )
-    }
+    return prev
+  }, [])
 
-    return (
+  return (
+    (!isEmpty(winnerList) || null) && (
       <div className={styles.rollList}>
         {isShow && (
           <div className='rollingContainer'>
-            <NoticeBoard
-              className='rollingList'
-              textClassName='textContent'
-              stepDuration={2000}
-              dataSource={winner}
-            />
+            {prizeUrl ? (
+              <NoticeBoard
+                className='rollingList'
+                textClassName='textContent'
+                stepDuration={2000}
+                dataSource={winner}
+              />
+            ) : (
+              <div className='rollingContainerEditor'>{data}</div>
+            )}
           </div>
         )}
       </div>
     )
-  }
-  return <div />
+  )
 }
 
 export default RollingList

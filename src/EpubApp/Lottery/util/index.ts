@@ -1,4 +1,5 @@
 import moment from 'moment'
+import { ImageType } from '../type'
 
 export function getLineTextList(
   context: CanvasRenderingContext2D,
@@ -130,4 +131,9 @@ export function translateTitle(name: string) {
     default:
       return 'err'
   }
+}
+
+// 返回对应的图片
+export const getPicture = (pictureList: ImageType[], pictureName: string) => {
+  return pictureList?.find((item) => item.name === pictureName)?.picture
 }

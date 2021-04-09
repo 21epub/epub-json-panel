@@ -7,7 +7,7 @@ interface RulesButtonProps {
   rules?: any
   isButtonClickable: boolean
   prefix: string
-  url: string
+  url?: string
 }
 
 const RulesButton: FC<RulesButtonProps> = (props) => {

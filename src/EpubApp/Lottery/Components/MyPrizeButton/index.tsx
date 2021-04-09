@@ -3,14 +3,14 @@ import { DataClient } from '@21epub/epub-data-client'
 import { Button, Col, Row } from 'antd'
 import Modal from 'antd/lib/modal/Modal'
 import { useDispatch, useSelector } from 'react-redux'
-import { SinglePrizeProps } from '../../type'
+import { WinnerListType } from '../../type'
 import styles from './index.module.less'
 import MyPrizeContent from '../MyPrizeContent'
 
 interface MyPrizeButtonProps {
   myPrizeListUrl?: string
   prefix: string
-  url: string
+  url?: string
 }
 
 const MyPrizeButton: FC<MyPrizeButtonProps> = (props) => {
@@ -19,7 +19,7 @@ const MyPrizeButton: FC<MyPrizeButtonProps> = (props) => {
   const state = useSelector((state: any) => state) // 获取保存的状态
 
   const myPrizeListClient = useMemo(() => {
-    return new DataClient<SinglePrizeProps>(myPrizeListUrl)
+    return new DataClient<WinnerListType>(myPrizeListUrl)
   }, [myPrizeListUrl])
 
   useEffect(() => {

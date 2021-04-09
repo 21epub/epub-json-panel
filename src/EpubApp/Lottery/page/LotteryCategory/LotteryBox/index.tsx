@@ -9,16 +9,23 @@ import {
   RollingList,
   ContactInfo
 } from '../../../Components'
+import {
+  SingleLotteryType,
+  UserInfoType,
+  PrizeType,
+  WinnerListType
+} from '../../../type'
+import { getPicture } from '../../../util'
 
 interface LotteryBoxProps {
-  winnerList: any
-  prizeList: any
-  singleLottery: any
-  userInfo: any
+  winnerList: WinnerListType[]
+  prizeList: PrizeType[]
+  singleLottery: SingleLotteryType
+  userInfo: UserInfoType
   isClickable: boolean
   prefix: string
   prizeUrl?: string
-  getData: Function
+  getData: () => void
 }
 
 // 抽奖箱
@@ -41,10 +48,13 @@ const LotteryBox: FC<LotteryBoxProps> = (props) => {
     show_rolling_list,
     contact_info,
     rules,
-    picture = {}
-  } = singleLottery?.[0] ?? {}
+    picture = []
+  } = singleLottery ?? {}
 
-  const { myPrize, rule, openBox, closeBox } = picture
+  const myPrize = getPicture(picture, 'myPrize')
+  const rule = getPicture(picture, 'rule')
+  const openBox = getPicture(picture, 'openBox')
+  const closeBox = getPicture(picture, 'closeBox')
 
   return (
     <div className={styles.lotteryBoxWrap}>
@@ -62,7 +72,11 @@ const LotteryBox: FC<LotteryBoxProps> = (props) => {
       <RemainTime remainTimes={remain_times} />
       <MyPrizeButton url={myPrize} myPrizeListUrl={prizeUrl} prefix={prefix} />
       <RulesButton url={rule} rules={rules} isButtonClickable prefix={prefix} />
-      <RollingList winnerList={winnerList} isShow={show_rolling_list} />
+      <RollingList
+        winnerList={winnerList}
+        isShow={show_rolling_list}
+        prizeUrl={prizeUrl}
+      />
       <ContactInfo contactInfo={contact_info} isShow={show_contact_info} />
     </div>
   )

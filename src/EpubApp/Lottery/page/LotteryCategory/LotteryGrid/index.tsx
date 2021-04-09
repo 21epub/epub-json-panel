@@ -9,18 +9,25 @@ import {
   RollingList,
   ContactInfo
 } from '../../../Components'
+import {
+  SingleLotteryType,
+  UserInfoType,
+  PrizeType,
+  WinnerListType
+} from '../../../type'
+import { getPicture } from '../../../util'
 
 interface LotteryGridProps {
-  winnerList: any
+  winnerList: WinnerListType[]
   pointerUrl: string
-  prizeList: any
-  singleLottery: any
-  userInfo: any
+  prizeList: PrizeType[]
+  singleLottery: SingleLotteryType
+  userInfo: UserInfoType
   isClickable: boolean
   prefix: string
   prizeUrl?: string
   myPrizeListUrl: string
-  getData: Function
+  getData: () => void
 }
 
 // 抽奖箱
@@ -44,10 +51,11 @@ const LotteryGrid: FC<LotteryGridProps> = (props) => {
     show_rolling_list,
     contact_info,
     rules,
-    picture = {}
-  } = singleLottery?.[0] ?? {}
+    picture = []
+  } = singleLottery ?? {}
 
-  const { myPrize, rule } = picture
+  const myPrize = getPicture(picture, 'myPrize')
+  const rule = getPicture(picture, 'rule')
 
   return (
     <div className={styles.lotteryGridWrap}>
@@ -65,7 +73,11 @@ const LotteryGrid: FC<LotteryGridProps> = (props) => {
       <RemainTime remainTimes={remain_times} />
       <MyPrizeButton url={myPrize} myPrizeListUrl={prizeUrl} prefix={prefix} />
       <RulesButton url={rule} rules={rules} isButtonClickable prefix={prefix} />
-      <RollingList winnerList={winnerList} isShow={show_rolling_list} />
+      <RollingList
+        winnerList={winnerList}
+        isShow={show_rolling_list}
+        prizeUrl={prizeUrl}
+      />
       <ContactInfo contactInfo={contact_info} isShow={show_contact_info} />
     </div>
   )

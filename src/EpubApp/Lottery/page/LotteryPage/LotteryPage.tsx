@@ -2,14 +2,16 @@ import React, { FC, useCallback, useEffect, useMemo } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { DataClient } from '@21epub/epub-data-client'
 import {
-  SingleLotteryProps,
-  UserInfo,
+  SingleLotteryType,
+  UserInfoType,
   LotteryType,
   LotteryUrlListType
 } from '../../type'
 import { getLotteryComponent } from '../LotteryCategory'
 import { UserInfoModal, ActivityTimeModal } from '../../Components'
+import { getPicture } from '../../util'
 import styles from './index.module.less'
+import { StateType } from '../../store/reducer'
 
 export interface LotteryPageProps {
   lotteryType: LotteryType
@@ -21,14 +23,14 @@ const LotteryPage: FC<LotteryPageProps> = (props) => {
   const { lotteryType, lotteryUrlList, isDataChanged } = props
   const {
     prizeListUrl,
-    prizeUrl,
     singleLotteryUrl,
     picturePrefix,
-    userInfoUrl = '',
-    winnersUrl = ''
+    prizeUrl,
+    userInfoUrl,
+    winnersUrl
   } = lotteryUrlList
 
-  const state = useSelector((stateValue: any) => stateValue) // 获取保存的状态
+  const state = useSelector((stateValue: StateType) => stateValue) // 获取保存的状态
   const dispatch = useDispatch()
   const LotteryComponent = getLotteryComponent(lotteryType)
 
@@ -37,15 +39,15 @@ const LotteryPage: FC<LotteryPageProps> = (props) => {
   }, [prizeListUrl])
 
   const singleLotteryClient = useMemo(() => {
-    return new DataClient<SingleLotteryProps>(singleLotteryUrl)
+    return new DataClient<SingleLotteryType>(singleLotteryUrl)
   }, [singleLotteryUrl])
 
   const winnersClient = useMemo(() => {
-    return new DataClient(winnersUrl)
+    return new DataClient(winnersUrl ?? '')
   }, [winnersUrl])
 
   const userInfoClient = useMemo(() => {
-    return new DataClient<UserInfo>(userInfoUrl)
+    return new DataClient<UserInfoType>(userInfoUrl ?? '')
   }, [userInfoUrl])
 
   // 初始，以及预留监听外部修改状态
@@ -67,28 +69,26 @@ const LotteryPage: FC<LotteryPageProps> = (props) => {
   }, [])
 
   const prizeList = prizeListClient.useData()
-  const singleLottery = singleLotteryClient.useData()
-  const userInfo = userInfoClient.useData()
+  const singleLottery = singleLotteryClient.useData()?.[0]
+  const userInfo = userInfoClient.useData()?.[0]
   const winnerList = winnersClient.useData()
 
   useEffect(() => {
-    if (singleLottery?.length && userInfo?.length) {
-      if (userInfo[0].user_id === null && singleLottery[0].need_user_info) {
+    if (singleLottery && userInfo) {
+      if (userInfo.user_id === null && singleLottery.need_user_info) {
         dispatch({ type: 'IsUserInfoModalShow', value: true })
-      } else if (userInfo[0].user_id === null) {
+      } else if (userInfo.user_id === null) {
         dispatch({ type: 'shouldUserInfoModalShow', value: true })
-      } else if (
-        userInfo[0].user_id !== null &&
-        state.shouldUserInfoModalShow
-      ) {
+      } else if (userInfo.user_id !== null && state.shouldUserInfoModalShow) {
         dispatch({ type: 'shouldUserInfoModalShow', value: false })
       }
     }
   }, [userInfo, singleLottery])
 
-  const { start_time, end_time, show_background_image, picture = {} } =
-    singleLottery?.[0] ?? {}
-  const { background } = picture
+  const { start_time, end_time, show_background_image, picture = [] } =
+    singleLottery ?? {}
+
+  const background = getPicture(picture, 'background')
 
   return (
     <div

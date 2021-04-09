@@ -3,16 +3,18 @@ import { Modal } from 'antd'
 import { useDispatch, useSelector } from 'react-redux'
 import { getLotteryResult } from '../../../data/api'
 import styles from './index.module.less'
+import { SingleLotteryType, UserInfoType, PrizeType } from '../../../type'
+import { StateType } from 'src/core/Lottery/store/reducer'
 
 interface TreasureBoxProps {
-  openBox: string
-  closeBox: string
-  prizeList: any
-  singleLottery: any
+  openBox?: string
+  closeBox?: string
+  prizeList: PrizeType[]
+  singleLottery: SingleLotteryType
   prizeUrl?: string
-  userInfo: any
+  userInfo?: UserInfoType
   prefix: string
-  getData: Function
+  getData: () => void
 }
 
 const TreasureBox: FC<TreasureBoxProps> = (props) => {
@@ -26,35 +28,30 @@ const TreasureBox: FC<TreasureBoxProps> = (props) => {
     getData
   } = props
   const dispatch = useDispatch()
-  const state = useSelector((state: any) => state) // 获取保存的状态
+  const state = useSelector((state: StateType) => state) // 获取保存的状态
   const [modalVisible, setModalVisible] = useState(false)
   const openBoxUrl =
     openBox || `${prefix}diazo/images/lottery/lotteryBox/openBox.png`
   const closeBoxUrl =
     closeBox || `${prefix}diazo/images/lottery/lotteryBox/closeBox.png`
 
-  const lottery = async (
-    singleLottery: any,
-    userInfo: any,
-    prizeUrl?: string
-  ) => {
+  // 开始抽奖
+  const lottery = async () => {
     // 先判断是否需要填写信息
     if (
-      userInfo[0]?.user_id === null &&
-      singleLottery[0].need_user_info &&
+      userInfo?.user_id === null &&
+      singleLottery.need_user_info &&
       state.shouldUserInfoModalShow
     ) {
       dispatch({ type: 'IsUserInfoModalShow', value: true })
     } else if (
       prizeUrl &&
-      (singleLottery[0].remain_times > 0 ||
-        singleLottery[0].remain_times === null)
+      (singleLottery.remain_times > 0 || singleLottery.remain_times === null)
     ) {
       dispatch({ type: 'isClickable', value: false })
       // 抽奖
       try {
-        const response = await getLotteryResult(prizeUrl)
-        const prize = response?.data?.data?.results[0]
+        const prize = await getLotteryResult(prizeUrl)
         setModalVisible(true)
         // 延时1000毫秒弹出获奖结果
         setTimeout(() => {
@@ -110,11 +107,7 @@ const TreasureBox: FC<TreasureBoxProps> = (props) => {
       {modalVisible ? (
         <img className='lotteryBoxPic' src={openBoxUrl} />
       ) : (
-        <img
-          className='lotteryBoxPic'
-          src={closeBoxUrl}
-          onClick={() => lottery(singleLottery, userInfo, prizeUrl)}
-        />
+        <img className='lotteryBoxPic' src={closeBoxUrl} onClick={lottery} />
       )}
     </div>
   )

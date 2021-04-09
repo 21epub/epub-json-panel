@@ -1,5 +1,6 @@
 import axios from 'axios'
 import qs from 'qs'
+import { UserInfoType, WinnerListType } from '../type'
 
 const instance = axios.create()
 instance.defaults.headers = {
@@ -7,15 +8,24 @@ instance.defaults.headers = {
 }
 
 export const getLotteryResult = (prizeUrl: string) => {
-  return instance.post(prizeUrl)
+  return new Promise<WinnerListType>((resolve, reject) => {
+    instance
+      .post(prizeUrl)
+      .then((response) => {
+        resolve(response?.data?.data?.results[0])
+      })
+      .catch((error) => {
+        reject(error)
+      })
+  })
 }
 
 export const addUserInfo = (addUserInfoUrl: string, data: any) => {
-  return new Promise((resolve, reject) => {
+  return new Promise<UserInfoType>((resolve, reject) => {
     instance
       .post(addUserInfoUrl, qs.stringify(data))
       .then((response) => {
-        resolve(response)
+        resolve(response.data)
       })
       .catch((error) => {
         reject(error)

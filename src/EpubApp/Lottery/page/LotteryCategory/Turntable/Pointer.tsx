@@ -2,17 +2,18 @@ import React, { FC } from 'react'
 import { Modal } from 'antd'
 import { useDispatch, useSelector } from 'react-redux'
 import { getLotteryResult } from '../../../data/api'
+import { SingleLotteryType, UserInfoType, WinnerListType } from '../../../type'
+import { StateType } from '../../../store/reducer'
 import styles from './index.module.less'
 
 interface PointerProps {
-  pointer: string
+  pointer?: string
   isClickable: boolean
-  prizeList: any
-  singleLottery: any
+  singleLottery: SingleLotteryType
   prizeUrl?: string
-  userInfo: any
+  userInfo?: UserInfoType
   prefix: string
-  doRotate: (prize: any) => void
+  doRotate: (prize: WinnerListType) => void
 }
 
 const Pointer: FC<PointerProps> = (props) => {
@@ -26,30 +27,23 @@ const Pointer: FC<PointerProps> = (props) => {
     doRotate
   } = props
   const dispatch = useDispatch()
-  const state = useSelector((state: any) => state) // 获取保存的状态
-
-  const lottery = async (
-    singleLottery: any,
-    userInfo: any,
-    prizeUrl?: string
-  ) => {
+  const state = useSelector((state: StateType) => state) // 获取保存的状态
+  const lottery = async () => {
     // 先判断是否需要填写信息
     if (
-      userInfo[0]?.user_id === null &&
-      singleLottery[0].need_user_info &&
+      userInfo?.user_id === null &&
+      singleLottery.need_user_info &&
       state.shouldUserInfoModalShow
     ) {
       dispatch({ type: 'IsUserInfoModalShow', value: true })
     } else if (
       prizeUrl &&
-      (singleLottery[0].remain_times > 0 ||
-        singleLottery[0].remain_times === null)
+      (singleLottery.remain_times > 0 || singleLottery.remain_times === null)
     ) {
       dispatch({ type: 'isClickable', value: false })
       // 抽奖
       try {
-        const response = await getLotteryResult(prizeUrl)
-        const prize = response?.data?.data?.results[0]
+        const prize = await getLotteryResult(prizeUrl)
         // 通知旋转
         doRotate(prize)
       } catch (error) {
@@ -85,7 +79,7 @@ const Pointer: FC<PointerProps> = (props) => {
             src={
               pointer || `${prefix}diazo/images/lottery/turntable/pointer.png`
             }
-            onClick={() => lottery(singleLottery, userInfo, prizeUrl)}
+            onClick={lottery}
           />
         </a>
       ) : (

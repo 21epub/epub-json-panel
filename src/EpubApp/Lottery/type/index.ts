@@ -3,7 +3,16 @@ export type LotteryType =
   | 'Turntable'
   | 'EggFrenzy'
   | 'LotteryBox'
+  | 'Gashapon'
   | 'LotteryGrid'
+
+// 图片格式
+export interface ImageType {
+  label: string
+  name: string
+  picture: string
+  description?: string
+}
 
 // api接口Url
 export interface LotteryUrlListType {
@@ -21,29 +30,54 @@ export interface LotteryUrlListType {
   winnersUrl?: string
 }
 
-// 活动参数
-export interface ObjectiveProps {
+// 奖品列表
+export interface PrizeType {
+  // 创建时间
+  created: string
+  // 奖品描述
+  description: string | null
+  // 奖品Id
   id: string
-  title: string
-  description: string
+  // 是否默认
+  is_default: boolean
+  // 抽奖编号
+  lottery: number
+  // 奖品图片
   picture: string
+  // 奖品类型
+  prize_type: number
+  // 中奖轮播信息
   ranking: string
+  // 剩余次数
+  remain_nums: number
+  // 奖品名称
+  title: string
+  // 奖品总数
+  total_num: number
 }
 
-// 单个奖品参数
-export interface SinglePrizeProps {
+// 中奖者信息
+export interface WinnerListType {
+  // 奖品id
   id: string
+  // 发起人id
   initiator_id: number
+  // 发起人用户名
   initiator_username: string
+  // 发起人姓名
   initiator_name: string
+  // 发起人头像
   initiator_avatar: string
+  // 创建时间
   created: string
+  // 标准类型
   received: 0 | 1
-  objective: ObjectiveProps
+  // 奖品信息
+  objective: PrizeType
 }
 
 // 单个抽奖活动参数
-export interface SingleLotteryProps {
+export interface SingleLotteryType {
   type: string
   info_fields_list: string[] | null
   title: string
@@ -55,7 +89,7 @@ export interface SingleLotteryProps {
   total_draw_num_each_one: number
   can_draw_num_everyday: number
   need_user_info: true
-  picture: any
+  picture: ImageType[]
   rules: null
   remain_times: number
   show_background_image: boolean
@@ -64,8 +98,24 @@ export interface SingleLotteryProps {
   contact_info: any
 }
 
-// 用户信息参数
-export interface UserInfo {
-  id: string
-  user_id: string | null
+// 用户填写的信息
+export interface UserInfoType {
+  // 地址
+  address: string
+  // 创建时间
+  created: string
+  // 邮箱
+  email: string
+  // 数据id
+  id: number
+  // mp应用slug
+  mp_slug: string
+  // 用户姓名
+  name: string
+  // 目标slug
+  objective_slug: string | null
+  // 电话
+  phone: string
+  // 用户id
+  user_id: number
 }

@@ -1,20 +1,27 @@
 import React, { FC, useEffect, useState } from 'react'
 import { Modal } from 'antd'
 import { useDispatch, useSelector } from 'react-redux'
-import { getIndexList, getPrizeIndex } from '../../../util'
+import { getIndexList, getPicture, getPrizeIndex } from '../../../util'
 import { getLotteryResult } from '../../../data/api'
 import styles from './index.module.less'
 import { clone } from 'ramda'
+import {
+  SingleLotteryType,
+  UserInfoType,
+  PrizeType,
+  ImageType
+} from '../../../type'
+import { StateType } from '../../../store/reducer'
 
 interface PrizeGridProps {
-  prizeList: any
+  prizeList: PrizeType[]
   prefix: string
   isClickable: boolean
-  singleLottery: any
+  singleLottery: SingleLotteryType
   prizeUrl?: string
-  userInfo: any
-  getData: Function
-  picture: any
+  userInfo: UserInfoType
+  getData: () => void
+  picture: ImageType[]
 }
 
 const PrizeGrid: FC<PrizeGridProps> = (props) => {
@@ -28,34 +35,28 @@ const PrizeGrid: FC<PrizeGridProps> = (props) => {
     userInfo,
     getData
   } = props
-  const { gridBg1, prizeBg, startBg } = picture
-  // const [borderActive, setBorderActive] = useState(false)
   const [activeIndex, setActiveIndex] = useState<undefined | number>()
-  const [itemList, setItemList] = useState<any>([])
-
-  useEffect(() => {
-    const temp = clone(prizeList)
-    setItemList(temp)
-  }, [prizeList])
+  const [itemList, setItemList] = useState<PrizeType[]>([])
+  const gridBg1 = getPicture(picture, 'gridBg1')
+  const prizeBg = getPicture(picture, 'prizeBg')
+  const startBg = getPicture(picture, 'startBg')
 
   const dispatch = useDispatch()
-  const states = useSelector((state: any) => state)
+  const states = useSelector((state: StateType) => state)
 
   const handleOnClick = async (prizeUrl: string | undefined) => {
     if (
-      userInfo[0]?.user_id === null &&
-      singleLottery[0].need_user_info &&
+      userInfo?.user_id === null &&
+      singleLottery.need_user_info &&
       states.shouldUserInfoModalShow
     ) {
       dispatch({ type: 'IsUserInfoModalShow', value: true })
     } else if (
       prizeUrl &&
-      (singleLottery[0].remain_times > 0 ||
-        singleLottery[0].remain_times === null)
+      (singleLottery.remain_times > 0 || singleLottery.remain_times === null)
     ) {
       try {
-        const respones = await getLotteryResult(prizeUrl)
-        const prize = respones?.data?.data?.results[0]
+        const prize = await getLotteryResult(prizeUrl)
         if (prize) {
           dispatch({ type: 'isClickable', value: false })
 
@@ -85,7 +86,7 @@ const PrizeGrid: FC<PrizeGridProps> = (props) => {
                     setActiveIndex(undefined)
 
                     if (
-                      !prize.objective.is_empty &&
+                      !prize.objective.is_default &&
                       states.shouldUserInfoModalShow
                     ) {
                       dispatch({ type: 'IsUserInfoModalShow', value: true })
@@ -126,9 +127,17 @@ const PrizeGrid: FC<PrizeGridProps> = (props) => {
     }
   }
 
+  useEffect(() => {
+    const temp = clone(prizeList)
+    setItemList(temp)
+  }, [prizeList])
+
   if (itemList?.length) {
     itemList?.length === 8 &&
-      itemList.splice(4, 0, { id: 'lotteryButton', ranking: 'lotteryButton' })
+      itemList.splice(4, 0, {
+        id: 'lotteryButton',
+        ranking: 'lotteryButton'
+      } as PrizeType)
 
     const prizeBackground = `url(${
       prizeBg || `${prefix}diazo/images/lottery/lotteryGrid/prizeBg.png`
@@ -155,7 +164,7 @@ const PrizeGrid: FC<PrizeGridProps> = (props) => {
             gridTemplateRows: '83px 83px 83px'
           }}
         >
-          {itemList.map((it: any, index: number) => {
+          {itemList.map((it, index: number) => {
             return (
               <div
                 key={it.id}
@@ -181,7 +190,7 @@ const PrizeGrid: FC<PrizeGridProps> = (props) => {
                 {index !== 4 && (
                   <img
                     src={
-                      it.objective?.picture ||
+                      it.picture ||
                       `${prefix}diazo/images/lottery/common/prize.png`
                     }
                     width='40%'

@@ -9,12 +9,19 @@ import {
   RollingList,
   ContactInfo
 } from '../../../Components'
+import {
+  SingleLotteryType,
+  UserInfoType,
+  PrizeType,
+  WinnerListType
+} from '../../../type'
+import { getPicture } from '../../../util'
 
 interface EggFrenzyProps {
-  winnerList: any
-  prizeList: any
-  singleLottery: any
-  userInfo: any
+  winnerList: WinnerListType[]
+  prizeList: PrizeType[]
+  singleLottery: SingleLotteryType
+  userInfo: UserInfoType
   isClickable: boolean
   prefix: string
   prizeUrl?: string
@@ -41,10 +48,11 @@ const EggFrenzy: FC<EggFrenzyProps> = (props) => {
     show_rolling_list,
     contact_info,
     rules,
-    picture = {}
-  } = singleLottery?.[0] ?? {}
+    picture = []
+  } = singleLottery ?? {}
 
-  const { myPrize, rule } = picture
+  const myPrize = getPicture(picture, 'myPrize')
+  const rule = getPicture(picture, 'rule')
 
   return (
     <div className={styles.eggFrenzyWrap}>
@@ -60,7 +68,11 @@ const EggFrenzy: FC<EggFrenzyProps> = (props) => {
       <RemainTime remainTimes={remain_times} />
       <MyPrizeButton url={myPrize} myPrizeListUrl={prizeUrl} prefix={prefix} />
       <RulesButton url={rule} rules={rules} isButtonClickable prefix={prefix} />
-      <RollingList winnerList={winnerList} isShow={show_rolling_list} />
+      <RollingList
+        winnerList={winnerList}
+        isShow={show_rolling_list}
+        prizeUrl={prizeUrl}
+      />
       <ContactInfo contactInfo={contact_info} isShow={show_contact_info} />
     </div>
   )

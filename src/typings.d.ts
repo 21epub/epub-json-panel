@@ -29,3 +29,11 @@ declare module '*.svg' {
   export default svgUrl
   export { svgComponent as ReactComponent }
 }
+
+// eslint-disable-next-line
+declare interface AnyObject {
+  [key: string]: any
+}
+
+// eslint-disable-next-line
+declare type Any = any

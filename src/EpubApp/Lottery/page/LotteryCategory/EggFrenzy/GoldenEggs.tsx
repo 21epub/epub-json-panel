@@ -3,12 +3,15 @@ import { Modal } from 'antd'
 import { useDispatch, useSelector } from 'react-redux'
 import { getLotteryResult } from '../../../data/api'
 import SmashEgg from './SmashEgg'
+import { SingleLotteryType, UserInfoType, PrizeType } from '../../../type'
+import { getPicture } from '../../../util'
+import { StateType } from 'src/core/Lottery/store/reducer'
 
 interface GoldenEggsProps {
-  prizeList: any
-  singleLottery: any
+  prizeList: PrizeType[]
+  singleLottery: SingleLotteryType
   prizeUrl?: string
-  userInfo: any
+  userInfo: UserInfoType
   prefix: string
   getData: Function
 }
@@ -16,33 +19,29 @@ interface GoldenEggsProps {
 const GoldenEggs: FC<GoldenEggsProps> = (props) => {
   const { singleLottery, prizeUrl, userInfo, prefix, getData } = props
   const dispatch = useDispatch()
-  const state = useSelector((stateValue: any) => stateValue) // 获取保存的状态
+  const state = useSelector((stateValue: StateType) => stateValue) // 获取保存的状态
   const [isLotterySuccess, setIsLotterySuccess] = useState(false)
-  const { picture = {} } = singleLottery?.[0] ?? {}
-  const { goodEgg, badEgg, hammer } = picture
+  const { picture = [] } = singleLottery ?? {}
+  const goodEgg = getPicture(picture, 'goodEgg')
+  const badEgg = getPicture(picture, 'badEgg')
+  const hammer = getPicture(picture, 'hammer')
 
-  const lottery = async (
-    singleLotteryValue: any,
-    userInfoValue: any,
-    prizeUrlValue?: string
-  ) => {
+  const lottery = async () => {
     // 先判断是否需要填写信息
     if (
-      userInfoValue[0]?.user_id === null &&
-      singleLotteryValue[0].need_user_info &&
+      userInfo?.user_id === null &&
+      singleLottery.need_user_info &&
       state.shouldUserInfoModalShow
     ) {
       dispatch({ type: 'IsUserInfoModalShow', value: true })
     } else if (
-      prizeUrlValue &&
-      (singleLotteryValue[0]?.remain_times > 0 ||
-        singleLotteryValue[0]?.remain_times === null)
+      prizeUrl &&
+      (singleLottery?.remain_times > 0 || singleLottery?.remain_times === null)
     ) {
       dispatch({ type: 'isClickable', value: false })
       // 抽奖
       try {
-        const response = await getLotteryResult(prizeUrlValue)
-        const prize = response?.data?.data?.results[0]
+        const prize = await getLotteryResult(prizeUrl)
         setIsLotterySuccess(true)
         // 延时1000毫秒弹出获奖结果
         setTimeout(() => {
@@ -99,7 +98,7 @@ const GoldenEggs: FC<GoldenEggsProps> = (props) => {
     badEgg,
     hammer,
     isLotterySuccess,
-    onClick: () => lottery(singleLottery, userInfo, prizeUrl)
+    onClick: lottery
   }
 
   return (
