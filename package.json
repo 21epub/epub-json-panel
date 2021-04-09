@@ -52,23 +52,22 @@
       "pre-commit": "lint-staged"
     }
   },
-  "peerDependencies": {
-    "antd": ">=4.8.2",
-    "react": ">=16.8.6",
-    "react-dom": ">=16.8.6"
-  },
   "dependencies": {
     "@21epub/epub-data-client": "^0.3.0",
     "@21epub/react-rxjs-store": "^0.2.0",
     "@21epub/rxjs-event-bus": "^0.1.1",
     "@types/styled-components": "^4.4.1",
     "ahooks": "^2.9.6",
+    "antd": "^4.8.2",
     "axios": "^0.21.0",
     "copy-to-clipboard": "^3.3.1",
+    "lodash": "^4.17.21",
     "moment": "^2.29.1",
     "qs": "^6.9.4",
     "ramda": "^0.21.0",
     "rc-tween-one": "^2.7.3",
+    "react": "^16.8.6",
+    "react-dom": "^16.8.6",
     "react-redux": "^7.2.2",
     "redux": "^4.0.5",
     "styled-components": "^4.4.1",
