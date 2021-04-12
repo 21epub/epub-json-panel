@@ -5,7 +5,7 @@ import { getLotteryResult } from '../../../data/api'
 import SmashEgg from './SmashEgg'
 import { SingleLotteryType, UserInfoType, PrizeType } from '../../../type'
 import { getPicture } from '../../../util'
-import { StateType } from 'src/core/Lottery/store/reducer'
+import { StateType } from '../../../store/reducer'
 
 interface GoldenEggsProps {
   prizeList: PrizeType[]
@@ -60,7 +60,7 @@ const GoldenEggs: FC<GoldenEggsProps> = (props) => {
               dispatch({ type: 'isClickable', value: true })
               setIsLotterySuccess(false)
               if (
-                !prize?.objective?.is_empty &&
+                !prize?.objective?.is_default &&
                 state.shouldUserInfoModalShow
               ) {
                 dispatch({ type: 'IsUserInfoModalShow', value: true })

@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import { getLotteryResult } from '../../../data/api'
 import styles from './index.module.less'
 import { SingleLotteryType, UserInfoType, PrizeType } from '../../../type'
-import { StateType } from 'src/core/Lottery/store/reducer'
+import { StateType } from '../../../store/reducer'
 
 interface TreasureBoxProps {
   openBox?: string
@@ -70,7 +70,7 @@ const TreasureBox: FC<TreasureBoxProps> = (props) => {
               dispatch({ type: 'isClickable', value: true })
               setModalVisible(false)
               if (
-                !prize?.objective?.is_empty &&
+                !prize?.objective?.is_default &&
                 state.shouldUserInfoModalShow
               ) {
                 dispatch({ type: 'IsUserInfoModalShow', value: true })

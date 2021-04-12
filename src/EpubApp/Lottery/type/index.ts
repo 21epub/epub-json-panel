@@ -107,7 +107,7 @@ export interface UserInfoType {
   // 邮箱
   email: string
   // 数据id
-  id: number
+  id: string
   // mp应用slug
   mp_slug: string
   // 用户姓名
