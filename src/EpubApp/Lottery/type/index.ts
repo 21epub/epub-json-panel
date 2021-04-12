@@ -5,6 +5,7 @@ export type LotteryType =
   | 'LotteryBox'
   | 'Gashapon'
   | 'LotteryGrid'
+  | 'Gashapon'
 
 // 图片格式
 export interface ImageType {
