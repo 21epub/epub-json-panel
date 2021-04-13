@@ -1,6 +1,6 @@
-import React, { FC } from 'react'
-import styles from './index.module.less'
-import GashaponMachine from './GashaponMachine'
+import React, { FC } from 'react';
+import styles from './index.module.less';
+import GashaponMachine from './GashaponMachine';
 import {
   ActivityTime,
   RemainTime,
@@ -8,17 +8,24 @@ import {
   RulesButton,
   RollingList,
   ContactInfo
-} from '../../../Components'
+} from '../../../Components';
+import {
+  SingleLotteryType,
+  UserInfoType,
+  PrizeType,
+  WinnerType
+} from '../../../type';
+import { getPicture } from '../../../util';
 
 interface GashaponProps {
-  winnerList: any
-  prizeList: any
-  singleLottery: any
-  userInfo: any
-  isClickable: boolean
-  prefix: string
-  prizeUrl?: string
-  getData: Function
+  winnerList: WinnerType[];
+  prizeList: PrizeType[];
+  singleLottery: SingleLotteryType;
+  userInfo?: UserInfoType;
+  isClickable: boolean;
+  prefix: string;
+  prizeUrl?: string;
+  getData: () => void;
 }
 
 // 抽奖箱
@@ -31,7 +38,7 @@ const Gashapon: FC<GashaponProps> = (props) => {
     prefix,
     prizeUrl,
     getData
-  } = props
+  } = props;
 
   const {
     start_time,
@@ -41,10 +48,11 @@ const Gashapon: FC<GashaponProps> = (props) => {
     show_rolling_list,
     contact_info,
     rules,
-    picture = {}
-  } = singleLottery?.[0] ?? {}
+    picture = []
+  } = singleLottery ?? {};
 
-  const { myPrize, rule } = picture
+  const myPrize = getPicture(picture, 'myPrize');
+  const rule = getPicture(picture, 'rule');
 
   return (
     <div className={styles.gashaponWrap}>
@@ -64,7 +72,7 @@ const Gashapon: FC<GashaponProps> = (props) => {
       <RollingList winnerList={winnerList} isShow={show_rolling_list} />
       <ContactInfo contactInfo={contact_info} isShow={show_contact_info} />
     </div>
-  )
-}
+  );
+};
 
-export default Gashapon
+export default Gashapon;

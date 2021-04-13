@@ -1,24 +1,37 @@
-import React, { FC } from 'react'
-import { Modal } from 'antd'
-import { useDispatch, useSelector } from 'react-redux'
-import { getLotteryResult } from '../../../data/api'
-import styles from './index.module.less'
+import React, { FC } from 'react';
+import { Modal } from 'antd';
+import { useDispatch, useSelector } from 'react-redux';
+import { getLotteryResult } from '../../../data/api';
+import styles from './index.module.less';
+import {
+  SingleLotteryType,
+  UserInfoType,
+  PrizeType,
+  ImageType
+} from '../../../type';
+import { getPicture } from '../../../util';
 
 interface TreasureBoxProps {
-  prizeList: any
-  singleLottery: any
-  prizeUrl?: string
-  userInfo: any
-  prefix: string
-  getData: Function
-  picture: any
+  prizeList: PrizeType[];
+  singleLottery: SingleLotteryType;
+  prizeUrl?: string;
+  userInfo?: UserInfoType;
+  prefix: string;
+  getData: () => void;
+  picture: ImageType[];
 }
 
 const GashaponMachine: FC<TreasureBoxProps> = (props) => {
-  const { picture, singleLottery, prizeUrl, userInfo, prefix, getData } = props
-  const dispatch = useDispatch()
-  const state = useSelector((state: any) => state) // 获取保存的状态
-  const { up, glass, down, start, exportBg } = picture
+  const { picture, singleLottery, prizeUrl, userInfo, prefix, getData } = props;
+  const dispatch = useDispatch();
+  const state = useSelector((state: any) => state); // 获取保存的状态
+  const { up, glass, down, start, exportBg } = picture;
+  const up = getPicture(picture, 'up');
+  const glass = getPicture(picture, 'glass');
+  const down = getPicture(picture, 'down');
+  const start = getPicture(picture, 'start');
+  const exportBg = getPicture(picture, 'exportBg');
+
   const lottery = async (
     singleLottery: any,
     userInfo: any,
@@ -30,17 +43,17 @@ const GashaponMachine: FC<TreasureBoxProps> = (props) => {
       singleLottery[0].need_user_info &&
       state.shouldUserInfoModalShow
     ) {
-      dispatch({ type: 'IsUserInfoModalShow', value: true })
+      dispatch({ type: 'IsUserInfoModalShow', value: true });
     } else if (
       prizeUrl &&
       (singleLottery[0].remain_times > 0 ||
         singleLottery[0].remain_times === null)
     ) {
-      dispatch({ type: 'isClickable', value: false })
+      dispatch({ type: 'isClickable', value: false });
       // 抽奖
       try {
-        const response = await getLotteryResult(prizeUrl)
-        const prize = response?.data?.data?.results[0]
+        const response = await getLotteryResult(prizeUrl);
+        const prize = response?.data?.data?.results[0];
 
         // 延时1000毫秒弹出获奖结果
         setTimeout(() => {
@@ -55,25 +68,25 @@ const GashaponMachine: FC<TreasureBoxProps> = (props) => {
             ),
             onOk() {
               // 重新获取后台的值
-              getData()
-              dispatch({ type: 'isClickable', value: true })
+              getData();
+              dispatch({ type: 'isClickable', value: true });
               if (
                 !prize?.objective?.is_empty &&
                 state.shouldUserInfoModalShow
               ) {
-                dispatch({ type: 'IsUserInfoModalShow', value: true })
+                dispatch({ type: 'IsUserInfoModalShow', value: true });
               }
             }
-          })
-        }, 500)
+          });
+        }, 500);
       } catch (error) {
         Modal.info({
           title: error.response.data,
           okText: '查看我的奖品',
           onOk() {
-            dispatch({ type: 'isPrizeModalShow', value: true })
+            dispatch({ type: 'isPrizeModalShow', value: true });
           }
-        })
+        });
       }
     } else {
       Modal.info({
@@ -86,9 +99,9 @@ const GashaponMachine: FC<TreasureBoxProps> = (props) => {
           </div>
         ),
         onOk() {}
-      })
+      });
     }
-  }
+  };
 
   return (
     <div className={styles.gashaponWrap}>
@@ -127,7 +140,7 @@ const GashaponMachine: FC<TreasureBoxProps> = (props) => {
         className='exportBg'
       />
     </div>
-  )
-}
+  );
+};
 
-export default GashaponMachine
+export default GashaponMachine;

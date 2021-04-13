@@ -1,6 +1,6 @@
-import React, { FC } from 'react'
-import styles from './index.module.less'
-import TreasureBox from './TreasureBox'
+import React, { FC } from 'react';
+import styles from './index.module.less';
+import TreasureBox from './TreasureBox';
 import {
   ActivityTime,
   RemainTime,
@@ -8,24 +8,24 @@ import {
   RulesButton,
   RollingList,
   ContactInfo
-} from '../../../Components'
+} from '../../../Components';
 import {
   SingleLotteryType,
   UserInfoType,
   PrizeType,
-  WinnerListType
-} from '../../../type'
-import { getPicture } from '../../../util'
+  WinnerType
+} from '../../../type';
+import { getPicture } from '../../../util';
 
 interface LotteryBoxProps {
-  winnerList: WinnerListType[]
-  prizeList: PrizeType[]
-  singleLottery: SingleLotteryType
-  userInfo: UserInfoType
-  isClickable: boolean
-  prefix: string
-  prizeUrl?: string
-  getData: () => void
+  winnerList: WinnerType[];
+  prizeList: PrizeType[];
+  singleLottery: SingleLotteryType;
+  userInfo: UserInfoType;
+  isClickable: boolean;
+  prefix: string;
+  prizeUrl?: string;
+  getData: () => void;
 }
 
 // 抽奖箱
@@ -38,7 +38,7 @@ const LotteryBox: FC<LotteryBoxProps> = (props) => {
     prefix,
     prizeUrl,
     getData
-  } = props
+  } = props;
 
   const {
     start_time,
@@ -49,12 +49,12 @@ const LotteryBox: FC<LotteryBoxProps> = (props) => {
     contact_info,
     rules,
     picture = []
-  } = singleLottery ?? {}
+  } = singleLottery ?? {};
 
-  const myPrize = getPicture(picture, 'myPrize')
-  const rule = getPicture(picture, 'rule')
-  const openBox = getPicture(picture, 'openBox')
-  const closeBox = getPicture(picture, 'closeBox')
+  const myPrize = getPicture(picture, 'myPrize');
+  const rule = getPicture(picture, 'rule');
+  const openBox = getPicture(picture, 'openBox');
+  const closeBox = getPicture(picture, 'closeBox');
 
   return (
     <div className={styles.lotteryBoxWrap}>
@@ -79,7 +79,7 @@ const LotteryBox: FC<LotteryBoxProps> = (props) => {
       />
       <ContactInfo contactInfo={contact_info} isShow={show_contact_info} />
     </div>
-  )
-}
+  );
+};
 
-export default LotteryBox
+export default LotteryBox;

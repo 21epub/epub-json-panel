@@ -1,6 +1,6 @@
-import React, { FC } from 'react'
-import styles from './index.module.less'
-import TurntableCenter from './TurntableCenter'
+import React, { FC } from 'react';
+import styles from './index.module.less';
+import TurntableCenter from './TurntableCenter';
 import {
   ActivityTime,
   RemainTime,
@@ -8,24 +8,24 @@ import {
   RulesButton,
   RollingList,
   ContactInfo
-} from '../../../Components'
+} from '../../../Components';
 import {
   SingleLotteryType,
   UserInfoType,
   PrizeType,
-  WinnerListType
-} from '../../../type'
-import { getPicture } from '../../../util'
+  WinnerType
+} from '../../../type';
+import { getPicture } from '../../../util';
 
 interface TurntableProps {
-  prizeList: PrizeType[]
-  winnerList: WinnerListType[]
-  singleLottery: SingleLotteryType
-  userInfo?: UserInfoType
-  isClickable: boolean
-  prefix: string
-  prizeUrl?: string
-  getData: Function
+  prizeList: PrizeType[];
+  winnerList: WinnerType[];
+  singleLottery: SingleLotteryType;
+  userInfo?: UserInfoType;
+  isClickable: boolean;
+  prefix: string;
+  prizeUrl?: string;
+  getData: Function;
 }
 
 // 大转盘抽奖
@@ -39,7 +39,7 @@ const Turntable: FC<TurntableProps> = (props) => {
     prefix,
     prizeUrl,
     getData
-  } = props
+  } = props;
 
   const {
     start_time,
@@ -50,12 +50,12 @@ const Turntable: FC<TurntableProps> = (props) => {
     contact_info,
     rules,
     picture = []
-  } = singleLottery ?? {}
+  } = singleLottery ?? {};
 
-  const myPrize = getPicture(picture, 'myPrize')
-  const rule = getPicture(picture, 'rule')
-  const pointer = getPicture(picture, 'pointer')
-  const turntable = getPicture(picture, 'turntable')
+  const myPrize = getPicture(picture, 'myPrize');
+  const rule = getPicture(picture, 'rule');
+  const pointer = getPicture(picture, 'pointer');
+  const turntable = getPicture(picture, 'turntable');
 
   return (
     <div className={styles.turntableWrap}>
@@ -81,7 +81,7 @@ const Turntable: FC<TurntableProps> = (props) => {
       />
       <ContactInfo contactInfo={contact_info} isShow={show_contact_info} />
     </div>
-  )
-}
+  );
+};
 
-export default Turntable
+export default Turntable;

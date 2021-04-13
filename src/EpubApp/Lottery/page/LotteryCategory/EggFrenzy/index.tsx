@@ -1,6 +1,6 @@
-import React, { FC } from 'react'
-import styles from './index.module.less'
-import GoldenEggs from './GoldenEggs'
+import React, { FC } from 'react';
+import styles from './index.module.less';
+import GoldenEggs from './GoldenEggs';
 import {
   ActivityTime,
   RemainTime,
@@ -8,24 +8,24 @@ import {
   RulesButton,
   RollingList,
   ContactInfo
-} from '../../../Components'
+} from '../../../Components';
 import {
   SingleLotteryType,
   UserInfoType,
   PrizeType,
-  WinnerListType
-} from '../../../type'
-import { getPicture } from '../../../util'
+  WinnerType
+} from '../../../type';
+import { getPicture } from '../../../util';
 
 interface EggFrenzyProps {
-  winnerList: WinnerListType[]
-  prizeList: PrizeType[]
-  singleLottery: SingleLotteryType
-  userInfo: UserInfoType
-  isClickable: boolean
-  prefix: string
-  prizeUrl?: string
-  getData: () => void
+  winnerList: WinnerType[];
+  prizeList: PrizeType[];
+  singleLottery: SingleLotteryType;
+  userInfo: UserInfoType;
+  isClickable: boolean;
+  prefix: string;
+  prizeUrl?: string;
+  getData: () => void;
 }
 
 // 抽奖箱
@@ -38,7 +38,7 @@ const EggFrenzy: FC<EggFrenzyProps> = (props) => {
     prefix,
     prizeUrl,
     getData
-  } = props
+  } = props;
 
   const {
     start_time,
@@ -49,10 +49,10 @@ const EggFrenzy: FC<EggFrenzyProps> = (props) => {
     contact_info,
     rules,
     picture = []
-  } = singleLottery ?? {}
+  } = singleLottery ?? {};
 
-  const myPrize = getPicture(picture, 'myPrize')
-  const rule = getPicture(picture, 'rule')
+  const myPrize = getPicture(picture, 'myPrize');
+  const rule = getPicture(picture, 'rule');
 
   return (
     <div className={styles.eggFrenzyWrap}>
@@ -75,7 +75,7 @@ const EggFrenzy: FC<EggFrenzyProps> = (props) => {
       />
       <ContactInfo contactInfo={contact_info} isShow={show_contact_info} />
     </div>
-  )
-}
+  );
+};
 
-export default EggFrenzy
+export default EggFrenzy;

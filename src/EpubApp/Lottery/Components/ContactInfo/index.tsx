@@ -1,13 +1,13 @@
-import React, { FC } from 'react'
-import styles from './index.module.less'
+import React, { FC } from 'react';
+import styles from './index.module.less';
 
 interface ContactInfoProps {
-  contactInfo?: any
-  isShow: boolean
+  contactInfo?: any;
+  isShow: boolean;
 }
 
 const ContactInfo: FC<ContactInfoProps> = (props) => {
-  const { contactInfo, isShow = true } = props
+  const { contactInfo, isShow = true } = props;
   if (isShow) {
     return (
       <div className={styles.contactInfo}>
@@ -17,10 +17,10 @@ const ContactInfo: FC<ContactInfoProps> = (props) => {
           {contactInfo.address && `地址：${contactInfo.address}`} */}
         </div>
       </div>
-    )
+    );
   } else {
-    return <div />
+    return <div />;
   }
-}
+};
 
-export default ContactInfo
+export default ContactInfo;

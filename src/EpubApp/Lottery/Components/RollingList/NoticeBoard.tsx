@@ -1,18 +1,18 @@
-import React, { FC, useState, useEffect } from 'react'
-import styled, { keyframes } from 'styled-components'
+import React, { FC, useState, useEffect } from 'react';
+import styled, { keyframes } from 'styled-components';
 
 export interface WrapperDivProps {
-  width?: number
-  height?: number
+  width?: number;
+  height?: number;
 }
 
 export interface ContentDivProps {
-  animation: Any
-  duration: number
+  animation: Any;
+  duration: number;
 }
 
 export interface TextPProps {
-  height: number
+  height: number;
 }
 
 const Wrapper = styled.div<WrapperDivProps>`
@@ -20,7 +20,7 @@ const Wrapper = styled.div<WrapperDivProps>`
   height: ${(props) => (props.height ? `${props.height}px` : '44px')};
   overflow: hidden;
   display: flex;
-`
+`;
 
 const Content = styled.div<ContentDivProps>`
   overflow: hidden;
@@ -28,7 +28,7 @@ const Content = styled.div<ContentDivProps>`
     ${(props) => props.duration}s linear infinite;
   margin-right: auto;
   margin-left: 22px;
-`
+`;
 
 const Text = styled.p<TextPProps>`
   line-height: ${(props) => (props.height ? `${props.height}px` : '30px')};
@@ -38,15 +38,15 @@ const Text = styled.p<TextPProps>`
   white-space: nowrap;
   color: white;
   text-shadow: grey 0.1em 0.1em 0.2em;
-`
+`;
 
 interface NoticeBoardProps {
-  stepDuration: number
-  height?: number
-  className: string
-  width?: number
-  textClassName?: string
-  dataSource: string[]
+  stepDuration: number;
+  height?: number;
+  className: string;
+  width?: number;
+  textClassName?: string;
+  dataSource: string[];
 }
 
 const NoticeBoard: FC<NoticeBoardProps> = (props) => {
@@ -57,61 +57,61 @@ const NoticeBoard: FC<NoticeBoardProps> = (props) => {
     width,
     dataSource,
     className
-  } = props
-  const [dataSourceL, setDataSourceL] = useState(dataSource)
-  const [keyframesValue, setKeyframesValue] = useState('')
+  } = props;
+  const [dataSourceL, setDataSourceL] = useState(dataSource);
+  const [keyframesValue, setKeyframesValue] = useState('');
 
   const getStepLen = () => {
-    return dataSource.length * 2
-  }
+    return dataSource.length * 2;
+  };
 
   const getDuration = () => {
-    return (dataSource.length * stepDuration) / 1000
-  }
+    return (dataSource.length * stepDuration) / 1000;
+  };
 
   const getScrollKeyFrames = () => {
     if (keyframesValue) {
       return keyframes`
         ${keyframesValue}
-      `
+      `;
     }
-    return null
-  }
+    return null;
+  };
 
   const handleDataSource = () => {
     return new Promise((resolve, reject) => {
       if (dataSource.length > 0) {
-        setDataSourceL(dataSource.concat(dataSource[0]))
+        setDataSourceL(dataSource.concat(dataSource[0]));
       }
-    })
-  }
+    });
+  };
 
   const createKeyFrames = () => {
-    const per = 100 / getStepLen()
-    let offset = 0
-    const cssStr: string[] = []
+    const per = 100 / getStepLen();
+    let offset = 0;
+    const cssStr: string[] = [];
     for (let i = 0; i <= getStepLen(); i++) {
-      const even = i % 2 === 0
+      const even = i % 2 === 0;
       if (i !== 0 && even) {
-        offset += height
+        offset += height;
       }
       const v = `
         ${i * per}% {
           margin-top: -${offset}px
         }
-      `
-      cssStr.push(v)
+      `;
+      cssStr.push(v);
     }
-    const css = cssStr.join('')
-    setKeyframesValue(css)
-  }
+    const css = cssStr.join('');
+    setKeyframesValue(css);
+  };
 
   useEffect(() => {
-    handleDataSource()
+    handleDataSource();
     if (dataSourceL.length >= 2) {
-      createKeyFrames()
+      createKeyFrames();
     }
-  }, [])
+  }, []);
 
   return (
     <div>
@@ -132,7 +132,7 @@ const NoticeBoard: FC<NoticeBoardProps> = (props) => {
         </Content>
       </Wrapper>
     </div>
-  )
-}
+  );
+};
 
-export default NoticeBoard
+export default NoticeBoard;

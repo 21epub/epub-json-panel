@@ -1,25 +1,25 @@
-import React, { FC } from 'react'
-import { Button, Col, Row, Space } from 'antd'
-import copy from 'copy-to-clipboard'
-import { useDispatch } from 'react-redux'
-import styles from './index.module.less'
+import React, { FC } from 'react';
+import { Button, Col, Row, Space } from 'antd';
+import copy from 'copy-to-clipboard';
+import { useDispatch } from 'react-redux';
+import styles from './index.module.less';
 
 interface MyPrizeContentProps {
-  myPrizeList: any
-  prefix: string
+  myPrizeList: any;
+  prefix: string;
 }
 
 const MyPrizeContent: FC<MyPrizeContentProps> = (props) => {
-  const { myPrizeList, prefix } = props
-  const dispatch = useDispatch()
+  const { myPrizeList, prefix } = props;
+  const dispatch = useDispatch();
   const copyContent = (id: string) => {
     if (copy(id)) {
-      dispatch({ type: 'isCopySuccess', value: true })
+      dispatch({ type: 'isCopySuccess', value: true });
       setTimeout(() => {
-        dispatch({ type: 'isCopySuccess', value: false })
-      }, 800)
+        dispatch({ type: 'isCopySuccess', value: false });
+      }, 800);
     }
-  }
+  };
 
   if (myPrizeList?.length) {
     return (
@@ -63,13 +63,13 @@ const MyPrizeContent: FC<MyPrizeContentProps> = (props) => {
               </Row>
               <br />
             </div>
-          )
+          );
         })}
       </div>
-    )
+    );
   } else {
-    return <div key='noPrize'>暂无奖品</div>
+    return <div key='noPrize'>暂无奖品</div>;
   }
-}
+};
 
-export default MyPrizeContent
+export default MyPrizeContent;

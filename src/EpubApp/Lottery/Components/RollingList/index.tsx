@@ -1,29 +1,29 @@
-import React, { FC } from 'react'
-import { isEmpty } from 'lodash'
-import NoticeBoard from './NoticeBoard'
-import { getNow } from '../../util'
-import { WinnerListType } from '../../type'
-import styles from './index.module.less'
+import React, { FC } from 'react';
+import { isEmpty } from 'lodash';
+import NoticeBoard from './NoticeBoard';
+import { getNow } from '../../util';
+import { WinnerType } from '../../type';
+import styles from './index.module.less';
 
 interface RollingListProps {
-  winnerList: WinnerListType[]
-  isShow: boolean
-  prizeUrl?: string
+  winnerList: WinnerType[];
+  isShow: boolean;
+  prizeUrl?: string;
 }
 
 // 中奖轮播列表
 const RollingList: FC<RollingListProps> = (props) => {
-  const { winnerList, isShow = true, prizeUrl } = props
-  const data = `恭喜小李抽中一等奖 ${getNow()}`
+  const { winnerList, isShow = true, prizeUrl } = props;
+  const data = `恭喜小李抽中一等奖 ${getNow()}`;
   // 中奖者轮播列表
   const winner: string[] = winnerList.reduce((prev: string[], curr, index) => {
     prev.push(
       `恭喜${
         curr.initiator_name || curr.initiator_username || `User${index + 1}`
       }抽中${curr.objective?.ranking} ${curr?.created}`
-    )
-    return prev
-  }, [])
+    );
+    return prev;
+  }, []);
 
   return (
     (!isEmpty(winnerList) || null) && (
@@ -44,7 +44,7 @@ const RollingList: FC<RollingListProps> = (props) => {
         )}
       </div>
     )
-  )
-}
+  );
+};
 
-export default RollingList
+export default RollingList;

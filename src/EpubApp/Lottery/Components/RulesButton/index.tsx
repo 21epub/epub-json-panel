@@ -1,26 +1,26 @@
-import React, { FC, useState } from 'react'
-import { Button } from 'antd'
-import Modal from 'antd/lib/modal/Modal'
-import styles from './index.module.less'
+import React, { FC, useState } from 'react';
+import { Button } from 'antd';
+import Modal from 'antd/lib/modal/Modal';
+import styles from './index.module.less';
 
 interface RulesButtonProps {
-  rules?: any
-  isButtonClickable: boolean
-  prefix: string
-  url?: string
+  rules?: any;
+  isButtonClickable: boolean;
+  prefix: string;
+  url?: string;
 }
 
 const RulesButton: FC<RulesButtonProps> = (props) => {
-  const { rules, isButtonClickable, prefix, url } = props
-  const [isModalShow, setIsModalShow] = useState(false)
+  const { rules, isButtonClickable, prefix, url } = props;
+  const [isModalShow, setIsModalShow] = useState(false);
 
   const getRules = () => {
-    setIsModalShow(true)
-  }
+    setIsModalShow(true);
+  };
 
   const handleOk = () => {
-    setIsModalShow(false)
-  }
+    setIsModalShow(false);
+  };
 
   return (
     <div className={styles.rulesButton}>
@@ -50,7 +50,7 @@ const RulesButton: FC<RulesButtonProps> = (props) => {
         <div dangerouslySetInnerHTML={{ __html: rules }} />
       </Modal>
     </div>
-  )
-}
+  );
+};
 
-export default RulesButton
+export default RulesButton;

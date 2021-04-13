@@ -1,27 +1,27 @@
-import React, { FC, useEffect, useState } from 'react'
-import { Modal } from 'antd'
-import { useDispatch, useSelector } from 'react-redux'
-import { getIndexList, getPicture, getPrizeIndex } from '../../../util'
-import { getLotteryResult } from '../../../data/api'
-import styles from './index.module.less'
-import { clone } from 'ramda'
+import React, { FC, useEffect, useState } from 'react';
+import { Modal } from 'antd';
+import { useDispatch, useSelector } from 'react-redux';
+import { getIndexList, getPicture, getPrizeIndex } from '../../../util';
+import { getLotteryResult } from '../../../data/api';
+import styles from './index.module.less';
+import { clone } from 'ramda';
 import {
   SingleLotteryType,
   UserInfoType,
   PrizeType,
   ImageType
-} from '../../../type'
-import { StateType } from '../../../store/reducer'
+} from '../../../type';
+import { StateType } from '../../../store/reducer';
 
 interface PrizeGridProps {
-  prizeList: PrizeType[]
-  prefix: string
-  isClickable: boolean
-  singleLottery: SingleLotteryType
-  prizeUrl?: string
-  userInfo: UserInfoType
-  getData: () => void
-  picture: ImageType[]
+  prizeList: PrizeType[];
+  prefix: string;
+  isClickable: boolean;
+  singleLottery: SingleLotteryType;
+  prizeUrl?: string;
+  userInfo: UserInfoType;
+  getData: () => void;
+  picture: ImageType[];
 }
 
 const PrizeGrid: FC<PrizeGridProps> = (props) => {
@@ -34,15 +34,15 @@ const PrizeGrid: FC<PrizeGridProps> = (props) => {
     prizeUrl,
     userInfo,
     getData
-  } = props
-  const [activeIndex, setActiveIndex] = useState<undefined | number>()
-  const [itemList, setItemList] = useState<PrizeType[]>([])
-  const gridBg1 = getPicture(picture, 'gridBg1')
-  const prizeBg = getPicture(picture, 'prizeBg')
-  const startBg = getPicture(picture, 'startBg')
+  } = props;
+  const [activeIndex, setActiveIndex] = useState<undefined | number>();
+  const [itemList, setItemList] = useState<PrizeType[]>([]);
+  const gridBg1 = getPicture(picture, 'gridBg1');
+  const prizeBg = getPicture(picture, 'prizeBg');
+  const startBg = getPicture(picture, 'startBg');
 
-  const dispatch = useDispatch()
-  const states = useSelector((state: StateType) => state)
+  const dispatch = useDispatch();
+  const states = useSelector((state: StateType) => state);
 
   const handleOnClick = async (prizeUrl: string | undefined) => {
     if (
@@ -50,28 +50,28 @@ const PrizeGrid: FC<PrizeGridProps> = (props) => {
       singleLottery.need_user_info &&
       states.shouldUserInfoModalShow
     ) {
-      dispatch({ type: 'IsUserInfoModalShow', value: true })
+      dispatch({ type: 'IsUserInfoModalShow', value: true });
     } else if (
       prizeUrl &&
       (singleLottery.remain_times > 0 || singleLottery.remain_times === null)
     ) {
       try {
-        const prize = await getLotteryResult(prizeUrl)
+        const prize = await getLotteryResult(prizeUrl);
         if (prize) {
-          dispatch({ type: 'isClickable', value: false })
+          dispatch({ type: 'isClickable', value: false });
 
-          let prizeIndex = getPrizeIndex(prize, prizeList)
+          let prizeIndex = getPrizeIndex(prize, prizeList);
           // 跳过开始抽奖按钮
-          if (prizeIndex > 3) prizeIndex = prizeIndex + 1
-          const turnList = [0, 1, 2, 5, 8, 7, 6, 3]
-          const indexList = getIndexList(prizeIndex, turnList)
-          let i = 0
+          if (prizeIndex > 3) prizeIndex = prizeIndex + 1;
+          const turnList = [0, 1, 2, 5, 8, 7, 6, 3];
+          const indexList = getIndexList(prizeIndex, turnList);
+          let i = 0;
           const timeId = setInterval(() => {
-            setActiveIndex(indexList[i])
-            i += 1
+            setActiveIndex(indexList[i]);
+            i += 1;
 
             if (i >= indexList.length) {
-              clearInterval(timeId)
+              clearInterval(timeId);
               // 延时1000毫秒弹出获奖结果
               setTimeout(() => {
                 Modal.info({
@@ -83,23 +83,23 @@ const PrizeGrid: FC<PrizeGridProps> = (props) => {
                     </div>
                   ),
                   onOk() {
-                    setActiveIndex(undefined)
+                    setActiveIndex(undefined);
 
                     if (
                       !prize.objective.is_default &&
                       states.shouldUserInfoModalShow
                     ) {
-                      dispatch({ type: 'IsUserInfoModalShow', value: true })
+                      dispatch({ type: 'IsUserInfoModalShow', value: true });
                     }
-                    dispatch({ type: 'isClickable', value: true })
+                    dispatch({ type: 'isClickable', value: true });
 
                     // 重新获取后台的值
-                    getData()
+                    getData();
                   }
-                })
-              }, 1000)
+                });
+              }, 1000);
             }
-          }, 100)
+          }, 100);
 
           // setBorderActive((b) => !b)
         }
@@ -108,9 +108,9 @@ const PrizeGrid: FC<PrizeGridProps> = (props) => {
           title: error.response.data,
           okText: '查看我的奖品',
           onOk() {
-            dispatch({ type: 'isPrizeModalShow', value: true })
+            dispatch({ type: 'isPrizeModalShow', value: true });
           }
-        })
+        });
       }
     } else {
       Modal.info({
@@ -123,28 +123,28 @@ const PrizeGrid: FC<PrizeGridProps> = (props) => {
           </div>
         ),
         onOk() {}
-      })
+      });
     }
-  }
+  };
 
   useEffect(() => {
-    const temp = clone(prizeList)
-    setItemList(temp)
-  }, [prizeList])
+    const temp = clone(prizeList);
+    setItemList(temp);
+  }, [prizeList]);
 
   if (itemList?.length) {
     itemList?.length === 8 &&
       itemList.splice(4, 0, {
         id: 'lotteryButton',
         ranking: 'lotteryButton'
-      } as PrizeType)
+      } as PrizeType);
 
     const prizeBackground = `url(${
       prizeBg || `${prefix}diazo/images/lottery/lotteryGrid/prizeBg.png`
-    })`
+    })`;
     const startBackground = `url(${
       startBg || `${prefix}diazo/images/lottery/lotteryGrid/startBg.png`
-    })`
+    })`;
 
     return (
       <div className={styles.prizeGridWrap}>
@@ -197,13 +197,13 @@ const PrizeGrid: FC<PrizeGridProps> = (props) => {
                   />
                 )}
               </div>
-            )
+            );
           })}
         </div>
       </div>
-    )
+    );
   }
-  return <div />
-}
+  return <div />;
+};
 
-export default PrizeGrid
+export default PrizeGrid;

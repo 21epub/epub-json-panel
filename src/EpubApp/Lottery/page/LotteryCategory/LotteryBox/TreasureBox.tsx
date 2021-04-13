@@ -1,20 +1,20 @@
-import React, { FC, useState } from 'react'
-import { Modal } from 'antd'
-import { useDispatch, useSelector } from 'react-redux'
-import { getLotteryResult } from '../../../data/api'
-import styles from './index.module.less'
-import { SingleLotteryType, UserInfoType, PrizeType } from '../../../type'
-import { StateType } from '../../../store/reducer'
+import React, { FC, useState } from 'react';
+import { Modal } from 'antd';
+import { useDispatch, useSelector } from 'react-redux';
+import { getLotteryResult } from '../../../data/api';
+import styles from './index.module.less';
+import { SingleLotteryType, UserInfoType, PrizeType } from '../../../type';
+import { StateType } from '../../../store/reducer';
 
 interface TreasureBoxProps {
-  openBox?: string
-  closeBox?: string
-  prizeList: PrizeType[]
-  singleLottery: SingleLotteryType
-  prizeUrl?: string
-  userInfo?: UserInfoType
-  prefix: string
-  getData: () => void
+  openBox?: string;
+  closeBox?: string;
+  prizeList: PrizeType[];
+  singleLottery: SingleLotteryType;
+  prizeUrl?: string;
+  userInfo?: UserInfoType;
+  prefix: string;
+  getData: () => void;
 }
 
 const TreasureBox: FC<TreasureBoxProps> = (props) => {
@@ -26,14 +26,14 @@ const TreasureBox: FC<TreasureBoxProps> = (props) => {
     userInfo,
     prefix,
     getData
-  } = props
-  const dispatch = useDispatch()
-  const state = useSelector((state: StateType) => state) // 获取保存的状态
-  const [modalVisible, setModalVisible] = useState(false)
+  } = props;
+  const dispatch = useDispatch();
+  const state = useSelector((state: StateType) => state); // 获取保存的状态
+  const [modalVisible, setModalVisible] = useState(false);
   const openBoxUrl =
-    openBox || `${prefix}diazo/images/lottery/lotteryBox/openBox.png`
+    openBox || `${prefix}diazo/images/lottery/lotteryBox/openBox.png`;
   const closeBoxUrl =
-    closeBox || `${prefix}diazo/images/lottery/lotteryBox/closeBox.png`
+    closeBox || `${prefix}diazo/images/lottery/lotteryBox/closeBox.png`;
 
   // 开始抽奖
   const lottery = async () => {
@@ -43,16 +43,16 @@ const TreasureBox: FC<TreasureBoxProps> = (props) => {
       singleLottery.need_user_info &&
       state.shouldUserInfoModalShow
     ) {
-      dispatch({ type: 'IsUserInfoModalShow', value: true })
+      dispatch({ type: 'IsUserInfoModalShow', value: true });
     } else if (
       prizeUrl &&
       (singleLottery.remain_times > 0 || singleLottery.remain_times === null)
     ) {
-      dispatch({ type: 'isClickable', value: false })
+      dispatch({ type: 'isClickable', value: false });
       // 抽奖
       try {
-        const prize = await getLotteryResult(prizeUrl)
-        setModalVisible(true)
+        const prize = await getLotteryResult(prizeUrl);
+        setModalVisible(true);
         // 延时1000毫秒弹出获奖结果
         setTimeout(() => {
           Modal.info({
@@ -66,26 +66,26 @@ const TreasureBox: FC<TreasureBoxProps> = (props) => {
             ),
             onOk() {
               // 重新获取后台的值
-              getData()
-              dispatch({ type: 'isClickable', value: true })
-              setModalVisible(false)
+              getData();
+              dispatch({ type: 'isClickable', value: true });
+              setModalVisible(false);
               if (
                 !prize?.objective?.is_default &&
                 state.shouldUserInfoModalShow
               ) {
-                dispatch({ type: 'IsUserInfoModalShow', value: true })
+                dispatch({ type: 'IsUserInfoModalShow', value: true });
               }
             }
-          })
-        }, 500)
+          });
+        }, 500);
       } catch (error) {
         Modal.info({
           title: error.response.data,
           okText: '查看我的奖品',
           onOk() {
-            dispatch({ type: 'isPrizeModalShow', value: true })
+            dispatch({ type: 'isPrizeModalShow', value: true });
           }
-        })
+        });
       }
     } else {
       Modal.info({
@@ -98,9 +98,9 @@ const TreasureBox: FC<TreasureBoxProps> = (props) => {
           </div>
         ),
         onOk() {}
-      })
+      });
     }
-  }
+  };
 
   return (
     <div className={styles.lotteryBoxPic}>
@@ -110,7 +110,7 @@ const TreasureBox: FC<TreasureBoxProps> = (props) => {
         <img className='lotteryBoxPic' src={closeBoxUrl} onClick={lottery} />
       )}
     </div>
-  )
-}
+  );
+};
 
-export default TreasureBox
+export default TreasureBox;

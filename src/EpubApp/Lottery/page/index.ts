@@ -1,1 +1,1 @@
-export * from './LotteryPage'
+export * from './LotteryPage';

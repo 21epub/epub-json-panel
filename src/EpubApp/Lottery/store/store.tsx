@@ -1,6 +1,6 @@
-import { createStore } from 'redux'
+import { createStore } from 'redux';
 
-import { reducer } from './reducer'
+import { reducer } from './reducer';
 
 const initialState = {
   IsUserInfoModalShow: false, // 是否显示用户窗
@@ -9,8 +9,8 @@ const initialState = {
   IsWin: false, // 是否中奖
   isCopySuccess: false,
   isPrizeModalShow: false // 我的奖品窗口
-}
+};
 
-const store = createStore(reducer as Any, initialState)
+const store = createStore(reducer as Any, initialState);
 
-export default store
+export default store;

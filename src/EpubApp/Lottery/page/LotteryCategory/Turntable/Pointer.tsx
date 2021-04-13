@@ -1,19 +1,19 @@
-import React, { FC } from 'react'
-import { Modal } from 'antd'
-import { useDispatch, useSelector } from 'react-redux'
-import { getLotteryResult } from '../../../data/api'
-import { SingleLotteryType, UserInfoType, WinnerListType } from '../../../type'
-import { StateType } from '../../../store/reducer'
-import styles from './index.module.less'
+import React, { FC } from 'react';
+import { Modal } from 'antd';
+import { useDispatch, useSelector } from 'react-redux';
+import { getLotteryResult } from '../../../data/api';
+import { SingleLotteryType, UserInfoType, WinnerType } from '../../../type';
+import { StateType } from '../../../store/reducer';
+import styles from './index.module.less';
 
 interface PointerProps {
-  pointer?: string
-  isClickable: boolean
-  singleLottery: SingleLotteryType
-  prizeUrl?: string
-  userInfo?: UserInfoType
-  prefix: string
-  doRotate: (prize: WinnerListType) => void
+  pointer?: string;
+  isClickable: boolean;
+  singleLottery: SingleLotteryType;
+  prizeUrl?: string;
+  userInfo?: UserInfoType;
+  prefix: string;
+  doRotate: (prize: WinnerType) => void;
 }
 
 const Pointer: FC<PointerProps> = (props) => {
@@ -25,9 +25,9 @@ const Pointer: FC<PointerProps> = (props) => {
     userInfo,
     prefix,
     doRotate
-  } = props
-  const dispatch = useDispatch()
-  const state = useSelector((state: StateType) => state) // 获取保存的状态
+  } = props;
+  const dispatch = useDispatch();
+  const state = useSelector((state: StateType) => state); // 获取保存的状态
   const lottery = async () => {
     // 先判断是否需要填写信息
     if (
@@ -35,25 +35,25 @@ const Pointer: FC<PointerProps> = (props) => {
       singleLottery.need_user_info &&
       state.shouldUserInfoModalShow
     ) {
-      dispatch({ type: 'IsUserInfoModalShow', value: true })
+      dispatch({ type: 'IsUserInfoModalShow', value: true });
     } else if (
       prizeUrl &&
       (singleLottery.remain_times > 0 || singleLottery.remain_times === null)
     ) {
-      dispatch({ type: 'isClickable', value: false })
+      dispatch({ type: 'isClickable', value: false });
       // 抽奖
       try {
-        const prize = await getLotteryResult(prizeUrl)
+        const prize = await getLotteryResult(prizeUrl);
         // 通知旋转
-        doRotate(prize)
+        doRotate(prize);
       } catch (error) {
         Modal.info({
           title: error.response.data,
           okText: '查看我的奖品',
           onOk() {
-            dispatch({ type: 'isPrizeModalShow', value: true })
+            dispatch({ type: 'isPrizeModalShow', value: true });
           }
-        })
+        });
       }
     } else {
       Modal.info({
@@ -66,9 +66,9 @@ const Pointer: FC<PointerProps> = (props) => {
           </div>
         ),
         onOk() {}
-      })
+      });
     }
-  }
+  };
 
   return (
     <div className={styles.pointer}>
@@ -93,7 +93,7 @@ const Pointer: FC<PointerProps> = (props) => {
         </a>
       )}
     </div>
-  )
-}
+  );
+};
 
-export default Pointer
+export default Pointer;

@@ -1,47 +1,47 @@
-import axios from 'axios'
-import qs from 'qs'
-import { UserInfoType, WinnerListType } from '../type'
+import axios from 'axios';
+import qs from 'qs';
+import { UserInfoType, WinnerType } from '../type';
 
-const instance = axios.create()
+const instance = axios.create();
 instance.defaults.headers = {
   'Content-type': 'application/x-www-form-urlencoded'
-}
+};
 
 export const getLotteryResult = (prizeUrl: string) => {
-  return new Promise<WinnerListType>((resolve, reject) => {
+  return new Promise<WinnerType>((resolve, reject) => {
     instance
       .post(prizeUrl)
       .then((response) => {
-        resolve(response?.data?.data?.results[0])
+        resolve(response?.data?.data?.results[0]);
       })
       .catch((error) => {
-        reject(error)
-      })
-  })
-}
+        reject(error);
+      });
+  });
+};
 
 export const addUserInfo = (addUserInfoUrl: string, data: any) => {
   return new Promise<UserInfoType>((resolve, reject) => {
     instance
       .post(addUserInfoUrl, qs.stringify(data))
       .then((response) => {
-        resolve(response.data)
+        resolve(response.data);
       })
       .catch((error) => {
-        reject(error)
-      })
-  })
-}
+        reject(error);
+      });
+  });
+};
 
 export const queryUserInfo = (queryUserInfo: string) => {
   return new Promise((resolve, reject) => {
     instance
       .get(queryUserInfo)
       .then((response) => {
-        resolve(response)
+        resolve(response);
       })
       .catch((error) => {
-        reject(error)
-      })
-  })
-}
+        reject(error);
+      });
+  });
+};

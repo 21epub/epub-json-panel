@@ -1,10 +1,10 @@
-import { Modal } from 'antd'
-import * as React from 'react'
-import 'antd/dist/antd.css'
+import { Modal } from 'antd';
+import * as React from 'react';
+import 'antd/dist/antd.css';
 
 interface Props {
-  content: any
-  title?: string
+  content: any;
+  title?: string;
 }
 
 function info({ content, title }: Props) {
@@ -18,13 +18,13 @@ function info({ content, title }: Props) {
         </div>
       ),
       onOk() {}
-    })
+    });
   } else {
     Modal.info({
       content: <div>{content}</div>,
       onOk() {}
-    })
+    });
   }
 }
 
-export { info }
+export { info };

@@ -1,14 +1,14 @@
-import React, { FC } from 'react'
-import styles from './index.module.less'
+import React, { FC } from 'react';
+import styles from './index.module.less';
 
 interface ActivityTimeProps {
-  startTime?: string | null
-  endTime?: string | null
+  startTime?: string | null;
+  endTime?: string | null;
 }
 
 // 活动时间组件
 const ActivityTime: FC<ActivityTimeProps> = (props) => {
-  const { startTime, endTime } = props
+  const { startTime, endTime } = props;
   return (
     <div className={`${styles.activityTime} activityTime`}>
       活动时间：
@@ -19,6 +19,6 @@ const ActivityTime: FC<ActivityTimeProps> = (props) => {
           )}`
         : '本活动永久有效'}
     </div>
-  )
-}
-export default ActivityTime
+  );
+};
+export default ActivityTime;

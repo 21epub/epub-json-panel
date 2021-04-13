@@ -1,42 +1,42 @@
-import React, { FC, Fragment, useState, useEffect } from 'react'
-import TweenOne from 'rc-tween-one'
-import BezierPlugin from 'rc-tween-one/lib/plugin/BezierPlugin'
-TweenOne.plugins.push(BezierPlugin)
+import React, { FC, Fragment, useState, useEffect } from 'react';
+import TweenOne from 'rc-tween-one';
+import BezierPlugin from 'rc-tween-one/lib/plugin/BezierPlugin';
+TweenOne.plugins.push(BezierPlugin);
 
 interface SmashEggProps {
-  prefix: string
-  goodEgg?: string
-  badEgg?: string
-  hammer?: string
-  isLotterySuccess: boolean
-  onClick: () => void
+  prefix: string;
+  goodEgg?: string;
+  badEgg?: string;
+  hammer?: string;
+  isLotterySuccess: boolean;
+  onClick: () => void;
 }
 
 const SmashEgg: FC<SmashEggProps> = (props) => {
-  const { prefix, goodEgg, badEgg, hammer, isLotterySuccess, onClick } = props
-  const [isClick, setIsClick] = useState(false)
-  const [play, setPlay] = useState(false)
+  const { prefix, goodEgg, badEgg, hammer, isLotterySuccess, onClick } = props;
+  const [isClick, setIsClick] = useState(false);
+  const [play, setPlay] = useState(false);
   const goodEggUrl =
-    goodEgg || `${prefix}diazo/images/lottery/eggFrenzy/goodEgg.png`
+    goodEgg || `${prefix}diazo/images/lottery/eggFrenzy/goodEgg.png`;
   const badEggUrl =
-    badEgg || `${prefix}diazo/images/lottery/eggFrenzy/goodEgg.png`
+    badEgg || `${prefix}diazo/images/lottery/eggFrenzy/goodEgg.png`;
   const hammerUrl =
-    hammer || `${prefix}diazo/images/lottery/eggFrenzy/hammer.png`
+    hammer || `${prefix}diazo/images/lottery/eggFrenzy/hammer.png`;
 
   const onLotteryClick = () => {
     // 隐藏锤子
-    setPlay(false)
+    setPlay(false);
     // 避免重复点击，只允许点击一次
     if (!isClick) {
-      onClick()
-      setIsClick(true)
+      onClick();
+      setIsClick(true);
     }
-  }
+  };
 
   // 开始播放锤子动画
   const onPlay = () => {
-    setPlay(true)
-  }
+    setPlay(true);
+  };
 
   const animation = {
     bezier: {
@@ -50,13 +50,13 @@ const SmashEgg: FC<SmashEggProps> = (props) => {
     },
     duration: 600,
     onComplete: onLotteryClick
-  }
+  };
 
   useEffect(() => {
     if (!isLotterySuccess) {
-      setIsClick(false)
+      setIsClick(false);
     }
-  }, [isLotterySuccess])
+  }, [isLotterySuccess]);
 
   return (
     <div className='SmashEgg' onClick={onPlay}>
@@ -77,7 +77,7 @@ const SmashEgg: FC<SmashEggProps> = (props) => {
         </Fragment>
       )}
     </div>
-  )
-}
+  );
+};
 
-export default SmashEgg
+export default SmashEgg;
