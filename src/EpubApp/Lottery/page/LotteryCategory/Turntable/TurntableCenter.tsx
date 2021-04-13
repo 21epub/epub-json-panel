@@ -116,7 +116,7 @@ const TurntableCenter: FC<TurntableCenterProps> = (props) => {
                 setStartRadian(0);
 
                 if (
-                  !res.prize.objective.is_default &&
+                  res?.prize?.objective?.prize_type &&
                   states.shouldUserInfoModalShow
                 ) {
                   dispatch({ type: 'IsUserInfoModalShow', value: true });

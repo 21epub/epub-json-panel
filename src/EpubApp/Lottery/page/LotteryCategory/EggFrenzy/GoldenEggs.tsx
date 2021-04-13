@@ -60,7 +60,7 @@ const GoldenEggs: FC<GoldenEggsProps> = (props) => {
               dispatch({ type: 'isClickable', value: true });
               setIsLotterySuccess(false);
               if (
-                !prize?.objective?.is_default &&
+                prize?.objective?.prize_type &&
                 state.shouldUserInfoModalShow
               ) {
                 dispatch({ type: 'IsUserInfoModalShow', value: true });
