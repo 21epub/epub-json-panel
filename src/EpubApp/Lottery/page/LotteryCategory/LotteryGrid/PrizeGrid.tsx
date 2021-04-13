@@ -86,7 +86,7 @@ const PrizeGrid: FC<PrizeGridProps> = (props) => {
                     setActiveIndex(undefined)
 
                     if (
-                      !prize.objective.is_default &&
+                      prize?.objective?.prize_type &&
                       states.shouldUserInfoModalShow
                     ) {
                       dispatch({ type: 'IsUserInfoModalShow', value: true })

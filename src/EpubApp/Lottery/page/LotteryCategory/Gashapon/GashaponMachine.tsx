@@ -58,7 +58,7 @@ const GashaponMachine: FC<TreasureBoxProps> = (props) => {
               getData()
               dispatch({ type: 'isClickable', value: true })
               if (
-                !prize?.objective?.is_empty &&
+                prize?.objective?.prize_type &&
                 state.shouldUserInfoModalShow
               ) {
                 dispatch({ type: 'IsUserInfoModalShow', value: true })

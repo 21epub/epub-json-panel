@@ -70,7 +70,7 @@ const TreasureBox: FC<TreasureBoxProps> = (props) => {
               dispatch({ type: 'isClickable', value: true })
               setModalVisible(false)
               if (
-                !prize?.objective?.is_default &&
+                prize?.objective?.prize_type &&
                 state.shouldUserInfoModalShow
               ) {
                 dispatch({ type: 'IsUserInfoModalShow', value: true })
