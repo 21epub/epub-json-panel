@@ -134,10 +134,49 @@ const TurntableCenter: FC<TurntableCenterProps> = (props) => {
   };
 
   if (prizeList?.length) {
-    for (let i = 0; i < prizeList.length; i += 1) {
-      if (i % 2 === 0)
-        Object.defineProperty(prizeList[i], 'color', { value: '#fef8e6' });
-      else Object.defineProperty(prizeList[i], 'color', { value: '#fff' });
+    if (prizeList?.length === 3 || prizeList?.length === 5) {
+      for (let i = 0; i < prizeList.length; i += 1) {
+        const value = i % 3;
+        switch (value) {
+          case 0:
+            Object.defineProperty(prizeList[i], 'color', { value: '#FFEDD6' });
+            break;
+          case 1:
+            Object.defineProperty(prizeList[i], 'color', { value: '#fff' });
+            break;
+          case 2:
+            Object.defineProperty(prizeList[i], 'color', { value: '#fef8e6' });
+            break;
+          default:
+            break;
+        }
+      }
+    } else if (prizeList.length === 7) {
+      for (let i = 0; i < prizeList.length; i += 1) {
+        const value = i % 4;
+        switch (value) {
+          case 0:
+            Object.defineProperty(prizeList[i], 'color', { value: '#FFF7E4' });
+            break;
+          case 1:
+            Object.defineProperty(prizeList[i], 'color', { value: '#fff' });
+            break;
+          case 2:
+            Object.defineProperty(prizeList[i], 'color', { value: '#FFEDD6' });
+            break;
+          case 3:
+            Object.defineProperty(prizeList[i], 'color', { value: '#fff' });
+            break;
+          default:
+            break;
+        }
+      }
+    } else {
+      for (let i = 0; i < prizeList.length; i += 1) {
+        if (i % 2 === 0)
+          Object.defineProperty(prizeList[i], 'color', { value: '#fef8e6' });
+        else Object.defineProperty(prizeList[i], 'color', { value: '#fff' });
+      }
     }
 
     return (

@@ -32,7 +32,7 @@ const Pointer: FC<PointerProps> = (props) => {
     // 先判断是否需要填写信息
     if (
       userInfo?.user_id === null &&
-      singleLottery.need_user_info &&
+      singleLottery?.need_user_info &&
       state.shouldUserInfoModalShow
     ) {
       dispatch({ type: 'IsUserInfoModalShow', value: true });
