@@ -1,21 +1,21 @@
-import React, { FC, useState, useEffect } from 'react'
-import { Progress } from 'antd'
+import React, { FC, useState, useEffect } from 'react';
+import { Progress } from 'antd';
 import type {
   AssistanceDetailType,
   ObjectiveDetailType,
   ActivityDetailType,
   SupporterDetailType
-} from '../../type'
-import { statusMap } from '../../type'
-import ErrorPrompt from '../ErrorPrompt'
-import { getEndTime } from '../../util'
-import 'antd/dist/antd.css'
+} from '../../type';
+import { statusMap } from '../../type';
+import ErrorPrompt from '../ErrorPrompt';
+import { getEndTime } from '../../util';
+import 'antd/dist/antd.css';
 
 interface AssistanceProgressProps {
-  SupporterList: SupporterDetailType[]
-  AssistanceDetail: AssistanceDetailType
-  ObjectiveDetail: ObjectiveDetailType
-  ActivityDetail: ActivityDetailType
+  SupporterList: SupporterDetailType[];
+  AssistanceDetail: AssistanceDetailType;
+  ObjectiveDetail: ObjectiveDetailType;
+  ActivityDetail: ActivityDetailType;
 }
 
 // 助力进度模块
@@ -25,25 +25,25 @@ const AssistanceProgress: FC<AssistanceProgressProps> = (props) => {
     ObjectiveDetail,
     ActivityDetail,
     SupporterList
-  } = props
-  const [remainTime, setRemainTime] = useState<number[]>([]) // 倒计时剩余时间
+  } = props;
+  const [remainTime, setRemainTime] = useState<number[]>([]); // 倒计时剩余时间
 
   // 助力倒计时
   useEffect(() => {
     const time = window.setInterval(() => {
-      const endTime = getEndTime(AssistanceDetail?.end_time)
+      const endTime = getEndTime(AssistanceDetail?.end_time);
       if (endTime) {
-        setRemainTime(endTime)
+        setRemainTime(endTime);
       } else {
-        ErrorPrompt('活动已结束')
-        window.clearInterval(time) //  清除定时器
-        setRemainTime([0, 0, 0, 0])
+        ErrorPrompt('活动已结束');
+        window.clearInterval(time); //  清除定时器
+        setRemainTime([0, 0, 0, 0]);
       }
-    }, 1000) // 倒计时
+    }, 1000); // 倒计时
     return () => {
-      window.clearInterval(time) // 卸载组件时清除定时器
-    }
-  }, [])
+      window.clearInterval(time); // 卸载组件时清除定时器
+    };
+  }, []);
 
   // 首页内容
   return (
@@ -78,7 +78,7 @@ const AssistanceProgress: FC<AssistanceProgressProps> = (props) => {
                 backgroundImage: 'url(' + item.supporter_avatar + ')'
               }}
             />
-          )
+          );
         })}
       </div>
       <div className='c-div DIV_PJeoHZ'>
@@ -101,7 +101,7 @@ const AssistanceProgress: FC<AssistanceProgressProps> = (props) => {
         </div>
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default AssistanceProgress
+export default AssistanceProgress;

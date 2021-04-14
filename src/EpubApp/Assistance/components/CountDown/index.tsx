@@ -1,31 +1,31 @@
-import React, { FC, useState, useEffect } from 'react'
-import ErrorPrompt from '../ErrorPrompt'
-import { getEndTime } from '../../util'
+import React, { FC, useState, useEffect } from 'react';
+import ErrorPrompt from '../ErrorPrompt';
+import { getEndTime } from '../../util';
 
 interface CountDownProp {
-  end_time: string
+  end_time: string;
 }
 
 const CountDown: FC<CountDownProp> = (props) => {
-  const { end_time } = props
-  const [remainTime, setRemainTime] = useState<number[]>([]) // 倒计时剩余时间
+  const { end_time } = props;
+  const [remainTime, setRemainTime] = useState<number[]>([]); // 倒计时剩余时间
 
   useEffect(() => {
     // 打开页面时开启计时器
     const time = window.setInterval(() => {
-      const endTime = getEndTime(end_time)
+      const endTime = getEndTime(end_time);
       if (endTime) {
-        setRemainTime(endTime)
+        setRemainTime(endTime);
       } else {
-        ErrorPrompt('活动已结束')
-        window.clearInterval(time) //  清除定时器
-        setRemainTime([0, 0, 0, 0])
+        ErrorPrompt('活动已结束');
+        window.clearInterval(time); //  清除定时器
+        setRemainTime([0, 0, 0, 0]);
       }
-    }, 1000) // 倒计时
+    }, 1000); // 倒计时
     return () => {
-      window.clearInterval(time) // 卸载组件时清除定时器
-    }
-  }, [])
+      window.clearInterval(time); // 卸载组件时清除定时器
+    };
+  }, []);
 
   // 首页内容
   return (
@@ -42,7 +42,7 @@ const CountDown: FC<CountDownProp> = (props) => {
         <p className='c-paragraph P_3D7UNz'>秒</p>
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default CountDown
+export default CountDown;

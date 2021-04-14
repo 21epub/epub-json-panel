@@ -93,7 +93,7 @@ const UserInfoModal: FC<UserInfoModalProps> = (props) => {
                         name={el}
                         key={index}
                         label={translateTitle(el)}
-                        rules={[{ required: true, message: '请输入信息' }]}
+                        // rules={[{ required: true, message: '请输入信息' }]}
                       >
                         <Input placeholder={translateTitle(el)} />
                       </Form.Item>

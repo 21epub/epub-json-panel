@@ -1,11 +1,11 @@
-import React, { FC, Fragment, useState, useEffect } from 'react'
-import { useRequest } from 'ahooks'
+import React, { FC, Fragment, useState, useEffect } from 'react';
+import { useRequest } from 'ahooks';
 import {
   QuerySupporterList,
   QueryObjectiveDetail,
   QueryActivityDetail
-} from '../../data/api'
-import type { AssistanceDetailType } from '../../type'
+} from '../../data/api';
+import type { AssistanceDetailType } from '../../type';
 import {
   HeadImage,
   CountDown,
@@ -15,53 +15,53 @@ import {
   GoBack,
   PopUpInfo,
   AssistanceProgress
-} from '../../components'
-import AssistanceInfo from './AssistanceInfo'
-import store from '../../store'
-import { SavePrevPageNumber } from '../../util'
+} from '../../components';
+import AssistanceInfo from './AssistanceInfo';
+import store from '../../store';
+import { SavePrevPageNumber } from '../../util';
 
 export interface AssistancePage {
-  AssistanceDetail: AssistanceDetailType
-  oslug: string
-  acslug: string
+  AssistanceDetail: AssistanceDetailType;
+  oslug: string;
+  acslug: string;
 }
 
 // 帮忙助力页
 const AssistancePage: FC<AssistancePage> = (props) => {
-  const { AssistanceDetail } = props
-  const [state] = store.useRxjsStore()
-  const [isPopUp, setIsPopUp] = useState(false)
-  const oslug = state.ObjectiveDetail?.slug || props.oslug
-  const acslug = state.ActivityDetail?.slug || props.acslug
+  const { AssistanceDetail } = props;
+  const [state] = store.useRxjsStore();
+  const [isPopUp, setIsPopUp] = useState(false);
+  const oslug = state.ObjectiveDetail?.slug || props.oslug;
+  const acslug = state.ActivityDetail?.slug || props.acslug;
 
   // 查询当前活动的助力者列表信息
   const { data: ObjectiveDetail } = useRequest(
     () => QueryObjectiveDetail(AssistanceDetail?.slug, oslug),
     {
       onSuccess: (ObjectiveDetailData) => {
-        store.reducers.SetObjectiveDetail(ObjectiveDetailData)
+        store.reducers.SetObjectiveDetail(ObjectiveDetailData);
       }
     }
-  )
+  );
 
   // 查询最新的活动信息
   const { data: ActivityDetail } = useRequest(
     () => QueryActivityDetail(AssistanceDetail?.slug, oslug, acslug),
     {
       onSuccess: (ActivityDetailData) => {
-        store.reducers.SetActivityDetail(ActivityDetailData)
+        store.reducers.SetActivityDetail(ActivityDetailData);
       }
     }
-  )
+  );
 
   // 查询当前活动的助力者列表信息
   const { data: SupporterList } = useRequest(() =>
     QuerySupporterList(AssistanceDetail?.slug, oslug, acslug)
-  )
+  );
 
   useEffect(() => {
-    SavePrevPageNumber('AssistancePage', state.PrevPageNumber)
-  }, [])
+    SavePrevPageNumber('AssistancePage', state.PrevPageNumber);
+  }, []);
 
   return (
     <Fragment>
@@ -96,7 +96,7 @@ const AssistancePage: FC<AssistancePage> = (props) => {
         <PopUpInfo onClose={() => setIsPopUp(false)} value='已帮他助力成功' />
       )}
     </Fragment>
-  )
-}
+  );
+};
 
-export default AssistancePage
+export default AssistancePage;

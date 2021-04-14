@@ -1,14 +1,14 @@
-import React, { FC } from 'react'
-import type { ObjectiveDetailType } from '../../../type'
+import React, { FC } from 'react';
+import type { ObjectiveDetailType } from '../../../type';
 
 interface ObjectiveDetailProps {
-  ObjectiveDetail: ObjectiveDetailType
-  onPartake: () => void
+  ObjectiveDetail: ObjectiveDetailType;
+  onPartake: () => void;
 }
 
 // 助力目标详情页
 const ObjectiveDetail: FC<ObjectiveDetailProps> = (props) => {
-  const { ObjectiveDetail, onPartake } = props
+  const { ObjectiveDetail, onPartake } = props;
 
   return (
     <div className='block c-div DIV_5eZtqX'>
@@ -37,7 +37,7 @@ const ObjectiveDetail: FC<ObjectiveDetailProps> = (props) => {
         </a>
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default ObjectiveDetail
+export default ObjectiveDetail;

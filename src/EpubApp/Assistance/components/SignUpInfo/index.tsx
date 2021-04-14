@@ -1,33 +1,33 @@
-import React, { FC } from 'react'
-import { useRequest } from 'ahooks'
-import { isEmpty } from 'ramda'
+import React, { FC } from 'react';
+import { useRequest } from 'ahooks';
+import { isEmpty } from 'ramda';
 import {
   QueryUserInfo,
   AddActivity,
   UpdateUserInfo,
   AddUserInfo,
   QueryActivityList
-} from '../../data/api'
-import type { AssistanceDetailType, ObjectiveDetailType } from '../../type'
-import ErrorPrompt from '../ErrorPrompt'
-import store from '../../store'
+} from '../../data/api';
+import type { AssistanceDetailType, ObjectiveDetailType } from '../../type';
+import ErrorPrompt from '../ErrorPrompt';
+import store from '../../store';
 
 interface SignUpInfoProps {
-  AssistanceDetail: AssistanceDetailType
-  ObjectiveDetail: ObjectiveDetailType
-  onClose: () => void
+  AssistanceDetail: AssistanceDetailType;
+  ObjectiveDetail: ObjectiveDetailType;
+  onClose: () => void;
 }
 
 export interface UserInfo {
-  [key: string]: string
+  [key: string]: string;
 }
 
 // 填写用户信息弹窗
 const SignUpInfo: FC<SignUpInfoProps> = (props) => {
-  const { ObjectiveDetail, AssistanceDetail, onClose } = props
-  const { user_info_id } = ObjectiveDetail
-  const { user_info_fields } = AssistanceDetail
-  const userInfo: UserInfo = {}
+  const { ObjectiveDetail, AssistanceDetail, onClose } = props;
+  const { user_info_id } = ObjectiveDetail;
+  const { user_info_fields } = AssistanceDetail;
+  const userInfo: UserInfo = {};
 
   // 请求用户信息
   const { data: UserInfoValue } = useRequest(
@@ -35,21 +35,21 @@ const SignUpInfo: FC<SignUpInfoProps> = (props) => {
     {
       ready: !!user_info_id
     }
-  )
+  );
 
   // 新增用户注册登记信息
   const { run: RunAddUserInfo } = useRequest(AddUserInfo, {
     manual: true
-  })
+  });
 
   // 用户新建助力活动
   const { run: RunAddActivity } = useRequest(AddActivity, {
     manual: true,
     onSuccess: (ActivityDetail) => {
-      store.reducers.SetActivityDetail(ActivityDetail)
-      store.reducers.ChangePage('MyAssistancePage')
+      store.reducers.SetActivityDetail(ActivityDetail);
+      store.reducers.ChangePage('MyAssistancePage');
     }
-  })
+  });
 
   // 查询用户助力活动
   const { run: RunQueryActivityList } = useRequest(QueryActivityList, {
@@ -57,21 +57,21 @@ const SignUpInfo: FC<SignUpInfoProps> = (props) => {
     onSuccess: (ActivityList: AssistanceDetailType[]) => {
       if (isEmpty(ActivityList)) {
         // 未发起过助力，进行发起助力
-        RunAddActivity(AssistanceDetail.slug, ObjectiveDetail.slug)
+        RunAddActivity(AssistanceDetail.slug, ObjectiveDetail.slug);
         // 添加并保存用户信息
-        RunAddUserInfo(ObjectiveDetail.slug, userInfo)
+        RunAddUserInfo(ObjectiveDetail.slug, userInfo);
       } else {
         // 发起过助力，跳转到我的助力页
-        store.reducers.ChangePage('MyAssistancePage')
+        store.reducers.ChangePage('MyAssistancePage');
       }
     }
-  })
+  });
 
   // 更新用户注册信息
   const { run: RunUpdateUserInfo } = useRequest(UpdateUserInfo, {
     manual: true,
     onSuccess: () => onClose
-  })
+  });
 
   const onOk = () => {
     // 有用户id，说明已发起过助力活动，更新用户登记信息即可
@@ -81,14 +81,14 @@ const SignUpInfo: FC<SignUpInfoProps> = (props) => {
         ObjectiveDetail?.slug,
         ObjectiveDetail?.user_info_id,
         userInfo
-      )
+      );
     } else if (userInfo.name && userInfo.phone && userInfo.address) {
       // 查询当前用户是否发起助力过
-      RunQueryActivityList(AssistanceDetail.slug, ObjectiveDetail.slug)
+      RunQueryActivityList(AssistanceDetail.slug, ObjectiveDetail.slug);
     } else {
-      ErrorPrompt('用户信息未填写完整')
+      ErrorPrompt('用户信息未填写完整');
     }
-  }
+  };
 
   return (
     <div className='c-div DIV_R5WrBr'>
@@ -108,10 +108,10 @@ const SignUpInfo: FC<SignUpInfoProps> = (props) => {
                   placeholder={item}
                   type='text'
                   onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
-                    userInfo[item] = e.target.value
+                    userInfo[item] = e.target.value;
                   }}
                 />
-              )
+              );
             })}
           </div>
         </div>
@@ -128,7 +128,7 @@ const SignUpInfo: FC<SignUpInfoProps> = (props) => {
         </div>
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default SignUpInfo
+export default SignUpInfo;

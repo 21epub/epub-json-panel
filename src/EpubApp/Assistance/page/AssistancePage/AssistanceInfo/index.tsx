@@ -1,20 +1,20 @@
-import React, { FC, useState } from 'react'
-import { useRequest } from 'ahooks'
-import { AddSupporter } from '../../../data/api'
+import React, { FC, useState } from 'react';
+import { useRequest } from 'ahooks';
+import { AddSupporter } from '../../../data/api';
 import type {
   AssistanceDetailType,
   ObjectiveDetailType,
   ActivityDetailType,
   SupporterDetailType
-} from '../../../type'
-import store from '../../../store'
+} from '../../../type';
+import store from '../../../store';
 
 interface AssistanceInfoProps {
-  SupporterList: SupporterDetailType[]
-  AssistanceDetail: AssistanceDetailType
-  ObjectiveDetail: ObjectiveDetailType
-  ActivityDetail: ActivityDetailType
-  onOpenPopUp: () => void
+  SupporterList: SupporterDetailType[];
+  AssistanceDetail: AssistanceDetailType;
+  ObjectiveDetail: ObjectiveDetailType;
+  ActivityDetail: ActivityDetailType;
+  onOpenPopUp: () => void;
 }
 
 // 助力信息
@@ -25,18 +25,18 @@ const AssistanceInfo: FC<AssistanceInfoProps> = (props) => {
     ActivityDetail,
     SupporterList,
     onOpenPopUp
-  } = props
+  } = props;
   const [canInitOrSupport, setCanInitOrSupport] = useState(
     ActivityDetail.identify_and_can_operate.can_init_or_support
-  ) // 是否可以创建助力活动和帮他人助力
+  ); // 是否可以创建助力活动和帮他人助力
 
   const { run: RunAddSupporter } = useRequest(AddSupporter, {
     manual: true,
     onSuccess: () => {
-      onOpenPopUp() // 打开提示弹框
-      setCanInitOrSupport(true)
+      onOpenPopUp(); // 打开提示弹框
+      setCanInitOrSupport(true);
     }
-  })
+  });
 
   // 帮TA助力
   const onHelp = () => {
@@ -46,14 +46,14 @@ const AssistanceInfo: FC<AssistanceInfoProps> = (props) => {
         AssistanceDetail.slug,
         ObjectiveDetail.slug,
         ActivityDetail.slug
-      )
+      );
     }
-  }
+  };
 
   // 我也参加，跳转到首页，让用户选择商品
   const onJoin = () => {
-    store.reducers.ChangePage('HomePage')
-  }
+    store.reducers.ChangePage('HomePage');
+  };
 
   return (
     <div className='block c-div DIV_5eZtqX'>
@@ -89,7 +89,7 @@ const AssistanceInfo: FC<AssistanceInfoProps> = (props) => {
                 backgroundImage: 'url(' + item.supporter_avatar + ')'
               }}
             />
-          )
+          );
         })}
         <p className='c-paragraph P_75CUYE4'>
           已有{SupporterList?.length}位好友助力
@@ -107,7 +107,7 @@ const AssistanceInfo: FC<AssistanceInfoProps> = (props) => {
         )}
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default AssistanceInfo
+export default AssistanceInfo;

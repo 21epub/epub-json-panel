@@ -1,13 +1,13 @@
-import React, { FC } from 'react'
-import type { AssistanceDetailType } from '../../type'
+import React, { FC } from 'react';
+import type { AssistanceDetailType } from '../../type';
 
 interface ContactInfoProps {
-  contact_info: AssistanceDetailType['contact_info']
+  contact_info: AssistanceDetailType['contact_info'];
 }
 
 // 联系信息
 const ContactInfo: FC<ContactInfoProps> = (props) => {
-  const { contact_info } = props
+  const { contact_info } = props;
 
   return (
     <div className='block c-div DIV_5eZtqX'>
@@ -32,7 +32,7 @@ const ContactInfo: FC<ContactInfoProps> = (props) => {
         </ul>
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default ContactInfo
+export default ContactInfo;

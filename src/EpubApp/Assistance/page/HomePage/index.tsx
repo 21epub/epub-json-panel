@@ -1,8 +1,8 @@
-import React, { FC, useEffect } from 'react'
-import { useRequest } from 'ahooks'
-import { QueryObjectiveList } from '../../data/api'
-import type { AssistanceDetailType } from '../../type'
-import { SavePrevPageNumber } from '../../util'
+import React, { FC, useEffect } from 'react';
+import { useRequest } from 'ahooks';
+import { QueryObjectiveList } from '../../data/api';
+import type { AssistanceDetailType } from '../../type';
+import { SavePrevPageNumber } from '../../util';
 
 // 引入各组件
 import {
@@ -10,22 +10,22 @@ import {
   CountDown,
   ActivityRules,
   ContactInfo
-} from '../../components'
-import ObjectiveList from './ObjectiveList'
+} from '../../components';
+import ObjectiveList from './ObjectiveList';
 
 export interface HomePageProps {
-  AssistanceDetail: AssistanceDetailType
+  AssistanceDetail: AssistanceDetailType;
 }
 
 const HomePage: FC<HomePageProps> = (props) => {
-  const { AssistanceDetail } = props
+  const { AssistanceDetail } = props;
   const { data: ObjectiveListValue } = useRequest(() =>
     QueryObjectiveList(AssistanceDetail?.slug)
-  )
+  );
 
   useEffect(() => {
-    SavePrevPageNumber('HomePage')
-  }, [])
+    SavePrevPageNumber('HomePage');
+  }, []);
 
   // 首页内容
   return (
@@ -43,7 +43,7 @@ const HomePage: FC<HomePageProps> = (props) => {
         </div>
       </div>
     )
-  )
-}
+  );
+};
 
-export default HomePage
+export default HomePage;

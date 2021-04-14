@@ -23,14 +23,14 @@ npm install --save epub-app-lib
 ## Usage
 
 ```tsx
-import React, { Component } from 'react'
+import React, { Component } from 'react';
 
-import MyComponent from 'epub-app-lib'
-import 'epub-app-lib/dist/index.css'
+import MyComponent from 'epub-app-lib';
+import 'epub-app-lib/dist/index.css';
 
 class Example extends Component {
   render() {
-    return <MyComponent />
+    return <MyComponent />;
   }
 }
 ```

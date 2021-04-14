@@ -1,20 +1,20 @@
-import React, { FC } from 'react'
+import React, { FC } from 'react';
 // import { setShareLink } from 'interaction_view/modules/sharelink';
 import type {
   ActivityDetailType,
   ObjectiveDetailType,
   SupporterDetailType
-} from '../../../type'
-import { statusMap } from '../../../type'
+} from '../../../type';
+import { statusMap } from '../../../type';
 // import { parseLinkArgs } from '../../../util'
 
 interface MyAssistanceInfoProps {
-  ActivityDetail: ActivityDetailType
-  ObjectiveDetail: ObjectiveDetailType
-  SupporterList: SupporterDetailType[]
-  urlKey: string
-  onOpenPopUp: () => void
-  onOpenSingUp: () => void
+  ActivityDetail: ActivityDetailType;
+  ObjectiveDetail: ObjectiveDetailType;
+  SupporterList: SupporterDetailType[];
+  urlKey: string;
+  onOpenPopUp: () => void;
+  onOpenSingUp: () => void;
 }
 
 const MyAssistanceInfo: FC<MyAssistanceInfoProps> = (
@@ -27,7 +27,7 @@ const MyAssistanceInfo: FC<MyAssistanceInfoProps> = (
     // urlKey,
     onOpenPopUp,
     onOpenSingUp
-  } = props
+  } = props;
 
   // 点击邀请好友
   const onInvitation = () => {
@@ -41,13 +41,13 @@ const MyAssistanceInfo: FC<MyAssistanceInfoProps> = (
     // setShareLink(message_link);
     // console.log(message_link);
     // interaction_view.weixin.share();
-    onOpenPopUp() // 打开提示弹框
-  }
+    onOpenPopUp(); // 打开提示弹框
+  };
 
   // 助力成功打开填写信息窗口
   const onReviseInfo = () => {
-    onOpenSingUp()
-  }
+    onOpenSingUp();
+  };
 
   // 首页内容
   return (
@@ -84,7 +84,7 @@ const MyAssistanceInfo: FC<MyAssistanceInfoProps> = (
                 backgroundImage: 'url(' + item.supporter_avatar + ')'
               }}
             />
-          )
+          );
         })}
         <p className='c-paragraph P_75CUYE4'>
           已有{SupporterList?.length}位好友助力
@@ -110,7 +110,7 @@ const MyAssistanceInfo: FC<MyAssistanceInfoProps> = (
         )}
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default MyAssistanceInfo
+export default MyAssistanceInfo;

@@ -1,17 +1,17 @@
-import React, { FC, Fragment } from 'react'
-import { useRequest } from 'ahooks'
-import { QueryRankingList } from '../../data/api'
+import React, { FC, Fragment } from 'react';
+import { useRequest } from 'ahooks';
+import { QueryRankingList } from '../../data/api';
 
 interface RankingListProps {
-  aslug: string
-  oslug: string
+  aslug: string;
+  oslug: string;
 }
 
 const RankingList: FC<RankingListProps> = (props) => {
-  const { aslug, oslug } = props
+  const { aslug, oslug } = props;
   const { data: RankingListValue } = useRequest(() =>
     QueryRankingList(aslug, oslug)
-  )
+  );
 
   const Tip = () => {
     return (
@@ -20,8 +20,8 @@ const RankingList: FC<RankingListProps> = (props) => {
           <th>暂无数据</th>
         </tr>
       </thead>
-    )
-  }
+    );
+  };
 
   // 首页内容
   return (
@@ -44,7 +44,7 @@ const RankingList: FC<RankingListProps> = (props) => {
               </thead>
               <tbody>
                 {RankingListValue?.map((item: any, index: number) => {
-                  if (index >= 10) return null // 用于限制显示的条数
+                  if (index >= 10) return null; // 用于限制显示的条数
                   return (
                     item && (
                       <tr className='TR_4Sk8Ik' key={index}>
@@ -69,7 +69,7 @@ const RankingList: FC<RankingListProps> = (props) => {
                         <td>{item.real_score}</td>
                       </tr>
                     )
-                  )
+                  );
                 })}
               </tbody>
             </Fragment>
@@ -79,7 +79,7 @@ const RankingList: FC<RankingListProps> = (props) => {
         </table>
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default RankingList
+export default RankingList;

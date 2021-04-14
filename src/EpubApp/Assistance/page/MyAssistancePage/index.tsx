@@ -1,7 +1,7 @@
-import React, { FC, Fragment, useState, useEffect } from 'react'
-import { useRequest } from 'ahooks'
-import { QueryActivityDetail, QuerySupporterList } from '../../data/api'
-import type { AssistanceDetailType } from '../../type'
+import React, { FC, Fragment, useState, useEffect } from 'react';
+import { useRequest } from 'ahooks';
+import { QueryActivityDetail, QuerySupporterList } from '../../data/api';
+import type { AssistanceDetailType } from '../../type';
 // 引入各组件
 import {
   HeadImage,
@@ -13,23 +13,23 @@ import {
   PopUpInfo,
   AssistanceProgress,
   SignUpInfo
-} from '../../components'
-import MyAssistanceInfo from './MyAssistanceInfo'
-import store from '../../store'
-import { SavePrevPageNumber } from '../../util'
+} from '../../components';
+import MyAssistanceInfo from './MyAssistanceInfo';
+import store from '../../store';
+import { SavePrevPageNumber } from '../../util';
 
 interface MyAssistancePageProps {
-  AssistanceDetail: AssistanceDetailType
-  urlKey: string
+  AssistanceDetail: AssistanceDetailType;
+  urlKey: string;
 }
 
 // 助力目标详情页
 const MyAssistancePage: FC<MyAssistancePageProps> = (props) => {
-  const { AssistanceDetail, urlKey } = props
-  const [state] = store.useRxjsStore()
-  const { ObjectiveDetail } = state // 获取保存的状态
-  const [isPopUp, setIsPopUp] = useState(false)
-  const [isSignUp, setSignUp] = useState(false)
+  const { AssistanceDetail, urlKey } = props;
+  const [state] = store.useRxjsStore();
+  const { ObjectiveDetail } = state; // 获取保存的状态
+  const [isPopUp, setIsPopUp] = useState(false);
+  const [isSignUp, setSignUp] = useState(false);
 
   // 查询最新的活动信息
   const { data: ActivityDetail } = useRequest(
@@ -41,10 +41,10 @@ const MyAssistancePage: FC<MyAssistancePageProps> = (props) => {
       ),
     {
       onSuccess: (ActivityDetailData) => {
-        store.reducers.SetActivityDetail(ActivityDetailData)
+        store.reducers.SetActivityDetail(ActivityDetailData);
       }
     }
-  )
+  );
 
   // 查询当前活动的助力者列表信息
   const { data: SupporterList } = useRequest(() =>
@@ -53,11 +53,11 @@ const MyAssistancePage: FC<MyAssistancePageProps> = (props) => {
       ObjectiveDetail?.slug!,
       state.ActivityDetail?.slug!
     )
-  )
+  );
 
   useEffect(() => {
-    SavePrevPageNumber('MyAssistancePage', state.PrevPageNumber)
-  }, [])
+    SavePrevPageNumber('MyAssistancePage', state.PrevPageNumber);
+  }, []);
 
   return (
     <Fragment>
@@ -106,7 +106,7 @@ const MyAssistancePage: FC<MyAssistancePageProps> = (props) => {
         />
       )}
     </Fragment>
-  )
-}
+  );
+};
 
-export default MyAssistancePage
+export default MyAssistancePage;

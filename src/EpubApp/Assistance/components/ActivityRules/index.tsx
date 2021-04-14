@@ -1,12 +1,12 @@
-import React, { FC } from 'react'
+import React, { FC } from 'react';
 
 interface ActivityRulesProps {
-  rules: string
+  rules: string;
 }
 
 // 活动规则说明
 const ActivityRules: FC<ActivityRulesProps> = (props) => {
-  const { rules = '' } = props
+  const { rules = '' } = props;
 
   return (
     <div className='block c-div DIV_5eZtqX'>
@@ -19,7 +19,7 @@ const ActivityRules: FC<ActivityRulesProps> = (props) => {
         dangerouslySetInnerHTML={{ __html: rules }}
       />
     </div>
-  )
-}
+  );
+};
 
-export default ActivityRules
+export default ActivityRules;

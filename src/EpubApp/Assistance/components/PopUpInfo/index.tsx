@@ -1,13 +1,13 @@
-import React, { FC } from 'react'
+import React, { FC } from 'react';
 
 interface PopUpInfoProps {
-  value: string
-  onClose: () => void
+  value: string;
+  onClose: () => void;
 }
 
 // 弹出菜单
 const PopUpInfo: FC<PopUpInfoProps> = (props) => {
-  const { value, onClose } = props
+  const { value, onClose } = props;
   return (
     <div className='c-div DIV_R5WrBr'>
       <div className='block c-div DIV_5eZtqX2'>
@@ -29,7 +29,7 @@ const PopUpInfo: FC<PopUpInfoProps> = (props) => {
         />
       )}
     </div>
-  )
-}
+  );
+};
 
-export default PopUpInfo
+export default PopUpInfo;

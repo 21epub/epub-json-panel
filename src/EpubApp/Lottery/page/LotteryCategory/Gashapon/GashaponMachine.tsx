@@ -10,7 +10,7 @@ import {
   ImageType
 } from '../../../type';
 import { getPicture } from '../../../util';
-import { StateType } from 'src/core/Lottery/store/reducer';
+import { StateType } from '../../../store/reducer';
 
 interface TreasureBoxProps {
   prizeList: PrizeType[];

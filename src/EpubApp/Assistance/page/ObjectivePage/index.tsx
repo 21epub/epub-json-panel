@@ -1,7 +1,7 @@
-import React, { FC, useState, Fragment, useEffect } from 'react'
-import { QueryObjectiveDetail } from '../../data/api'
-import type { AssistanceDetailType } from '../../type'
-import { useRequest } from 'ahooks'
+import React, { FC, useState, Fragment, useEffect } from 'react';
+import { QueryObjectiveDetail } from '../../data/api';
+import type { AssistanceDetailType } from '../../type';
+import { useRequest } from 'ahooks';
 import {
   HeadImage,
   CountDown,
@@ -10,28 +10,28 @@ import {
   RankingList,
   GoBack,
   SignUpInfo
-} from '../../components'
-import ObjectiveDetails from './ObjectiveDetail'
-import store from '../../store'
-import { SavePrevPageNumber } from '../../util'
+} from '../../components';
+import ObjectiveDetails from './ObjectiveDetail';
+import store from '../../store';
+import { SavePrevPageNumber } from '../../util';
 
 interface ObjectivePageProps {
-  AssistanceDetail: AssistanceDetailType
+  AssistanceDetail: AssistanceDetailType;
 }
 
 // 助力目标详情页
 const ObjectivePage: FC<ObjectivePageProps> = (props) => {
-  const { AssistanceDetail } = props
-  const [state] = store.useRxjsStore()
-  const [isSignUp, setSignUp] = useState(false)
+  const { AssistanceDetail } = props;
+  const [state] = store.useRxjsStore();
+  const [isSignUp, setSignUp] = useState(false);
   // 查询最新的目标详情
   const { data: ObjectiveDetail } = useRequest(
     QueryObjectiveDetail(AssistanceDetail?.slug, state.ObjectiveDetail?.slug!)
-  )
+  );
 
   useEffect(() => {
-    SavePrevPageNumber('ObjectivePage', state.PrevPageNumber)
-  }, [])
+    SavePrevPageNumber('ObjectivePage', state.PrevPageNumber);
+  }, []);
 
   return ObjectiveDetail ? (
     <Fragment>
@@ -42,7 +42,7 @@ const ObjectivePage: FC<ObjectivePageProps> = (props) => {
           <ObjectiveDetails
             ObjectiveDetail={ObjectiveDetail}
             onPartake={() => {
-              setSignUp(true)
+              setSignUp(true);
             }}
           />
           <RankingList
@@ -62,7 +62,7 @@ const ObjectivePage: FC<ObjectivePageProps> = (props) => {
         />
       )}
     </Fragment>
-  ) : null
-}
+  ) : null;
+};
 
-export default ObjectivePage
+export default ObjectivePage;

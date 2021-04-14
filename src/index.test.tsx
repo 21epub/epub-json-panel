@@ -1,7 +1,7 @@
-import { InfoModalButton } from './EpubApp/Lottery'
+import { InfoModalButton } from './EpubApp/Lottery';
 
 describe('InfoModalButton', () => {
   it('is truthy', () => {
-    expect(InfoModalButton).toBeTruthy()
-  })
-})
+    expect(InfoModalButton).toBeTruthy();
+  });
+});
