@@ -1,14 +1,14 @@
-import React from 'react'
-import { Story, Meta } from '@storybook/react/types-6-0'
+import React from 'react';
+import { Story, Meta } from '@storybook/react/types-6-0';
 import {
   singleLotteryUrl,
   prizeListUrl,
   prizeUrl,
   userInfoUrl,
   winnersUrl
-} from '../../EpubApp/Lottery/data/apiUrl'
-import { LotteryPageRender } from '../../EpubApp/Lottery/page'
-import type { LotteryPageRenderProps, LotteryUrlListType } from '../../index'
+} from '../../EpubApp/Lottery/data/apiUrl';
+import { LotteryPageRender } from '../../EpubApp/Lottery/page';
+import type { LotteryPageRenderProps, LotteryUrlListType } from '../../index';
 
 export default {
   title: 'Lottery/抽奖页面',
@@ -19,15 +19,15 @@ export default {
       type: { name: 'string', required: true }
     }
   }
-} as Meta
+} as Meta;
 
 const Template: Story<LotteryPageRenderProps> = (args) => (
   <div style={{ width: '422px', height: '748px' }}>
     <LotteryPageRender {...args} />
   </div>
-)
+);
 
-export const Yapi = Template.bind({})
+export const Yapi = Template.bind({});
 
 // 抽奖各接口请求地址
 const lotteryUrlList: LotteryUrlListType = {
@@ -43,10 +43,10 @@ const lotteryUrlList: LotteryUrlListType = {
   userInfoUrl: userInfoUrl,
   // 获取中奖用户滚动信息
   winnersUrl: winnersUrl
-}
+};
 
 Yapi.args = {
   lotteryType: 'Gashapon',
   lotteryUrlList: lotteryUrlList,
   isDataChanged: true
-}
+};

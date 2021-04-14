@@ -10,6 +10,7 @@ import {
   ImageType
 } from '../../../type';
 import { getPicture } from '../../../util';
+import { StateType } from 'src/core/Lottery/store/reducer';
 
 interface TreasureBoxProps {
   prizeList: PrizeType[];
@@ -24,36 +25,32 @@ interface TreasureBoxProps {
 const GashaponMachine: FC<TreasureBoxProps> = (props) => {
   const { picture, singleLottery, prizeUrl, userInfo, prefix, getData } = props;
   const dispatch = useDispatch();
-  const state = useSelector((state: any) => state); // 获取保存的状态
-  const { up, glass, down, start, exportBg } = picture;
+  const state = useSelector((stateValue: StateType) => stateValue); // 获取保存的状态
   const up = getPicture(picture, 'up');
   const glass = getPicture(picture, 'glass');
   const down = getPicture(picture, 'down');
   const start = getPicture(picture, 'start');
   const exportBg = getPicture(picture, 'exportBg');
+  const egg1 = getPicture(picture, 'egg1');
+  const egg2 = getPicture(picture, 'egg2');
+  const egg3 = getPicture(picture, 'egg3');
 
-  const lottery = async (
-    singleLottery: any,
-    userInfo: any,
-    prizeUrl?: string
-  ) => {
+  const lottery = async () => {
     // 先判断是否需要填写信息
     if (
-      userInfo[0]?.user_id === null &&
-      singleLottery[0].need_user_info &&
+      userInfo?.user_id === null &&
+      singleLottery.need_user_info &&
       state.shouldUserInfoModalShow
     ) {
       dispatch({ type: 'IsUserInfoModalShow', value: true });
     } else if (
       prizeUrl &&
-      (singleLottery[0].remain_times > 0 ||
-        singleLottery[0].remain_times === null)
+      (singleLottery.remain_times > 0 || singleLottery.remain_times === null)
     ) {
       dispatch({ type: 'isClickable', value: false });
       // 抽奖
       try {
-        const response = await getLotteryResult(prizeUrl);
-        const prize = response?.data?.data?.results[0];
+        const prize = await getLotteryResult(prizeUrl);
 
         // 延时1000毫秒弹出获奖结果
         setTimeout(() => {
@@ -110,15 +107,15 @@ const GashaponMachine: FC<TreasureBoxProps> = (props) => {
         className='up'
       />
       <img
-        src={up || `${prefix}diazo/images/lottery/gashapon/egg1.png`}
+        src={egg1 || `${prefix}diazo/images/lottery/gashapon/egg1.png`}
         className='egg1'
       />
       <img
-        src={up || `${prefix}diazo/images/lottery/gashapon/egg2.png`}
+        src={egg2 || `${prefix}diazo/images/lottery/gashapon/egg2.png`}
         className='egg2'
       />
       <img
-        src={up || `${prefix}diazo/images/lottery/gashapon/egg3.png`}
+        src={egg3 || `${prefix}diazo/images/lottery/gashapon/egg3.png`}
         className='egg3'
       />
       <img
@@ -132,7 +129,7 @@ const GashaponMachine: FC<TreasureBoxProps> = (props) => {
       <img
         src={start || `${prefix}diazo/images/lottery/gashapon/start.png`}
         className='start'
-        onClick={() => lottery(singleLottery, userInfo, prizeUrl)}
+        onClick={lottery}
         style={{ cursor: state.isClickable ? 'pointer' : 'default' }}
       />
       <img
