@@ -75,7 +75,7 @@ const LotteryPage: FC<LotteryPageProps> = (props) => {
 
   useEffect(() => {
     if (singleLottery && userInfo) {
-      if (userInfo.user_id === null && singleLottery.need_user_info) {
+      if (userInfo.user_id === null && singleLottery?.need_user_info) {
         dispatch({ type: 'IsUserInfoModalShow', value: true });
       } else if (userInfo.user_id === null) {
         dispatch({ type: 'shouldUserInfoModalShow', value: true });
