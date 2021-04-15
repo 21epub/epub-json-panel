@@ -47,13 +47,13 @@ const PrizeGrid: FC<PrizeGridProps> = (props) => {
   const handleOnClick = async (prizeUrl: string | undefined) => {
     if (
       userInfo?.user_id === null &&
-      singleLottery.need_user_info &&
+      singleLottery?.need_user_info &&
       states.shouldUserInfoModalShow
     ) {
       dispatch({ type: 'IsUserInfoModalShow', value: true });
     } else if (
       prizeUrl &&
-      (singleLottery.remain_times > 0 || singleLottery.remain_times === null)
+      (singleLottery?.remain_times === null || singleLottery?.remain_times > 0)
     ) {
       try {
         const prize = await getLotteryResult(prizeUrl);

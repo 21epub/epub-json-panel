@@ -30,13 +30,13 @@ const GoldenEggs: FC<GoldenEggsProps> = (props) => {
     // 先判断是否需要填写信息
     if (
       userInfo?.user_id === null &&
-      singleLottery.need_user_info &&
+      singleLottery?.need_user_info &&
       state.shouldUserInfoModalShow
     ) {
       dispatch({ type: 'IsUserInfoModalShow', value: true });
     } else if (
       prizeUrl &&
-      (singleLottery?.remain_times > 0 || singleLottery?.remain_times === null)
+      (singleLottery?.remain_times === null || singleLottery?.remain_times > 0)
     ) {
       dispatch({ type: 'isClickable', value: false });
       // 抽奖

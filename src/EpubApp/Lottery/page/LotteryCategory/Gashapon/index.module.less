@@ -14,36 +14,6 @@
       background-color: rgba(255, 255, 255, 0.45);
       border-radius: 15px;
     }
-
-    .egg1 {
-      position: absolute;
-      top: 0;
-      width: 20%;
-      margin-top: 96px;
-      margin-left: 105px;
-    }
-
-    .egg2 {
-      position: absolute;
-      top: 0;
-      width: 20%;
-      margin-top: 30px;
-    }
-
-    .egg3 {
-      position: absolute;
-      top: 0;
-      width: 20%;
-      margin-top: 96px;
-      margin-left: -105px;
-    }
-
-    .up {
-      position: absolute;
-      top: 0;
-      width: 260px;
-      margin-top: 8px;
-    }
     .glass {
       position: absolute;
       top: 0;
@@ -64,12 +34,77 @@
       margin-left: -40%;
     }
 
-    .exportBg {
+    .eggWrapper {
       position: absolute;
       top: 0;
+      width: 260px;
+      height: 174px;
+      margin-top: 8px;
+      background-size: 100% 100%;
+
+      .egg {
+        position: absolute;
+        width: 50px;
+        height: 50px;
+        background-size: 100% 100%;
+      }
+      .egg0 {
+        bottom: 0%;
+        left: 12%;
+      }
+      .egg1 {
+        bottom: 0%;
+        left: 32%;
+      }
+      .egg2 {
+        bottom: 0%;
+        left: 46%;
+      }
+      .egg3 {
+        bottom: 0%;
+        left: 64%;
+      }
+      .egg4 {
+        bottom: 16%;
+        left: 20%;
+      }
+      .egg5 {
+        bottom: 16%;
+        left: 55%;
+      }
+      .egg6 {
+        bottom: 18%;
+        left: 35%;
+      }
+      .egg7 {
+        bottom: 40%;
+        left: 45%;
+      }
+    }
+
+    .exportWrapper {
+      position: absolute;
+      top: 70%;
+      left: 50%;
       width: 28%;
-      margin-top: 218px;
-      margin-left: 31%;
+      height: 70px;
+      overflow: hidden;
+      background-size: 100% 100%;
+      .exportBox {
+        position: relative;
+        height: 70%;
+        margin-top: 10%;
+        overflow: hidden;
+        .exportEgg {
+          position: absolute;
+          top: -130%;
+          left: 50%;
+          width: 50px;
+          height: 50px;
+          margin-left: -25px;
+          background-size: 100% 100%;
+        }
+      }
     }
 
     .remainTimesWrap {
