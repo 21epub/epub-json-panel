@@ -107,7 +107,7 @@ export interface SingleLotteryType {
   // 抽奖活动结束时间
   end_time: string;
   // 抽奖应用id,slug
-  id?: string;
+  id: string;
   // 用户填写的信息
   info_fields: string;
   // 用户填写信息列表
