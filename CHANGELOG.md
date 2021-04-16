@@ -2,6 +2,18 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.0.3-alpha.66](https://github.com/icey0126/epub-app-lib/compare/v0.0.3-alpha.61...v0.0.3-alpha.66) (2021-04-16)
+
+### Features
+
+- 🎸 add gashapon ([927fc6c](https://github.com/icey0126/epub-app-lib/commit/927fc6c20ddc009ef68f7f9835ed8b8065251fce))
+
+### Bug Fixes
+
+- 🐛 fix is_empty ([22f5f17](https://github.com/icey0126/epub-app-lib/commit/22f5f1733ce9d6e918fc5640a9ef3136e9823cae))
+- 🐛 fix pic url ([78fc5c3](https://github.com/icey0126/epub-app-lib/commit/78fc5c3c5b7b64c255e5ab3914f192f8914d354d))
+- 🐛 fix turntable color ([fb99ef6](https://github.com/icey0126/epub-app-lib/commit/fb99ef6e09cbd77f65a43d839c20c8856f7ed7dc))
+
 ### [0.0.3-alpha.61](https://github.com/icey0126/epub-app-lib/compare/v0.0.3-alpha.60...v0.0.3-alpha.61) (2021-04-02)
 
 ### Bug Fixes
