@@ -53,7 +53,7 @@ const PrizeGrid: FC<PrizeGridProps> = (props) => {
       dispatch({ type: 'IsUserInfoModalShow', value: true });
     } else if (
       prizeUrl &&
-      (singleLottery.remain_times > 0 || singleLottery.remain_times === null)
+      (singleLottery?.remain_times === null || singleLottery?.remain_times > 0)
     ) {
       try {
         const prize = await getLotteryResult(prizeUrl);

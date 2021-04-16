@@ -69,7 +69,11 @@ const Gashapon: FC<GashaponProps> = (props) => {
       <RemainTime remainTimes={remain_times} />
       <MyPrizeButton url={myPrize} myPrizeListUrl={prizeUrl} prefix={prefix} />
       <RulesButton url={rule} rules={rules} isButtonClickable prefix={prefix} />
-      <RollingList winnerList={winnerList} isShow={show_rolling_list} />
+      <RollingList
+        winnerList={winnerList}
+        isShow={show_rolling_list}
+        prizeUrl={prizeUrl}
+      />
       <ContactInfo contactInfo={contact_info} isShow={show_contact_info} />
     </div>
   );

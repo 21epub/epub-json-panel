@@ -1,4 +1,4 @@
-import React, { FC } from 'react';
+import React, { FC, useState } from 'react';
 import { Modal } from 'antd';
 import { useDispatch, useSelector } from 'react-redux';
 import { getLotteryResult } from '../../../data/api';
@@ -9,6 +9,8 @@ import {
   PrizeType,
   ImageType
 } from '../../../type';
+import ExportWrapper from './ExportWrapper';
+import EggWrapper from './EggWrapper';
 import { getPicture } from '../../../util';
 import { StateType } from '../../../store/reducer';
 
@@ -23,17 +25,22 @@ interface TreasureBoxProps {
 }
 
 const GashaponMachine: FC<TreasureBoxProps> = (props) => {
-  const { picture, singleLottery, prizeUrl, userInfo, prefix, getData } = props;
+  const {
+    prizeList,
+    picture,
+    singleLottery,
+    prizeUrl,
+    userInfo,
+    prefix,
+    getData
+  } = props;
   const dispatch = useDispatch();
   const state = useSelector((stateValue: StateType) => stateValue); // 获取保存的状态
-  const up = getPicture(picture, 'up');
   const glass = getPicture(picture, 'glass');
   const down = getPicture(picture, 'down');
   const start = getPicture(picture, 'start');
-  const exportBg = getPicture(picture, 'exportBg');
-  const egg1 = getPicture(picture, 'egg1');
-  const egg2 = getPicture(picture, 'egg2');
-  const egg3 = getPicture(picture, 'egg3');
+  const [playEgg, setPlayEgg] = useState(false);
+  const [playExport, setPlayExport] = useState(false);
 
   const lottery = async () => {
     // 先判断是否需要填写信息
@@ -45,7 +52,7 @@ const GashaponMachine: FC<TreasureBoxProps> = (props) => {
       dispatch({ type: 'IsUserInfoModalShow', value: true });
     } else if (
       prizeUrl &&
-      (singleLottery.remain_times > 0 || singleLottery.remain_times === null)
+      (singleLottery?.remain_times === null || singleLottery?.remain_times > 0)
     ) {
       dispatch({ type: 'isClickable', value: false });
       // 抽奖
@@ -56,7 +63,6 @@ const GashaponMachine: FC<TreasureBoxProps> = (props) => {
         setTimeout(() => {
           Modal.info({
             title: prize.objective.ranking,
-
             content: (
               <div>
                 <hr />
@@ -73,6 +79,9 @@ const GashaponMachine: FC<TreasureBoxProps> = (props) => {
               ) {
                 dispatch({ type: 'IsUserInfoModalShow', value: true });
               }
+              // 重置动画状态
+              setPlayEgg(false);
+              setPlayExport(false);
             }
           });
         }, 500);
@@ -81,6 +90,8 @@ const GashaponMachine: FC<TreasureBoxProps> = (props) => {
           title: error.response.data,
           okText: '查看我的奖品',
           onOk() {
+            setPlayEgg(false);
+            setPlayExport(false);
             dispatch({ type: 'isPrizeModalShow', value: true });
           }
         });
@@ -95,29 +106,27 @@ const GashaponMachine: FC<TreasureBoxProps> = (props) => {
             <p>无法抽奖，感谢您的参与！</p>
           </div>
         ),
-        onOk() {}
+        onOk() {
+          setPlayEgg(false);
+          setPlayExport(false);
+        }
       });
+    }
+  };
+
+  const onPlayEgg = () => {
+    setPlayEgg(true);
+  };
+
+  const onComplete = () => {
+    if (!playExport) {
+      // 防止多次触发
+      setPlayExport(true);
     }
   };
 
   return (
     <div className={styles.gashaponWrap}>
-      <img
-        src={up || `${prefix}diazo/images/lottery/gashapon/up.png`}
-        className='up'
-      />
-      <img
-        src={egg1 || `${prefix}diazo/images/lottery/gashapon/egg1.png`}
-        className='egg1'
-      />
-      <img
-        src={egg2 || `${prefix}diazo/images/lottery/gashapon/egg2.png`}
-        className='egg2'
-      />
-      <img
-        src={egg3 || `${prefix}diazo/images/lottery/gashapon/egg3.png`}
-        className='egg3'
-      />
       <img
         src={glass || `${prefix}diazo/images/lottery/gashapon/glass.png`}
         className='glass'
@@ -129,12 +138,21 @@ const GashaponMachine: FC<TreasureBoxProps> = (props) => {
       <img
         src={start || `${prefix}diazo/images/lottery/gashapon/start.png`}
         className='start'
-        onClick={lottery}
+        onClick={onPlayEgg}
         style={{ cursor: state.isClickable ? 'pointer' : 'default' }}
       />
-      <img
-        src={exportBg || `${prefix}diazo/images/lottery/gashapon/export.png`}
-        className='exportBg'
+      <EggWrapper
+        playEgg={playEgg}
+        prizeList={prizeList}
+        picture={picture}
+        prefix={prefix}
+        onComplete={onComplete}
+      />
+      <ExportWrapper
+        playExport={playExport}
+        picture={picture}
+        prefix={prefix}
+        onClick={lottery}
       />
     </div>
   );

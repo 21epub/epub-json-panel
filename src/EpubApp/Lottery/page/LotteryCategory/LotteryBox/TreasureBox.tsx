@@ -46,7 +46,7 @@ const TreasureBox: FC<TreasureBoxProps> = (props) => {
       dispatch({ type: 'IsUserInfoModalShow', value: true });
     } else if (
       prizeUrl &&
-      (singleLottery.remain_times > 0 || singleLottery.remain_times === null)
+      (singleLottery?.remain_times === null || singleLottery?.remain_times > 0)
     ) {
       dispatch({ type: 'isClickable', value: false });
       // 抽奖

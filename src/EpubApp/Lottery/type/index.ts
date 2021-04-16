@@ -9,9 +9,13 @@ export type LotteryType =
 
 // 图片格式
 export interface ImageType {
+  // 图片标题
   label: string;
+  // 图片名称，唯一标识
   name: string;
+  // 图片url
   picture: string;
+  // 图片描述
   description?: string;
 }
 
@@ -77,26 +81,64 @@ export interface WinnerType {
   objective: PrizeType;
 }
 
+// 举办方信息
+export interface ContactInfoType {
+  // 举办方名称
+  name?: string;
+}
+
 // 单个抽奖活动参数
 export interface SingleLotteryType {
-  type: string;
-  info_fields_list: string[] | null;
-  title: string;
-  id: string;
-  start_time: null | string;
-  end_time: null | string;
+  // 作品slug
   book_slug: string;
-  created: string;
-  total_draw_num_each_one: number;
-  can_draw_num_everyday: number;
-  need_user_info: true;
+  // 是否可以继续抽奖
+  can_continue_draw: boolean;
+  // 每人每天可抽奖次数
+  can_draw_num_everyday: number | null;
+  // 每人每天可抽中次数
+  can_win_num_everyday: number | null;
+  // 举办方信息
+  contact_info: ContactInfoType;
+  _contact_info?: string;
+  // 抽奖应用创建时间
+  created?: string;
+  // 抽奖规则：总计：total，每天：everyday
+  draw_rule?: 'total' | 'everyday';
+  // 抽奖活动结束时间
+  end_time: string;
+  // 抽奖应用id,slug
+  id: string;
+  // 用户填写的信息
+  info_fields: string;
+  // 用户填写信息列表
+  info_fields_list?: string[];
+  // 是否需要填写用户信息
+  need_user_info: boolean;
+  // 抽奖应用图片集合
   picture: ImageType[];
-  rules: null;
-  remain_times: number;
+  _picture?: string;
+  // 剩余抽奖次数
+  remain_times: number | null;
+  // 抽奖活动规则
+  rules: string;
+  // 是否显示背景图片
   show_background_image: boolean;
-  show_rolling_list: boolean;
+  // 是否显示举办方信息
   show_contact_info: boolean;
-  contact_info: any;
+  // 是否显示中奖轮播
+  show_rolling_list: boolean;
+  // 抽奖活动开始时间
+  start_time: string;
+  // 抽奖活动名称
+  title: string;
+  // 总计每人可抽奖次数
+  total_draw_num_each_one: number | null;
+  // 总计每人可中奖次数
+  total_win_num_each_one: number | null;
+  // 抽奖应用类型，1：大转盘、2：砸金蛋、3：抽奖箱、4:扭蛋机、5：九宫格
+  type: 1 | 2 | 3 | 4 | 5 | '1' | '2' | '3' | '4' | '5';
+  // 用户id
+  user_id?: number;
 }
 
 // 用户填写的信息
