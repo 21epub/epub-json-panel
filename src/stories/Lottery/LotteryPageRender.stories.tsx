@@ -46,7 +46,7 @@ const lotteryUrlList: LotteryUrlListType = {
 };
 
 Yapi.args = {
-  lotteryType: 'Turntable',
+  lotteryType: 'LotteryGrid',
   lotteryUrlList: lotteryUrlList,
   isDataChanged: true
 };

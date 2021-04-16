@@ -132,6 +132,13 @@ const PrizeGrid: FC<PrizeGridProps> = (props) => {
     setItemList(temp);
   }, [prizeList]);
 
+  const getPrizePic = (prizeUrl: string) => {
+    const webUrl = prizeUrl.includes('staticfs')
+      ? prizeUrl
+      : `${prefix}${prizeUrl}`;
+    return webUrl;
+  };
+
   if (itemList?.length) {
     itemList?.length === 8 &&
       itemList.splice(4, 0, {
@@ -190,7 +197,7 @@ const PrizeGrid: FC<PrizeGridProps> = (props) => {
                 {index !== 4 && (
                   <img
                     src={
-                      it.picture ||
+                      `${getPrizePic(it.picture)}` ||
                       `${prefix}diazo/images/lottery/common/prize.png`
                     }
                     width='40%'
