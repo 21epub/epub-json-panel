@@ -56,7 +56,8 @@ const PrizeGrid: FC<PrizeGridProps> = (props) => {
       (singleLottery?.remain_times === null || singleLottery?.remain_times > 0)
     ) {
       try {
-        const prize = await getLotteryResult(prizeUrl);
+        const response = await getLotteryResult(prizeUrl);
+        const prize = response?.data?.data?.results[0];
         if (prize) {
           dispatch({ type: 'isClickable', value: false });
 

@@ -43,7 +43,9 @@ const Pointer: FC<PointerProps> = (props) => {
       dispatch({ type: 'isClickable', value: false });
       // 抽奖
       try {
-        const prize = await getLotteryResult(prizeUrl);
+        // const prize = await getLotteryResult(prizeUrl);
+        const response = await getLotteryResult(prizeUrl);
+        const prize = response?.data?.data?.results[0];
         // 通知旋转
         doRotate(prize);
       } catch (error) {

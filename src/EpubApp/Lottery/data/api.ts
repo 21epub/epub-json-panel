@@ -1,6 +1,6 @@
 import axios from 'axios';
 import qs from 'qs';
-import { UserInfoType, WinnerType } from '../type';
+import { UserInfoType } from '../type';
 
 const instance = axios.create();
 instance.defaults.headers = {
@@ -8,17 +8,21 @@ instance.defaults.headers = {
 };
 
 export const getLotteryResult = (prizeUrl: string) => {
-  return new Promise<WinnerType>((resolve, reject) => {
-    instance
-      .post(prizeUrl)
-      .then((response) => {
-        resolve(response?.data?.data?.results[0]);
-      })
-      .catch((error) => {
-        reject(error);
-      });
-  });
+  return instance.post(prizeUrl);
 };
+
+// export const getLotteryResult = (prizeUrl: string) => {
+//   return new Promise<WinnerType>((resolve, reject) => {
+//     instance
+//       .post(prizeUrl)
+//       .then((response) => {
+//         resolve(response?.data?.data?.results[0]);
+//       })
+//       .catch((error) => {
+//         reject(error);
+//       });
+//   });
+// };
 
 export const addUserInfo = (addUserInfoUrl: string, data: any) => {
   return new Promise<UserInfoType>((resolve, reject) => {

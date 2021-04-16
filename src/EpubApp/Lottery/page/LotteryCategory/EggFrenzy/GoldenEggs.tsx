@@ -41,7 +41,8 @@ const GoldenEggs: FC<GoldenEggsProps> = (props) => {
       dispatch({ type: 'isClickable', value: false });
       // 抽奖
       try {
-        const prize = await getLotteryResult(prizeUrl);
+        const response = await getLotteryResult(prizeUrl);
+        const prize = response?.data?.data?.results[0];
         setIsLotterySuccess(true);
         // 延时1000毫秒弹出获奖结果
         setTimeout(() => {
