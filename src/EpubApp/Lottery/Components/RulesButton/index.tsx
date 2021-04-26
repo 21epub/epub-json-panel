@@ -1,22 +1,20 @@
 import React, { FC, useState } from 'react';
 import { Button } from 'antd';
-import { useSelector } from 'react-redux';
 import Modal from 'antd/lib/modal/Modal';
-import { StateType } from '../../store/reducer';
+import store from '../../store';
 import { getPicture } from '../../util';
 import styles from './index.module.less';
 
 interface RulesButtonProps {
-  rules: string;
+  rules?: string;
 }
 
 const RulesButton: FC<RulesButtonProps> = (props) => {
   const { rules } = props;
   const [isModalShow, setIsModalShow] = useState(false);
-  const { pictureList, lotteryDetail } = useSelector(
-    (state: StateType) => state
-  ); // 获取保存的状态
-  const rulePic = getPicture(lotteryDetail.picture, 'rule');
+  const [state] = store.useRxjsStore();
+  const { pictureList, lotteryDetail } = state;
+  const rulePic = getPicture(lotteryDetail?.picture ?? [], 'rule');
   const defaultRulePic = getPicture(pictureList, 'rule');
 
   const getRules = () => {
@@ -45,7 +43,7 @@ const RulesButton: FC<RulesButtonProps> = (props) => {
         ]}
         closable={false}
       >
-        <div dangerouslySetInnerHTML={{ __html: rules }} />
+        <div dangerouslySetInnerHTML={{ __html: rules ?? '' }} />
       </Modal>
     </div>
   );

@@ -1,6 +1,5 @@
 import React, { FC, useEffect, useRef, useState } from 'react';
 import { Modal } from 'antd';
-import { useDispatch, useSelector } from 'react-redux';
 import {
   drawPrizeBlock,
   getPicture,
@@ -10,7 +9,7 @@ import {
 } from '../../../util';
 import Pointer from './Pointer';
 import { UserInfoType, PrizeType, WinnerType } from '../../../type';
-import { StateType } from '../../../store/reducer';
+import store from '../../../store';
 
 interface ResultType {
   status: 'success';
@@ -29,12 +28,10 @@ const TurntableCenter: FC<TurntableCenterProps> = (props) => {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const [ctx, setCtx] = useState<CanvasRenderingContext2D | null>(null);
   const [startRadian, setStartRadian] = useState(0); // 定义圆的角度
-  const dispatch = useDispatch();
+  const [state] = store.useRxjsStore();
   // 获取保存的状态
-  const { lotteryDetail, pictureList, shouldUserInfoModalShow } = useSelector(
-    (state: StateType) => state
-  );
-  const turntablePic = getPicture(lotteryDetail.picture, 'turntable');
+  const { lotteryDetail, pictureList, shouldUserInfoModalShow } = state;
+  const turntablePic = getPicture(lotteryDetail?.picture ?? [], 'turntable');
   const defaultTurntablePic = getPicture(pictureList, 'turntable');
 
   // 渲染抽奖盘
@@ -100,15 +97,13 @@ const TurntableCenter: FC<TurntableCenterProps> = (props) => {
               ),
               onOk() {
                 setStartRadian(0);
-
                 if (
                   res?.prize?.objective?.prize_type &&
                   shouldUserInfoModalShow
                 ) {
-                  dispatch({ type: 'IsUserInfoModalShow', value: true });
+                  store.reducers.setIsUserInfoModalShow(true);
                 }
-                dispatch({ type: 'isClickable', value: true });
-
+                store.reducers.setIsClickable(true);
                 // 重新获取后台的值
                 getData();
               }

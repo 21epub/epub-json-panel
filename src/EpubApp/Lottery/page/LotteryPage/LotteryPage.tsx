@@ -1,5 +1,4 @@
 import React, { FC, useCallback, useEffect, useMemo } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
 import { DataClient } from '@21epub/epub-data-client';
 import { isEmpty } from 'lodash';
 import {
@@ -12,8 +11,8 @@ import {
 import { getLotteryComponent } from '../LotteryCategory';
 import { UserInfoModal, ActivityTimeModal } from '../../Components';
 import { getPictureList, getPicture } from '../../util';
+import store from '../../store';
 import styles from './index.module.less';
-import { StateType } from '../../store/reducer';
 
 export interface LotteryPageProps {
   lotteryType: LotteryType;
@@ -31,10 +30,8 @@ const LotteryPage: FC<LotteryPageProps> = (props) => {
     userInfoUrl,
     winnersUrl
   } = lotteryUrlList;
-  const { shouldUserInfoModalShow, IsUserInfoModalShow } = useSelector(
-    (stateValue: StateType) => stateValue
-  ); // 获取保存的状态
-  const dispatch = useDispatch();
+  const [state] = store.useRxjsStore();
+  const { shouldUserInfoModalShow, IsUserInfoModalShow } = state;
   const LotteryComponent = getLotteryComponent(lotteryType);
   const pictureList = getPictureList(lotteryPicture, lotteryType);
 
@@ -87,16 +84,16 @@ const LotteryPage: FC<LotteryPageProps> = (props) => {
   const defaultBackground = getPicture(pictureList, 'background');
 
   useEffect(() => {
-    dispatch({ type: 'lotteryUrlList', value: lotteryUrlList });
-    if (!isEmpty(lotteryDetail) && userInfo) {
-      dispatch({ type: 'lotteryDetail', value: lotteryDetail });
-      dispatch({ type: 'pictureList', value: pictureList });
-      if (userInfo.user_id === null && lotteryDetail?.need_user_info) {
-        dispatch({ type: 'IsUserInfoModalShow', value: true });
-      } else if (userInfo.user_id === null) {
-        dispatch({ type: 'shouldUserInfoModalShow', value: true });
-      } else if (userInfo.user_id !== null && shouldUserInfoModalShow) {
-        dispatch({ type: 'shouldUserInfoModalShow', value: false });
+    if (!isEmpty(lotteryDetail)) {
+      store.reducers.setLotteryUrlList(lotteryUrlList);
+      store.reducers.setLotteryDetail(lotteryDetail);
+      store.reducers.setPictureList(pictureList);
+      if (userInfo?.user_id === null && lotteryDetail?.need_user_info) {
+        store.reducers.setIsUserInfoModalShow(true);
+      } else if (userInfo?.user_id === null) {
+        store.reducers.setShouldUserInfoModalShow(true);
+      } else if (userInfo?.user_id !== null && shouldUserInfoModalShow) {
+        store.reducers.setShouldUserInfoModalShow(false);
       }
     }
   }, [userInfo, lotteryDetail]);

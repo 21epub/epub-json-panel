@@ -1,11 +1,10 @@
 import React, { FC } from 'react';
 import { Button, Col, Row, Space } from 'antd';
 import copy from 'copy-to-clipboard';
-import { useDispatch, useSelector } from 'react-redux';
 import { getPicture, formatPictureUrl } from '../../../util';
 import type { WinnerType } from '../../../type';
 import styles from './index.module.less';
-import { StateType } from '../../../store/reducer';
+import store from '../../../store';
 
 interface MyPrizeContentProps {
   myPrizeList: WinnerType[];
@@ -13,16 +12,14 @@ interface MyPrizeContentProps {
 
 const MyPrizeContent: FC<MyPrizeContentProps> = (props) => {
   const { myPrizeList } = props;
-  const dispatch = useDispatch();
-  const { pictureList, lotteryUrlList } = useSelector(
-    (state: StateType) => state
-  ); // 获取保存的状态
+  const [state] = store.useRxjsStore();
+  const { pictureList, lotteryUrlList } = state;
   const defaultPrizePic = getPicture(pictureList, 'prize');
   const copyContent = (id: string) => {
     if (copy(id)) {
-      dispatch({ type: 'isCopySuccess', value: true });
+      store.reducers.setIsCopySuccess(true);
       setTimeout(() => {
-        dispatch({ type: 'isCopySuccess', value: false });
+        store.reducers.setIsCopySuccess(false);
       }, 800);
     }
   };
@@ -38,7 +35,7 @@ const MyPrizeContent: FC<MyPrizeContentProps> = (props) => {
                   <img
                     src={formatPictureUrl(
                       item.objective?.picture || defaultPrizePic,
-                      lotteryUrlList.web_url
+                      lotteryUrlList?.web_url
                     )}
                     alt='err'
                     width='80%'

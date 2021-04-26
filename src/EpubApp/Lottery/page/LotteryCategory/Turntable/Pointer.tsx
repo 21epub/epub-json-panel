@@ -1,10 +1,9 @@
 import React, { FC } from 'react';
 import { Modal } from 'antd';
-import { useDispatch, useSelector } from 'react-redux';
 import { getLotteryResult } from '../../../data/api';
 import { UserInfoType, WinnerType } from '../../../type';
 import { getPicture } from '../../../util';
-import { StateType } from '../../../store/reducer';
+import store from '../../../store';
 import styles from './index.module.less';
 
 interface PointerProps {
@@ -15,15 +14,15 @@ interface PointerProps {
 
 const Pointer: FC<PointerProps> = (props) => {
   const { prizeUrl, userInfo, doRotate } = props;
-  const dispatch = useDispatch();
+  const [state] = store.useRxjsStore();
   // 获取保存的状态
   const {
     lotteryDetail,
     shouldUserInfoModalShow,
     isClickable,
     pictureList
-  } = useSelector((stateValue: StateType) => stateValue);
-  const pointerPic = getPicture(lotteryDetail.picture, 'pointer');
+  } = state;
+  const pointerPic = getPicture(lotteryDetail?.picture ?? [], 'pointer');
   const defaultPointerPic = getPicture(pictureList, 'pointer');
 
   const lottery = async () => {
@@ -33,15 +32,15 @@ const Pointer: FC<PointerProps> = (props) => {
       lotteryDetail?.need_user_info &&
       shouldUserInfoModalShow
     ) {
-      dispatch({ type: 'IsUserInfoModalShow', value: true });
+      store.reducers.setIsUserInfoModalShow(true);
     } else if (
       prizeUrl &&
+      lotteryDetail?.remain_times &&
       (lotteryDetail?.remain_times === null || lotteryDetail?.remain_times > 0)
     ) {
-      dispatch({ type: 'isClickable', value: false });
+      store.reducers.setIsClickable(false);
       // 抽奖
       try {
-        // const prize = await getLotteryResult(prizeUrl);
         const response = await getLotteryResult(prizeUrl);
         const prize = response?.data?.data?.results[0];
         // 通知旋转
@@ -51,7 +50,7 @@ const Pointer: FC<PointerProps> = (props) => {
           title: error.response.data,
           okText: '查看我的奖品',
           onOk() {
-            dispatch({ type: 'isPrizeModalShow', value: true });
+            store.reducers.setIsPrizeModalShow(true);
           }
         });
       }

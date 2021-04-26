@@ -1,5 +1,4 @@
 import React, { FC } from 'react';
-import { useSelector } from 'react-redux';
 import styles from './index.module.less';
 import TreasureBox from './TreasureBox';
 import {
@@ -11,7 +10,7 @@ import {
   ContactInfo
 } from '../../../Components';
 import { UserInfoType, WinnerType } from '../../../type';
-import { StateType } from '../../../store/reducer';
+import store from '../../../store';
 
 interface LotteryBoxProps {
   winnerList: WinnerType[];
@@ -23,7 +22,8 @@ interface LotteryBoxProps {
 // 抽奖箱
 const LotteryBox: FC<LotteryBoxProps> = (props) => {
   const { winnerList, userInfo, prizeUrl, getData } = props;
-  const { lotteryDetail } = useSelector((state: StateType) => state);
+  const [state] = store.useRxjsStore();
+  const { lotteryDetail } = state;
   const {
     start_time,
     end_time,
@@ -32,7 +32,7 @@ const LotteryBox: FC<LotteryBoxProps> = (props) => {
     show_rolling_list,
     contact_info,
     rules
-  } = lotteryDetail;
+  } = lotteryDetail ?? {};
 
   return (
     <div className={styles.lotteryBoxWrap}>

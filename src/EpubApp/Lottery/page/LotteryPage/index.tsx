@@ -1,9 +1,7 @@
 import React, { FC } from 'react';
-import { Provider } from 'react-redux';
 import { ConfigProvider } from 'antd';
 import zhCN from 'antd/lib/locale/zh_CN';
 import LotteryPage from './LotteryPage';
-import store from '../../store/store';
 import {
   LotteryType,
   LotteryUrlListType,
@@ -23,14 +21,12 @@ export const LotteryPageRender: FC<LotteryPageRenderProps> = (props) => {
 
   return (
     <ConfigProvider locale={zhCN}>
-      <Provider store={store}>
-        <LotteryPage
-          lotteryType={lotteryType}
-          lotteryUrlList={lotteryUrlList}
-          lotteryPicture={lotteryPicture}
-          isDataChanged={isDataChanged}
-        />
-      </Provider>
+      <LotteryPage
+        lotteryType={lotteryType}
+        lotteryUrlList={lotteryUrlList}
+        lotteryPicture={lotteryPicture}
+        isDataChanged={isDataChanged}
+      />
     </ConfigProvider>
   );
 };

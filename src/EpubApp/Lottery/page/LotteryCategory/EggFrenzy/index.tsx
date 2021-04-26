@@ -1,6 +1,5 @@
 import React, { FC } from 'react';
-import { useSelector } from 'react-redux';
-import { StateType } from '../../../store/reducer';
+import store from '../../../store';
 import styles from './index.module.less';
 import GoldenEggs from './GoldenEggs';
 import {
@@ -24,8 +23,8 @@ interface EggFrenzyProps {
 // 抽奖箱
 const EggFrenzy: FC<EggFrenzyProps> = (props) => {
   const { winnerList, prizeList, userInfo, prizeUrl, getData } = props;
-  const { lotteryDetail } = useSelector((state: StateType) => state);
-
+  const [state] = store.useRxjsStore();
+  const { lotteryDetail } = state;
   const {
     start_time,
     end_time,
@@ -34,7 +33,7 @@ const EggFrenzy: FC<EggFrenzyProps> = (props) => {
     show_rolling_list,
     contact_info,
     rules
-  } = lotteryDetail;
+  } = lotteryDetail ?? {};
 
   return (
     <div className={styles.eggFrenzyWrap}>

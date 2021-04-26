@@ -1,5 +1,4 @@
 import React, { FC } from 'react';
-import { useSelector } from 'react-redux';
 import styles from './index.module.less';
 import GashaponMachine from './GashaponMachine';
 import {
@@ -11,7 +10,7 @@ import {
   ContactInfo
 } from '../../../Components';
 import { UserInfoType, PrizeType, WinnerType } from '../../../type';
-import { StateType } from '../../../store/reducer';
+import store from '../../../store';
 
 interface GashaponProps {
   winnerList: WinnerType[];
@@ -24,8 +23,8 @@ interface GashaponProps {
 // 抽奖箱
 const Gashapon: FC<GashaponProps> = (props) => {
   const { winnerList, prizeList, userInfo, prizeUrl, getData } = props;
-  const { lotteryDetail } = useSelector((state: StateType) => state);
-
+  const [state] = store.useRxjsStore();
+  const { lotteryDetail } = state;
   const {
     start_time,
     end_time,
@@ -34,7 +33,7 @@ const Gashapon: FC<GashaponProps> = (props) => {
     show_rolling_list,
     contact_info,
     rules
-  } = lotteryDetail;
+  } = lotteryDetail ?? {};
 
   return (
     <div className={styles.gashaponWrap}>

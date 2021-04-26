@@ -7,7 +7,7 @@ import styles from './index.module.less';
 
 interface RollingListProps {
   winnerList: WinnerType[];
-  isShow: boolean;
+  isShow?: boolean;
   prizeUrl?: string;
 }
 

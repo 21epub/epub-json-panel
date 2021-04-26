@@ -1,11 +1,10 @@
 import React, { FC, useState } from 'react';
 import { Modal } from 'antd';
-import { useDispatch, useSelector } from 'react-redux';
 import { getLotteryResult } from '../../../data/api';
 import styles from './index.module.less';
 import type { UserInfoType } from '../../../type';
 import { getPicture } from '../../../util';
-import { StateType } from '../../../store/reducer';
+import store from '../../../store';
 
 interface TreasureBoxProps {
   prizeUrl?: string;
@@ -15,13 +14,11 @@ interface TreasureBoxProps {
 
 const TreasureBox: FC<TreasureBoxProps> = (props) => {
   const { prizeUrl, userInfo, getData } = props;
-  const dispatch = useDispatch();
-  const { lotteryDetail, pictureList, shouldUserInfoModalShow } = useSelector(
-    (state: StateType) => state
-  ); // 获取保存的状态
-  const openBoxPic = getPicture(lotteryDetail.picture, 'openBox');
+  const [state] = store.useRxjsStore();
+  const { lotteryDetail, pictureList, shouldUserInfoModalShow } = state;
+  const openBoxPic = getPicture(lotteryDetail?.picture ?? [], 'openBox');
+  const closeBoxPic = getPicture(lotteryDetail?.picture ?? [], 'closeBox');
   const defaultOpenBoxPic = getPicture(pictureList, 'openBox');
-  const closeBoxPic = getPicture(lotteryDetail.picture, 'closeBox');
   const defaultCloseBoxPic = getPicture(pictureList, 'closeBox');
 
   const [modalVisible, setModalVisible] = useState(false);
@@ -33,12 +30,13 @@ const TreasureBox: FC<TreasureBoxProps> = (props) => {
       lotteryDetail?.need_user_info &&
       shouldUserInfoModalShow
     ) {
-      dispatch({ type: 'IsUserInfoModalShow', value: true });
+      store.reducers.setIsUserInfoModalShow(true);
     } else if (
       prizeUrl &&
+      lotteryDetail?.remain_times &&
       (lotteryDetail?.remain_times === null || lotteryDetail?.remain_times > 0)
     ) {
-      dispatch({ type: 'isClickable', value: false });
+      store.reducers.setIsClickable(false);
       // 抽奖
       try {
         const response = await getLotteryResult(prizeUrl);
@@ -58,10 +56,10 @@ const TreasureBox: FC<TreasureBoxProps> = (props) => {
             onOk() {
               // 重新获取后台的值
               getData();
-              dispatch({ type: 'isClickable', value: true });
+              store.reducers.setIsClickable(true);
               setModalVisible(false);
               if (prize?.objective?.prize_type && shouldUserInfoModalShow) {
-                dispatch({ type: 'IsUserInfoModalShow', value: true });
+                store.reducers.setIsUserInfoModalShow(true);
               }
             }
           });
@@ -71,7 +69,7 @@ const TreasureBox: FC<TreasureBoxProps> = (props) => {
           title: error.response.data,
           okText: '查看我的奖品',
           onOk() {
-            dispatch({ type: 'isPrizeModalShow', value: true });
+            store.reducers.setIsPrizeModalShow(true);
           }
         });
       }
@@ -92,6 +90,7 @@ const TreasureBox: FC<TreasureBoxProps> = (props) => {
 
   return (
     <div className={styles.lotteryBoxPic}>
+      {console.log(openBoxPic, defaultOpenBoxPic)}
       {modalVisible ? (
         <img className='lotteryBoxPic' src={openBoxPic || defaultOpenBoxPic} />
       ) : (

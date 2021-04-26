@@ -2,12 +2,11 @@ import React, { FC, useMemo, useEffect } from 'react';
 import { DataClient } from '@21epub/epub-data-client';
 import { Button, Col, Row } from 'antd';
 import Modal from 'antd/lib/modal/Modal';
-import { useDispatch, useSelector } from 'react-redux';
 import { WinnerType } from '../../type';
 import { getPicture } from '../../util';
 import styles from './index.module.less';
 import MyPrizeContent from './MyPrizeContent';
-import { StateType } from '../../store/reducer';
+import store from '../../store';
 
 interface MyPrizeButtonProps {
   myPrizeListUrl?: string;
@@ -15,16 +14,16 @@ interface MyPrizeButtonProps {
 
 const MyPrizeButton: FC<MyPrizeButtonProps> = (props) => {
   const { myPrizeListUrl = '' } = props;
-  const dispatch = useDispatch();
+  const [state] = store.useRxjsStore();
   const {
     lotteryDetail,
     pictureList,
     shouldUserInfoModalShow,
     isPrizeModalShow,
     isCopySuccess
-  } = useSelector((state: StateType) => state); // 获取保存的状态
+  } = state;
   const defaultMyPrizePic = getPicture(pictureList, 'myPrize');
-  const myPrizePic = getPicture(lotteryDetail.picture, 'myPrize');
+  const myPrizePic = getPicture(lotteryDetail?.picture ?? [], 'myPrize');
 
   const myPrizeListClient = useMemo(() => {
     return new DataClient<WinnerType>(myPrizeListUrl);
@@ -38,13 +37,13 @@ const MyPrizeButton: FC<MyPrizeButtonProps> = (props) => {
 
   const getMyPrize = () => {
     myPrizeListClient.getAll();
-    dispatch({ type: 'isPrizeModalShow', value: true });
+    store.reducers.setIsPrizeModalShow(true);
   };
 
   const handleOk = (myPrizeList: WinnerType[]) => {
-    dispatch({ type: 'isPrizeModalShow', value: false });
+    store.reducers.setIsPrizeModalShow(false);
     if (shouldUserInfoModalShow && myPrizeList?.length) {
-      dispatch({ type: 'IsUserInfoModalShow', value: true });
+      store.reducers.setIsUserInfoModalShow(true);
     }
   };
 

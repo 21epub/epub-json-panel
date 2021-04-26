@@ -1,13 +1,12 @@
 import React, { FC, useState } from 'react';
 import { Modal } from 'antd';
-import { useDispatch, useSelector } from 'react-redux';
 import { getLotteryResult } from '../../../data/api';
 import styles from './index.module.less';
 import { UserInfoType, PrizeType } from '../../../type';
 import ExportWrapper from './ExportWrapper';
 import EggWrapper from './EggWrapper';
 import { getPicture } from '../../../util';
-import { StateType } from '../../../store/reducer';
+import store from '../../../store';
 
 interface TreasureBoxProps {
   prizeList: PrizeType[];
@@ -18,16 +17,16 @@ interface TreasureBoxProps {
 
 const GashaponMachine: FC<TreasureBoxProps> = (props) => {
   const { prizeList, prizeUrl, userInfo, getData } = props;
-  const dispatch = useDispatch();
+  const [state] = store.useRxjsStore();
   const {
     lotteryDetail,
     pictureList,
     shouldUserInfoModalShow,
     isClickable
-  } = useSelector((stateValue: StateType) => stateValue); // 获取保存的状态
-  const glassPic = getPicture(lotteryDetail.picture, 'glass');
-  const downPic = getPicture(lotteryDetail.picture, 'down');
-  const startPic = getPicture(lotteryDetail.picture, 'start');
+  } = state;
+  const glassPic = getPicture(lotteryDetail?.picture ?? [], 'glass');
+  const downPic = getPicture(lotteryDetail?.picture ?? [], 'down');
+  const startPic = getPicture(lotteryDetail?.picture ?? [], 'start');
   const defaultGlassPic = getPicture(pictureList, 'glass');
   const defaultDownPic = getPicture(pictureList, 'down');
   const defaultStartPic = getPicture(pictureList, 'start');
@@ -41,12 +40,13 @@ const GashaponMachine: FC<TreasureBoxProps> = (props) => {
       lotteryDetail?.need_user_info &&
       shouldUserInfoModalShow
     ) {
-      dispatch({ type: 'IsUserInfoModalShow', value: true });
+      store.reducers.setIsUserInfoModalShow(true);
     } else if (
       prizeUrl &&
+      lotteryDetail?.remain_times &&
       (lotteryDetail?.remain_times === null || lotteryDetail?.remain_times > 0)
     ) {
-      dispatch({ type: 'isClickable', value: false });
+      store.reducers.setIsClickable(false);
       // 抽奖
       try {
         const response = await getLotteryResult(prizeUrl);
@@ -64,9 +64,9 @@ const GashaponMachine: FC<TreasureBoxProps> = (props) => {
             onOk() {
               // 重新获取后台的值
               getData();
-              dispatch({ type: 'isClickable', value: true });
+              store.reducers.setIsClickable(true);
               if (prize?.objective?.prize_type && shouldUserInfoModalShow) {
-                dispatch({ type: 'IsUserInfoModalShow', value: true });
+                store.reducers.setIsUserInfoModalShow(true);
               }
               // 重置动画状态
               setPlayEgg(false);
@@ -81,7 +81,7 @@ const GashaponMachine: FC<TreasureBoxProps> = (props) => {
           onOk() {
             setPlayEgg(false);
             setPlayExport(false);
-            dispatch({ type: 'isPrizeModalShow', value: true });
+            store.reducers.setIsPrizeModalShow(true);
           }
         });
       }

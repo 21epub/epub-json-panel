@@ -1,6 +1,5 @@
 import React, { FC } from 'react';
-import { useSelector } from 'react-redux';
-import { StateType } from '../../../store/reducer';
+import store from '../../../store';
 import styles from './index.module.less';
 import TurntableCenter from './TurntableCenter';
 import {
@@ -24,8 +23,8 @@ interface TurntableProps {
 // 大转盘抽奖
 const Turntable: FC<TurntableProps> = (props) => {
   const { winnerList, prizeList, userInfo, prizeUrl, getData } = props;
-  // 获取保存的状态
-  const { lotteryDetail } = useSelector((state: StateType) => state);
+  const [state] = store.useRxjsStore();
+  const { lotteryDetail } = state;
   const {
     start_time,
     end_time,
@@ -34,7 +33,7 @@ const Turntable: FC<TurntableProps> = (props) => {
     show_rolling_list,
     contact_info,
     rules
-  } = lotteryDetail;
+  } = lotteryDetail ?? {};
 
   return (
     <div className={styles.turntableWrap}>

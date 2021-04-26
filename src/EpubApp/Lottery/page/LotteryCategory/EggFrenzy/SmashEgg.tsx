@@ -1,9 +1,8 @@
 import React, { FC, Fragment, useState, useEffect } from 'react';
-import { useSelector } from 'react-redux';
 import TweenOne from 'rc-tween-one';
 import BezierPlugin from 'rc-tween-one/lib/plugin/BezierPlugin';
 import { getPicture } from '../../../util';
-import { StateType } from '../../../store/reducer';
+import store from '../../../store';
 TweenOne.plugins.push(BezierPlugin);
 
 interface SmashEggProps {
@@ -15,12 +14,11 @@ const SmashEgg: FC<SmashEggProps> = (props) => {
   const { isLotterySuccess, onClick } = props;
   const [isClick, setIsClick] = useState(false);
   const [play, setPlay] = useState(false);
-  const { lotteryDetail, pictureList } = useSelector(
-    (state: StateType) => state
-  );
-  const goodEggPic = getPicture(lotteryDetail.picture, 'goodEgg');
-  const badEggPic = getPicture(lotteryDetail.picture, 'badEgg');
-  const hammerPic = getPicture(lotteryDetail.picture, 'hammer');
+  const [state] = store.useRxjsStore();
+  const { lotteryDetail, pictureList } = state;
+  const goodEggPic = getPicture(lotteryDetail?.picture ?? [], 'goodEgg');
+  const badEggPic = getPicture(lotteryDetail?.picture ?? [], 'badEgg');
+  const hammerPic = getPicture(lotteryDetail?.picture ?? [], 'hammer');
   const defaultGoodEggPic = getPicture(pictureList, 'goodEgg');
   const defaultBadEggPic = getPicture(pictureList, 'badEgg');
   const defaultHammerPic = getPicture(pictureList, 'hammer');

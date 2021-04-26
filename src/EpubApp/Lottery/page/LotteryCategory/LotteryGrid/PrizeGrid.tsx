@@ -1,7 +1,6 @@
 import React, { FC, useEffect, useState } from 'react';
 import { Modal } from 'antd';
-import { useDispatch, useSelector } from 'react-redux';
-import { StateType } from '../../../store/reducer';
+import store from '../../../store';
 import {
   getIndexList,
   getPicture,
@@ -22,19 +21,19 @@ interface PrizeGridProps {
 
 const PrizeGrid: FC<PrizeGridProps> = (props) => {
   const { prizeList, prizeUrl, userInfo, getData } = props;
-  const dispatch = useDispatch();
+  const [state] = store.useRxjsStore();
   const {
     lotteryDetail,
     pictureList,
     shouldUserInfoModalShow,
     isClickable,
     lotteryUrlList
-  } = useSelector((state: StateType) => state);
+  } = state;
   const [activeIndex, setActiveIndex] = useState<undefined | number>();
   const [itemList, setItemList] = useState<PrizeType[]>([]);
-  const gridBg1Pic = getPicture(lotteryDetail.picture, 'gridBg1');
-  const prizeBgPic = getPicture(lotteryDetail.picture, 'prizeBg');
-  const startBgPic = getPicture(lotteryDetail.picture, 'startBg');
+  const gridBg1Pic = getPicture(lotteryDetail?.picture ?? [], 'gridBg1');
+  const prizeBgPic = getPicture(lotteryDetail?.picture ?? [], 'prizeBg');
+  const startBgPic = getPicture(lotteryDetail?.picture ?? [], 'startBg');
   const defaultGridBg1Pic = getPicture(pictureList, 'gridBg1');
   const defaultPrizeBgPic = getPicture(pictureList, 'prizeBg');
   const defaultStartBgPic = getPicture(pictureList, 'startBg');
@@ -46,17 +45,17 @@ const PrizeGrid: FC<PrizeGridProps> = (props) => {
       lotteryDetail?.need_user_info &&
       shouldUserInfoModalShow
     ) {
-      dispatch({ type: 'IsUserInfoModalShow', value: true });
+      store.reducers.setIsUserInfoModalShow(true);
     } else if (
       prizeUrl &&
+      lotteryDetail?.remain_times &&
       (lotteryDetail?.remain_times === null || lotteryDetail?.remain_times > 0)
     ) {
       try {
         const response = await getLotteryResult(prizeUrl);
         const prize = response?.data?.data?.results[0];
         if (prize) {
-          dispatch({ type: 'isClickable', value: false });
-
+          store.reducers.setIsClickable(false);
           let prizeIndex = getPrizeIndex(prize, prizeList);
           // 跳过开始抽奖按钮
           if (prizeIndex > 3) prizeIndex = prizeIndex + 1;
@@ -66,7 +65,6 @@ const PrizeGrid: FC<PrizeGridProps> = (props) => {
           const timeId = setInterval(() => {
             setActiveIndex(indexList[i]);
             i += 1;
-
             if (i >= indexList.length) {
               clearInterval(timeId);
               // 延时1000毫秒弹出获奖结果
@@ -81,15 +79,13 @@ const PrizeGrid: FC<PrizeGridProps> = (props) => {
                   ),
                   onOk() {
                     setActiveIndex(undefined);
-
                     if (
                       prize?.objective?.prize_type &&
                       shouldUserInfoModalShow
                     ) {
-                      dispatch({ type: 'IsUserInfoModalShow', value: true });
+                      store.reducers.setIsUserInfoModalShow(true);
                     }
-                    dispatch({ type: 'isClickable', value: true });
-
+                    store.reducers.setIsClickable(true);
                     // 重新获取后台的值
                     getData();
                   }
@@ -97,7 +93,6 @@ const PrizeGrid: FC<PrizeGridProps> = (props) => {
               }, 1000);
             }
           }, 100);
-
           // setBorderActive((b) => !b)
         }
       } catch (error) {
@@ -105,7 +100,7 @@ const PrizeGrid: FC<PrizeGridProps> = (props) => {
           title: error.response.data,
           okText: '查看我的奖品',
           onOk() {
-            dispatch({ type: 'isPrizeModalShow', value: true });
+            store.reducers.setIsPrizeModalShow(true);
           }
         });
       }
@@ -182,7 +177,7 @@ const PrizeGrid: FC<PrizeGridProps> = (props) => {
                   <img
                     src={formatPictureUrl(
                       it.picture || defaultPrizePic,
-                      lotteryUrlList.web_url
+                      lotteryUrlList?.web_url
                     )}
                     width='40%'
                   />

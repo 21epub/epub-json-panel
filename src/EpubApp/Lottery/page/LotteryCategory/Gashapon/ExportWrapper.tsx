@@ -1,8 +1,7 @@
 import React, { FC, useEffect, useState } from 'react';
 import TweenOne from 'rc-tween-one';
 import { random } from 'lodash';
-import { useSelector } from 'react-redux';
-import { StateType } from '../../../store/reducer';
+import store from '../../../store';
 import { getPicture } from '../../../util';
 
 interface ExportWrapperProps {
@@ -13,17 +12,16 @@ interface ExportWrapperProps {
 const ExportWrapper: FC<ExportWrapperProps> = (props) => {
   const { playExport = true, onClick } = props;
   const [visible, setVisible] = useState(true);
-  const { lotteryDetail, pictureList } = useSelector(
-    (state: StateType) => state
-  );
-  const exportBgPic = getPicture(lotteryDetail.picture, 'exportBg');
+  const [state] = store.useRxjsStore();
+  const { lotteryDetail, pictureList } = state;
+  const exportBgPic = getPicture(lotteryDetail?.picture ?? [], 'exportBg');
   const defaultExportBgPic = getPicture(pictureList, 'exportBg');
   const defaultEgg1Pic = getPicture(pictureList, 'egg1');
   const eggList = ['egg1', 'egg2', 'egg3'];
 
   // 随机返回一个扭蛋的图片
   const getEggPicture = () => {
-    return getPicture(lotteryDetail.picture, eggList[random(0, 2)]);
+    return getPicture(lotteryDetail?.picture ?? [], eggList[random(0, 2)]);
   };
 
   // 扭蛋出口动画

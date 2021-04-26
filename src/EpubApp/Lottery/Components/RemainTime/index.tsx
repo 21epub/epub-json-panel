@@ -2,7 +2,7 @@ import React, { FC } from 'react';
 import styles from './index.module.less';
 
 interface RemainTimeProps {
-  remainTimes: number | null;
+  remainTimes?: number | null;
 }
 
 const RemainTime: FC<RemainTimeProps> = (props) => {

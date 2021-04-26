@@ -1,10 +1,9 @@
 import React, { FC, useState } from 'react';
 import { Col, Form, Input, Row, Button } from 'antd';
 import Modal from 'antd/lib/modal/Modal';
-import { useDispatch, useSelector } from 'react-redux';
 import { addUserInfo } from '../../data/api';
 import { translateTitle } from '../../util';
-import { StateType } from '../../store/reducer';
+import store from '../../store';
 
 interface UserInfoModalProps {
   isModalShow: boolean;
@@ -18,15 +17,15 @@ interface DataType {
 
 const UserInfoModal: FC<UserInfoModalProps> = (props) => {
   const { isModalShow, addUserInfoUrl, getUser } = props;
-  const dispatch = useDispatch();
+  const [state] = store.useRxjsStore();
   // 获取保存的状态
-  const { lotteryDetail } = useSelector((stateValue: StateType) => stateValue);
+  const { lotteryDetail } = state;
   const [confirmLoading, setConfirmLoading] = useState(false);
   const [form] = Form.useForm(); // 用户信息
   const [info, setInfo] = useState<DataType>({});
 
   const handleCancel = () => {
-    dispatch({ type: 'IsUserInfoModalShow', value: false });
+    store.reducers.setIsUserInfoModalShow(false);
   };
 
   const handleOk = () => {
@@ -41,7 +40,7 @@ const UserInfoModal: FC<UserInfoModalProps> = (props) => {
         .then(() => {
           setConfirmLoading(false);
           getUser();
-          dispatch({ type: 'IsUserInfoModalShow', value: false });
+          store.reducers.setIsUserInfoModalShow(false);
           form.resetFields();
           // 成功则清除内容
         })

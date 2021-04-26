@@ -3,8 +3,7 @@ import TweenOne from 'rc-tween-one';
 import { IAnimObject } from 'rc-tween-one/typings/AnimObject';
 import { random } from 'lodash';
 import { useDebounceFn } from 'ahooks';
-import { useSelector } from 'react-redux';
-import { StateType } from '../../../store/reducer';
+import store from '../../../store';
 import { animationList } from './AnimationConfig';
 import { PrizeType } from '../../../type';
 import { getPicture } from '../../../util';
@@ -18,10 +17,9 @@ interface eggWrapperProps {
 const eggWrapper: FC<eggWrapperProps> = (props) => {
   const { playEgg, prizeList, onComplete } = props;
   const [visible, setVisible] = useState(true);
-  const { lotteryDetail, pictureList } = useSelector(
-    (state: StateType) => state
-  );
-  const upPic = getPicture(lotteryDetail.picture, 'up');
+  const [state] = store.useRxjsStore();
+  const { lotteryDetail, pictureList } = state;
+  const upPic = getPicture(lotteryDetail?.picture ?? [], 'up');
   const defaultUpPic = getPicture(pictureList, 'up');
   const defaultEgg1Pic = getPicture(pictureList, 'egg1');
   const eggList = ['egg1', 'egg2', 'egg3'];
@@ -55,7 +53,7 @@ const eggWrapper: FC<eggWrapperProps> = (props) => {
 
   // 随机返回一个扭蛋的图片
   const getEggPicture = () => {
-    return getPicture(lotteryDetail.picture, eggList[random(0, 2)]);
+    return getPicture(lotteryDetail?.picture ?? [], eggList[random(0, 2)]);
   };
 
   useEffect(() => {

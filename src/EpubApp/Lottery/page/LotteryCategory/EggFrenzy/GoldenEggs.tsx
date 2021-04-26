@@ -1,10 +1,9 @@
 import React, { FC, useState } from 'react';
 import { Modal } from 'antd';
-import { useDispatch, useSelector } from 'react-redux';
 import { getLotteryResult } from '../../../data/api';
 import SmashEgg from './SmashEgg';
 import { UserInfoType, PrizeType } from '../../../type';
-import { StateType } from '../../../store/reducer';
+import store from '../../../store';
 
 interface GoldenEggsProps {
   prizeList: PrizeType[];
@@ -15,11 +14,9 @@ interface GoldenEggsProps {
 
 const GoldenEggs: FC<GoldenEggsProps> = (props) => {
   const { prizeUrl, userInfo, getData } = props;
-  const dispatch = useDispatch();
+  const [state] = store.useRxjsStore();
   const [isLotterySuccess, setIsLotterySuccess] = useState(false);
-  const { lotteryDetail, shouldUserInfoModalShow } = useSelector(
-    (state: StateType) => state
-  );
+  const { lotteryDetail, shouldUserInfoModalShow } = state;
 
   const lottery = async () => {
     // 先判断是否需要填写信息
@@ -28,12 +25,13 @@ const GoldenEggs: FC<GoldenEggsProps> = (props) => {
       lotteryDetail?.need_user_info &&
       shouldUserInfoModalShow
     ) {
-      dispatch({ type: 'IsUserInfoModalShow', value: true });
+      store.reducers.setIsUserInfoModalShow(true);
     } else if (
       prizeUrl &&
+      lotteryDetail?.remain_times &&
       (lotteryDetail?.remain_times === null || lotteryDetail?.remain_times > 0)
     ) {
-      dispatch({ type: 'isClickable', value: false });
+      store.reducers.setIsClickable(false);
       // 抽奖
       try {
         const response = await getLotteryResult(prizeUrl);
@@ -53,10 +51,10 @@ const GoldenEggs: FC<GoldenEggsProps> = (props) => {
             onOk() {
               // 重新获取后台的值
               getData();
-              dispatch({ type: 'isClickable', value: true });
+              store.reducers.setIsClickable(true);
               setIsLotterySuccess(false);
               if (prize?.objective?.prize_type && shouldUserInfoModalShow) {
-                dispatch({ type: 'IsUserInfoModalShow', value: true });
+                store.reducers.setIsUserInfoModalShow(true);
               }
             }
           });
@@ -66,7 +64,7 @@ const GoldenEggs: FC<GoldenEggsProps> = (props) => {
           title: error.response.data,
           okText: '查看我的奖品',
           onOk() {
-            dispatch({ type: 'isPrizeModalShow', value: true });
+            store.reducers.setIsPrizeModalShow(true);
           }
         });
       }
