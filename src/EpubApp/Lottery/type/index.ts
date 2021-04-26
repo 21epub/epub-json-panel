@@ -31,7 +31,7 @@ export interface LotteryPictureType {
 // api接口Url
 export interface LotteryUrlListType {
   // 默认图片链接地址头
-  picturePrefix: string;
+  web_url: string;
   // 获取单个抽奖活动信息
   lotteryDetailUrl: string;
   // 获取奖品信息列表

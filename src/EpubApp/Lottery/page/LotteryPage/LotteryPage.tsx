@@ -87,6 +87,7 @@ const LotteryPage: FC<LotteryPageProps> = (props) => {
   const defaultBackground = getPicture(pictureList, 'background');
 
   useEffect(() => {
+    dispatch({ type: 'lotteryUrlList', value: lotteryUrlList });
     if (!isEmpty(lotteryDetail) && userInfo) {
       dispatch({ type: 'lotteryDetail', value: lotteryDetail });
       dispatch({ type: 'pictureList', value: pictureList });

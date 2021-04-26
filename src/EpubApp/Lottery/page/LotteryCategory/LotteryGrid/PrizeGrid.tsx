@@ -1,6 +1,7 @@
 import React, { FC, useEffect, useState } from 'react';
 import { Modal } from 'antd';
 import { useDispatch, useSelector } from 'react-redux';
+import { StateType } from '../../../store/reducer';
 import {
   getIndexList,
   getPicture,
@@ -11,8 +12,6 @@ import { getLotteryResult } from '../../../data/api';
 import styles from './index.module.less';
 import { cloneDeep } from 'lodash';
 import type { UserInfoType, PrizeType } from '../../../type';
-
-import { StateType } from '../../../store/reducer';
 
 interface PrizeGridProps {
   prizeList: PrizeType[];
@@ -28,7 +27,8 @@ const PrizeGrid: FC<PrizeGridProps> = (props) => {
     lotteryDetail,
     pictureList,
     shouldUserInfoModalShow,
-    isClickable
+    isClickable,
+    lotteryUrlList
   } = useSelector((state: StateType) => state);
   const [activeIndex, setActiveIndex] = useState<undefined | number>();
   const [itemList, setItemList] = useState<PrizeType[]>([]);
@@ -180,7 +180,10 @@ const PrizeGrid: FC<PrizeGridProps> = (props) => {
               >
                 {index !== 4 && (
                   <img
-                    src={formatPictureUrl(it.picture || defaultPrizePic)}
+                    src={formatPictureUrl(
+                      it.picture || defaultPrizePic,
+                      lotteryUrlList.web_url
+                    )}
                     width='40%'
                   />
                 )}

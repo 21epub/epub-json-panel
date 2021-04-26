@@ -10,7 +10,8 @@ const initialState = {
   isCopySuccess: false,
   isPrizeModalShow: false,
   pictureList: [],
-  lotteryDetail: {}
+  lotteryDetail: {},
+  lotteryUrlList: {}
 };
 
 const store = createStore(reducer as Any, initialState);

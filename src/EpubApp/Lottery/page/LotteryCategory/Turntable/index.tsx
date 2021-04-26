@@ -1,5 +1,6 @@
 import React, { FC } from 'react';
 import { useSelector } from 'react-redux';
+import { StateType } from '../../../store/reducer';
 import styles from './index.module.less';
 import TurntableCenter from './TurntableCenter';
 import {
@@ -11,7 +12,6 @@ import {
   ContactInfo
 } from '../../../Components';
 import { UserInfoType, PrizeType, WinnerType } from '../../../type';
-import { StateType } from '../../../store/reducer';
 
 interface TurntableProps {
   prizeList: PrizeType[];
@@ -19,7 +19,6 @@ interface TurntableProps {
   userInfo?: UserInfoType;
   prizeUrl?: string;
   getData: Function;
-  prefix: string;
 }
 
 // 大转盘抽奖

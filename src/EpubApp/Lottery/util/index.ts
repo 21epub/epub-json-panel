@@ -150,7 +150,7 @@ export const getPicture = (pictureList: ImageType[], pictureName: string) => {
 };
 
 // 格式化对应的图片Url地址,没有前缀的加上
-export const formatPictureUrl = (pictureUrl?: string) => {
-  const webUrl = pictureUrl?.includes('//') ? '' : window.web_url;
+export const formatPictureUrl = (pictureUrl?: string, web_url?: string) => {
+  const webUrl = pictureUrl?.includes('//') ? '' : web_url;
   return pictureUrl && webUrl + pictureUrl;
 };
