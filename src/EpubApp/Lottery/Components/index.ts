@@ -3,7 +3,7 @@ export { default as ActivityTimeModal } from './ActivityTimeModal';
 export { default as ContactInfo } from './ContactInfo';
 export { default as InfoModalButton } from './InfoModalButton';
 export { default as MyPrizeButton } from './MyPrizeButton';
-export { default as MyPrizeContent } from './MyPrizeContent';
+export { default as MyPrizeContent } from './MyPrizeButton/MyPrizeContent';
 export { default as RemainTime } from './RemainTime';
 export { default as RollingList } from './RollingList';
 export { default as RulesButton } from './RulesButton';

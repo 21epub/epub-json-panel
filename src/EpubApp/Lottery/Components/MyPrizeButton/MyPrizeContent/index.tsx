@@ -1,17 +1,22 @@
 import React, { FC } from 'react';
 import { Button, Col, Row, Space } from 'antd';
 import copy from 'copy-to-clipboard';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+import { getPicture, formatPictureUrl } from '../../../util';
+import type { WinnerType } from '../../../type';
+
 import styles from './index.module.less';
+import { StateType } from '../../../store/reducer';
 
 interface MyPrizeContentProps {
-  myPrizeList: any;
-  prefix: string;
+  myPrizeList: WinnerType[];
 }
 
 const MyPrizeContent: FC<MyPrizeContentProps> = (props) => {
-  const { myPrizeList, prefix } = props;
+  const { myPrizeList } = props;
   const dispatch = useDispatch();
+  const { pictureList } = useSelector((state: StateType) => state); // 获取保存的状态
+  const defaultPrizePic = getPicture(pictureList, 'prize');
   const copyContent = (id: string) => {
     if (copy(id)) {
       dispatch({ type: 'isCopySuccess', value: true });
@@ -30,10 +35,9 @@ const MyPrizeContent: FC<MyPrizeContentProps> = (props) => {
               <Row>
                 <Col span={6} offset={2}>
                   <img
-                    src={
-                      item.objective?.picture ||
-                      `${prefix}diazo/images/lottery/common/prize.png`
-                    }
+                    src={formatPictureUrl(
+                      item.objective?.picture || defaultPrizePic
+                    )}
                     alt='err'
                     width='80%'
                   />

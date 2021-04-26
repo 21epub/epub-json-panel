@@ -2,43 +2,41 @@ import React, { FC } from 'react';
 import { Modal } from 'antd';
 import { useDispatch, useSelector } from 'react-redux';
 import { getLotteryResult } from '../../../data/api';
-import { SingleLotteryType, UserInfoType, WinnerType } from '../../../type';
+import { UserInfoType, WinnerType } from '../../../type';
+import { getPicture } from '../../../util';
 import { StateType } from '../../../store/reducer';
 import styles from './index.module.less';
 
 interface PointerProps {
-  pointer?: string;
-  isClickable: boolean;
-  singleLottery: SingleLotteryType;
   prizeUrl?: string;
   userInfo?: UserInfoType;
-  prefix: string;
   doRotate: (prize: WinnerType) => void;
 }
 
 const Pointer: FC<PointerProps> = (props) => {
-  const {
-    pointer,
-    isClickable,
-    singleLottery,
-    prizeUrl,
-    userInfo,
-    prefix,
-    doRotate
-  } = props;
+  const { prizeUrl, userInfo, doRotate } = props;
   const dispatch = useDispatch();
-  const state = useSelector((state: StateType) => state); // 获取保存的状态
+  // 获取保存的状态
+  const {
+    lotteryDetail,
+    shouldUserInfoModalShow,
+    isClickable,
+    pictureList
+  } = useSelector((stateValue: StateType) => stateValue);
+  const pointerPic = getPicture(lotteryDetail.picture, 'pointer');
+  const defaultPointerPic = getPicture(pictureList, 'pointer');
+
   const lottery = async () => {
     // 先判断是否需要填写信息
     if (
       userInfo?.user_id === null &&
-      singleLottery?.need_user_info &&
-      state.shouldUserInfoModalShow
+      lotteryDetail?.need_user_info &&
+      shouldUserInfoModalShow
     ) {
       dispatch({ type: 'IsUserInfoModalShow', value: true });
     } else if (
       prizeUrl &&
-      (singleLottery?.remain_times === null || singleLottery?.remain_times > 0)
+      (lotteryDetail?.remain_times === null || lotteryDetail?.remain_times > 0)
     ) {
       dispatch({ type: 'isClickable', value: false });
       // 抽奖
@@ -75,24 +73,13 @@ const Pointer: FC<PointerProps> = (props) => {
   return (
     <div className={styles.pointer}>
       {isClickable ? (
-        <a>
-          <img
-            className='point'
-            src={
-              pointer || `${prefix}diazo/images/lottery/turntable/pointer.png`
-            }
-            onClick={lottery}
-          />
-        </a>
+        <img
+          className='point'
+          src={pointerPic || defaultPointerPic}
+          onClick={lottery}
+        />
       ) : (
-        <a style={{ cursor: 'default' }}>
-          <img
-            className='point'
-            src={
-              pointer || `${prefix}diazo/images/lottery/turntable/pointer.png`
-            }
-          />
-        </a>
+        <img className='point' src={pointerPic || defaultPointerPic} />
       )}
     </div>
   );

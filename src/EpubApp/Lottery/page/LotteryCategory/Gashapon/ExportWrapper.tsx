@@ -1,25 +1,29 @@
 import React, { FC, useEffect, useState } from 'react';
 import TweenOne from 'rc-tween-one';
 import { random } from 'lodash';
-import { ImageType } from '../../../type';
+import { useSelector } from 'react-redux';
+import { StateType } from '../../../store/reducer';
 import { getPicture } from '../../../util';
 
 interface ExportWrapperProps {
   playExport: boolean;
-  prefix: string;
-  picture: ImageType[];
   onClick: () => void;
 }
 
 const ExportWrapper: FC<ExportWrapperProps> = (props) => {
-  const { playExport = true, picture, prefix, onClick } = props;
+  const { playExport = true, onClick } = props;
   const [visible, setVisible] = useState(true);
-  const exportBg = getPicture(picture, 'exportBg');
+  const { lotteryDetail, pictureList } = useSelector(
+    (state: StateType) => state
+  );
+  const exportBgPic = getPicture(lotteryDetail.picture, 'exportBg');
+  const defaultExportBgPic = getPicture(pictureList, 'exportBg');
+  const defaultEgg1Pic = getPicture(pictureList, 'egg1');
   const eggList = ['egg1', 'egg2', 'egg3'];
 
   // 随机返回一个扭蛋的图片
   const getEggPicture = () => {
-    return getPicture(picture, eggList[random(0, 2)]);
+    return getPicture(lotteryDetail.picture, eggList[random(0, 2)]);
   };
 
   // 扭蛋出口动画
@@ -42,9 +46,7 @@ const ExportWrapper: FC<ExportWrapperProps> = (props) => {
     <div
       className='exportWrapper'
       style={{
-        backgroundImage: `url(${
-          exportBg || `${prefix}diazo/images/lottery/gashapon/export.png`
-        })`
+        backgroundImage: `url(${exportBgPic || defaultExportBgPic})`
       }}
     >
       {visible && (
@@ -57,10 +59,7 @@ const ExportWrapper: FC<ExportWrapperProps> = (props) => {
             repeat={0}
             yoyo={false}
             style={{
-              backgroundImage: `url(${
-                getEggPicture() ||
-                `${prefix}diazo/images/lottery/gashapon/egg1.png`
-              })`
+              backgroundImage: `url(${getEggPicture() || defaultEgg1Pic})`
             }}
           />
         </div>

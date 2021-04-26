@@ -1,14 +1,13 @@
 import React, { FC, useState } from 'react';
 import { Col, Form, Input, Row, Button } from 'antd';
 import Modal from 'antd/lib/modal/Modal';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { addUserInfo } from '../../data/api';
 import { translateTitle } from '../../util';
-import { SingleLotteryType } from '../../type';
+import { StateType } from '../../store/reducer';
 
 interface UserInfoModalProps {
   isModalShow: boolean;
-  singleLottery: SingleLotteryType;
   addUserInfoUrl?: string;
   getUser: () => void;
 }
@@ -18,9 +17,10 @@ interface DataType {
 }
 
 const UserInfoModal: FC<UserInfoModalProps> = (props) => {
-  const { isModalShow, singleLottery, addUserInfoUrl, getUser } = props;
+  const { isModalShow, addUserInfoUrl, getUser } = props;
   const dispatch = useDispatch();
-
+  // 获取保存的状态
+  const { lotteryDetail } = useSelector((stateValue: StateType) => stateValue);
   const [confirmLoading, setConfirmLoading] = useState(false);
   const [form] = Form.useForm(); // 用户信息
   const [info, setInfo] = useState<DataType>({});
@@ -78,7 +78,7 @@ const UserInfoModal: FC<UserInfoModalProps> = (props) => {
         ]}
         confirmLoading={confirmLoading}
       >
-        {singleLottery?.info_fields_list && (
+        {lotteryDetail?.info_fields_list && (
           <Row gutter={[16, 16]}>
             <Col span={24}>
               <Form
@@ -86,7 +86,7 @@ const UserInfoModal: FC<UserInfoModalProps> = (props) => {
                 form={form}
                 onValuesChange={onValuesChange}
               >
-                {singleLottery?.info_fields_list.map(
+                {lotteryDetail?.info_fields_list.map(
                   (el: string, index: number) => {
                     return (
                       <Form.Item

@@ -3,12 +3,7 @@ import { Modal } from 'antd';
 import { useDispatch, useSelector } from 'react-redux';
 import { getLotteryResult } from '../../../data/api';
 import styles from './index.module.less';
-import {
-  SingleLotteryType,
-  UserInfoType,
-  PrizeType,
-  ImageType
-} from '../../../type';
+import { UserInfoType, PrizeType } from '../../../type';
 import ExportWrapper from './ExportWrapper';
 import EggWrapper from './EggWrapper';
 import { getPicture } from '../../../util';
@@ -16,29 +11,26 @@ import { StateType } from '../../../store/reducer';
 
 interface TreasureBoxProps {
   prizeList: PrizeType[];
-  singleLottery: SingleLotteryType;
   prizeUrl?: string;
   userInfo?: UserInfoType;
-  prefix: string;
   getData: () => void;
-  picture: ImageType[];
 }
 
 const GashaponMachine: FC<TreasureBoxProps> = (props) => {
-  const {
-    prizeList,
-    picture,
-    singleLottery,
-    prizeUrl,
-    userInfo,
-    prefix,
-    getData
-  } = props;
+  const { prizeList, prizeUrl, userInfo, getData } = props;
   const dispatch = useDispatch();
-  const state = useSelector((stateValue: StateType) => stateValue); // 获取保存的状态
-  const glass = getPicture(picture, 'glass');
-  const down = getPicture(picture, 'down');
-  const start = getPicture(picture, 'start');
+  const {
+    lotteryDetail,
+    pictureList,
+    shouldUserInfoModalShow,
+    isClickable
+  } = useSelector((stateValue: StateType) => stateValue); // 获取保存的状态
+  const glassPic = getPicture(lotteryDetail.picture, 'glass');
+  const downPic = getPicture(lotteryDetail.picture, 'down');
+  const startPic = getPicture(lotteryDetail.picture, 'start');
+  const defaultGlassPic = getPicture(pictureList, 'glass');
+  const defaultDownPic = getPicture(pictureList, 'down');
+  const defaultStartPic = getPicture(pictureList, 'start');
   const [playEgg, setPlayEgg] = useState(false);
   const [playExport, setPlayExport] = useState(false);
 
@@ -46,13 +38,13 @@ const GashaponMachine: FC<TreasureBoxProps> = (props) => {
     // 先判断是否需要填写信息
     if (
       userInfo?.user_id === null &&
-      singleLottery?.need_user_info &&
-      state.shouldUserInfoModalShow
+      lotteryDetail?.need_user_info &&
+      shouldUserInfoModalShow
     ) {
       dispatch({ type: 'IsUserInfoModalShow', value: true });
     } else if (
       prizeUrl &&
-      (singleLottery?.remain_times === null || singleLottery?.remain_times > 0)
+      (lotteryDetail?.remain_times === null || lotteryDetail?.remain_times > 0)
     ) {
       dispatch({ type: 'isClickable', value: false });
       // 抽奖
@@ -73,10 +65,7 @@ const GashaponMachine: FC<TreasureBoxProps> = (props) => {
               // 重新获取后台的值
               getData();
               dispatch({ type: 'isClickable', value: true });
-              if (
-                prize?.objective?.prize_type &&
-                state.shouldUserInfoModalShow
-              ) {
+              if (prize?.objective?.prize_type && shouldUserInfoModalShow) {
                 dispatch({ type: 'IsUserInfoModalShow', value: true });
               }
               // 重置动画状态
@@ -127,33 +116,20 @@ const GashaponMachine: FC<TreasureBoxProps> = (props) => {
 
   return (
     <div className={styles.gashaponWrap}>
+      <img src={glassPic || defaultGlassPic} className='glass' />
+      <img src={downPic || defaultDownPic} className='down' />
       <img
-        src={glass || `${prefix}diazo/images/lottery/gashapon/glass.png`}
-        className='glass'
-      />
-      <img
-        src={down || `${prefix}diazo/images/lottery/gashapon/down.png`}
-        className='down'
-      />
-      <img
-        src={start || `${prefix}diazo/images/lottery/gashapon/start.png`}
+        src={startPic || defaultStartPic}
         className='start'
         onClick={onPlayEgg}
-        style={{ cursor: state.isClickable ? 'pointer' : 'default' }}
+        style={{ cursor: isClickable ? 'pointer' : 'default' }}
       />
       <EggWrapper
         playEgg={playEgg}
         prizeList={prizeList}
-        picture={picture}
-        prefix={prefix}
         onComplete={onComplete}
       />
-      <ExportWrapper
-        playExport={playExport}
-        picture={picture}
-        prefix={prefix}
-        onClick={lottery}
-      />
+      <ExportWrapper playExport={playExport} onClick={lottery} />
     </div>
   );
 };

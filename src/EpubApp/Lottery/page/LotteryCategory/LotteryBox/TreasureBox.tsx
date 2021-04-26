@@ -3,50 +3,40 @@ import { Modal } from 'antd';
 import { useDispatch, useSelector } from 'react-redux';
 import { getLotteryResult } from '../../../data/api';
 import styles from './index.module.less';
-import { SingleLotteryType, UserInfoType, PrizeType } from '../../../type';
+import type { UserInfoType } from '../../../type';
+import { getPicture } from '../../../util';
 import { StateType } from '../../../store/reducer';
 
 interface TreasureBoxProps {
-  openBox?: string;
-  closeBox?: string;
-  prizeList: PrizeType[];
-  singleLottery: SingleLotteryType;
   prizeUrl?: string;
   userInfo?: UserInfoType;
-  prefix: string;
   getData: () => void;
 }
 
 const TreasureBox: FC<TreasureBoxProps> = (props) => {
-  const {
-    openBox,
-    closeBox,
-    singleLottery,
-    prizeUrl,
-    userInfo,
-    prefix,
-    getData
-  } = props;
+  const { prizeUrl, userInfo, getData } = props;
   const dispatch = useDispatch();
-  const state = useSelector((state: StateType) => state); // 获取保存的状态
-  const [modalVisible, setModalVisible] = useState(false);
-  const openBoxUrl =
-    openBox || `${prefix}diazo/images/lottery/lotteryBox/openBox.png`;
-  const closeBoxUrl =
-    closeBox || `${prefix}diazo/images/lottery/lotteryBox/closeBox.png`;
+  const { lotteryDetail, pictureList, shouldUserInfoModalShow } = useSelector(
+    (state: StateType) => state
+  ); // 获取保存的状态
+  const openBoxPic = getPicture(lotteryDetail.picture, 'openBox');
+  const defaultOpenBoxPic = getPicture(pictureList, 'openBox');
+  const closeBoxPic = getPicture(lotteryDetail.picture, 'closeBox');
+  const defaultCloseBoxPic = getPicture(pictureList, 'closeBox');
 
+  const [modalVisible, setModalVisible] = useState(false);
   // 开始抽奖
   const lottery = async () => {
     // 先判断是否需要填写信息
     if (
       userInfo?.user_id === null &&
-      singleLottery?.need_user_info &&
-      state.shouldUserInfoModalShow
+      lotteryDetail?.need_user_info &&
+      shouldUserInfoModalShow
     ) {
       dispatch({ type: 'IsUserInfoModalShow', value: true });
     } else if (
       prizeUrl &&
-      (singleLottery?.remain_times === null || singleLottery?.remain_times > 0)
+      (lotteryDetail?.remain_times === null || lotteryDetail?.remain_times > 0)
     ) {
       dispatch({ type: 'isClickable', value: false });
       // 抽奖
@@ -70,10 +60,7 @@ const TreasureBox: FC<TreasureBoxProps> = (props) => {
               getData();
               dispatch({ type: 'isClickable', value: true });
               setModalVisible(false);
-              if (
-                prize?.objective?.prize_type &&
-                state.shouldUserInfoModalShow
-              ) {
+              if (prize?.objective?.prize_type && shouldUserInfoModalShow) {
                 dispatch({ type: 'IsUserInfoModalShow', value: true });
               }
             }
@@ -106,9 +93,13 @@ const TreasureBox: FC<TreasureBoxProps> = (props) => {
   return (
     <div className={styles.lotteryBoxPic}>
       {modalVisible ? (
-        <img className='lotteryBoxPic' src={openBoxUrl} />
+        <img className='lotteryBoxPic' src={openBoxPic || defaultOpenBoxPic} />
       ) : (
-        <img className='lotteryBoxPic' src={closeBoxUrl} onClick={lottery} />
+        <img
+          className='lotteryBoxPic'
+          src={closeBoxPic || defaultCloseBoxPic}
+          onClick={lottery}
+        />
       )}
     </div>
   );

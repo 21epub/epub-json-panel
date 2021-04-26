@@ -1,11 +1,10 @@
 // 抽奖类型
 export type LotteryType =
-  | 'Turntable'
   | 'EggFrenzy'
-  | 'LotteryBox'
   | 'Gashapon'
+  | 'LotteryBox'
   | 'LotteryGrid'
-  | 'Gashapon';
+  | 'Turntable';
 
 // 图片格式
 export interface ImageType {
@@ -19,12 +18,22 @@ export interface ImageType {
   description?: string;
 }
 
+// 图片格式
+export interface LotteryPictureType {
+  eggFrenzyPicture: ImageType[];
+  gashaponPicture: ImageType[];
+  lotteryBoxPicture: ImageType[];
+  lotteryGridPicture: ImageType[];
+  turntablePicture: ImageType[];
+  [key: string]: ImageType[];
+}
+
 // api接口Url
 export interface LotteryUrlListType {
   // 默认图片链接地址头
   picturePrefix: string;
   // 获取单个抽奖活动信息
-  singleLotteryUrl: string;
+  lotteryDetailUrl: string;
   // 获取奖品信息列表
   prizeListUrl: string;
   // 抽奖与获取我的奖品信息
@@ -88,7 +97,7 @@ export interface ContactInfoType {
 }
 
 // 单个抽奖活动参数
-export interface SingleLotteryType {
+export interface LotteryDetailType {
   // 作品slug
   book_slug: string;
   // 是否可以继续抽奖

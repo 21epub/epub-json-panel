@@ -3,17 +3,13 @@ import { Modal } from 'antd';
 import { useDispatch, useSelector } from 'react-redux';
 import {
   drawPrizeBlock,
+  getPicture,
   getPrizeIndex,
   getRandomInt,
   prizeToAngle
 } from '../../../util';
 import Pointer from './Pointer';
-import {
-  SingleLotteryType,
-  UserInfoType,
-  PrizeType,
-  WinnerType
-} from '../../../type';
+import { UserInfoType, PrizeType, WinnerType } from '../../../type';
 import { StateType } from '../../../store/reducer';
 
 interface ResultType {
@@ -23,33 +19,23 @@ interface ResultType {
 
 interface TurntableCenterProps {
   prizeList: PrizeType[];
-  turntable?: string;
-  prefix: string;
-  pointer?: string;
-  isClickable: boolean;
-  singleLottery: SingleLotteryType;
   prizeUrl?: string;
   userInfo?: UserInfoType;
   getData: Function;
 }
 
 const TurntableCenter: FC<TurntableCenterProps> = (props) => {
-  const {
-    prizeList,
-    turntable,
-    prefix,
-    pointer,
-    isClickable,
-    singleLottery,
-    prizeUrl,
-    userInfo,
-    getData
-  } = props;
+  const { prizeList, prizeUrl, userInfo, getData } = props;
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const [ctx, setCtx] = useState<CanvasRenderingContext2D | null>(null);
   const [startRadian, setStartRadian] = useState(0); // 定义圆的角度
   const dispatch = useDispatch();
-  const states = useSelector((state: StateType) => state); // 获取保存的状态
+  // 获取保存的状态
+  const { lotteryDetail, pictureList, shouldUserInfoModalShow } = useSelector(
+    (state: StateType) => state
+  );
+  const turntablePic = getPicture(lotteryDetail.picture, 'turntable');
+  const defaultTurntablePic = getPicture(pictureList, 'turntable');
 
   // 渲染抽奖盘
   useEffect(() => {
@@ -117,7 +103,7 @@ const TurntableCenter: FC<TurntableCenterProps> = (props) => {
 
                 if (
                   res?.prize?.objective?.prize_type &&
-                  states.shouldUserInfoModalShow
+                  shouldUserInfoModalShow
                 ) {
                   dispatch({ type: 'IsUserInfoModalShow', value: true });
                 }
@@ -183,9 +169,7 @@ const TurntableCenter: FC<TurntableCenterProps> = (props) => {
       <div
         className='turntableCenterWrap'
         style={{
-          backgroundImage: `url(${
-            turntable || `${prefix}diazo/images/lottery/turntable/turntable.png`
-          })`,
+          backgroundImage: `url(${turntablePic || defaultTurntablePic})`,
           backgroundSize: '100% 100%'
         }}
       >
@@ -197,15 +181,7 @@ const TurntableCenter: FC<TurntableCenterProps> = (props) => {
         >
           您的浏览器不支持canvas。
         </canvas>
-        <Pointer
-          pointer={pointer}
-          isClickable={isClickable}
-          singleLottery={singleLottery}
-          userInfo={userInfo}
-          prefix={prefix}
-          prizeUrl={prizeUrl}
-          doRotate={doRotate}
-        />
+        <Pointer userInfo={userInfo} prizeUrl={prizeUrl} doRotate={doRotate} />
       </div>
     );
   }

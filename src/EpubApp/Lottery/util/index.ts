@@ -1,5 +1,5 @@
 import moment from 'moment';
-import { ImageType } from '../type';
+import { LotteryType, LotteryPictureType, ImageType } from '../type';
 
 export function getLineTextList(
   context: CanvasRenderingContext2D,
@@ -133,7 +133,24 @@ export function translateTitle(name: string) {
   }
 }
 
+// 返回对应的图片数组
+export const getPictureList = (
+  lotteryPicture: LotteryPictureType,
+  lotteryType: LotteryType
+) => {
+  // 把抽奖类型。首字母转为小写 再拼上Picture。组成图片的key值
+  const pictureType: string =
+    lotteryType.charAt(0).toLowerCase() + lotteryType.slice(1) + 'Picture';
+  return lotteryPicture[pictureType];
+};
+
 // 返回对应的图片
 export const getPicture = (pictureList: ImageType[], pictureName: string) => {
   return pictureList?.find((item) => item.name === pictureName)?.picture;
+};
+
+// 格式化对应的图片Url地址,没有前缀的加上
+export const formatPictureUrl = (pictureUrl?: string) => {
+  const webUrl = pictureUrl?.includes('//') ? '' : window.web_url;
+  return pictureUrl && webUrl + pictureUrl;
 };

@@ -3,22 +3,27 @@ import TweenOne from 'rc-tween-one';
 import { IAnimObject } from 'rc-tween-one/typings/AnimObject';
 import { random } from 'lodash';
 import { useDebounceFn } from 'ahooks';
+import { useSelector } from 'react-redux';
+import { StateType } from '../../../store/reducer';
 import { animationList } from './AnimationConfig';
-import { ImageType, PrizeType } from '../../../type';
+import { PrizeType } from '../../../type';
 import { getPicture } from '../../../util';
 
 interface eggWrapperProps {
   playEgg: boolean;
   prizeList: PrizeType[];
-  prefix: string;
-  picture: ImageType[];
   onComplete: () => void;
 }
 
 const eggWrapper: FC<eggWrapperProps> = (props) => {
-  const { playEgg, prizeList, picture, prefix, onComplete } = props;
+  const { playEgg, prizeList, onComplete } = props;
   const [visible, setVisible] = useState(true);
-  const up = getPicture(picture, 'up');
+  const { lotteryDetail, pictureList } = useSelector(
+    (state: StateType) => state
+  );
+  const upPic = getPicture(lotteryDetail.picture, 'up');
+  const defaultUpPic = getPicture(pictureList, 'up');
+  const defaultEgg1Pic = getPicture(pictureList, 'egg1');
   const eggList = ['egg1', 'egg2', 'egg3'];
 
   // 防抖处理，动画重复多次。最后一次结束后触发
@@ -50,7 +55,7 @@ const eggWrapper: FC<eggWrapperProps> = (props) => {
 
   // 随机返回一个扭蛋的图片
   const getEggPicture = () => {
-    return getPicture(picture, eggList[random(0, 2)]);
+    return getPicture(lotteryDetail.picture, eggList[random(0, 2)]);
   };
 
   useEffect(() => {
@@ -66,9 +71,7 @@ const eggWrapper: FC<eggWrapperProps> = (props) => {
     <div
       className='eggWrapper'
       style={{
-        backgroundImage: `url(${
-          up || `${prefix}diazo/images/lottery/gashapon/up.png`
-        })`
+        backgroundImage: `url(${upPic || defaultUpPic})`
       }}
     >
       {visible &&
@@ -83,10 +86,7 @@ const eggWrapper: FC<eggWrapperProps> = (props) => {
               repeat={2}
               yoyo={false}
               style={{
-                backgroundImage: `url(${
-                  getEggPicture() ||
-                  `${prefix}diazo/images/lottery/gashapon/egg1.png`
-                })`
+                backgroundImage: `url(${getEggPicture() || defaultEgg1Pic})`
               }}
             />
           );

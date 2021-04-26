@@ -1,59 +1,55 @@
 import React, { FC, useEffect, useState } from 'react';
 import { Modal } from 'antd';
 import { useDispatch, useSelector } from 'react-redux';
-import { getIndexList, getPicture, getPrizeIndex } from '../../../util';
+import {
+  getIndexList,
+  getPicture,
+  getPrizeIndex,
+  formatPictureUrl
+} from '../../../util';
 import { getLotteryResult } from '../../../data/api';
 import styles from './index.module.less';
-import { clone } from 'ramda';
-import {
-  SingleLotteryType,
-  UserInfoType,
-  PrizeType,
-  ImageType
-} from '../../../type';
+import { cloneDeep } from 'lodash';
+import type { UserInfoType, PrizeType } from '../../../type';
+
 import { StateType } from '../../../store/reducer';
 
 interface PrizeGridProps {
   prizeList: PrizeType[];
-  prefix: string;
-  isClickable: boolean;
-  singleLottery: SingleLotteryType;
   prizeUrl?: string;
   userInfo: UserInfoType;
   getData: () => void;
-  picture: ImageType[];
 }
 
 const PrizeGrid: FC<PrizeGridProps> = (props) => {
+  const { prizeList, prizeUrl, userInfo, getData } = props;
+  const dispatch = useDispatch();
   const {
-    prizeList,
-    picture,
-    prefix,
-    isClickable,
-    singleLottery,
-    prizeUrl,
-    userInfo,
-    getData
-  } = props;
+    lotteryDetail,
+    pictureList,
+    shouldUserInfoModalShow,
+    isClickable
+  } = useSelector((state: StateType) => state);
   const [activeIndex, setActiveIndex] = useState<undefined | number>();
   const [itemList, setItemList] = useState<PrizeType[]>([]);
-  const gridBg1 = getPicture(picture, 'gridBg1');
-  const prizeBg = getPicture(picture, 'prizeBg');
-  const startBg = getPicture(picture, 'startBg');
-
-  const dispatch = useDispatch();
-  const states = useSelector((state: StateType) => state);
+  const gridBg1Pic = getPicture(lotteryDetail.picture, 'gridBg1');
+  const prizeBgPic = getPicture(lotteryDetail.picture, 'prizeBg');
+  const startBgPic = getPicture(lotteryDetail.picture, 'startBg');
+  const defaultGridBg1Pic = getPicture(pictureList, 'gridBg1');
+  const defaultPrizeBgPic = getPicture(pictureList, 'prizeBg');
+  const defaultStartBgPic = getPicture(pictureList, 'startBg');
+  const defaultPrizePic = getPicture(pictureList, 'prize');
 
   const handleOnClick = async (prizeUrl: string | undefined) => {
     if (
       userInfo?.user_id === null &&
-      singleLottery?.need_user_info &&
-      states.shouldUserInfoModalShow
+      lotteryDetail?.need_user_info &&
+      shouldUserInfoModalShow
     ) {
       dispatch({ type: 'IsUserInfoModalShow', value: true });
     } else if (
       prizeUrl &&
-      (singleLottery?.remain_times === null || singleLottery?.remain_times > 0)
+      (lotteryDetail?.remain_times === null || lotteryDetail?.remain_times > 0)
     ) {
       try {
         const response = await getLotteryResult(prizeUrl);
@@ -88,7 +84,7 @@ const PrizeGrid: FC<PrizeGridProps> = (props) => {
 
                     if (
                       prize?.objective?.prize_type &&
-                      states.shouldUserInfoModalShow
+                      shouldUserInfoModalShow
                     ) {
                       dispatch({ type: 'IsUserInfoModalShow', value: true });
                     }
@@ -129,16 +125,9 @@ const PrizeGrid: FC<PrizeGridProps> = (props) => {
   };
 
   useEffect(() => {
-    const temp = clone(prizeList);
+    const temp = cloneDeep(prizeList);
     setItemList(temp);
   }, [prizeList]);
-
-  const getPrizePic = (prizeUrl: string) => {
-    const webUrl = prizeUrl.includes('staticfs')
-      ? prizeUrl
-      : `${prefix}${prizeUrl}`;
-    return webUrl;
-  };
 
   if (itemList?.length) {
     itemList?.length === 8 &&
@@ -147,21 +136,15 @@ const PrizeGrid: FC<PrizeGridProps> = (props) => {
         ranking: 'lotteryButton'
       } as PrizeType);
 
-    const prizeBackground = `url(${
-      prizeBg || `${prefix}diazo/images/lottery/lotteryGrid/prizeBg.png`
-    })`;
-    const startBackground = `url(${
-      startBg || `${prefix}diazo/images/lottery/lotteryGrid/startBg.png`
-    })`;
+    const prizeBackground = `url(${prizeBgPic || defaultPrizeBgPic})`;
+    const startBackground = `url(${startBgPic || defaultStartBgPic})`;
 
     return (
       <div className={styles.prizeGridWrap}>
         <div
           className='gridBg'
           style={{
-            backgroundImage: `url(${
-              gridBg1 || `${prefix}diazo/images/lottery/lotteryGrid/gridBg1.png`
-            })`,
+            backgroundImage: `url(${gridBg1Pic || defaultGridBg1Pic})`,
             backgroundSize: '100% 100%',
             height: '300px',
             width: '300px',
@@ -197,10 +180,7 @@ const PrizeGrid: FC<PrizeGridProps> = (props) => {
               >
                 {index !== 4 && (
                   <img
-                    src={
-                      `${getPrizePic(it.picture)}` ||
-                      `${prefix}diazo/images/lottery/common/prize.png`
-                    }
+                    src={formatPictureUrl(it.picture || defaultPrizePic)}
                     width='40%'
                   />
                 )}

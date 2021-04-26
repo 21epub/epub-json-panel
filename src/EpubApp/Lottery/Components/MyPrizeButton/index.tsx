@@ -4,19 +4,27 @@ import { Button, Col, Row } from 'antd';
 import Modal from 'antd/lib/modal/Modal';
 import { useDispatch, useSelector } from 'react-redux';
 import { WinnerType } from '../../type';
+import { getPicture } from '../../util';
 import styles from './index.module.less';
-import MyPrizeContent from '../MyPrizeContent';
+import MyPrizeContent from './MyPrizeContent';
+import { StateType } from '../../store/reducer';
 
 interface MyPrizeButtonProps {
   myPrizeListUrl?: string;
-  prefix: string;
-  url?: string;
 }
 
 const MyPrizeButton: FC<MyPrizeButtonProps> = (props) => {
-  const { myPrizeListUrl = '', prefix, url } = props;
+  const { myPrizeListUrl = '' } = props;
   const dispatch = useDispatch();
-  const state = useSelector((state: any) => state); // 获取保存的状态
+  const {
+    lotteryDetail,
+    pictureList,
+    shouldUserInfoModalShow,
+    isPrizeModalShow,
+    isCopySuccess
+  } = useSelector((state: StateType) => state); // 获取保存的状态
+  const defaultMyPrizePic = getPicture(pictureList, 'myPrize');
+  const myPrizePic = getPicture(lotteryDetail.picture, 'myPrize');
 
   const myPrizeListClient = useMemo(() => {
     return new DataClient<WinnerType>(myPrizeListUrl);
@@ -33,10 +41,9 @@ const MyPrizeButton: FC<MyPrizeButtonProps> = (props) => {
     dispatch({ type: 'isPrizeModalShow', value: true });
   };
 
-  const handleOk = (myPrizeList: any) => {
+  const handleOk = (myPrizeList: WinnerType[]) => {
     dispatch({ type: 'isPrizeModalShow', value: false });
-
-    if (state.shouldUserInfoModalShow && myPrizeList?.length) {
+    if (shouldUserInfoModalShow && myPrizeList?.length) {
       dispatch({ type: 'IsUserInfoModalShow', value: true });
     }
   };
@@ -45,7 +52,7 @@ const MyPrizeButton: FC<MyPrizeButtonProps> = (props) => {
     <div className={styles.myPrize}>
       <img
         className='prizeButton'
-        src={url || `${prefix}diazo/images/lottery/common/myPrize.png`}
+        src={myPrizePic || defaultMyPrizePic}
         onClick={getMyPrize}
       />
       <Modal
@@ -53,7 +60,7 @@ const MyPrizeButton: FC<MyPrizeButtonProps> = (props) => {
           <Row style={{ height: '20px' }}>
             <Col span={10}>我的奖品</Col>
             <Col>
-              {state.isCopySuccess && (
+              {isCopySuccess && (
                 <Button
                   type='primary'
                   size='small'
@@ -65,7 +72,7 @@ const MyPrizeButton: FC<MyPrizeButtonProps> = (props) => {
             </Col>
           </Row>
         }
-        visible={state.isPrizeModalShow}
+        visible={isPrizeModalShow}
         footer={[
           <Button
             onClick={() => handleOk(myPrizeList)}
@@ -77,7 +84,7 @@ const MyPrizeButton: FC<MyPrizeButtonProps> = (props) => {
         ]}
         closable={false}
       >
-        <MyPrizeContent myPrizeList={myPrizeList} prefix={prefix} />
+        <MyPrizeContent myPrizeList={myPrizeList} />
       </Modal>
     </div>
   );

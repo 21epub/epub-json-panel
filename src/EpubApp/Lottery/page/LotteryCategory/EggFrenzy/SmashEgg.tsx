@@ -1,27 +1,29 @@
 import React, { FC, Fragment, useState, useEffect } from 'react';
+import { useSelector } from 'react-redux';
 import TweenOne from 'rc-tween-one';
 import BezierPlugin from 'rc-tween-one/lib/plugin/BezierPlugin';
+import { getPicture } from '../../../util';
+import { StateType } from '../../../store/reducer';
 TweenOne.plugins.push(BezierPlugin);
 
 interface SmashEggProps {
-  prefix: string;
-  goodEgg?: string;
-  badEgg?: string;
-  hammer?: string;
   isLotterySuccess: boolean;
   onClick: () => void;
 }
 
 const SmashEgg: FC<SmashEggProps> = (props) => {
-  const { prefix, goodEgg, badEgg, hammer, isLotterySuccess, onClick } = props;
+  const { isLotterySuccess, onClick } = props;
   const [isClick, setIsClick] = useState(false);
   const [play, setPlay] = useState(false);
-  const goodEggUrl =
-    goodEgg || `${prefix}diazo/images/lottery/eggFrenzy/goodEgg.png`;
-  const badEggUrl =
-    badEgg || `${prefix}diazo/images/lottery/eggFrenzy/goodEgg.png`;
-  const hammerUrl =
-    hammer || `${prefix}diazo/images/lottery/eggFrenzy/hammer.png`;
+  const { lotteryDetail, pictureList } = useSelector(
+    (state: StateType) => state
+  );
+  const goodEggPic = getPicture(lotteryDetail.picture, 'goodEgg');
+  const badEggPic = getPicture(lotteryDetail.picture, 'badEgg');
+  const hammerPic = getPicture(lotteryDetail.picture, 'hammer');
+  const defaultGoodEggPic = getPicture(pictureList, 'goodEgg');
+  const defaultBadEggPic = getPicture(pictureList, 'badEgg');
+  const defaultHammerPic = getPicture(pictureList, 'hammer');
 
   const onLotteryClick = () => {
     // 隐藏锤子
@@ -61,17 +63,19 @@ const SmashEgg: FC<SmashEggProps> = (props) => {
   return (
     <div className='SmashEgg' onClick={onPlay}>
       {isClick && isLotterySuccess ? (
-        <img className='goldenEggPic' src={badEggUrl} />
+        <img className='goldenEggPic' src={badEggPic || defaultBadEggPic} />
       ) : (
         <Fragment>
-          <img className='goldenEggPic' src={goodEggUrl} />
+          <img className='goldenEggPic' src={goodEggPic || defaultGoodEggPic} />
           {play && (
             <TweenOne
               className='code-box-hammer'
               animation={animation}
               reverse={false}
               yoyo={false}
-              style={{ backgroundImage: `url(${hammerUrl})` }}
+              style={{
+                backgroundImage: `url(${hammerPic || defaultHammerPic})`
+              }}
             />
           )}
         </Fragment>
