@@ -1,4 +1,5 @@
 import React, { FC, useCallback, useEffect, useMemo } from 'react';
+import { useInViewport } from 'ahooks';
 import { DataClient } from '@21epub/epub-data-client';
 import { isEmpty } from 'lodash';
 import {
@@ -23,6 +24,10 @@ export interface LotteryPageProps {
 
 const LotteryPage: FC<LotteryPageProps> = (props) => {
   const { lotteryType, lotteryUrlList, lotteryPicture, isDataChanged } = props;
+  // 获取当前抽奖页面用户是否可见
+  const inViewPort = useInViewport(() =>
+    document.querySelector('#LotteryPage')
+  );
   const {
     prizeListUrl,
     lotteryDetailUrl,
@@ -100,6 +105,7 @@ const LotteryPage: FC<LotteryPageProps> = (props) => {
 
   return (
     <div
+      id='LotteryPage'
       className={styles.lotteryPageWrap}
       style={{
         backgroundImage: show_background_image
@@ -114,7 +120,7 @@ const LotteryPage: FC<LotteryPageProps> = (props) => {
         prizeUrl={prizeUrl}
         getData={getData}
       />
-      {userInfoUrl && (
+      {userInfoUrl && inViewPort && (
         <div>
           <UserInfoModal
             isModalShow={IsUserInfoModalShow}

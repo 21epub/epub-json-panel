@@ -26,13 +26,12 @@ const RulesButton: FC<RulesButtonProps> = (props) => {
   };
 
   return (
-    <div className={styles.rulesButton}>
+    <div className={styles.rulesButtonBox}>
       <img
         className='ruleButton'
         src={rulePic || defaultRulePic}
         onClick={getRules}
       />
-
       <Modal
         title='规则说明'
         visible={isModalShow}
@@ -43,7 +42,10 @@ const RulesButton: FC<RulesButtonProps> = (props) => {
         ]}
         closable={false}
       >
-        <div dangerouslySetInnerHTML={{ __html: rules ?? '' }} />
+        <div
+          className={styles.ruleBox}
+          dangerouslySetInnerHTML={{ __html: rules ?? '' }}
+        />
       </Modal>
     </div>
   );

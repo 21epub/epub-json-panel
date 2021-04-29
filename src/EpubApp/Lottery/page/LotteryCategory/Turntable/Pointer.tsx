@@ -35,8 +35,9 @@ const Pointer: FC<PointerProps> = (props) => {
       store.reducers.setIsUserInfoModalShow(true);
     } else if (
       prizeUrl &&
-      lotteryDetail?.remain_times &&
-      (lotteryDetail?.remain_times === null || lotteryDetail?.remain_times > 0)
+      (lotteryDetail?.remain_times === null ||
+        lotteryDetail?.remain_times === undefined ||
+        lotteryDetail?.remain_times > 0)
     ) {
       store.reducers.setIsClickable(false);
       // 抽奖

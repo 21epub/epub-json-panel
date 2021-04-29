@@ -48,8 +48,9 @@ const PrizeGrid: FC<PrizeGridProps> = (props) => {
       store.reducers.setIsUserInfoModalShow(true);
     } else if (
       prizeUrl &&
-      lotteryDetail?.remain_times &&
-      (lotteryDetail?.remain_times === null || lotteryDetail?.remain_times > 0)
+      (lotteryDetail?.remain_times === null ||
+        lotteryDetail?.remain_times === undefined ||
+        lotteryDetail?.remain_times > 0)
     ) {
       try {
         const response = await getLotteryResult(prizeUrl);
