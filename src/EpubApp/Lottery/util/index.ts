@@ -1,4 +1,5 @@
 import moment from 'moment';
+import { message } from 'antd';
 import { LotteryType, LotteryPictureType, ImageType } from '../type';
 
 export function getLineTextList(
@@ -118,7 +119,7 @@ export const getDate = (days: number) => {
   return moment().add(days, 'days').locale('zh-cn').format('YYYY-MM-DD');
 };
 
-export function translateTitle(name: string) {
+export const translateTitle = (name: string) => {
   switch (name) {
     case 'name':
       return '姓名';
@@ -131,7 +132,32 @@ export function translateTitle(name: string) {
     default:
       return 'err';
   }
-}
+};
+
+// 验证用户信息表单数据
+export const validateValues = (values: AnyObject) => {
+  const errorMsg: string[] = [];
+  // 手机号验证
+  if (
+    !/^1((3[0-9])|(4[1579])|(5[0-9])|(6[6])|(7[0-9])|(8[0-9])|(9[0-9]))\d{8}$/.test(
+      values.phone
+    )
+  ) {
+    errorMsg.push('请输入正确的手机号');
+  }
+  // 邮箱验证
+  if (!/^([a-z0-9_.-]+)@([\da-z.-]+).([a-z.]{2,6})$/.test(values.email)) {
+    errorMsg.push('请输入正确的邮箱');
+  }
+  return errorMsg;
+};
+
+// 错误提示
+export const ErrorMsgPrompt = (errorMsgList: string[]) => {
+  errorMsgList.forEach((errorMsg) => {
+    message.error(errorMsg);
+  });
+};
 
 // 返回对应的图片数组
 export const getPictureList = (

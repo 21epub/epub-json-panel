@@ -1,8 +1,9 @@
 import React, { FC, useState } from 'react';
-import { Col, Form, Input, Row, Button } from 'antd';
+import { Col, Form, Input, Row, Button, message } from 'antd';
 import Modal from 'antd/lib/modal/Modal';
+import { isEmpty } from 'lodash';
 import { addUserInfo } from '../../data/api';
-import { translateTitle } from '../../util';
+import { translateTitle, validateValues, ErrorMsgPrompt } from '../../util';
 import store from '../../store';
 
 interface UserInfoModalProps {
@@ -11,8 +12,11 @@ interface UserInfoModalProps {
   getUser: () => void;
 }
 
-interface DataType {
-  [key: string]: Any;
+export interface DataType {
+  name?: string;
+  address?: string;
+  phone?: string;
+  email?: string;
 }
 
 const UserInfoModal: FC<UserInfoModalProps> = (props) => {
@@ -29,27 +33,33 @@ const UserInfoModal: FC<UserInfoModalProps> = (props) => {
   };
 
   const handleOk = () => {
-    setConfirmLoading(true);
-    const address: string = form.getFieldInstance('address').props.value;
-    const phone: string = form.getFieldInstance('phone').props.value;
-    const email: string = form.getFieldInstance('email').props.value;
-    const name: string = form.getFieldInstance('name').props.value;
-    if (address && phone && email && name && addUserInfoUrl) {
-      // 添加用户信息
-      addUserInfo(addUserInfoUrl, info)
-        .then(() => {
-          setConfirmLoading(false);
-          getUser();
-          store.reducers.setIsUserInfoModalShow(false);
-          form.resetFields();
-          // 成功则清除内容
-        })
-        .catch(() => {
-          setConfirmLoading(false);
-        });
+    const errorMsgList = validateValues(info);
+    if (isEmpty(errorMsgList)) {
+      setConfirmLoading(true);
+      const address: string = form.getFieldInstance('address').props.value;
+      const phone: string = form.getFieldInstance('phone').props.value;
+      const email: string = form.getFieldInstance('email').props.value;
+      const name: string = form.getFieldInstance('name').props.value;
+      if (address && phone && email && name && addUserInfoUrl) {
+        // 添加用户信息
+        addUserInfo(addUserInfoUrl, info)
+          .then(() => {
+            setConfirmLoading(false);
+            getUser();
+            store.reducers.setIsUserInfoModalShow(false);
+            form.resetFields();
+            message.success('提交信息成功');
+            // 成功则清除内容
+          })
+          .catch(() => {
+            setConfirmLoading(false);
+          });
+      } else {
+        // 用户信息填写不完整
+        setConfirmLoading(false);
+      }
     } else {
-      // 用户信息填写不完整
-      setConfirmLoading(false);
+      ErrorMsgPrompt(errorMsgList);
     }
   };
 
@@ -92,7 +102,6 @@ const UserInfoModal: FC<UserInfoModalProps> = (props) => {
                         name={el}
                         key={index}
                         label={translateTitle(el)}
-                        // rules={[{ required: true, message: '请输入信息' }]}
                       >
                         <Input placeholder={translateTitle(el)} />
                       </Form.Item>

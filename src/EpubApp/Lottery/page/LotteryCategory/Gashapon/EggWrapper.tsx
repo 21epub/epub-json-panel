@@ -75,18 +75,20 @@ const eggWrapper: FC<eggWrapperProps> = (props) => {
       {visible &&
         prizeList.map((prize, index) => {
           return (
-            <TweenOne
-              key={prize.id}
-              className={`${'egg' + index} egg`}
-              animation={animationList[index]}
-              paused={!playEgg}
-              reverse={false}
-              repeat={2}
-              yoyo={false}
-              style={{
-                backgroundImage: `url(${getEggPicture() || defaultEgg1Pic})`
-              }}
-            />
+            index <= 7 && (
+              <TweenOne
+                key={prize.id}
+                className={`${'egg' + index} egg`}
+                animation={animationList[index]}
+                paused={!playEgg}
+                reverse={false}
+                repeat={2}
+                yoyo={false}
+                style={{
+                  backgroundImage: `url(${getEggPicture() || defaultEgg1Pic})`
+                }}
+              />
+            )
           );
         })}
     </div>
