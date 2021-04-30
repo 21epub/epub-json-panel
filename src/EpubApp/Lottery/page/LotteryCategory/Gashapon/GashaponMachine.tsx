@@ -2,7 +2,7 @@ import React, { FC, useState } from 'react';
 import { Modal } from 'antd';
 import { getLotteryResult } from '../../../data/api';
 import styles from './index.module.less';
-import { UserInfoType, PrizeType } from '../../../type';
+import { UserInfoType, PrizeType, WinnerType } from '../../../type';
 import ExportWrapper from './ExportWrapper';
 import EggWrapper from './EggWrapper';
 import { getPicture } from '../../../util';
@@ -32,6 +32,11 @@ const GashaponMachine: FC<TreasureBoxProps> = (props) => {
   const defaultStartPic = getPicture(pictureList, 'start');
   const [playEgg, setPlayEgg] = useState(false);
   const [playExport, setPlayExport] = useState(false);
+  const [prize, setPrize] = useState<WinnerType>();
+
+  const onPlayEgg = () => {
+    setPlayEgg(true);
+  };
 
   const lottery = async () => {
     // 先判断是否需要填写信息
@@ -51,30 +56,9 @@ const GashaponMachine: FC<TreasureBoxProps> = (props) => {
       // 抽奖
       try {
         const response = await getLotteryResult(prizeUrl);
-        const prize = response?.data?.data?.results[0];
-        // 延时1000毫秒弹出获奖结果
-        setTimeout(() => {
-          Modal.info({
-            title: prize.objective.ranking,
-            content: (
-              <div>
-                <hr />
-                奖项名:{prize.objective.title}
-              </div>
-            ),
-            onOk() {
-              // 重新获取后台的值
-              getData();
-              store.reducers.setIsClickable(true);
-              if (prize?.objective?.prize_type && shouldUserInfoModalShow) {
-                store.reducers.setIsUserInfoModalShow(true);
-              }
-              // 重置动画状态
-              setPlayEgg(false);
-              setPlayExport(false);
-            }
-          });
-        }, 500);
+        setPrize(response?.data?.data?.results[0]);
+        // 开始播放扭蛋机动画
+        onPlayEgg();
       } catch (error) {
         Modal.info({
           title: error.response.data,
@@ -104,15 +88,38 @@ const GashaponMachine: FC<TreasureBoxProps> = (props) => {
     }
   };
 
-  const onPlayEgg = () => {
-    setPlayEgg(true);
-  };
-
   const onComplete = () => {
     if (!playExport) {
       // 防止多次触发
       setPlayExport(true);
     }
+  };
+
+  // 动画全部完成后
+  const onExportComplete = () => {
+    // 延时1000毫秒弹出获奖结果
+    setTimeout(() => {
+      Modal.info({
+        title: prize?.objective.ranking,
+        content: (
+          <div>
+            <hr />
+            奖项名:{prize?.objective.title}
+          </div>
+        ),
+        onOk() {
+          // 重新获取后台的值
+          getData();
+          store.reducers.setIsClickable(true);
+          if (prize?.objective?.prize_type && shouldUserInfoModalShow) {
+            store.reducers.setIsUserInfoModalShow(true);
+          }
+          // 重置动画状态
+          setPlayEgg(false);
+          setPlayExport(false);
+        }
+      });
+    }, 500);
   };
 
   return (
@@ -122,7 +129,7 @@ const GashaponMachine: FC<TreasureBoxProps> = (props) => {
       <img
         src={startPic || defaultStartPic}
         className='start'
-        onClick={onPlayEgg}
+        onClick={lottery}
         style={{ cursor: isClickable ? 'pointer' : 'default' }}
       />
       <EggWrapper
@@ -130,7 +137,10 @@ const GashaponMachine: FC<TreasureBoxProps> = (props) => {
         prizeList={prizeList}
         onComplete={onComplete}
       />
-      <ExportWrapper playExport={playExport} onClick={lottery} />
+      <ExportWrapper
+        playExport={playExport}
+        onExportComplete={onExportComplete}
+      />
     </div>
   );
 };

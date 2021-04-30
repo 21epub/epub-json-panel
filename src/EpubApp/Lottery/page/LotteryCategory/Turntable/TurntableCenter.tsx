@@ -20,7 +20,7 @@ interface TurntableCenterProps {
   prizeList: PrizeType[];
   prizeUrl?: string;
   userInfo?: UserInfoType;
-  getData: Function;
+  getData: () => void;
 }
 
 const TurntableCenter: FC<TurntableCenterProps> = (props) => {

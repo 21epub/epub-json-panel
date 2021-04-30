@@ -6,11 +6,11 @@ import { getPicture } from '../../../util';
 
 interface ExportWrapperProps {
   playExport: boolean;
-  onClick: () => void;
+  onExportComplete: () => void;
 }
 
 const ExportWrapper: FC<ExportWrapperProps> = (props) => {
-  const { playExport = true, onClick } = props;
+  const { playExport = true, onExportComplete } = props;
   const [visible, setVisible] = useState(true);
   const [state] = store.useRxjsStore();
   const { lotteryDetail, pictureList } = state;
@@ -28,7 +28,7 @@ const ExportWrapper: FC<ExportWrapperProps> = (props) => {
   const animation = {
     top: '10%',
     duration: 2000,
-    onComplete: onClick
+    onComplete: onExportComplete
   };
 
   useEffect(() => {
