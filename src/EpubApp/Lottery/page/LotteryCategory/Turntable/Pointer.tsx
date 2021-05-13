@@ -1,14 +1,14 @@
 import React, { FC } from 'react';
 import { Modal } from 'antd';
 import { getLotteryResult } from '../../../data/api';
-import { UserInfoType, WinnerType } from '../../../type';
+import { LotteryUserInfoType, WinnerType } from '../../../type';
 import { getPicture } from '../../../util';
 import store from '../../../store';
 import styles from './index.module.less';
 
 interface PointerProps {
   prizeUrl?: string;
-  userInfo?: UserInfoType;
+  userInfo?: LotteryUserInfoType;
   doRotate: (prize: WinnerType) => void;
 }
 

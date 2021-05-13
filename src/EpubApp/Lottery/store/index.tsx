@@ -1,5 +1,9 @@
 import RxjsStore, { RxjsStoreReducerParams } from '@21epub/react-rxjs-store';
-import { ImageType, LotteryDetailType, LotteryUrlListType } from '../type';
+import {
+  LotteryImageType,
+  LotteryDetailType,
+  LotteryUrlListType
+} from '../type';
 
 // 管理的状态数据
 export interface StateType {
@@ -16,7 +20,7 @@ export interface StateType {
   // 是否应该显示用户窗
   shouldUserInfoModalShow: boolean;
   // 默认图片
-  pictureList: ImageType[];
+  pictureList: LotteryImageType[];
   // 当前抽奖应用详情
   lotteryDetail?: LotteryDetailType;
   // 抽奖接口Url列表
@@ -44,7 +48,7 @@ interface Reducers<S> extends RxjsStoreReducerParams<S> {
   setIsWin: (state: S, payload?: boolean) => S;
   setIsCopySuccess: (state: S, payload?: boolean) => S;
   setIsPrizeModalShow: (state: S, payload?: boolean) => S;
-  setPictureList: (state: S, payload?: ImageType[]) => S;
+  setPictureList: (state: S, payload?: LotteryImageType[]) => S;
   setLotteryDetail: (state: S, payload?: LotteryDetailType) => S;
   setLotteryUrlList: (state: S, payload?: LotteryUrlListType) => S;
 }

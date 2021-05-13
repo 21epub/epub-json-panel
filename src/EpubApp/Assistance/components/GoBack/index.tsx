@@ -1,24 +1,27 @@
 import React, { FC } from 'react';
 import store from '../../store';
-import type { PageNumberType } from '../../index';
+import type { PageType } from '../../index';
+import { Wrapper } from './Styled';
 
 interface GoBackProps {
-  PageNumber: PageNumberType;
+  pageType: PageType;
 }
 
 // 返回
 const GoBack: FC<GoBackProps> = (props) => {
-  const { PageNumber } = props;
+  const { pageType } = props;
 
   // 返回指定页面
   const onGoBack = () => {
-    store.reducers.ChangePage(PageNumber || 'HomePage');
+    store.reducers.changePage(pageType || 'HomePage');
   };
 
   return (
-    <a className='c-linkblock A_nYZHMU' href='#' onClick={onGoBack}>
-      ❮
-    </a>
+    <Wrapper>
+      <a className='c-linkblock A_nYZHMU' href='#' onClick={onGoBack}>
+        ❮
+      </a>
+    </Wrapper>
   );
 };
 

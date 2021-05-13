@@ -10,12 +10,12 @@ import {
   RollingList,
   ContactInfo
 } from '../../../Components';
-import { UserInfoType, PrizeType, WinnerType } from '../../../type';
+import { LotteryUserInfoType, PrizeType, WinnerType } from '../../../type';
 
 interface EggFrenzyProps {
   winnerList: WinnerType[];
   prizeList: PrizeType[];
-  userInfo: UserInfoType;
+  userInfo: LotteryUserInfoType;
   prizeUrl?: string;
   getData: () => void;
 }

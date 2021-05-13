@@ -1,8 +1,7 @@
 export { default as ActivityRules } from './ActivityRules';
 export { default as AssistanceProgress } from './AssistanceProgress';
-export { default as ContactInfo } from './ContactInfo';
+export { default as AssistanceContactInfo } from './AssistanceContactInfo/';
 export { default as CountDown } from './CountDown';
-export { default as ErrorPrompt } from './ErrorPrompt';
 export { default as GoBack } from './GoBack';
 export { default as HeadImage } from './HeadImage';
 export { default as PopUpInfo } from './PopUpInfo';

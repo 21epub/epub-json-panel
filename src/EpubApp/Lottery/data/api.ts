@@ -1,6 +1,6 @@
 import axios from 'axios';
 import qs from 'qs';
-import { UserInfoType } from '../type';
+import { LotteryUserInfoType } from '../type';
 
 const instance = axios.create();
 instance.defaults.headers = {
@@ -25,7 +25,7 @@ export const getLotteryResult = (prizeUrl: string) => {
 // };
 
 export const addUserInfo = (addUserInfoUrl: string, data: any) => {
-  return new Promise<UserInfoType>((resolve, reject) => {
+  return new Promise<LotteryUserInfoType>((resolve, reject) => {
     instance
       .post(addUserInfoUrl, qs.stringify(data))
       .then((response) => {

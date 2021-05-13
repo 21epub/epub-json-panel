@@ -1,14 +1,15 @@
 import React, { FC, Fragment } from 'react';
 import { useRequest } from 'ahooks';
 import { QueryRankingList } from '../../data/api';
+import { Wrapper } from './Styled';
 
 interface RankingListProps {
-  aslug: string;
-  oslug: string;
+  aslug?: string;
+  oslug?: string;
 }
 
 const RankingList: FC<RankingListProps> = (props) => {
-  const { aslug, oslug } = props;
+  const { aslug = '', oslug = '' } = props;
   const { data: RankingListValue } = useRequest(() =>
     QueryRankingList(aslug, oslug)
   );
@@ -25,7 +26,7 @@ const RankingList: FC<RankingListProps> = (props) => {
 
   // 首页内容
   return (
-    <div className='block c-div DIV_5eZtqX'>
+    <Wrapper>
       <div className='c-div DIV_sVS1zF'>
         <i className='fa fa-bar-chart-o c-icon' />
         <p className='c-paragraph P_PedtjQ'>排行榜：</p>
@@ -63,7 +64,7 @@ const RankingList: FC<RankingListProps> = (props) => {
                         </td>
                         <td>
                           <span className='SPAN_pItcrQ'>
-                            {item.initiator_name}
+                            {item.initiator_username}
                           </span>
                         </td>
                         <td>{item.real_score}</td>
@@ -78,7 +79,7 @@ const RankingList: FC<RankingListProps> = (props) => {
           )}
         </table>
       </div>
-    </div>
+    </Wrapper>
   );
 };
 

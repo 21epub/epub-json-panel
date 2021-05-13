@@ -2,13 +2,13 @@ import React, { FC, useState } from 'react';
 import { Modal } from 'antd';
 import { getLotteryResult } from '../../../data/api';
 import styles from './index.module.less';
-import type { UserInfoType } from '../../../type';
+import type { LotteryUserInfoType } from '../../../type';
 import { getPicture } from '../../../util';
 import store from '../../../store';
 
 interface TreasureBoxProps {
   prizeUrl?: string;
-  userInfo?: UserInfoType;
+  userInfo?: LotteryUserInfoType;
   getData: () => void;
 }
 

@@ -9,13 +9,13 @@ import {
   RollingList,
   ContactInfo
 } from '../../../Components';
-import { UserInfoType, PrizeType, WinnerType } from '../../../type';
+import { LotteryUserInfoType, PrizeType, WinnerType } from '../../../type';
 import store from '../../../store';
 
 interface GashaponProps {
   winnerList: WinnerType[];
   prizeList: PrizeType[];
-  userInfo?: UserInfoType;
+  userInfo?: LotteryUserInfoType;
   prizeUrl?: string;
   getData: () => void;
 }

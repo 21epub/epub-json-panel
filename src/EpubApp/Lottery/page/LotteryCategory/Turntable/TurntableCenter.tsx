@@ -8,7 +8,7 @@ import {
   prizeToAngle
 } from '../../../util';
 import Pointer from './Pointer';
-import { UserInfoType, PrizeType, WinnerType } from '../../../type';
+import { LotteryUserInfoType, PrizeType, WinnerType } from '../../../type';
 import store from '../../../store';
 
 interface ResultType {
@@ -19,7 +19,7 @@ interface ResultType {
 interface TurntableCenterProps {
   prizeList: PrizeType[];
   prizeUrl?: string;
-  userInfo?: UserInfoType;
+  userInfo?: LotteryUserInfoType;
   getData: () => void;
 }
 

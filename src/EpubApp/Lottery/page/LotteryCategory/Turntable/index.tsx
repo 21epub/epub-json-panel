@@ -10,14 +10,14 @@ import {
   RollingList,
   ContactInfo
 } from '../../../Components';
-import { UserInfoType, PrizeType, WinnerType } from '../../../type';
+import { LotteryUserInfoType, PrizeType, WinnerType } from '../../../type';
 
 interface TurntableProps {
   prizeList: PrizeType[];
   winnerList: WinnerType[];
-  userInfo?: UserInfoType;
+  userInfo?: LotteryUserInfoType;
   prizeUrl?: string;
-  getData: Function;
+  getData: () => void;
 }
 
 // 大转盘抽奖

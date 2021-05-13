@@ -7,7 +7,7 @@ export type LotteryType =
   | 'Turntable';
 
 // 图片格式
-export interface ImageType {
+export interface LotteryImageType {
   // 图片标题
   label: string;
   // 图片名称，唯一标识
@@ -20,12 +20,12 @@ export interface ImageType {
 
 // 图片格式
 export interface LotteryPictureType {
-  eggFrenzyPicture: ImageType[];
-  gashaponPicture: ImageType[];
-  lotteryBoxPicture: ImageType[];
-  lotteryGridPicture: ImageType[];
-  turntablePicture: ImageType[];
-  [key: string]: ImageType[];
+  eggFrenzyPicture: LotteryImageType[];
+  gashaponPicture: LotteryImageType[];
+  lotteryBoxPicture: LotteryImageType[];
+  lotteryGridPicture: LotteryImageType[];
+  turntablePicture: LotteryImageType[];
+  [key: string]: LotteryImageType[];
 }
 
 // api接口Url
@@ -124,7 +124,7 @@ export interface LotteryDetailType {
   // 是否需要填写用户信息
   need_user_info: boolean;
   // 抽奖应用图片集合
-  picture: ImageType[];
+  picture: LotteryImageType[];
   _picture?: string;
   // 剩余抽奖次数
   remain_times: number | null;
@@ -151,7 +151,7 @@ export interface LotteryDetailType {
 }
 
 // 用户填写的信息
-export interface UserInfoType {
+export interface LotteryUserInfoType {
   // 地址
   address: string;
   // 创建时间

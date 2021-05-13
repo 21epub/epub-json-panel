@@ -2,7 +2,7 @@ import React, { FC, useState } from 'react';
 import { Modal } from 'antd';
 import { getLotteryResult } from '../../../data/api';
 import styles from './index.module.less';
-import { UserInfoType, PrizeType, WinnerType } from '../../../type';
+import { LotteryUserInfoType, PrizeType, WinnerType } from '../../../type';
 import ExportWrapper from './ExportWrapper';
 import EggWrapper from './EggWrapper';
 import { getPicture } from '../../../util';
@@ -11,7 +11,7 @@ import store from '../../../store';
 interface TreasureBoxProps {
   prizeList: PrizeType[];
   prizeUrl?: string;
-  userInfo?: UserInfoType;
+  userInfo?: LotteryUserInfoType;
   getData: () => void;
 }
 

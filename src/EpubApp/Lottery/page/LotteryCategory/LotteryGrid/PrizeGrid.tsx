@@ -10,12 +10,12 @@ import {
 import { getLotteryResult } from '../../../data/api';
 import styles from './index.module.less';
 import { cloneDeep } from 'lodash';
-import type { UserInfoType, PrizeType } from '../../../type';
+import type { LotteryUserInfoType, PrizeType } from '../../../type';
 
 interface PrizeGridProps {
   prizeList: PrizeType[];
   prizeUrl?: string;
-  userInfo: UserInfoType;
+  userInfo: LotteryUserInfoType;
   getData: () => void;
 }
 

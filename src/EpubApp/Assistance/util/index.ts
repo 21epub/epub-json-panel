@@ -1,13 +1,12 @@
-import moment from 'moment';
-import type { PageNumberType } from '../index';
+import type { PageType, AssistanceImageType } from '../type';
 import store from '../store';
 
-interface argsType {
+export interface argsType {
   key: string;
   value: string;
 }
 
-interface TheRequestType {
+export interface TheRequestType {
   [key: string]: string;
 }
 
@@ -35,7 +34,8 @@ export const GetRequest = (str: string) => {
   return theRequest;
 };
 
-export const parseLinkArgs = (message_link: string, args: argsType) => {
+// 根据情况，生成不同的分享链接
+export const parseLinkArgs = (args: argsType, message_link?: string) => {
   let link: string;
   const urlValue = GetUrlRequest();
   if (message_link) {
@@ -72,34 +72,16 @@ export const parseLinkArgs = (message_link: string, args: argsType) => {
   }
 };
 
-// 倒计时计算剩余时间
-export const getEndTime = (endTime?: string) => {
-  const startDate = new Date(); // 开始时间，当前时间
-  const endDate = moment(endTime); // 结束时间，需传入时间参数
-  let t = 0;
-  if (endDate.valueOf() - startDate.getTime() > 0) {
-    t = endDate.valueOf() - startDate.getTime(); // 时间差的毫秒数
-    let d = 0;
-    let h = 0;
-    let m = 0;
-    let s = 0;
-    if (t >= 0) {
-      d = Math.floor(t / 1000 / 3600 / 24);
-      h = Math.floor((t / 1000 / 60 / 60) % 24);
-      m = Math.floor((t / 1000 / 60) % 60);
-      s = Math.floor((t / 1000) % 60);
-    }
-    return [d, h, m, s];
-  } else {
-    return false;
+export const setPrevPageType = (currPage: PageType, prevPage?: PageType) => {
+  if (prevPage !== currPage && prevPage) {
+    store.reducers.setPrevPageType(prevPage);
   }
 };
 
-export const SavePrevPageNumber = (
-  currPage: PageNumberType,
-  prevPage?: PageNumberType
+// 返回对应的图片
+export const getPicture = (
+  pictureList: AssistanceImageType[],
+  pictureName: string
 ) => {
-  if (prevPage !== currPage) {
-    store.reducers.SavePrevPageNumber(prevPage);
-  }
+  return pictureList?.find((item) => item.name === pictureName)?.picture;
 };

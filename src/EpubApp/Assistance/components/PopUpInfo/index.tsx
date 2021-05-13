@@ -1,4 +1,5 @@
 import React, { FC } from 'react';
+import { Wrapper } from './Styled';
 
 interface PopUpInfoProps {
   value: string;
@@ -9,7 +10,7 @@ interface PopUpInfoProps {
 const PopUpInfo: FC<PopUpInfoProps> = (props) => {
   const { value, onClose } = props;
   return (
-    <div className='c-div DIV_R5WrBr'>
+    <Wrapper>
       <div className='block c-div DIV_5eZtqX2'>
         <div className='bottom-border c-div'>
           <div className='c-div DIV_bEvLxo2'>
@@ -28,7 +29,7 @@ const PopUpInfo: FC<PopUpInfoProps> = (props) => {
           src='http://qty83k.creatby.com/materials/2/origin/6de751c5d68e24b092484fd79396a490_origin.png'
         />
       )}
-    </div>
+    </Wrapper>
   );
 };
 

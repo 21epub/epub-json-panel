@@ -5,8 +5,30 @@ export const statusMap = {
   3: '已过期'
 };
 
-// 新增助力初始值类型
+// 页面类型
+export type PageType =
+  | 'HomePage'
+  | 'ObjectivePage'
+  | 'MyAssistancePage'
+  | 'HelpAssistancePage'
+  | '';
 
+// 助力应用类型
+export type AssistanceType = 'Assistance' | 'GroupPurchase';
+
+// 图片格式
+export interface AssistanceImageType {
+  // 图片标题
+  label: string;
+  // 图片名称，唯一标识
+  name: string;
+  // 图片url
+  picture: string;
+  // 图片描述
+  description?: string;
+}
+
+// 新增助力初始值类型
 export interface AssistanceInitialValueType {
   // 助力标题
   title: string;
@@ -19,7 +41,7 @@ export interface AssistanceInitialValueType {
   // 助力活动结束时间
   end_time: string;
   // 助力首页大图Url
-  picture: string;
+  _picture: string;
   // 助力首页富文本规则html字符串
   rules: string;
   // 字符串数组-保存需要收集的用户信息:['name', 'address', 'phone']
@@ -63,7 +85,7 @@ export interface AssistanceDetailType {
   picture: string;
   // 助力首页富文本规则html字符串
   rules: string;
-  // 是否需要获取用户怒信息
+  // 是否需要获取用户信息
   need_user_info: boolean;
   // 用户id
   user_id: number;
@@ -131,7 +153,7 @@ export interface ObjectiveDetailType {
   user_info_id?: string;
 }
 
-export interface UserInfoType {
+export interface AssistanceUserInfoType {
   // id
   id: string;
   // 用户id
@@ -202,4 +224,28 @@ export interface SupporterDetailType {
   supporter_username: string;
   // 助力增加分数
   value: string;
+}
+
+export interface AssistanceApiPropsType {
+  // 助力slug
+  aslug: string;
+  // urlKey,用于识别抽奖链接
+  urlKey: string;
+  // 默认图片链接地址头
+  web_url: string;
+  // 分享链接link
+  message_link?: string;
+}
+
+// 图片格式
+export interface AssistancePictureType {
+  Assistance: AssistanceImageType[];
+  GroupPurchase: AssistanceImageType[];
+  [key: string]: AssistanceImageType[];
+}
+
+// 助力里需要用到的事件，方法，触发器等
+export interface AssistanceEventType {
+  setShareLink: (link: string) => void;
+  share: () => void;
 }

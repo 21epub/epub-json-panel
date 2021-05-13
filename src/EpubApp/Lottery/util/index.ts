@@ -1,6 +1,6 @@
 import moment from 'moment';
 import { message } from 'antd';
-import { LotteryType, LotteryPictureType, ImageType } from '../type';
+import { LotteryType, LotteryPictureType, LotteryImageType } from '../type';
 
 export function getLineTextList(
   context: CanvasRenderingContext2D,
@@ -171,7 +171,10 @@ export const getPictureList = (
 };
 
 // 返回对应的图片
-export const getPicture = (pictureList: ImageType[], pictureName: string) => {
+export const getPicture = (
+  pictureList: LotteryImageType[],
+  pictureName: string
+) => {
   return pictureList?.find((item) => item.name === pictureName)?.picture;
 };
 

@@ -1,6 +1,7 @@
 import React, { FC } from 'react';
+import { message } from 'antd';
 import { useRequest } from 'ahooks';
-import { isEmpty } from 'ramda';
+import { isEmpty } from 'lodash';
 import {
   QueryUserInfo,
   AddActivity,
@@ -9,8 +10,8 @@ import {
   QueryActivityList
 } from '../../data/api';
 import type { AssistanceDetailType, ObjectiveDetailType } from '../../type';
-import ErrorPrompt from '../ErrorPrompt';
 import store from '../../store';
+import { Wrapper } from './Styled';
 
 interface SignUpInfoProps {
   AssistanceDetail: AssistanceDetailType;
@@ -24,7 +25,7 @@ export interface UserInfo {
 
 // 填写用户信息弹窗
 const SignUpInfo: FC<SignUpInfoProps> = (props) => {
-  const { ObjectiveDetail, AssistanceDetail, onClose } = props;
+  const { AssistanceDetail, ObjectiveDetail, onClose } = props;
   const { user_info_id } = ObjectiveDetail;
   const { user_info_fields } = AssistanceDetail;
   const userInfo: UserInfo = {};
@@ -46,8 +47,8 @@ const SignUpInfo: FC<SignUpInfoProps> = (props) => {
   const { run: RunAddActivity } = useRequest(AddActivity, {
     manual: true,
     onSuccess: (ActivityDetail) => {
-      store.reducers.SetActivityDetail(ActivityDetail);
-      store.reducers.ChangePage('MyAssistancePage');
+      store.reducers.setActivityDetail(ActivityDetail);
+      store.reducers.changePage('MyAssistancePage');
     }
   });
 
@@ -55,14 +56,14 @@ const SignUpInfo: FC<SignUpInfoProps> = (props) => {
   const { run: RunQueryActivityList } = useRequest(QueryActivityList, {
     manual: true,
     onSuccess: (ActivityList: AssistanceDetailType[]) => {
-      if (isEmpty(ActivityList)) {
+      if (isEmpty(ActivityList) && AssistanceDetail?.slug) {
         // 未发起过助力，进行发起助力
-        RunAddActivity(AssistanceDetail.slug, ObjectiveDetail.slug);
+        RunAddActivity(AssistanceDetail?.slug, ObjectiveDetail.slug);
         // 添加并保存用户信息
         RunAddUserInfo(ObjectiveDetail.slug, userInfo);
       } else {
         // 发起过助力，跳转到我的助力页
-        store.reducers.ChangePage('MyAssistancePage');
+        store.reducers.changePage('MyAssistancePage');
       }
     }
   });
@@ -70,7 +71,9 @@ const SignUpInfo: FC<SignUpInfoProps> = (props) => {
   // 更新用户注册信息
   const { run: RunUpdateUserInfo } = useRequest(UpdateUserInfo, {
     manual: true,
-    onSuccess: () => onClose
+    onSuccess: () => {
+      onClose();
+    }
   });
 
   const onOk = () => {
@@ -82,16 +85,21 @@ const SignUpInfo: FC<SignUpInfoProps> = (props) => {
         ObjectiveDetail?.user_info_id,
         userInfo
       );
-    } else if (userInfo.name && userInfo.phone && userInfo.address) {
+    } else if (
+      userInfo.name &&
+      userInfo.phone &&
+      userInfo.address &&
+      AssistanceDetail?.slug
+    ) {
       // 查询当前用户是否发起助力过
-      RunQueryActivityList(AssistanceDetail.slug, ObjectiveDetail.slug);
+      RunQueryActivityList(AssistanceDetail?.slug, ObjectiveDetail.slug);
     } else {
-      ErrorPrompt('用户信息未填写完整');
+      message.error('用户信息未填写完整');
     }
   };
 
   return (
-    <div className='c-div DIV_R5WrBr'>
+    <Wrapper>
       <div className='block c-div DIV_5eZtqX2'>
         <div className='c-div DIV_sVS1zF'>
           <i className='fa fa-user c-icon' />
@@ -127,7 +135,7 @@ const SignUpInfo: FC<SignUpInfoProps> = (props) => {
           </a>
         </div>
       </div>
-    </div>
+    </Wrapper>
   );
 };
 

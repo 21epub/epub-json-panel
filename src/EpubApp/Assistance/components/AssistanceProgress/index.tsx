@@ -1,19 +1,18 @@
-import React, { FC, useState, useEffect } from 'react';
+import React, { FC } from 'react';
 import { Progress } from 'antd';
+import { useCountDown } from 'ahooks';
 import type {
-  AssistanceDetailType,
   ObjectiveDetailType,
   ActivityDetailType,
-  SupporterDetailType
+  SupporterDetailType,
+  AssistanceDetailType
 } from '../../type';
 import { statusMap } from '../../type';
-import ErrorPrompt from '../ErrorPrompt';
-import { getEndTime } from '../../util';
-import 'antd/dist/antd.css';
+import { Wrapper } from './Styled';
 
 interface AssistanceProgressProps {
-  SupporterList: SupporterDetailType[];
   AssistanceDetail: AssistanceDetailType;
+  SupporterList: SupporterDetailType[];
   ObjectiveDetail: ObjectiveDetailType;
   ActivityDetail: ActivityDetailType;
 }
@@ -22,32 +21,20 @@ interface AssistanceProgressProps {
 const AssistanceProgress: FC<AssistanceProgressProps> = (props) => {
   const {
     AssistanceDetail,
+    SupporterList,
     ObjectiveDetail,
-    ActivityDetail,
-    SupporterList
+    ActivityDetail
   } = props;
-  const [remainTime, setRemainTime] = useState<number[]>([]); // 倒计时剩余时间
 
-  // 助力倒计时
-  useEffect(() => {
-    const time = window.setInterval(() => {
-      const endTime = getEndTime(AssistanceDetail?.end_time);
-      if (endTime) {
-        setRemainTime(endTime);
-      } else {
-        ErrorPrompt('活动已结束');
-        window.clearInterval(time); //  清除定时器
-        setRemainTime([0, 0, 0, 0]);
-      }
-    }, 1000); // 倒计时
-    return () => {
-      window.clearInterval(time); // 卸载组件时清除定时器
-    };
-  }, []);
+  // eslint-disable-next-line
+  const [_countdown, _setTargetDate, formattedRes] = useCountDown({
+    targetDate: AssistanceDetail?.end_time
+  });
+  const { days, hours, minutes, seconds } = formattedRes;
 
   // 首页内容
   return (
-    <div className='block c-div DIV_5eZtqX'>
+    <Wrapper>
       <div className='c-div DIV_sVS1zF'>
         <i className='fa fa-bolt c-icon' />
         <p className='c-paragraph P_PedtjQ'>
@@ -56,13 +43,13 @@ const AssistanceProgress: FC<AssistanceProgressProps> = (props) => {
       </div>
       <div className='bottom-border c-div DIV_uOIS6L'>
         <p className='c-paragraph P_3D7UNz'>助力倒计时：</p>
-        <p className='c-paragraph P_Pjxaj3'>{remainTime[0]}</p>
+        <p className='c-paragraph P_Pjxaj3'>{days}</p>
         <p className='c-paragraph P_3D7UNz'>天</p>
-        <p className='c-paragraph P_Pjxaj3'>{remainTime[1]}</p>
+        <p className='c-paragraph P_Pjxaj3'>{hours}</p>
         <p className='c-paragraph P_3D7UNz'>时</p>
-        <p className='c-paragraph P_Pjxaj3'>{remainTime[2]}</p>
+        <p className='c-paragraph P_Pjxaj3'>{minutes}</p>
         <p className='c-paragraph P_3D7UNz'>分</p>
-        <p className='c-paragraph P_Pjxaj3'>{remainTime[3]}</p>
+        <p className='c-paragraph P_Pjxaj3'>{seconds}</p>
         <p className='c-paragraph P_3D7UNz'>秒</p>
       </div>
       <div className='c-div LI_735Cot3'>
@@ -100,7 +87,7 @@ const AssistanceProgress: FC<AssistanceProgressProps> = (props) => {
           <span>{ObjectiveDetail?.target_score}人</span>
         </div>
       </div>
-    </div>
+    </Wrapper>
   );
 };
 

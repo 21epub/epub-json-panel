@@ -5,7 +5,7 @@ import type {
   AssistanceInitialValueType,
   AssistanceDetailType,
   ObjectiveDetailType,
-  UserInfoType,
+  AssistanceUserInfoType,
   ActivityDetailType,
   SupporterDetailType
 } from '../type';
@@ -22,14 +22,14 @@ axios.defaults.headers = {
 // const portal_url = 'http://test.epub360.com/';
 // const portal_url = 'http://www.epub360.com/v2/';
 // const portal_url = window.location.protocol + "//" + window.location.host;
-const portal_url = '/';
+const portal_url = '/api/assistance/';
 
 // **-------------------------------------------------------------------------------------------助力活动接口'api/assistance/'
 // 新建助力，并设置初始值；
 export const AddAssistance = (value: AssistanceInitialValueType) => {
   return new Promise<AssistanceDetailType>((resolve, reject) => {
     axios
-      .post(portal_url + 'api/assistance/', qs.stringify(value))
+      .post(portal_url, qs.stringify(value))
       .then((response) => {
         resolve(response.data.data.results[0]);
       })
@@ -43,7 +43,7 @@ export const AddAssistance = (value: AssistanceInitialValueType) => {
 export const DeleteAssistance = (aslug: string) => {
   return new Promise<null>((resolve, reject) => {
     axios
-      .delete(portal_url + 'api/assistance/' + aslug)
+      .delete(portal_url + aslug)
       .then((response) => {
         resolve(response.data.data.results[0]);
       })
@@ -60,7 +60,7 @@ export const UpdateAssistance = (
 ) => {
   return new Promise<AssistanceDetailType>((resolve, reject) => {
     axios
-      .patch(portal_url + 'api/assistance/' + aslug, qs.stringify(value))
+      .patch(portal_url + aslug, qs.stringify(value))
       .then((response) => {
         resolve(response.data.data.results);
       })
@@ -74,7 +74,7 @@ export const UpdateAssistance = (
 export const QueryAssistanceList = () => {
   return new Promise<AssistanceDetailType[]>((resolve, reject) => {
     axios
-      .get(portal_url + 'api/assistance/')
+      .get(portal_url)
       .then((response) => {
         resolve(response.data.results);
       })
@@ -88,7 +88,7 @@ export const QueryAssistanceList = () => {
 export const QueryAssistanceDetail = (aslug: string) => {
   return new Promise<AssistanceDetailType>((resolve, reject) => {
     axios
-      .get(portal_url + 'api/assistance/' + aslug)
+      .get(portal_url + aslug)
       .then((response) => {
         resolve(response.data.data.results[0]);
       })
@@ -105,7 +105,7 @@ export const AddObjective = (aslug: string, value: any) => {
   return new Promise<any>((resolve, reject) => {
     axios
       .post(
-        portal_url + 'api/assistance/' + aslug + '/objective/',
+        portal_url + aslug + '/objective/',
         qs.stringify({
           title: value.title,
           description: value.title,
@@ -127,7 +127,7 @@ export const AddObjective = (aslug: string, value: any) => {
 export const DeleteObjective = (aslug: string, oslug: string) => {
   return new Promise<any>((resolve, reject) => {
     axios
-      .delete(portal_url + 'api/assistance/' + aslug + '/objective/' + oslug)
+      .delete(portal_url + aslug + '/objective/' + oslug)
       .then((response) => {
         resolve(response);
       })
@@ -145,10 +145,7 @@ export const UpdateObjective = (
 ) => {
   return new Promise<any>((resolve, reject) => {
     axios
-      .patch(
-        portal_url + 'api/assistance/' + aslug + '/objective/' + oslug,
-        qs.stringify(value)
-      )
+      .patch(portal_url + aslug + '/objective/' + oslug, qs.stringify(value))
       .then((response) => {
         resolve(response);
       })
@@ -162,7 +159,7 @@ export const UpdateObjective = (
 export const QueryObjectiveList = (aslug: string) => {
   return new Promise<ObjectiveDetailType[]>((resolve, reject) => {
     axios
-      .get(portal_url + 'api/assistance/' + aslug + '/objective/')
+      .get(portal_url + aslug + '/objective/')
       .then((response) => {
         resolve(response.data.data.results);
       })
@@ -176,7 +173,7 @@ export const QueryObjectiveList = (aslug: string) => {
 export const QueryObjectiveDetail = (aslug: string, oslug: string) => {
   return new Promise<ObjectiveDetailType>((resolve, reject) => {
     axios
-      .get(portal_url + 'api/assistance/' + aslug + '/objective/' + oslug)
+      .get(portal_url + aslug + '/objective/' + oslug)
       .then((response) => {
         resolve(response.data.data.results[0]);
       })
@@ -191,14 +188,7 @@ export const QueryObjectiveDetail = (aslug: string, oslug: string) => {
 export const AddActivity = (aslug: string, oslug: string) => {
   return new Promise<ActivityDetailType>((resolve, reject) => {
     axios
-      .post(
-        portal_url +
-          'api/assistance/' +
-          aslug +
-          '/objective/' +
-          oslug +
-          '/activity/'
-      )
+      .post(portal_url + aslug + '/objective/' + oslug + '/activity/')
       .then((response) => {
         resolve(response.data.data.results[0]);
       })
@@ -212,14 +202,7 @@ export const AddActivity = (aslug: string, oslug: string) => {
 export const QueryActivityList = (aslug: string, oslug: string) => {
   return new Promise<ActivityDetailType[]>((resolve, reject) => {
     axios
-      .get(
-        portal_url +
-          'api/assistance/' +
-          aslug +
-          '/objective/' +
-          oslug +
-          '/activity/'
-      )
+      .get(portal_url + aslug + '/objective/' + oslug + '/activity/')
       .then((response) => {
         resolve(response.data.data.results);
       })
@@ -233,14 +216,7 @@ export const QueryActivityList = (aslug: string, oslug: string) => {
 export const QueryRankingList = (aslug: string, oslug: string) => {
   return new Promise<any>((resolve, reject) => {
     axios
-      .get(
-        portal_url +
-          'api/assistance/' +
-          aslug +
-          '/objective/' +
-          oslug +
-          '/activity/rank/'
-      )
+      .get(portal_url + aslug + '/objective/' + oslug + '/activity/rank/')
       .then((response) => {
         resolve(response.data.data.results);
       })
@@ -258,15 +234,7 @@ export const QueryActivityDetail = (
 ) => {
   return new Promise<ActivityDetailType>((resolve, reject) => {
     axios
-      .get(
-        portal_url +
-          'api/assistance/' +
-          aslug +
-          '/objective/' +
-          oslug +
-          '/activity/' +
-          acslug
-      )
+      .get(portal_url + aslug + '/objective/' + oslug + '/activity/' + acslug)
       .then((response) => {
         resolve(response.data.data.results[0]);
       })
@@ -283,7 +251,6 @@ export const AddSupporter = (aslug: string, oslug: string, acslug: string) => {
     axios
       .post(
         portal_url +
-          'api/assistance/' +
           aslug +
           '/objective/' +
           oslug +
@@ -310,7 +277,6 @@ export const QuerySupporterList = (
     axios
       .get(
         portal_url +
-          'api/assistance/' +
           aslug +
           '/objective/' +
           oslug +
@@ -338,7 +304,6 @@ export const QuerySupporterDetail = (
     axios
       .get(
         portal_url +
-          'api/assistance/' +
           aslug +
           '/objective/' +
           oslug +
@@ -358,9 +323,9 @@ export const QuerySupporterDetail = (
 
 // 查询当前登录信息
 export const QueryUserDetail = () => {
-  return new Promise<UserInfoType>((resolve, reject) => {
+  return new Promise<AssistanceUserInfoType>((resolve, reject) => {
     axios
-      .get(portal_url + 'v2/api/users/')
+      .get('v3/api/users/')
       .then((response) => {
         resolve(response.data.data.results);
       })
@@ -372,10 +337,10 @@ export const QueryUserDetail = () => {
 
 // 添加当前目标用户登记信息
 export const AddUserInfo = (oslug: string, userInfo: UserInfo) => {
-  return new Promise<UserInfoType>((resolve, reject) => {
+  return new Promise<AssistanceUserInfoType>((resolve, reject) => {
     axios
       .post(
-        portal_url + 'api/assistance/objective/' + oslug + '/userinfo/',
+        portal_url + 'objective/' + oslug + '/userinfo/',
         qs.stringify(userInfo)
       )
       .then((response) => {
@@ -393,14 +358,10 @@ export const UpdateUserInfo = (
   user_info_id: string,
   userInfo: UserInfo
 ) => {
-  return new Promise<UserInfoType>((resolve, reject) => {
+  return new Promise<AssistanceUserInfoType>((resolve, reject) => {
     axios
       .patch(
-        portal_url +
-          'api/assistance/objective/' +
-          oslug +
-          '/userinfo/' +
-          user_info_id,
+        portal_url + 'objective/' + oslug + '/userinfo/' + user_info_id,
         qs.stringify(userInfo),
         { headers: { 'Content-type': 'application/json' } }
       )
@@ -415,11 +376,9 @@ export const UpdateUserInfo = (
 
 // 查询用户登记信息
 export const QueryUserInfo = (oslug: string, userId: string) => {
-  return new Promise<UserInfoType>((resolve, reject) => {
+  return new Promise<AssistanceUserInfoType>((resolve, reject) => {
     axios
-      .get(
-        portal_url + 'api/assistance/objective/' + oslug + '/userinfo/' + userId
-      )
+      .get(portal_url + 'objective/' + oslug + '/userinfo/' + userId)
       .then((response) => {
         resolve(response.data.data.results);
       })

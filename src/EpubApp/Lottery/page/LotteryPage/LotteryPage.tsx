@@ -4,7 +4,7 @@ import { DataClient } from '@21epub/epub-data-client';
 import { isEmpty } from 'lodash';
 import {
   LotteryDetailType,
-  UserInfoType,
+  LotteryUserInfoType,
   LotteryType,
   LotteryUrlListType,
   LotteryPictureType
@@ -53,7 +53,7 @@ const LotteryPage: FC<LotteryPageProps> = (props) => {
   }, [winnersUrl]);
 
   const userInfoClient = useMemo(() => {
-    return new DataClient<UserInfoType>(userInfoUrl ?? '');
+    return new DataClient<LotteryUserInfoType>(userInfoUrl ?? '');
   }, [userInfoUrl]);
 
   // 初始，以及预留监听外部修改状态

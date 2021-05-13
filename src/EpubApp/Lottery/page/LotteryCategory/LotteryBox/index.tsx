@@ -9,12 +9,12 @@ import {
   RollingList,
   ContactInfo
 } from '../../../Components';
-import { UserInfoType, WinnerType } from '../../../type';
+import { LotteryUserInfoType, WinnerType } from '../../../type';
 import store from '../../../store';
 
 interface LotteryBoxProps {
   winnerList: WinnerType[];
-  userInfo: UserInfoType;
+  userInfo: LotteryUserInfoType;
   prizeUrl?: string;
   getData: () => void;
 }

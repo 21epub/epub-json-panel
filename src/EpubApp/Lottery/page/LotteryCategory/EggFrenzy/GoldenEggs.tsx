@@ -2,13 +2,13 @@ import React, { FC, useState } from 'react';
 import { Modal } from 'antd';
 import { getLotteryResult } from '../../../data/api';
 import SmashEgg from './SmashEgg';
-import { UserInfoType, PrizeType } from '../../../type';
+import { LotteryUserInfoType, PrizeType } from '../../../type';
 import store from '../../../store';
 
 interface GoldenEggsProps {
   prizeList: PrizeType[];
   prizeUrl?: string;
-  userInfo: UserInfoType;
+  userInfo: LotteryUserInfoType;
   getData: Function;
 }
 
