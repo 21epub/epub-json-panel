@@ -1,5 +1,5 @@
 import React, { FC, useEffect, useState } from 'react';
-import { useRequest } from 'ahooks';
+import { useRequest, useUpdateEffect } from 'ahooks';
 import { getAssistanceComponent } from '../AssistanceCategory/';
 import type {
   AssistanceApiPropsType,
@@ -26,7 +26,8 @@ const AssistancePage: FC<AssistancePageProps> = (props) => {
     assistanceType,
     assistanceApiProps,
     assistancePicture,
-    assistanceEvent
+    assistanceEvent,
+    isDataChanged
   } = props;
   const { aslug, urlKey } = assistanceApiProps;
   const [oslug, setOslug] = useState('');
@@ -38,9 +39,13 @@ const AssistancePage: FC<AssistancePageProps> = (props) => {
   const pictureList = assistancePicture[assistanceType];
 
   // 查询助力详情接口
-  const { data: AssistanceDetail, loading } = useRequest(() =>
+  const { data: AssistanceDetail, loading, run } = useRequest(() =>
     QueryAssistanceDetail(aslug)
   );
+
+  useUpdateEffect(() => {
+    run();
+  }, [isDataChanged]);
 
   // 请求接口数据
   useEffect(() => {
