@@ -5,7 +5,8 @@ import type {
   AssistanceDetailType,
   ObjectiveDetailType,
   ActivityDetailType,
-  SupporterDetailType
+  SupporterDetailType,
+  AssistanceEventType
 } from '../../../../../type';
 import store from '../../../../../store';
 import { getPicture } from '../../../../../util';
@@ -30,7 +31,10 @@ const AssistanceInfo: FC<AssistanceInfoProps> = (props) => {
   } = props;
 
   const [state] = store.useRxjsStore();
-  const { PictureList = [] } = state;
+  const {
+    PictureList = [],
+    AssistanceEvent = {} as AssistanceEventType
+  } = state;
   const defaultObjectivePic = getPicture(PictureList, 'objective');
 
   // 是否可以创建助力活动和帮他人助力
@@ -41,6 +45,8 @@ const AssistanceInfo: FC<AssistanceInfoProps> = (props) => {
   const { run: RunAddSupporter } = useRequest(AddSupporter, {
     manual: true,
     onSuccess: () => {
+      // 帮他助力成功触发器
+      AssistanceEvent.onAssistanceSuccess();
       onOpenPopUp(); // 打开提示弹框
       setCanInitOrSupport(true);
     }
@@ -48,8 +54,6 @@ const AssistanceInfo: FC<AssistanceInfoProps> = (props) => {
 
   // 帮TA助力
   const onHelp = () => {
-    console.log(canInitOrSupport);
-    console.log(AssistanceDetail);
     if (canInitOrSupport && AssistanceDetail?.slug) {
       // 帮他助力
       RunAddSupporter(

@@ -244,8 +244,15 @@ export interface AssistancePictureType {
   [key: string]: AssistanceImageType[];
 }
 
+export interface ActionsType {
+  onAssistanceSuccess: () => void;
+  onAssistanceFail: () => void;
+}
+
 // 助力里需要用到的事件，方法，触发器等
-export interface AssistanceEventType {
+export interface AssistanceEventType extends ActionsType {
+  // 设置分享链接
   setShareLink: (link: string) => void;
+  // 微信分享
   share: () => void;
 }
