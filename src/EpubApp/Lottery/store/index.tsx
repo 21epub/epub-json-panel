@@ -2,7 +2,8 @@ import RxjsStore, { RxjsStoreReducerParams } from '@21epub/react-rxjs-store';
 import {
   LotteryImageType,
   LotteryDetailType,
-  LotteryUrlListType
+  LotteryUrlListType,
+  LotteryEventType
 } from '../type';
 
 // 管理的状态数据
@@ -25,6 +26,8 @@ export interface StateType {
   lotteryDetail?: LotteryDetailType;
   // 抽奖接口Url列表
   lotteryUrlList?: LotteryUrlListType;
+  // 事件及触发器
+  lotteryEvent?: LotteryEventType;
 }
 
 // 初始值
@@ -37,7 +40,8 @@ const initState: StateType = {
   isPrizeModalShow: false,
   pictureList: [],
   lotteryDetail: undefined,
-  lotteryUrlList: undefined
+  lotteryUrlList: undefined,
+  lotteryEvent: undefined
 };
 
 // Reducers Types definition (Recommanded)
@@ -51,6 +55,7 @@ interface Reducers<S> extends RxjsStoreReducerParams<S> {
   setPictureList: (state: S, payload?: LotteryImageType[]) => S;
   setLotteryDetail: (state: S, payload?: LotteryDetailType) => S;
   setLotteryUrlList: (state: S, payload?: LotteryUrlListType) => S;
+  setLotteryEvent: (state: S, payload?: LotteryEventType) => S;
 }
 
 const reducers: Reducers<StateType> = {
@@ -81,6 +86,9 @@ const reducers: Reducers<StateType> = {
   },
   setLotteryUrlList(state, payload) {
     return { ...state, lotteryUrlList: payload };
+  },
+  setLotteryEvent(state, payload) {
+    return { ...state, lotteryEvent: payload };
   }
 };
 

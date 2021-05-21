@@ -68,6 +68,10 @@ export interface PrizeType {
   title: string;
   // 奖品总数
   total_num: number;
+  // 中奖概率
+  probability?: string;
+  // key,用于表格显示的key
+  key?: string;
 }
 
 // 中奖者信息
@@ -171,3 +175,11 @@ export interface LotteryUserInfoType {
   // 用户id
   user_id: number;
 }
+
+export interface LotteryActionsType {
+  onLotterySuccess: () => void;
+  onLotteryFail: () => void;
+}
+
+// 助力里需要用到的事件，方法，触发器等
+export interface LotteryEventType extends LotteryActionsType {}

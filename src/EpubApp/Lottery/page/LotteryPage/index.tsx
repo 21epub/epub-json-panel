@@ -5,19 +5,27 @@ import LotteryPage from './LotteryPage';
 import {
   LotteryType,
   LotteryUrlListType,
-  LotteryPictureType
+  LotteryPictureType,
+  LotteryEventType
 } from '../../type';
 
 export interface LotteryPageRenderProps {
   lotteryType: LotteryType;
   lotteryUrlList: LotteryUrlListType;
   lotteryPicture: LotteryPictureType;
-  isDataChanged: boolean;
+  lotteryEvent?: LotteryEventType;
+  isDataChanged?: boolean;
 }
 
 // 抽奖页面渲染
 export const LotteryPageRender: FC<LotteryPageRenderProps> = (props) => {
-  const { lotteryUrlList, lotteryPicture, lotteryType, isDataChanged } = props;
+  const {
+    lotteryUrlList,
+    lotteryPicture,
+    lotteryType,
+    lotteryEvent,
+    isDataChanged
+  } = props;
 
   return (
     <ConfigProvider locale={zhCN}>
@@ -25,6 +33,7 @@ export const LotteryPageRender: FC<LotteryPageRenderProps> = (props) => {
         lotteryType={lotteryType}
         lotteryUrlList={lotteryUrlList}
         lotteryPicture={lotteryPicture}
+        lotteryEvent={lotteryEvent}
         isDataChanged={isDataChanged}
       />
     </ConfigProvider>

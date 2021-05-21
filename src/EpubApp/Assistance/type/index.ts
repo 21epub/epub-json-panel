@@ -64,6 +64,13 @@ export interface AssistanceInitialValueType {
   _contact_info: string;
 }
 
+export interface ContactInfoType {
+  name: string;
+  address: string;
+  phone: string;
+  [field: string]: string;
+}
+
 // 助力详情接口
 export interface AssistanceDetailType {
   id?: string;
@@ -81,8 +88,12 @@ export interface AssistanceDetailType {
   start_time: string;
   // 助力活动结束时间
   end_time: string;
+  // 传给接口的助力时间
+  assistanceTime?: string[];
   // 助力首页大图Url
   picture: string;
+  // 传给后台的图片值
+  _picture?: string;
   // 助力首页富文本规则html字符串
   rules: string;
   // 是否需要获取用户信息
@@ -113,12 +124,15 @@ export interface AssistanceDetailType {
     value_rule: number;
   };
   // 助力活动举办方基础信息
-  contact_info: {
-    name: string;
-    address: string;
-    phone: string;
-    [field: string]: string;
-  };
+  contact_info: ContactInfoType;
+  // 传给后台的信息
+  _contact_info?: string;
+  // 配置面板的举办方名称
+  contact_info_0?: string;
+  // 配置面板的举办方地址
+  contact_info_1?: string;
+  // 配置面板的举办方联系方式
+  contact_info_2?: string;
 }
 
 // 助力目标接口
@@ -151,6 +165,8 @@ export interface ObjectiveDetailType {
   total_num: number;
   // 用户信息id
   user_info_id?: string;
+  // key，用户表格key值
+  key?: string;
 }
 
 export interface AssistanceUserInfoType {
@@ -244,15 +260,22 @@ export interface AssistancePictureType {
   [key: string]: AssistanceImageType[];
 }
 
-export interface ActionsType {
+export interface AssistanceActionsType {
   onAssistanceSuccess: () => void;
   onAssistanceFail: () => void;
 }
 
 // 助力里需要用到的事件，方法，触发器等
-export interface AssistanceEventType extends ActionsType {
+export interface AssistanceEventType extends AssistanceActionsType {
   // 设置分享链接
   setShareLink: (link: string) => void;
   // 微信分享
   share: () => void;
+}
+
+export interface AssistanceUrlListType {
+  // 默认图片链接地址头
+  web_url: string;
+  // 助力详情
+  assistanceDetailUrl: string;
 }

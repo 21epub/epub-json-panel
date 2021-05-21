@@ -7,7 +7,8 @@ import {
   LotteryUserInfoType,
   LotteryType,
   LotteryUrlListType,
-  LotteryPictureType
+  LotteryPictureType,
+  LotteryEventType
 } from '../../type';
 import { getLotteryComponent } from '../LotteryCategory';
 import { UserInfoModal, ActivityTimeModal } from '../../Components';
@@ -19,11 +20,18 @@ export interface LotteryPageProps {
   lotteryType: LotteryType;
   lotteryUrlList: LotteryUrlListType;
   lotteryPicture: LotteryPictureType;
-  isDataChanged: boolean;
+  lotteryEvent?: LotteryEventType;
+  isDataChanged?: boolean;
 }
 
 const LotteryPage: FC<LotteryPageProps> = (props) => {
-  const { lotteryType, lotteryUrlList, lotteryPicture, isDataChanged } = props;
+  const {
+    lotteryType,
+    lotteryUrlList,
+    lotteryPicture,
+    lotteryEvent,
+    isDataChanged
+  } = props;
   // 获取当前抽奖页面用户是否可见
   const inViewPort = useInViewport(() =>
     document.querySelector('#LotteryPage')
@@ -93,6 +101,7 @@ const LotteryPage: FC<LotteryPageProps> = (props) => {
       store.reducers.setLotteryUrlList(lotteryUrlList);
       store.reducers.setLotteryDetail(lotteryDetail);
       store.reducers.setPictureList(pictureList);
+      store.reducers.setLotteryEvent(lotteryEvent);
       if (userInfo?.user_id === null && lotteryDetail?.need_user_info) {
         store.reducers.setIsUserInfoModalShow(true);
       } else if (userInfo?.user_id === null) {
