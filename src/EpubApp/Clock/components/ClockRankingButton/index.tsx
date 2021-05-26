@@ -1,4 +1,4 @@
-import React, { FC, useState } from 'react';
+import React, { FC, useState, useEffect } from 'react';
 import RankingModal from './RankingModal';
 import store from '../../store';
 import { getPicture } from '../../util';
@@ -8,11 +8,10 @@ interface ClockRankingButtonProps {}
 
 const ClockRankingButton: FC<ClockRankingButtonProps> = (props) => {
   const [visibleModal, setVisibleModal] = useState(false);
+  const [clockRankingPic, setClockRankingPic] = useState<string>('');
   const [state] = store.useRxjsStore();
-  const { pictureList } = state;
-  const clockRanking = getPicture([], 'clockRanking');
-  const defaultClockRanking = getPicture(pictureList, 'clockRanking');
-  const clockRankingButtonPic = clockRanking || defaultClockRanking;
+  const { pictureList, clockDetail } = state;
+  const defaultClockRankingPic = getPicture(pictureList, 'clockRanking');
 
   const onClick = () => {
     setVisibleModal(true);
@@ -22,11 +21,19 @@ const ClockRankingButton: FC<ClockRankingButtonProps> = (props) => {
     setVisibleModal(false);
   };
 
+  useEffect(() => {
+    if (clockDetail) {
+      setClockRankingPic(
+        getPicture(clockDetail?.picture ?? [], 'clockRanking') ?? ''
+      );
+    }
+  }, [clockDetail]);
+
   return (
     <Wrapper className='clockRankingButton'>
       <img
         className='clockRankingButtonImg'
-        src={clockRankingButtonPic}
+        src={clockRankingPic || defaultClockRankingPic}
         onClick={onClick}
       />
       <RankingModal

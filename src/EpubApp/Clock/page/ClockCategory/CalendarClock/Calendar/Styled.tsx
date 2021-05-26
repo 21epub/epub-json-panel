@@ -46,13 +46,15 @@ export const DateFullCellWrapper = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  .clockDate {
+  .clockDate,
+  .todayClock {
     position: relative;
     top: 0;
     left: 0;
     display: block;
     width: 24px;
     height: 24px;
+    color: #fff;
     direction: ltr;
     background: #ed694a;
     border: 1px solid #d9d9d9;

@@ -64,7 +64,7 @@ export interface AssistanceInitialValueType {
   _contact_info: string;
 }
 
-export interface ContactInfoType {
+export interface AssistanceContactInfoType {
   name: string;
   address: string;
   phone: string;
@@ -124,7 +124,7 @@ export interface AssistanceDetailType {
     value_rule: number;
   };
   // 助力活动举办方基础信息
-  contact_info: ContactInfoType;
+  contact_info: AssistanceContactInfoType;
   // 传给后台的信息
   _contact_info?: string;
   // 配置面板的举办方名称

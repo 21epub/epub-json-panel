@@ -8,7 +8,7 @@ import {
   RulesButton,
   RollingList,
   ContactInfo
-} from '../../../Components';
+} from '../../../components';
 import { LotteryUserInfoType, PrizeType, WinnerType } from '../../../type';
 import store from '../../../store';
 

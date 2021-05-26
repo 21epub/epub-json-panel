@@ -11,7 +11,7 @@ import {
   LotteryEventType
 } from '../../type';
 import { getLotteryComponent } from '../LotteryCategory';
-import { UserInfoModal, ActivityTimeModal } from '../../Components';
+import { UserInfoModal, ActivityTimeModal } from '../../components';
 import { getPictureList, getPicture } from '../../util';
 import store from '../../store';
 import styles from './index.module.less';

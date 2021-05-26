@@ -1,8 +1,13 @@
 import React, { FC } from 'react';
 import { Modal, Table, Tabs, List, Avatar } from 'antd';
 import { ModalProps } from 'antd/lib/modal';
+import { useRequest, useUpdateEffect } from 'ahooks';
+import { isEmpty } from 'lodash';
+import { queryClockRanking } from '../../../data/api';
+import store from '../../../store';
 import { rankingColumns } from './TabsConfig';
 import { Wrapper } from './Styled';
+import { ClockRankingType } from '../../../type';
 
 export interface RankingModalProps extends ModalProps {
   onCloseModal: () => void;
@@ -11,27 +16,19 @@ export interface RankingModalProps extends ModalProps {
 // 用于添加奖品与修改奖品
 const RankingModal: FC<RankingModalProps> = (props) => {
   const { onCloseModal, ...rest } = props;
-  // const [dataSource, setDataSource] = useState<[]>();
-  const dataSource: any = [];
+  const [state] = store.useRxjsStore();
+  const { clockApiProps, clockEvent, clockRecord } = state;
+  const slug = clockApiProps?.slug ?? '';
 
-  const onTabsChange = (value: string) => {
-    console.log('切换对应的配置面板', value);
-  };
-
-  const listData = [
-    {
-      userName: 'Ant Design Title 1'
-    },
-    {
-      userName: 'Ant Design Title 2'
-    },
-    {
-      userName: 'Ant Design Title 3'
-    },
-    {
-      userName: 'Ant Design Title 4'
-    }
-  ];
+  // 查询签到排行榜详情接口
+  const {
+    data: clockRanking,
+    loading: rankingLoading,
+    run: runQueryClockRanking
+  } = useRequest(() => queryClockRanking(slug ?? ''), {
+    ready: !!clockApiProps?.slug && !!clockEvent,
+    manual: true
+  });
 
   // 点击确定时
   const onOk = () => {
@@ -43,34 +40,52 @@ const RankingModal: FC<RankingModalProps> = (props) => {
     onCloseModal();
   };
 
+  useUpdateEffect(() => {
+    if (!rankingLoading && clockRanking) {
+      // 处理表单返回的奖品列表数据，使之符合表格的数据格式
+      clockRanking.forEach((draft: ClockRankingType, index: number) => {
+        // 给数据添加key用于表格组件渲染
+        draft.key = index + 1;
+      });
+    }
+  }, [rankingLoading, clockRanking]);
+
+  useUpdateEffect(() => {
+    if (clockRecord) {
+      runQueryClockRanking();
+    }
+  }, [clockRecord]);
+
   return (
     <Wrapper>
       <Modal onOk={onOk} onCancel={onCancel} {...rest}>
-        <Tabs size='small' defaultActiveKey='1' onChange={onTabsChange}>
+        <Tabs size='small' defaultActiveKey='1'>
           <Tabs.TabPane tab='打卡排行' key='clockRanking'>
-            <Table
-              size='small'
-              columns={rankingColumns}
-              dataSource={dataSource}
-              locale={{ emptyText: '暂无数据' }}
-            />
+            {!rankingLoading && (
+              <Table
+                size='small'
+                columns={rankingColumns}
+                dataSource={clockRanking}
+                locale={{ emptyText: '暂无数据' }}
+              />
+            )}
           </Tabs.TabPane>
           <Tabs.TabPane tab='打卡记录' key='clockRecords'>
-            <List
-              itemLayout='horizontal'
-              dataSource={listData}
-              renderItem={(item) => (
-                <List.Item>
-                  <List.Item.Meta
-                    avatar={
-                      <Avatar src='https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png' />
-                    }
-                    title={<a href='https://ant.design'>{item.userName}</a>}
-                    description='在5月1日打卡获得10积分'
-                  />
-                </List.Item>
-              )}
-            />
+            {!isEmpty(clockRecord) && (
+              <List
+                itemLayout='horizontal'
+                dataSource={clockRecord}
+                renderItem={(item) => (
+                  <List.Item>
+                    <List.Item.Meta
+                      avatar={<Avatar src={item.initiator_avatar} />}
+                      title={item.initiator_username}
+                      description={`在${item.created}打卡成功`}
+                    />
+                  </List.Item>
+                )}
+              />
+            )}
           </Tabs.TabPane>
         </Tabs>
       </Modal>

@@ -95,7 +95,7 @@ export interface WinnerType {
 }
 
 // 举办方信息
-export interface ContactInfoType {
+export interface LotteryContactInfoType {
   // 举办方名称
   name?: string;
 }
@@ -111,7 +111,7 @@ export interface LotteryDetailType {
   // 每人每天可抽中次数
   can_win_num_everyday: number | null;
   // 举办方信息
-  contact_info: ContactInfoType;
+  contact_info?: LotteryContactInfoType;
   _contact_info?: string;
   // 抽奖应用创建时间
   created?: string;
@@ -128,10 +128,10 @@ export interface LotteryDetailType {
   // 是否需要填写用户信息
   need_user_info: boolean;
   // 抽奖应用图片集合
-  picture: LotteryImageType[];
+  picture?: LotteryImageType[];
   _picture?: string;
   // 剩余抽奖次数
-  remain_times: number | null;
+  remain_times?: number | null;
   // 抽奖活动规则
   rules: string;
   // 是否显示背景图片
@@ -152,6 +152,15 @@ export interface LotteryDetailType {
   type: 1 | 2 | 3 | 4 | 5 | '1' | '2' | '3' | '4' | '5';
   // 用户id
   user_id?: number;
+  // 每人可中奖次数
+  win_num_each_one?: number | null;
+  // 每人可抽奖次数
+  draw_num_each_one?: number | null;
+  // 每人可抽奖次数
+  contact_info_0?: string;
+  // 抽奖时间范围
+  lotteryTime?: string[];
+  [key: string]: any;
 }
 
 // 用户填写的信息

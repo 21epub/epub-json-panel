@@ -24,6 +24,15 @@ export const Wrapper = styled.div`
     position: absolute;
     top: 84%;
   }
+  .BorderDrawer {
+    position: absolute;
+    top: 71%;
+    width: 80%;
+    height: 12px;
+    background-color: #ff6450;
+    border-radius: 10px;
+    box-shadow: 0px 1px 4px 0px #333;
+  }
 `;
 
 export const CalendarWrapper = styled.div<CalendarWrapperProps>`
@@ -48,14 +57,5 @@ export const CalendarWrapper = styled.div<CalendarWrapperProps>`
     background-color: #cdcecf;
     border-radius: 10px;
     cursor: pointer;
-  }
-  .BorderDrawer {
-    position: absolute;
-    bottom: -2%;
-    width: 100%;
-    height: 12px;
-    background-color: #ff6450;
-    border-radius: 10px;
-    box-shadow: 0px 1px 4px 0px #333;
   }
 `;

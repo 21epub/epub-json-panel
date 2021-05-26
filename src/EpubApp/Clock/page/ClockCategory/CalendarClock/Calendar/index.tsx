@@ -1,55 +1,47 @@
-import React, { FC, useState } from 'react';
+import React, { FC, useState, useEffect } from 'react';
 import { Calendar as AntCalendar } from 'antd';
-import { CalendarMode } from 'antd/lib/calendar/generateCalendar';
 import { useUpdateEffect } from 'ahooks';
 import locale from 'antd/lib/date-picker/locale/zh_CN';
 import moment from 'moment';
 import HeaderRender from './HeaderRender';
 import DateFullCellRender from './DateFullCellRender';
 import { AntCalendarWrapper } from './Styled';
+import store from '../../../../store';
+import { isEmpty } from 'lodash';
 
 export interface CalendarProps {
   isOpen: boolean;
+  runQueryClockRecord: (start: string, end: string) => void;
 }
 
 // 日历组件
 const Calendar: FC<CalendarProps> = (props) => {
-  const { isOpen } = props;
+  const { isOpen, runQueryClockRecord } = props;
+  const [state] = store.useRxjsStore();
+  const { clockRecord } = state;
   const [CTop, setCTop] = useState('');
+  const [alreadyClock, setAlreadyClock] = useState<string[]>([]);
+  const [omitClock, setOmitClock] = useState<string[]>([]);
+  const [startDay, setStartDay] = useState<string>(
+    moment().startOf('month').format('YYYY-MM-DD')
+  );
+  const [endDay, setEndDay] = useState<string>(
+    moment().endOf('month').format('YYYY-MM-DD')
+  );
   const today = moment().format('DD');
   const CalendarMonth: string[] = [];
 
-  const clockList = [
-    '2021-05-01',
-    '2021-05-02',
-    '2021-05-03',
-    '2021-05-05',
-    '2021-05-06',
-    '2021-05-07',
-    '2021-05-09',
-    '2021-05-12',
-    '2021-05-13',
-    '2021-05-14',
-    '2021-05-17',
-    '2021-05-18',
-    '2021-05-21'
-  ];
-  const noClockList = [
-    '2021-05-05',
-    '2021-05-08',
-    '2021-05-10',
-    '2021-05-11',
-    '2021-05-15',
-    '2021-05-16',
-    '2021-05-19',
-    '2021-05-20'
-  ];
-
-  const onPanelChange = (date: moment.Moment, mode: CalendarMode) => {
-    console.log(date, mode);
+  // 切换日历面板时
+  const onPanelChange = (date: moment.Moment) => {
+    const month = moment(date).format('YYYY-MM');
+    setStartDay(moment(month).startOf('month').format('YYYY-MM-DD'));
+    setEndDay(moment(month).endOf('month').format('YYYY-MM-DD'));
+    setTimeout(() => {
+      runQueryClockRecord(startDay, endDay);
+    });
   };
 
-  useUpdateEffect(() => {
+  useEffect(() => {
     if (isOpen) {
       setCTop('0px');
     } else {
@@ -61,6 +53,13 @@ const Calendar: FC<CalendarProps> = (props) => {
       setCTop(top);
     }
   }, [isOpen]);
+
+  useUpdateEffect(() => {
+    if (!isEmpty(clockRecord)) {
+      setAlreadyClock(clockRecord?.[0]?.already_clock ?? []);
+      setOmitClock(clockRecord?.[0]?.omit_clock ?? []);
+    }
+  }, [clockRecord]);
 
   return (
     <AntCalendarWrapper className='AntCalendar' top={CTop}>
@@ -76,8 +75,8 @@ const Calendar: FC<CalendarProps> = (props) => {
           CalendarMonth.push(moment(value).format('DD'));
           return (
             <DateFullCellRender
-              clockList={clockList}
-              noClockList={noClockList}
+              alreadyClock={alreadyClock}
+              omitClock={omitClock}
               momentValue={value}
             />
           );
