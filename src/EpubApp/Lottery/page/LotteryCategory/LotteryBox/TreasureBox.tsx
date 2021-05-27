@@ -1,4 +1,4 @@
-import React, { FC, useState } from 'react';
+import React, { FC, useState, useEffect } from 'react';
 import { Modal } from 'antd';
 import { getLotteryResult } from '../../../data/api';
 import styles from './index.module.less';
@@ -15,12 +15,17 @@ interface TreasureBoxProps {
 const TreasureBox: FC<TreasureBoxProps> = (props) => {
   const { prizeUrl, userInfo, getData } = props;
   const [state] = store.useRxjsStore();
-  const { lotteryDetail, pictureList, shouldUserInfoModalShow } = state;
+  const {
+    lotteryDetail,
+    pictureList,
+    shouldUserInfoModalShow,
+    isClickable
+  } = state;
   const openBoxPic = getPicture(lotteryDetail?.picture ?? [], 'openBox');
   const closeBoxPic = getPicture(lotteryDetail?.picture ?? [], 'closeBox');
   const defaultOpenBoxPic = getPicture(pictureList, 'openBox');
   const defaultCloseBoxPic = getPicture(pictureList, 'closeBox');
-
+  const [pointerEvents, setPointerEvents] = useState<'none' | 'auto'>('auto');
   const [modalVisible, setModalVisible] = useState(false);
   // 开始抽奖
   const lottery = async () => {
@@ -89,8 +94,15 @@ const TreasureBox: FC<TreasureBoxProps> = (props) => {
     }
   };
 
+  useEffect(() => {
+    setPointerEvents(isClickable ? 'auto' : 'none');
+  }, [isClickable]);
+
   return (
-    <div className={styles.lotteryBoxPic}>
+    <div
+      className={styles.lotteryBoxPic}
+      style={{ pointerEvents: pointerEvents }}
+    >
       {console.log(openBoxPic, defaultOpenBoxPic)}
       {modalVisible ? (
         <img className='lotteryBoxPic' src={openBoxPic || defaultOpenBoxPic} />

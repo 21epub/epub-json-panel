@@ -1,4 +1,4 @@
-import React, { FC, useState } from 'react';
+import React, { FC, useState, useEffect } from 'react';
 import { Modal } from 'antd';
 import { getLotteryResult } from '../../../data/api';
 import styles from './index.module.less';
@@ -33,6 +33,7 @@ const GashaponMachine: FC<TreasureBoxProps> = (props) => {
   const [playEgg, setPlayEgg] = useState(false);
   const [playExport, setPlayExport] = useState(false);
   const [prize, setPrize] = useState<WinnerType>();
+  const [pointerEvents, setPointerEvents] = useState<'none' | 'auto'>('auto');
 
   const onPlayEgg = () => {
     setPlayEgg(true);
@@ -122,8 +123,15 @@ const GashaponMachine: FC<TreasureBoxProps> = (props) => {
     }, 500);
   };
 
+  useEffect(() => {
+    setPointerEvents(isClickable ? 'auto' : 'none');
+  }, [isClickable]);
+
   return (
-    <div className={styles.gashaponWrap}>
+    <div
+      className={styles.gashaponWrap}
+      style={{ pointerEvents: pointerEvents }}
+    >
       <img src={glassPic || defaultGlassPic} className='glass' />
       <img src={downPic || defaultDownPic} className='down' />
       <img

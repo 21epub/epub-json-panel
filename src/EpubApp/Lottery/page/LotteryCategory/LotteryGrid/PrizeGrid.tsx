@@ -38,6 +38,7 @@ const PrizeGrid: FC<PrizeGridProps> = (props) => {
   const defaultPrizeBgPic = getPicture(pictureList, 'prizeBg');
   const defaultStartBgPic = getPicture(pictureList, 'startBg');
   const defaultPrizePic = getPicture(pictureList, 'prize');
+  const [pointerEvents, setPointerEvents] = useState<'none' | 'auto'>('auto');
 
   const handleOnClick = async (prizeUrl: string | undefined) => {
     if (
@@ -125,6 +126,10 @@ const PrizeGrid: FC<PrizeGridProps> = (props) => {
     setItemList(temp);
   }, [prizeList]);
 
+  useEffect(() => {
+    setPointerEvents(isClickable ? 'auto' : 'none');
+  }, [isClickable]);
+
   if (itemList?.length) {
     itemList?.length === 8 &&
       itemList.splice(4, 0, {
@@ -136,7 +141,10 @@ const PrizeGrid: FC<PrizeGridProps> = (props) => {
     const startBackground = `url(${startBgPic || defaultStartBgPic})`;
 
     return (
-      <div className={styles.prizeGridWrap}>
+      <div
+        className={styles.prizeGridWrap}
+        style={{ pointerEvents: pointerEvents }}
+      >
         <div
           className='gridBg'
           style={{

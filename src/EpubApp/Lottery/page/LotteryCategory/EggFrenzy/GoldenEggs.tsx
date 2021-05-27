@@ -1,4 +1,4 @@
-import React, { FC, useState } from 'react';
+import React, { FC, useEffect, useState } from 'react';
 import { Modal } from 'antd';
 import { getLotteryResult } from '../../../data/api';
 import SmashEgg from './SmashEgg';
@@ -15,7 +15,10 @@ interface GoldenEggsProps {
 const GoldenEggs: FC<GoldenEggsProps> = (props) => {
   const { prizeUrl, userInfo, getData } = props;
   const [state] = store.useRxjsStore();
-  const [isLotterySuccess, setIsLotterySuccess] = useState(false);
+  const { isClickable } = state;
+  const [isLotterySuccess, setIsLotterySuccess] = useState<boolean>(false);
+  // 记录当前时候已有抽奖
+  const [pointerEvents, setPointerEvents] = useState<'none' | 'auto'>('auto');
   const { lotteryDetail, shouldUserInfoModalShow } = state;
 
   const lottery = async () => {
@@ -51,6 +54,7 @@ const GoldenEggs: FC<GoldenEggsProps> = (props) => {
             ),
             onOk() {
               // 重新获取后台的值
+              setPointerEvents('auto');
               getData();
               store.reducers.setIsClickable(true);
               setIsLotterySuccess(false);
@@ -86,11 +90,19 @@ const GoldenEggs: FC<GoldenEggsProps> = (props) => {
 
   const SmashEggProps = {
     isLotterySuccess,
-    onClick: lottery
+    onClick: lottery,
+    onStartPlay: () => setPointerEvents('none')
   };
 
+  useEffect(() => {
+    setPointerEvents(isClickable ? 'auto' : 'none');
+  }, [isClickable]);
+
   return (
-    <div className='eggFrenzyContainer'>
+    <div
+      className='eggFrenzyContainer'
+      style={{ pointerEvents: pointerEvents }}
+    >
       <div className='egg1'>
         <SmashEgg {...SmashEggProps} />
       </div>

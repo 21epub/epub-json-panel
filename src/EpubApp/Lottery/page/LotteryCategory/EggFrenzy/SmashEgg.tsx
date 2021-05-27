@@ -8,10 +8,11 @@ TweenOne.plugins.push(BezierPlugin);
 interface SmashEggProps {
   isLotterySuccess: boolean;
   onClick: () => void;
+  onStartPlay: () => void;
 }
 
 const SmashEgg: FC<SmashEggProps> = (props) => {
-  const { isLotterySuccess, onClick } = props;
+  const { isLotterySuccess, onClick, onStartPlay } = props;
   const [isClick, setIsClick] = useState(false);
   const [play, setPlay] = useState(false);
   const [state] = store.useRxjsStore();
@@ -36,6 +37,8 @@ const SmashEgg: FC<SmashEggProps> = (props) => {
   // 开始播放锤子动画
   const onPlay = () => {
     setPlay(true);
+    // 开始播放动画，并屏蔽点击事件，方式重复点击其他金蛋
+    onStartPlay();
   };
 
   const animation = {

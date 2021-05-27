@@ -20,7 +20,7 @@ interface EggFrenzyProps {
   getData: () => void;
 }
 
-// 抽奖箱
+// 砸金蛋
 const EggFrenzy: FC<EggFrenzyProps> = (props) => {
   const { winnerList, prizeList, userInfo, prizeUrl, getData } = props;
   const [state] = store.useRxjsStore();

@@ -21,6 +21,8 @@ export interface StateType {
   clockEvent?: ClockEventType;
   // 是否弹出填写用户信息框
   isShowUserInfoModal?: boolean;
+  // 是否允许点击签到
+  isClickable?: boolean;
 }
 
 // 初始值
@@ -30,7 +32,8 @@ const initState: StateType = {
   clockRecord: undefined,
   clockApiProps: undefined,
   clockEvent: undefined,
-  isShowUserInfoModal: false
+  isShowUserInfoModal: false,
+  isClickable: true
 };
 
 // Reducers Types definition (Recommanded)
@@ -41,6 +44,7 @@ interface Reducers<S> extends RxjsStoreReducerParams<S> {
   setClockApiProps: (state: S, payload?: ClockApiPropsType) => S;
   setClockEvent: (state: S, payload?: ClockEventType) => S;
   setIsShowUserInfoModal: (state: S, payload?: boolean) => S;
+  setIsClickable: (state: S, payload?: boolean) => S;
 }
 
 const reducers: Reducers<StateType> = {
@@ -61,6 +65,9 @@ const reducers: Reducers<StateType> = {
   },
   setIsShowUserInfoModal(state, payload) {
     return { ...state, isShowUserInfoModal: payload };
+  },
+  setIsClickable(state, payload) {
+    return { ...state, isClickable: payload };
   }
 };
 

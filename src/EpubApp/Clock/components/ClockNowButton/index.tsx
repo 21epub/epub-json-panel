@@ -12,7 +12,13 @@ interface ClockNowButtonProps {}
 
 const ClockNowButton: FC<ClockNowButtonProps> = () => {
   const [state] = store.useRxjsStore();
-  const { pictureList, clockDetail, clockEvent, clockRecord } = state;
+  const {
+    pictureList,
+    clockDetail,
+    clockEvent,
+    clockRecord,
+    isClickable
+  } = state;
   const [clockNowPic, setClockNowPic] = useState<string>('');
   const today = moment().format('YYYY-MM-DD');
   const defaultClockNowPic = getPicture(pictureList, 'clockNow');
@@ -65,7 +71,11 @@ const ClockNowButton: FC<ClockNowButtonProps> = () => {
 
   // 点击立即打卡
   const onClick = () => {
-    run();
+    if (isClickable) {
+      run();
+    } else {
+      message.error('不在活动时间内');
+    }
   };
 
   useEffect(() => {

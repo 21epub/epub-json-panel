@@ -44,7 +44,7 @@ const LotteryPage: FC<LotteryPageProps> = (props) => {
     winnersUrl
   } = lotteryUrlList;
   const [state] = store.useRxjsStore();
-  const { shouldUserInfoModalShow, IsUserInfoModalShow } = state;
+  const { shouldUserInfoModalShow, IsUserInfoModalShow, isClickable } = state;
   const LotteryComponent = getLotteryComponent(lotteryType);
   const pictureList = getPictureList(lotteryPicture, lotteryType);
 
@@ -132,7 +132,7 @@ const LotteryPage: FC<LotteryPageProps> = (props) => {
       {userInfoUrl && inViewPort && (
         <div>
           <UserInfoModal
-            isModalShow={IsUserInfoModalShow}
+            isModalShow={IsUserInfoModalShow && isClickable}
             addUserInfoUrl={userInfoUrl}
             getUser={getUser}
           />

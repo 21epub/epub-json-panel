@@ -1,4 +1,4 @@
-import React, { FC } from 'react';
+import React, { FC, useState, useEffect } from 'react';
 import { Modal } from 'antd';
 import { getLotteryResult } from '../../../data/api';
 import { LotteryUserInfoType, WinnerType } from '../../../type';
@@ -24,6 +24,7 @@ const Pointer: FC<PointerProps> = (props) => {
   } = state;
   const pointerPic = getPicture(lotteryDetail?.picture ?? [], 'pointer');
   const defaultPointerPic = getPicture(pictureList, 'pointer');
+  const [pointerEvents, setPointerEvents] = useState<'none' | 'auto'>('auto');
 
   const lottery = async () => {
     // 先判断是否需要填写信息
@@ -70,8 +71,12 @@ const Pointer: FC<PointerProps> = (props) => {
     }
   };
 
+  useEffect(() => {
+    setPointerEvents(isClickable ? 'auto' : 'none');
+  }, [isClickable]);
+
   return (
-    <div className={styles.pointer}>
+    <div className={styles.pointer} style={{ pointerEvents: pointerEvents }}>
       {isClickable ? (
         <img
           className='point'
