@@ -43,7 +43,7 @@ const ClockPage: FC<ClockPageProps> = (props) => {
 
   // 请求接口数据
   useEffect(() => {
-    if (!loading && ClockDetail && clockEvent) {
+    if (!loading && ClockDetail) {
       // 判断是否在活动时间内
       const beforeTime = moment(ClockDetail.start_time, 'YYYY-MM-DD hh:mm:ss');
       const afterTime = moment(ClockDetail.end_time, 'YYYY-MM-DD hh:mm:ss');
@@ -62,7 +62,9 @@ const ClockPage: FC<ClockPageProps> = (props) => {
       setIsShowBackground(ClockDetail?.show_background_image);
       store.reducers.setClockApiProps(clockApiProps);
       store.reducers.setPictureList(pictureList);
-      store.reducers.setClockEvent({ ...clockEvent, runQueryClockDetail });
+      store.reducers.setClockEvent(
+        clockEvent && { ...clockEvent, runQueryClockDetail }
+      );
       store.reducers.setClockDetail(ClockDetail);
     }
   }, [loading]);
