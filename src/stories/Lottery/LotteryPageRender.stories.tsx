@@ -1,7 +1,7 @@
 import React from 'react';
 import { Story, Meta } from '@storybook/react/types-6-0';
 import {
-  singleLotteryUrl,
+  lotteryDetailUrl,
   prizeListUrl,
   prizeUrl,
   userInfoUrl,
@@ -32,11 +32,11 @@ export const Yapi = Template.bind({});
 // 抽奖各接口请求地址
 const lotteryUrlList: LotteryUrlListType = {
   // 获取单个抽奖活动信息
-  singleLotteryUrl: singleLotteryUrl,
+  lotteryDetailUrl: lotteryDetailUrl,
   // 获取奖品信息列表
   prizeListUrl: prizeListUrl,
   // 默认图片链接地址头
-  picturePrefix: 'http://dev.epub360.com/staticfs2/',
+  web_url: 'http://dev.epub360.com/staticfs2/',
   // 抽奖与获取我的奖品信息
   prizeUrl: prizeUrl,
   // 获取与查询用户信息

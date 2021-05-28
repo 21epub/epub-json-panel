@@ -44,19 +44,24 @@ const ClockPage: FC<ClockPageProps> = (props) => {
   // 请求接口数据
   useEffect(() => {
     if (!loading && ClockDetail) {
-      // 判断是否在活动时间内
-      const beforeTime = moment(ClockDetail.start_time, 'YYYY-MM-DD hh:mm:ss');
-      const afterTime = moment(ClockDetail.end_time, 'YYYY-MM-DD hh:mm:ss');
-      const now = moment(
-        moment().locale('zh-cn').format('YYYY-MM-DD HH:mm'),
-        'YYYY-MM-DD hh:mm:ss'
-      );
-      if (now.isBefore(beforeTime)) {
-        message.error('活动未开始，请耐心等待！');
-        store.reducers.setIsClickable(false);
-      } else if (now.isAfter(afterTime)) {
-        message.error('活动已结束，感谢参与！');
-        store.reducers.setIsClickable(false);
+      if (clockEvent) {
+        // 判断是否在活动时间内
+        const beforeTime = moment(
+          ClockDetail.start_time,
+          'YYYY-MM-DD hh:mm:ss'
+        );
+        const afterTime = moment(ClockDetail.end_time, 'YYYY-MM-DD hh:mm:ss');
+        const now = moment(
+          moment().locale('zh-cn').format('YYYY-MM-DD HH:mm'),
+          'YYYY-MM-DD hh:mm:ss'
+        );
+        if (now.isBefore(beforeTime)) {
+          message.error('活动未开始，请耐心等待！');
+          store.reducers.setIsClickable(false);
+        } else if (now.isAfter(afterTime)) {
+          message.error('活动已结束，感谢参与！');
+          store.reducers.setIsClickable(false);
+        }
       }
       setBackground(getPicture(ClockDetail?.picture ?? [], 'background') ?? '');
       setIsShowBackground(ClockDetail?.show_background_image);

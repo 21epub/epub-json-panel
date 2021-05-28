@@ -167,7 +167,7 @@ export const getPictureList = (
   // 把抽奖类型。首字母转为小写 再拼上Picture。组成图片的key值
   const pictureType: string =
     lotteryType?.charAt(0).toLowerCase() + lotteryType.slice(1) + 'Picture';
-  return lotteryPicture[pictureType];
+  return lotteryPicture?.[pictureType];
 };
 
 // 返回对应的图片

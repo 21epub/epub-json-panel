@@ -7,7 +7,7 @@ export const prizeUrl =
   'https://yapi.epub360.com/mock/26/api/lottery/%7Blottery_slug%7D/draw/';
 
 // 单次抽奖信息
-export const singleLotteryUrl =
+export const lotteryDetailUrl =
   'https://yapi.epub360.com/mock/26/api/lottery/%7Bslug%7D';
 
 // 添加和查询用户信息
