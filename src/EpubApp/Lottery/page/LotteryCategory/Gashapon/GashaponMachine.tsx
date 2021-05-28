@@ -1,11 +1,11 @@
 import React, { FC, useState, useEffect } from 'react';
-import { Modal } from 'antd';
+import { Modal, Space } from 'antd';
 import { getLotteryResult } from '../../../data/api';
 import styles from './index.module.less';
 import { LotteryUserInfoType, PrizeType, WinnerType } from '../../../type';
 import ExportWrapper from './ExportWrapper';
 import EggWrapper from './EggWrapper';
-import { getPicture } from '../../../util';
+import { getPicture, formatPictureUrl } from '../../../util';
 import store from '../../../store';
 
 interface TreasureBoxProps {
@@ -22,7 +22,8 @@ const GashaponMachine: FC<TreasureBoxProps> = (props) => {
     lotteryDetail,
     pictureList,
     shouldUserInfoModalShow,
-    isClickable
+    isClickable,
+    lotteryUrlList
   } = state;
   const glassPic = getPicture(lotteryDetail?.picture ?? [], 'glass');
   const downPic = getPicture(lotteryDetail?.picture ?? [], 'down');
@@ -32,8 +33,8 @@ const GashaponMachine: FC<TreasureBoxProps> = (props) => {
   const defaultStartPic = getPicture(pictureList, 'start');
   const [playEgg, setPlayEgg] = useState(false);
   const [playExport, setPlayExport] = useState(false);
-  const [prize, setPrize] = useState<WinnerType>();
   const [pointerEvents, setPointerEvents] = useState<'none' | 'auto'>('auto');
+  const [prize, setPrize] = useState<WinnerType>();
 
   const onPlayEgg = () => {
     setPlayEgg(true);
@@ -101,12 +102,18 @@ const GashaponMachine: FC<TreasureBoxProps> = (props) => {
     // 延时1000毫秒弹出获奖结果
     setTimeout(() => {
       Modal.info({
-        title: prize?.objective.ranking,
+        title: prize?.objective?.ranking,
         content: (
-          <div>
-            <hr />
-            奖项名:{prize?.objective.title}
-          </div>
+          <Space size='large' align='center' style={{ marginLeft: '-38px' }}>
+            <img
+              src={formatPictureUrl(
+                prize?.objective?.picture,
+                lotteryUrlList?.web_url
+              )}
+              style={{ width: '100px' }}
+            />
+            <span>奖项名:{prize?.objective?.title}</span>
+          </Space>
         ),
         onOk() {
           // 重新获取后台的值

@@ -1,11 +1,12 @@
 import React, { FC, useEffect, useRef, useState } from 'react';
-import { Modal } from 'antd';
+import { Modal, Space } from 'antd';
 import {
   drawPrizeBlock,
   getPicture,
   getPrizeIndex,
   getRandomInt,
-  prizeToAngle
+  prizeToAngle,
+  formatPictureUrl
 } from '../../../util';
 import Pointer from './Pointer';
 import { LotteryUserInfoType, PrizeType, WinnerType } from '../../../type';
@@ -30,7 +31,12 @@ const TurntableCenter: FC<TurntableCenterProps> = (props) => {
   const [startRadian, setStartRadian] = useState(0); // 定义圆的角度
   const [state] = store.useRxjsStore();
   // 获取保存的状态
-  const { lotteryDetail, pictureList, shouldUserInfoModalShow } = state;
+  const {
+    lotteryDetail,
+    pictureList,
+    shouldUserInfoModalShow,
+    lotteryUrlList
+  } = state;
   const turntablePic = getPicture(lotteryDetail?.picture ?? [], 'turntable');
   const defaultTurntablePic = getPicture(pictureList, 'turntable');
 
@@ -90,10 +96,20 @@ const TurntableCenter: FC<TurntableCenterProps> = (props) => {
             Modal.info({
               title: res.prize.objective.ranking,
               content: (
-                <div>
-                  <hr />
-                  奖项名:{res.prize.objective.title}
-                </div>
+                <Space
+                  size='large'
+                  align='center'
+                  style={{ marginLeft: '-38px' }}
+                >
+                  <img
+                    src={formatPictureUrl(
+                      res.prize.objective.picture,
+                      lotteryUrlList?.web_url
+                    )}
+                    style={{ width: '100px' }}
+                  />
+                  <span>奖项名:{res.prize.objective.title}</span>
+                </Space>
               ),
               onOk() {
                 setStartRadian(0);

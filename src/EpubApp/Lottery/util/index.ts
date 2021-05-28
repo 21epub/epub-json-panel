@@ -180,6 +180,6 @@ export const getPicture = (
 
 // 格式化对应的图片Url地址,没有前缀的加上
 export const formatPictureUrl = (pictureUrl?: string, web_url?: string) => {
-  const webUrl = pictureUrl?.includes('//') ? '' : web_url;
+  const webUrl = pictureUrl?.includes('//') ? '' : web_url ?? '';
   return pictureUrl && webUrl + pictureUrl;
 };

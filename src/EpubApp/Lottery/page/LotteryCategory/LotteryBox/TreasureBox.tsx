@@ -1,9 +1,9 @@
 import React, { FC, useState, useEffect } from 'react';
-import { Modal } from 'antd';
+import { Modal, Space } from 'antd';
 import { getLotteryResult } from '../../../data/api';
 import styles from './index.module.less';
 import type { LotteryUserInfoType } from '../../../type';
-import { getPicture } from '../../../util';
+import { getPicture, formatPictureUrl } from '../../../util';
 import store from '../../../store';
 
 interface TreasureBoxProps {
@@ -19,7 +19,8 @@ const TreasureBox: FC<TreasureBoxProps> = (props) => {
     lotteryDetail,
     pictureList,
     shouldUserInfoModalShow,
-    isClickable
+    isClickable,
+    lotteryUrlList
   } = state;
   const openBoxPic = getPicture(lotteryDetail?.picture ?? [], 'openBox');
   const closeBoxPic = getPicture(lotteryDetail?.picture ?? [], 'closeBox');
@@ -54,10 +55,20 @@ const TreasureBox: FC<TreasureBoxProps> = (props) => {
             title: prize.objective.ranking,
             visible: modalVisible,
             content: (
-              <div>
-                <hr />
-                奖项名:{prize.objective.title}
-              </div>
+              <Space
+                size='large'
+                align='center'
+                style={{ marginLeft: '-38px' }}
+              >
+                <img
+                  src={formatPictureUrl(
+                    prize.objective.picture,
+                    lotteryUrlList?.web_url
+                  )}
+                  style={{ width: '100px' }}
+                />
+                <span>奖项名:{prize.objective.title}</span>
+              </Space>
             ),
             onOk() {
               // 重新获取后台的值

@@ -1,8 +1,9 @@
 import React, { FC, useEffect, useState } from 'react';
-import { Modal } from 'antd';
+import { Modal, Space } from 'antd';
 import { getLotteryResult } from '../../../data/api';
 import SmashEgg from './SmashEgg';
 import { LotteryUserInfoType, PrizeType } from '../../../type';
+import { formatPictureUrl } from '../../../util';
 import store from '../../../store';
 
 interface GoldenEggsProps {
@@ -15,7 +16,7 @@ interface GoldenEggsProps {
 const GoldenEggs: FC<GoldenEggsProps> = (props) => {
   const { prizeUrl, userInfo, getData } = props;
   const [state] = store.useRxjsStore();
-  const { isClickable } = state;
+  const { isClickable, lotteryUrlList } = state;
   const [isLotterySuccess, setIsLotterySuccess] = useState<boolean>(false);
   // 记录当前时候已有抽奖
   const [pointerEvents, setPointerEvents] = useState<'none' | 'auto'>('auto');
@@ -47,10 +48,20 @@ const GoldenEggs: FC<GoldenEggsProps> = (props) => {
             title: prize.objective.ranking,
             visible: isLotterySuccess,
             content: (
-              <div>
-                <hr />
-                奖项名:{prize.objective.title}
-              </div>
+              <Space
+                size='large'
+                align='center'
+                style={{ marginLeft: '-38px' }}
+              >
+                <img
+                  src={formatPictureUrl(
+                    prize?.objective.picture,
+                    lotteryUrlList?.web_url
+                  )}
+                  style={{ width: '100px' }}
+                />
+                <span>奖项名:{prize?.objective.title}</span>
+              </Space>
             ),
             onOk() {
               // 重新获取后台的值

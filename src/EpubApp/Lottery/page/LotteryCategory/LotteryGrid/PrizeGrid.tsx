@@ -1,5 +1,5 @@
 import React, { FC, useEffect, useState } from 'react';
-import { Modal } from 'antd';
+import { Modal, Space } from 'antd';
 import store from '../../../store';
 import {
   getIndexList,
@@ -74,10 +74,20 @@ const PrizeGrid: FC<PrizeGridProps> = (props) => {
                 Modal.info({
                   title: prize.objective.ranking,
                   content: (
-                    <div>
-                      <hr />
-                      奖项名:{prize.objective.title}
-                    </div>
+                    <Space
+                      size='large'
+                      align='center'
+                      style={{ marginLeft: '-38px' }}
+                    >
+                      <img
+                        src={formatPictureUrl(
+                          prize.objective.picture,
+                          lotteryUrlList?.web_url
+                        )}
+                        style={{ width: '100px' }}
+                      />
+                      <span>奖项名:{prize.objective.title}</span>
+                    </Space>
                   ),
                   onOk() {
                     setActiveIndex(undefined);

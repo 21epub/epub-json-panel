@@ -1,6 +1,7 @@
 import React, { FC, useEffect, useState } from 'react';
 import TweenOne from 'rc-tween-one';
 import { random } from 'lodash';
+import { useUpdateEffect } from 'ahooks';
 import store from '../../../store';
 import { getPicture } from '../../../util';
 
@@ -11,7 +12,8 @@ interface ExportWrapperProps {
 
 const ExportWrapper: FC<ExportWrapperProps> = (props) => {
   const { playExport = true, onExportComplete } = props;
-  const [visible, setVisible] = useState(true);
+  const [visible, setVisible] = useState<boolean>(true);
+  const [isComplete, setIsComplete] = useState<boolean>(false);
   const [state] = store.useRxjsStore();
   const { lotteryDetail, pictureList } = state;
   const exportBgPic = getPicture(lotteryDetail?.picture ?? [], 'exportBg');
@@ -28,7 +30,7 @@ const ExportWrapper: FC<ExportWrapperProps> = (props) => {
   const animation = {
     top: '10%',
     duration: 2000,
-    onComplete: onExportComplete
+    onComplete: () => setIsComplete(true)
   };
 
   useEffect(() => {
@@ -39,6 +41,12 @@ const ExportWrapper: FC<ExportWrapperProps> = (props) => {
       }, 100);
     }
   }, [playExport]);
+
+  useUpdateEffect(() => {
+    if (isComplete) {
+      onExportComplete();
+    }
+  }, [isComplete]);
 
   return (
     <div

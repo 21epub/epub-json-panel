@@ -37,8 +37,8 @@ const LotteryBox: FC<LotteryBoxProps> = (props) => {
   return (
     <div className={styles.lotteryBoxWrap}>
       <ActivityTime startTime={start_time} endTime={end_time} />
-      <TreasureBox userInfo={userInfo} prizeUrl={prizeUrl} getData={getData} />
       <RemainTime remainTimes={remain_times} />
+      <TreasureBox userInfo={userInfo} prizeUrl={prizeUrl} getData={getData} />
       <MyPrizeButton myPrizeListUrl={prizeUrl} />
       <RulesButton rules={rules} />
       <RollingList

@@ -5,6 +5,7 @@ import { isEmpty } from 'lodash';
 import { addUserInfo } from '../../data/api';
 import { translateTitle, validateValues, ErrorMsgPrompt } from '../../util';
 import store from '../../store';
+import styles from './index.module.less';
 
 interface UserInfoModalProps {
   isModalShow: boolean;
@@ -70,9 +71,11 @@ const UserInfoModal: FC<UserInfoModalProps> = (props) => {
   return (
     <div>
       <Modal
+        className={styles.userInfoModal}
         title='请填写信息'
         visible={isModalShow}
         onCancel={handleCancel}
+        destroyOnClose
         footer={[
           <Button
             onClick={handleCancel}
@@ -91,6 +94,7 @@ const UserInfoModal: FC<UserInfoModalProps> = (props) => {
           <Row gutter={[16, 16]}>
             <Col span={24}>
               <Form
+                layout='horizontal'
                 name='addUserInfo'
                 form={form}
                 onValuesChange={onValuesChange}

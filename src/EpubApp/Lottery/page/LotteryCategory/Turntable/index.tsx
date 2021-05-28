@@ -38,13 +38,13 @@ const Turntable: FC<TurntableProps> = (props) => {
   return (
     <div className={styles.turntableWrap}>
       <ActivityTime startTime={start_time} endTime={end_time} />
+      <RemainTime remainTimes={remain_times} />
       <TurntableCenter
         prizeList={prizeList}
         userInfo={userInfo}
         prizeUrl={prizeUrl}
         getData={getData}
       />
-      <RemainTime remainTimes={remain_times} />
       <MyPrizeButton myPrizeListUrl={prizeUrl} />
       <RulesButton rules={rules} />
       <RollingList

@@ -38,13 +38,13 @@ const EggFrenzy: FC<EggFrenzyProps> = (props) => {
   return (
     <div className={styles.eggFrenzyWrap}>
       <ActivityTime startTime={start_time} endTime={end_time} />
+      <RemainTime remainTimes={remain_times} />
       <GoldenEggs
         prizeList={prizeList}
         userInfo={userInfo}
         prizeUrl={prizeUrl}
         getData={getData}
       />
-      <RemainTime remainTimes={remain_times} />
       <MyPrizeButton myPrizeListUrl={prizeUrl} />
       <RulesButton rules={rules} />
       <RollingList
