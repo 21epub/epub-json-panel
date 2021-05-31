@@ -29,6 +29,9 @@ export const AntCalendarWrapper = styled.div<AntCalendarWrapperProps>`
     .ant-picker-panel {
       .ant-picker-content {
         margin: 0px;
+        th {
+          text-align: inherit;
+        }
       }
     }
   }
