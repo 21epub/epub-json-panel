@@ -39,8 +39,11 @@ const AssistancePage: FC<AssistancePageProps> = (props) => {
   const pictureList = assistancePicture[assistanceType];
 
   // 查询助力详情接口
-  const { data: AssistanceDetail, loading, run } = useRequest(() =>
-    QueryAssistanceDetail(aslug)
+  const { data: AssistanceDetail, loading, run } = useRequest(
+    () => QueryAssistanceDetail(aslug),
+    {
+      throwOnError: true
+    }
   );
 
   useUpdateEffect(() => {

@@ -36,7 +36,8 @@ const CalendarClock: FC<CalendarClockProps> = () => {
   } = useRequest(
     (start?: string, end?: string) => queryClockRecordDetail(slug, start, end),
     {
-      ready: !!clockApiProps?.slug && !!clockEvent
+      ready: !!clockApiProps?.slug && !!clockEvent,
+      throwOnError: true
     }
   );
 

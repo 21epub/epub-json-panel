@@ -27,7 +27,8 @@ const RankingModal: FC<RankingModalProps> = (props) => {
     run: runQueryClockRanking
   } = useRequest(() => queryClockRanking(slug ?? ''), {
     ready: !!clockApiProps?.slug && !!clockEvent,
-    manual: true
+    manual: true,
+    throwOnError: true
   });
 
   // 点击确定时

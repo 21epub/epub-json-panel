@@ -44,6 +44,7 @@ const AssistanceInfo: FC<AssistanceInfoProps> = (props) => {
 
   const { run: RunAddSupporter } = useRequest(AddSupporter, {
     manual: true,
+    throwOnError: true,
     onSuccess: () => {
       // 帮他助力成功触发器
       AssistanceEvent.onAssistanceSuccess();

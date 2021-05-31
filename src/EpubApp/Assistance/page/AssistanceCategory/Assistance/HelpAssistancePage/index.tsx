@@ -37,6 +37,7 @@ const HelpAssistancePage: FC<HelpAssistancePage> = (props) => {
   const { data: ObjectiveDetail } = useRequest(
     () => QueryObjectiveDetail(AssistanceDetail?.slug!, oslug),
     {
+      throwOnError: true,
       onSuccess: (ObjectiveDetailData) => {
         store.reducers.setObjectiveDetail(ObjectiveDetailData);
       }
@@ -47,6 +48,7 @@ const HelpAssistancePage: FC<HelpAssistancePage> = (props) => {
   const { data: ActivityDetail } = useRequest(
     () => QueryActivityDetail(AssistanceDetail?.slug!, oslug, acslug),
     {
+      throwOnError: true,
       onSuccess: (ActivityDetailData) => {
         store.reducers.setActivityDetail(ActivityDetailData);
       }
@@ -54,8 +56,11 @@ const HelpAssistancePage: FC<HelpAssistancePage> = (props) => {
   );
 
   // 查询当前活动的助力者列表信息
-  const { data: SupporterList } = useRequest(() =>
-    QuerySupporterList(AssistanceDetail?.slug!, oslug, acslug)
+  const { data: SupporterList } = useRequest(
+    () => QuerySupporterList(AssistanceDetail?.slug!, oslug, acslug),
+    {
+      throwOnError: true
+    }
   );
 
   useEffect(() => {

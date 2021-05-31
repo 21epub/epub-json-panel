@@ -25,6 +25,7 @@ const ObjectiveList: FC<ObjectiveListProps> = (props) => {
   // 查询当前目标商品详情接口
   const { run: RunObjectiveDetail } = useRequest(QueryObjectiveDetail, {
     manual: true,
+    throwOnError: true,
     onSuccess: (ObjectiveDetail: ObjectiveDetailType) => {
       if (ActivityList && ActivityList.length > 0) {
         store.reducers.setActivityDetail(ActivityList[0]);
@@ -49,6 +50,7 @@ const ObjectiveList: FC<ObjectiveListProps> = (props) => {
     QueryActivityList,
     {
       manual: true,
+      throwOnError: true,
       onSuccess: (_data, params) => {
         // 查询当前目标商品的详情信息，判断是否有剩余
         RunObjectiveDetail(params[0], params[1]);

@@ -30,11 +30,12 @@ const ClockPage: FC<ClockPageProps> = (props) => {
   const defaultBackground = getPicture(pictureList, 'background');
 
   // 查询签到详情接口
-  const {
-    data: ClockDetail,
-    loading,
-    run: runQueryClockDetail
-  } = useRequest(() => queryClockDetail(slug));
+  const { data: ClockDetail, loading, run: runQueryClockDetail } = useRequest(
+    () => queryClockDetail(slug),
+    {
+      throwOnError: true
+    }
+  );
 
   // 配置面板数据变化时，重新加载最新应用详情
   useUpdateEffect(() => {

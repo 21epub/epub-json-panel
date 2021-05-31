@@ -19,8 +19,11 @@ const HomePage: FC<HomePageProps> = () => {
   const { AssistanceDetail } = state;
 
   // 请求奖品列表
-  const { data: ObjectiveListValue } = useRequest(() =>
-    QueryObjectiveList(AssistanceDetail?.slug!)
+  const { data: ObjectiveListValue } = useRequest(
+    () => QueryObjectiveList(AssistanceDetail?.slug!),
+    {
+      throwOnError: true
+    }
   );
 
   useEffect(() => {

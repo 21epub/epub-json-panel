@@ -10,8 +10,11 @@ interface RankingListProps {
 
 const RankingList: FC<RankingListProps> = (props) => {
   const { aslug = '', oslug = '' } = props;
-  const { data: RankingListValue } = useRequest(() =>
-    QueryRankingList(aslug, oslug)
+  const { data: RankingListValue } = useRequest(
+    () => QueryRankingList(aslug, oslug),
+    {
+      throwOnError: true
+    }
   );
 
   const Tip = () => {

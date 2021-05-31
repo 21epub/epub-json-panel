@@ -34,18 +34,21 @@ const SignUpInfo: FC<SignUpInfoProps> = (props) => {
   const { data: UserInfoValue } = useRequest(
     () => QueryUserInfo(ObjectiveDetail?.slug, user_info_id!),
     {
-      ready: !!user_info_id
+      ready: !!user_info_id,
+      throwOnError: true
     }
   );
 
   // 新增用户注册登记信息
   const { run: RunAddUserInfo } = useRequest(AddUserInfo, {
-    manual: true
+    manual: true,
+    throwOnError: true
   });
 
   // 用户新建助力活动
   const { run: RunAddActivity } = useRequest(AddActivity, {
     manual: true,
+    throwOnError: true,
     onSuccess: (ActivityDetail) => {
       store.reducers.setActivityDetail(ActivityDetail);
       store.reducers.changePage('MyAssistancePage');
@@ -55,6 +58,7 @@ const SignUpInfo: FC<SignUpInfoProps> = (props) => {
   // 查询用户助力活动
   const { run: RunQueryActivityList } = useRequest(QueryActivityList, {
     manual: true,
+    throwOnError: true,
     onSuccess: (ActivityList: AssistanceDetailType[]) => {
       if (isEmpty(ActivityList) && AssistanceDetail?.slug) {
         // 未发起过助力，进行发起助力
@@ -71,6 +75,7 @@ const SignUpInfo: FC<SignUpInfoProps> = (props) => {
   // 更新用户注册信息
   const { run: RunUpdateUserInfo } = useRequest(UpdateUserInfo, {
     manual: true,
+    throwOnError: true,
     onSuccess: () => {
       onClose();
     }

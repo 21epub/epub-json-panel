@@ -29,6 +29,7 @@ const ClockNowButton: FC<ClockNowButtonProps> = () => {
     {
       ready: !!clockDetail?.slug && !!clockEvent,
       manual: true,
+      throwOnError: true,
       onSuccess: (res) => {
         if (clockDetail && clockEvent?.runQueryClockDetail) {
           clockEvent.onClockSuccess();

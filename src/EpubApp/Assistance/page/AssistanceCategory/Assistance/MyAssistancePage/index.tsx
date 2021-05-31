@@ -38,6 +38,7 @@ const MyAssistancePage: FC<MyAssistancePageProps> = () => {
         state.ActivityDetail?.slug!
       ),
     {
+      throwOnError: true,
       onSuccess: (ActivityDetailData) => {
         store.reducers.setActivityDetail(ActivityDetailData);
       }
@@ -45,12 +46,16 @@ const MyAssistancePage: FC<MyAssistancePageProps> = () => {
   );
 
   // 查询当前活动的助力者列表信息
-  const { data: SupporterList } = useRequest(() =>
-    QuerySupporterList(
-      AssistanceDetail?.slug!,
-      ObjectiveDetail?.slug!,
-      state.ActivityDetail?.slug!
-    )
+  const { data: SupporterList } = useRequest(
+    () =>
+      QuerySupporterList(
+        AssistanceDetail?.slug!,
+        ObjectiveDetail?.slug!,
+        state.ActivityDetail?.slug!
+      ),
+    {
+      throwOnError: true
+    }
   );
 
   useEffect(() => {
