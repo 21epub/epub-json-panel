@@ -76,7 +76,15 @@ export const prizeToAngle = (prizeIndex: number, prizeLength: number) => {
   const max = (3 * Math.PI) / 2 - ((2 * Math.PI) / prizeLength) * prizeIndex;
 
   let target = Math.random() * (max - min) + min; // [min,max)
-  if (target === min) target = target + 0.0001; // 如果为边界值则加上0.0001
+
+  const borderInterval = 0.2;
+  if (Math.abs(max - target) < borderInterval) {
+    target = target - 0.2;
+  } else if (Math.abs(target - min) < borderInterval) {
+    target = target + 0.2;
+  }
+
+  // if (target === min) target = target + 0.0001; // 如果为边界值则加上0.0001
   return target;
 };
 
