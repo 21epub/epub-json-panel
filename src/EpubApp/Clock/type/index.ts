@@ -169,6 +169,10 @@ export interface ClockDetailType {
 }
 
 export interface ClockActionsType {
+  // 签到成功时
+  onClockSuccess: () => void;
+  // 签到失败时
+  onClockFail: () => void;
   // 连续签到成功触发器
   onKeepClockSuccess: () => void;
   // 累计签到成功触发器
@@ -178,5 +182,5 @@ export interface ClockActionsType {
 // 助力里需要用到的事件，方法，触发器等
 export interface ClockEventType extends ClockActionsType {
   // 查询签到应用详情
-  runQueryClockDetail: () => void;
+  runQueryClockDetail?: () => void;
 }

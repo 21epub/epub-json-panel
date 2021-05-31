@@ -16,7 +16,7 @@ interface GoldenEggsProps {
 const GoldenEggs: FC<GoldenEggsProps> = (props) => {
   const { prizeUrl, userInfo, getData } = props;
   const [state] = store.useRxjsStore();
-  const { isClickable, lotteryUrlList } = state;
+  const { isClickable, lotteryUrlList, lotteryEvent } = state;
   const [isLotterySuccess, setIsLotterySuccess] = useState<boolean>(false);
   // 记录当前时候已有抽奖
   const [pointerEvents, setPointerEvents] = useState<'none' | 'auto'>('auto');
@@ -64,6 +64,15 @@ const GoldenEggs: FC<GoldenEggsProps> = (props) => {
               </Space>
             ),
             onOk() {
+              if (lotteryEvent) {
+                if (prize?.objective?.prize_type === 0) {
+                  // 抽中空奖时触发
+                  lotteryEvent.onLotteryEmpty();
+                } else if (prize?.objective?.prize_type === 1) {
+                  // 抽中奖品时触发
+                  lotteryEvent.onLotterySuccess();
+                }
+              }
               // 重新获取后台的值
               setPointerEvents('auto');
               getData();

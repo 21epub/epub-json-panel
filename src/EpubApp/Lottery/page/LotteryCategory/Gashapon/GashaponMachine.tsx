@@ -23,7 +23,8 @@ const GashaponMachine: FC<TreasureBoxProps> = (props) => {
     pictureList,
     shouldUserInfoModalShow,
     isClickable,
-    lotteryUrlList
+    lotteryUrlList,
+    lotteryEvent
   } = state;
   const glassPic = getPicture(lotteryDetail?.picture ?? [], 'glass');
   const downPic = getPicture(lotteryDetail?.picture ?? [], 'down');
@@ -116,6 +117,15 @@ const GashaponMachine: FC<TreasureBoxProps> = (props) => {
           </Space>
         ),
         onOk() {
+          if (lotteryEvent) {
+            if (prize?.objective?.prize_type === 0) {
+              // 抽中空奖时触发
+              lotteryEvent.onLotteryEmpty();
+            } else if (prize?.objective?.prize_type === 1) {
+              // 抽中奖品时触发
+              lotteryEvent.onLotterySuccess();
+            }
+          }
           // 重新获取后台的值
           getData();
           store.reducers.setIsClickable(true);

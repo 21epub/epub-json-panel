@@ -186,8 +186,10 @@ export interface LotteryUserInfoType {
 }
 
 export interface LotteryActionsType {
+  // 抽中奖品时
   onLotterySuccess: () => void;
-  onLotteryFail: () => void;
+  // 抽中空奖时
+  onLotteryEmpty: () => void;
 }
 
 // 助力里需要用到的事件，方法，触发器等

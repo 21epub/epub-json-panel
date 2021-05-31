@@ -35,7 +35,8 @@ const TurntableCenter: FC<TurntableCenterProps> = (props) => {
     lotteryDetail,
     pictureList,
     shouldUserInfoModalShow,
-    lotteryUrlList
+    lotteryUrlList,
+    lotteryEvent
   } = state;
   const turntablePic = getPicture(lotteryDetail?.picture ?? [], 'turntable');
   const defaultTurntablePic = getPicture(pictureList, 'turntable');
@@ -113,6 +114,15 @@ const TurntableCenter: FC<TurntableCenterProps> = (props) => {
               ),
               onOk() {
                 setStartRadian(0);
+                if (lotteryEvent) {
+                  if (res?.prize?.objective?.prize_type === 0) {
+                    // 抽中空奖时触发
+                    lotteryEvent.onLotteryEmpty();
+                  } else if (res?.prize?.objective?.prize_type === 1) {
+                    // 抽中奖品时触发
+                    lotteryEvent.onLotterySuccess();
+                  }
+                }
                 if (
                   res?.prize?.objective?.prize_type &&
                   shouldUserInfoModalShow

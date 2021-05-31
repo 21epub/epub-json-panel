@@ -20,7 +20,8 @@ const TreasureBox: FC<TreasureBoxProps> = (props) => {
     pictureList,
     shouldUserInfoModalShow,
     isClickable,
-    lotteryUrlList
+    lotteryUrlList,
+    lotteryEvent
   } = state;
   const openBoxPic = getPicture(lotteryDetail?.picture ?? [], 'openBox');
   const closeBoxPic = getPicture(lotteryDetail?.picture ?? [], 'closeBox');
@@ -71,6 +72,15 @@ const TreasureBox: FC<TreasureBoxProps> = (props) => {
               </Space>
             ),
             onOk() {
+              if (lotteryEvent) {
+                if (prize?.objective?.prize_type === 0) {
+                  // 抽中空奖时触发
+                  lotteryEvent.onLotteryEmpty();
+                } else if (prize?.objective?.prize_type === 1) {
+                  // 抽中奖品时触发
+                  lotteryEvent.onLotterySuccess();
+                }
+              }
               // 重新获取后台的值
               getData();
               store.reducers.setIsClickable(true);

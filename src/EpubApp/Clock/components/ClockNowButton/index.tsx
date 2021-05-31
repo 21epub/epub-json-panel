@@ -30,7 +30,8 @@ const ClockNowButton: FC<ClockNowButtonProps> = () => {
       ready: !!clockDetail?.slug && !!clockEvent,
       manual: true,
       onSuccess: (res) => {
-        if (clockDetail && clockEvent) {
+        if (clockDetail && clockEvent?.runQueryClockDetail) {
+          clockEvent.onClockSuccess();
           clockEvent.runQueryClockDetail();
           Modal.success({
             title: '签到成功',
@@ -64,6 +65,7 @@ const ClockNowButton: FC<ClockNowButtonProps> = () => {
         }
       },
       onError: (err: any) => {
+        if (clockEvent) clockEvent.onClockFail();
         message.error(err.response.data[0]);
       }
     }
