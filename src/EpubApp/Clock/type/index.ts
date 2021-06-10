@@ -29,23 +29,23 @@ export interface ClockPictureType {
 // 个人打卡记录
 export interface ClockRankingType {
   // Id
-  id: string;
+  id?: string;
   // 创建时间
-  created: string;
+  created?: string;
   // 用户id
-  user_id: string | null;
+  user_id?: string | null;
   // 用户头像
-  initiator_avatar: boolean;
+  initiator_avatar?: string;
   // 用户编号
-  initiator_id: number;
+  initiator_id?: number;
   // 用户昵称
-  initiator_name: string;
+  initiator_name?: string;
   // 用户姓名
-  initiator_username: number;
+  initiator_username?: string;
   // 累计签到次数
-  total_clock_num_each_one: number;
+  total_clock_num_each_one?: number;
   // 连续签到次数
-  keep_clock_num_each_one: number;
+  keep_clock_num_each_one?: number;
   // 表格用到的key
   key?: number;
 }
@@ -53,29 +53,29 @@ export interface ClockRankingType {
 // 签到记录列表
 export interface ClockRecordType {
   // Id
-  id: string;
+  id?: string;
   // 创建时间
-  created: string;
+  created?: string;
   // 用户id
-  user_id: string | null;
+  user_id?: string | null;
   // 用户头像
-  initiator_avatar: boolean;
+  initiator_avatar?: string;
   // 用户编号
-  initiator_id: number;
+  initiator_id?: number;
   // 用户昵称
-  initiator_name: string;
+  initiator_name?: string;
   // 用户姓名
-  initiator_username: number;
+  initiator_username?: string;
   // 累计签到次数
-  total_clock_num_each_one: number;
+  total_clock_num_each_one?: number;
   // 连续签到次数
-  keep_clock_num_each_one: number;
+  keep_clock_num_each_one?: number;
   // 积分
-  integral: number;
+  integral?: number;
   // 已签到日期
-  already_clock: string[];
+  already_clock?: string[];
   // 漏签日期
-  omit_clock: string[];
+  omit_clock?: string[];
 }
 
 // 用户信息

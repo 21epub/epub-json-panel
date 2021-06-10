@@ -1,4 +1,4 @@
-import React, { FC, useState } from 'react';
+import React, { FC, useState, Fragment } from 'react';
 import { Button, Card, List, message, Input } from 'antd';
 import { SearchOutlined } from '@ant-design/icons';
 import { useRequest } from 'ahooks';
@@ -148,13 +148,13 @@ const ParticipantsList: FC<ParticipantsListProps> = () => {
               </RankingBgWrapper>
               <Card
                 cover={
-                  <>
+                  <Fragment>
                     <img
                       src={item.cover}
                       onClick={() => onOpenParticipantInfoModal(item.slug)}
                     />
                     <div className='cardTitle'>{item.sign_title}</div>
-                  </>
+                  </Fragment>
                 }
               >
                 <ParticipantsInfoWrapper>

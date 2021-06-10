@@ -60,7 +60,13 @@ const RankingModal: FC<RankingModalProps> = (props) => {
 
   return (
     <Wrapper>
-      <Modal onOk={onOk} onCancel={onCancel} {...rest}>
+      <Modal
+        centered
+        className='clockRankingModal'
+        onOk={onOk}
+        onCancel={onCancel}
+        {...rest}
+      >
         <Tabs size='small' defaultActiveKey='1'>
           <Tabs.TabPane tab='打卡排行' key='clockRanking'>
             {!rankingLoading && (
@@ -68,6 +74,8 @@ const RankingModal: FC<RankingModalProps> = (props) => {
                 size='small'
                 columns={rankingColumns}
                 dataSource={clockRanking}
+                scroll={{ y: 370 }}
+                pagination={false}
                 locale={{ emptyText: '暂无数据' }}
               />
             )}

@@ -1,6 +1,6 @@
 {
   "name": "@21epub/epub-app-lib",
-  "version": "0.3.17",
+  "version": "0.3.19",
   "description": "",
   "author": "icey0126",
   "license": "MIT",
@@ -94,6 +94,7 @@
     "@types/ramda": "^0.27.38",
     "@types/react": "16.9.50",
     "@types/react-dom": "16.9.8",
+    "@types/react-infinite-scroller": "^1.2.1",
     "@types/react-redux": "^7.1.14",
     "@typescript-eslint/eslint-plugin": "4.0.1",
     "@typescript-eslint/parser": "4.0.1",

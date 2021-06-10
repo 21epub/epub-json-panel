@@ -40,12 +40,14 @@ const ClockNowButton: FC<ClockNowButtonProps> = () => {
             onOk() {
               // 满足目标则触发对应的触发器
               if (
+                res?.keep_clock_num_each_one &&
                 isNumber(clockDetail?.total_clock_target_num) &&
-                res.keep_clock_num_each_one >=
+                res?.keep_clock_num_each_one >=
                   clockDetail?.total_clock_target_num
               ) {
                 clockEvent.onTotalClockSuccess();
               } else if (
+                res?.keep_clock_num_each_one &&
                 isNumber(clockDetail?.keep_clock_target_num) &&
                 res.keep_clock_num_each_one >=
                   clockDetail?.keep_clock_target_num
@@ -86,7 +88,7 @@ const ClockNowButton: FC<ClockNowButtonProps> = () => {
       setClockNowPic(getPicture(clockDetail?.picture ?? [], 'clockNow') ?? '');
       if (clockRecord) {
         // 若在播放器中，开启了自动签到，且当天没有签到过，则加载页面完成就直接签到
-        const isIncludeToday = clockRecord[0]?.already_clock.find(
+        const isIncludeToday = clockRecord[0]?.already_clock?.find(
           (item: string) => item === today
         );
         if (clockEvent && clockDetail?.auto_clock && !isIncludeToday) {

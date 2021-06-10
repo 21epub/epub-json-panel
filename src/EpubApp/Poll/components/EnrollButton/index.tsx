@@ -1,4 +1,4 @@
-import React, { FC, useState, useEffect } from 'react';
+import React, { FC, useState, useEffect, Fragment } from 'react';
 import store from '../../store';
 import { getPicture } from '../../util';
 import { Wrapper } from './Styled';
@@ -35,7 +35,7 @@ const EnrollButton: FC<EnrollButtonProps> = () => {
         />
       </Wrapper>
       {isModalShow && (
-        <>
+        <Fragment>
           {pollDetail?.sign_slug ? (
             <PersonalInfo
               isSelf
@@ -51,7 +51,7 @@ const EnrollButton: FC<EnrollButtonProps> = () => {
               onCancel={() => setIsModalShow(false)}
             />
           )}
-        </>
+        </Fragment>
       )}
     </div>
   );

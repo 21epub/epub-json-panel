@@ -7,6 +7,7 @@ import {
   ClockPictureType,
   ClockEventType
 } from '../../type';
+import { GlobalStyle } from './Styled';
 
 export interface ClockPageRenderProps {
   clockApiProps: ClockApiPropsType;
@@ -19,6 +20,7 @@ export interface ClockPageRenderProps {
 export const ClockPageRender: FC<ClockPageRenderProps> = (props) => {
   return (
     <ConfigProvider locale={zhCN}>
+      <GlobalStyle />
       <ClockPage {...props} />
     </ConfigProvider>
   );

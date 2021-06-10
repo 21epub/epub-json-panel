@@ -42,7 +42,6 @@ const ClockRankingButton: FC<ClockRankingButtonProps> = (props) => {
         cancelText='取消'
         zIndex={1040}
         destroyOnClose
-        getContainer={false}
         visible={visibleModal}
         onCloseModal={onCloseModal}
       />

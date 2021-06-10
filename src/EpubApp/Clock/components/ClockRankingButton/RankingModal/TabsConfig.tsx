@@ -40,3 +40,33 @@ export const rankingColumns: ColumnsType<ClockRankingType> = [
     align: 'center'
   }
 ];
+
+// 测试mock数据
+// export const tableList = () => {
+//   const data: ClockRankingType[] = [];
+//   for (let i = 0; i < 100; i++) {
+//     data.push({
+//       key: i + 1,
+//       initiator_avatar:
+//         '//cdn1.zhizhucms.com/weixin/cr4fig/8089a61e74314d77379ba7c7f00a655a.png',
+//       initiator_username: `${32 + i}`,
+//       total_clock_num_each_one: i,
+//       keep_clock_num_each_one: i,
+//     });
+//   }
+//   return data;
+// };
+
+// export const listData = () => {
+//   const data: ClockRecordType[] = [];
+//   for (let i = 0; i < 100; i++) {
+//     data.push({
+//       created: `${i}`,
+//       initiator_avatar:
+//         '//cdn1.zhizhucms.com/weixin/cr4fig/8089a61e74314d77379ba7c7f00a655a.png',
+//       initiator_name: `${i}`,
+//       initiator_username: `${32 + i}`,
+//     });
+//   }
+//   return data;
+// };
