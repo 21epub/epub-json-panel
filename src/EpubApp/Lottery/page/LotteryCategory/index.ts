@@ -1,10 +1,11 @@
+import { LotteryType } from '../../type';
 import EggFrenzy from './EggFrenzy';
 import LotteryBox from './LotteryBox';
 import Turntable from './Turntable';
 import LotteryGrid from './LotteryGrid';
 import Gashapon from './Gashapon';
 
-export const getLotteryComponent = (lotteryType: string) => {
+export const getLotteryComponent = (lotteryType: LotteryType) => {
   // 抽奖应用列表
   const lotteryMap = {
     EggFrenzy,

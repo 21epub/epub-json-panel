@@ -1,3 +1,5 @@
+export type ClockType = 'CalendarClock';
+
 // 图片格式
 export interface ClockImageType {
   // 图片标题
@@ -10,7 +12,7 @@ export interface ClockImageType {
   description?: string;
 }
 
-// api接口Url
+// api参数
 export interface ClockApiPropsType {
   // 应用slug
   slug: string;

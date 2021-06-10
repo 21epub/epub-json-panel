@@ -67,7 +67,7 @@ const RankingList: FC<RankingListProps> = (props) => {
                         </td>
                         <td>
                           <span className='SPAN_pItcrQ'>
-                            {item.initiator_username}
+                            {item.initiator_name || item.initiator_username}
                           </span>
                         </td>
                         <td>{item.real_score}</td>

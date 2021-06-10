@@ -1,4 +1,6 @@
 import React from 'react';
+import { Avatar } from 'antd';
+import { UserOutlined } from '@ant-design/icons';
 import type { ColumnsType } from 'antd/lib/table';
 import { ClockRankingType } from '../../../type';
 
@@ -15,7 +17,7 @@ export const rankingColumns: ColumnsType<ClockRankingType> = [
     width: '15%',
     align: 'center',
     render: (record: string) => {
-      return <img src={record} />;
+      return <Avatar icon={<UserOutlined />} src={record} />;
     }
   },
   {

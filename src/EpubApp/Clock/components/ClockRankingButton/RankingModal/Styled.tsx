@@ -16,6 +16,10 @@ export const Wrapper = styled.div`
       .ant-modal-body {
         height: 460px;
         padding: 0px 10px 10px;
+
+        .ant-list-item-meta {
+          align-items: center;
+        }
       }
     }
   }

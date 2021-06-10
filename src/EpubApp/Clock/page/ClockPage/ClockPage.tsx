@@ -11,7 +11,7 @@ import { UserInfoModal } from '../../components';
 import { getPicture } from '../../util';
 import { queryClockDetail } from '../../data/api';
 import store from '../../store';
-import { CalendarClock } from '../ClockCategory';
+import { getClockComponent } from '../ClockCategory';
 import { Wrapper } from './Styled';
 
 export interface ClockPageProps {
@@ -28,6 +28,7 @@ const ClockPage: FC<ClockPageProps> = (props) => {
   const [background, setBackground] = useState<string>('');
   const [isShowBackground, setIsShowBackground] = useState<boolean>(true);
   const defaultBackground = getPicture(pictureList, 'background');
+  const ClockComponent = getClockComponent('CalendarClock');
 
   // 查询签到详情接口
   const { data: ClockDetail, loading, run: runQueryClockDetail } = useRequest(
@@ -79,7 +80,7 @@ const ClockPage: FC<ClockPageProps> = (props) => {
     <Wrapper
       backgroundImage={isShowBackground ? background || defaultBackground : ''}
     >
-      {!loading && <CalendarClock />}
+      {!loading && <ClockComponent />}
       <UserInfoModal />
     </Wrapper>
   );

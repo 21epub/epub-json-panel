@@ -17,16 +17,9 @@ export interface ClockPageRenderProps {
 
 // 抽奖页面渲染
 export const ClockPageRender: FC<ClockPageRenderProps> = (props) => {
-  const { clockApiProps, clockPicture, clockEvent, isDataChanged } = props;
-
   return (
     <ConfigProvider locale={zhCN}>
-      <ClockPage
-        clockApiProps={clockApiProps}
-        clockPicture={clockPicture}
-        clockEvent={clockEvent}
-        isDataChanged={isDataChanged}
-      />
+      <ClockPage {...props} />
     </ConfigProvider>
   );
 };

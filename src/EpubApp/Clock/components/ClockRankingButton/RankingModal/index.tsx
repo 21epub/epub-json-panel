@@ -1,5 +1,6 @@
 import React, { FC } from 'react';
 import { Modal, Table, Tabs, List, Avatar } from 'antd';
+import { UserOutlined } from '@ant-design/icons';
 import { ModalProps } from 'antd/lib/modal';
 import { useRequest, useUpdateEffect } from 'ahooks';
 import { isEmpty } from 'lodash';
@@ -79,8 +80,13 @@ const RankingModal: FC<RankingModalProps> = (props) => {
                 renderItem={(item) => (
                   <List.Item>
                     <List.Item.Meta
-                      avatar={<Avatar src={item.initiator_avatar} />}
-                      title={item.initiator_username}
+                      avatar={
+                        <Avatar
+                          icon={<UserOutlined />}
+                          src={item.initiator_avatar}
+                        />
+                      }
+                      title={item.initiator_name || item.initiator_username}
                       description={`在${item.created}打卡成功`}
                     />
                   </List.Item>
