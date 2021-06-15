@@ -36,7 +36,17 @@ export const getCountDownObject = (timeStringGroup: getCountDownTextProps) => {
   // 当前时间
   const now = moment(getNow(), format);
 
-  if (now.isBefore(enrollStartTime)) {
+  if (
+    pollStartTime.isBefore(enrollStartTime) ||
+    pollEndTime.isBefore(enrollEndTime)
+  ) {
+    // 投票结束时间早于报名结束时间
+    return {
+      status: '错误',
+      text: '投票时间不能早于报名时间！',
+      compareTime: now
+    };
+  } else if (now.isBefore(enrollStartTime)) {
     // 报名开始前
     return {
       status: '未开始',
@@ -90,7 +100,11 @@ export const getCountDownObject = (timeStringGroup: getCountDownTextProps) => {
     };
   }
 
-  return { status: 'error', text: 'error', compareTime: pollEndTime };
+  return {
+    status: '错误',
+    text: '活动时间设置错误，请重新设置',
+    compareTime: pollEndTime
+  };
 };
 
 // 返回对应的图片

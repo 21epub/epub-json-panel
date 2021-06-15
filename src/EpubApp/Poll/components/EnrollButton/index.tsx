@@ -4,6 +4,7 @@ import { getPicture } from '../../util';
 import { Wrapper } from './Styled';
 import PersonalInfo from '../PersonalInfo/';
 import PersonalSign from '../PersonalSign/';
+import { message } from 'antd';
 
 interface EnrollButtonProps {}
 
@@ -16,7 +17,15 @@ const EnrollButton: FC<EnrollButtonProps> = () => {
 
   // 点击立即参与
   const onClick = () => {
-    setIsModalShow(true);
+    if (pollDetail?.status) {
+      if (pollDetail.status === 1) {
+        message.error('活动未开始，请稍后再试');
+      } else if (pollDetail.status === 2) {
+        setIsModalShow(true);
+      } else if (pollDetail.status === 3) {
+        message.error('活动已结束，谢谢参与');
+      }
+    }
   };
 
   useEffect(() => {

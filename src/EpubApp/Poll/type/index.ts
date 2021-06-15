@@ -72,7 +72,7 @@ export interface PollDetailType {
   participants?: number;
   // 投票总票数
   total_poll_sum?: number;
-  // 活动状态，未开始，进行中，已结束
+  // 活动状态，1：未开始，2：进行中，3：已结束
   status?: number;
   // 该用户剩余可投票次数
   remain_times?: number;

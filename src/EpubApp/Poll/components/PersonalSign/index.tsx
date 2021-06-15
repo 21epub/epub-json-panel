@@ -34,9 +34,9 @@ const PersonalSign: FC<PersonalSignProps> = (props: PersonalSignProps) => {
         setConfirmLoading(false);
         message.success('提交报名信息成功');
         if (pollEvent) {
+          pollEvent.runQueryPollDetail();
           pollEvent.onSignUpSuccess();
         }
-        onCancel();
       },
       onError: (err: any) => {
         if (pollEvent) {

@@ -1,4 +1,5 @@
 import React, { FC, useState, useEffect } from 'react';
+import { useInViewport } from 'ahooks';
 import store from '../../store';
 import { getPicture } from '../../util';
 import { Wrapper } from './Styled';
@@ -12,6 +13,9 @@ const RankingButton: FC<RankingButtonProps> = () => {
   const [isModalShow, setIsModalShow] = useState<boolean>(false);
   const [rankingBtnPic, setRankingBtnPic] = useState<string>('');
   const defaultRankingBtn = getPicture(pollPicture, 'rankingBtn');
+  const inViewPort = useInViewport(() =>
+    document.querySelector('#RankingWrapper')
+  );
 
   // 点击显示参赛信息框
   const onClick = () => {
@@ -34,8 +38,14 @@ const RankingButton: FC<RankingButtonProps> = () => {
     }
   }, [pollDetail]);
 
+  useEffect(() => {
+    if (!inViewPort) {
+      setIsModalShow(false);
+    }
+  }, [inViewPort]);
+
   return (
-    <Wrapper>
+    <Wrapper id='RankingWrapper'>
       <img
         className='buttonImg'
         src={rankingBtnPic || defaultRankingBtn}
