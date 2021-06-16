@@ -25,7 +25,7 @@ const RankingButton: FC<RankingButtonProps> = () => {
   // 关闭弹窗
   const onCloseModal = () => {
     setIsModalShow(false);
-    if (pollEvent) {
+    if (pollEvent && pollEvent.runQueryPollDetail) {
       pollEvent.runQueryPollDetail();
     }
   };

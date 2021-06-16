@@ -33,7 +33,7 @@ const PersonalSign: FC<PersonalSignProps> = (props: PersonalSignProps) => {
       onSuccess: () => {
         setConfirmLoading(false);
         message.success('提交报名信息成功');
-        if (pollEvent) {
+        if (pollEvent && pollEvent.runQueryPollDetail) {
           pollEvent.runQueryPollDetail();
           pollEvent.onSignUpSuccess();
         }
@@ -90,7 +90,7 @@ const PersonalSign: FC<PersonalSignProps> = (props: PersonalSignProps) => {
       onCancel={onCancel}
       {...rest}
     >
-      <Form onValuesChange={onValuesChange}>
+      <Form layout='vertical' onValuesChange={onValuesChange}>
         <Form.Item label='上传参赛图片' name='cover'>
           <FormImage book_slug={book_slug} />
         </Form.Item>

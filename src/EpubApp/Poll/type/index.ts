@@ -160,5 +160,5 @@ export interface PollActionsType {
 // 需要用到的事件，方法，触发器等
 export interface PollEventType extends PollActionsType {
   // 查询签到详情
-  runQueryPollDetail: () => void;
+  runQueryPollDetail?: () => void;
 }

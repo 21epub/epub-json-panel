@@ -87,6 +87,7 @@ const UserInfoModal: FC<UserInfoModalProps> = (props) => {
           <Row gutter={[16, 16]}>
             <Col span={24}>
               <Form
+                layout='vertical'
                 name='addUserInfo'
                 form={form}
                 onValuesChange={onValuesChange}
