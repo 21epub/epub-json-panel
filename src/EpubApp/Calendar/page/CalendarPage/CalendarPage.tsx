@@ -1,4 +1,4 @@
-import React, { FC, useEffect, useState } from 'react';
+import React, { FC, useState } from 'react';
 import { useRequest, useUpdateEffect } from 'ahooks';
 import type {
   CalendarApiPropsType,
@@ -31,7 +31,6 @@ const CalendarPage: FC<CalendarPageProps> = (props) => {
   const [isShowBackground, setIsShowBackground] = useState<boolean>(true);
   const [isShowDefaultText, setIsShowDefaultText] = useState<boolean>(true);
   const [background, setBackground] = useState<string>('');
-  console.log(props);
   const defaultBackground = getPicture(pictureCalendarPic, 'background');
   const CalendarComponent = getCalendarComponent(calendarType);
 
@@ -47,10 +46,10 @@ const CalendarPage: FC<CalendarPageProps> = (props) => {
   // 配置面板数据变化时，重新加载最新应用详情
   useUpdateEffect(() => {
     runQueryCalendarDetail();
-  }, [isDataChanged]);
+  }, [isDataChanged, calendarType]);
 
   // 请求接口数据
-  useEffect(() => {
+  useUpdateEffect(() => {
     store.reducers.setCalendarApiProps(calendarApiProps);
     store.reducers.setCalendarPicture(pictureCalendarPic);
     if (!loading && calendarDetail) {
@@ -63,15 +62,16 @@ const CalendarPage: FC<CalendarPageProps> = (props) => {
     }
   }, [loading]);
 
-  console.log(background);
-  console.log(defaultBackground);
-
   return (
-    <Wrapper
-      backgroundImage={isShowBackground ? background || defaultBackground : ''}
-    >
-      {!loading && isShowDefaultText && <CalendarComponent />}
-    </Wrapper>
+    (!loading || null) && (
+      <Wrapper
+        backgroundImage={
+          isShowBackground ? background || defaultBackground : ''
+        }
+      >
+        {isShowDefaultText && <CalendarComponent />}
+      </Wrapper>
+    )
   );
 };
 
