@@ -12,7 +12,7 @@ instance.defaults.headers = {
   'Content-type': 'application/x-www-form-urlencoded'
 };
 
-export const portal_url = '/v3/api/clock/';
+export const portal_url = '/v3/api/apps/clock/';
 
 // ** 签到详情接口
 // ** ---------------------------------------------------------------------------------------------------------

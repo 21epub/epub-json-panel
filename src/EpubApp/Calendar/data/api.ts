@@ -6,8 +6,7 @@ instance.defaults.headers = {
   'Content-type': 'application/x-www-form-urlencoded'
 };
 
-const portal_url = '/v3/api/calendar/';
-// const portal_url = 'https://yapi.epub360.com/mock/184/api/calendar/%7Bslug%7D';
+const portal_url = '/v3/api/apps/calendar/';
 
 // ** 日历应用详情接口
 // ** ---------------------------------------------------------------------------------------------------------

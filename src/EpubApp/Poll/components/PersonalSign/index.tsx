@@ -42,7 +42,7 @@ const PersonalSign: FC<PersonalSignProps> = (props: PersonalSignProps) => {
         if (pollEvent) {
           pollEvent.onSignUpFail();
         }
-        message.error(err?.response?.data?.non_field_errors?.[0]);
+        message.error(err?.response?.data?.[0]);
         setConfirmLoading(false);
       }
     }

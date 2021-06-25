@@ -1,4 +1,4 @@
-import React, { FC, useState, Fragment } from 'react';
+import React, { FC, useState, Fragment, useEffect } from 'react';
 import { Button, Card, List, message, Input } from 'antd';
 import { SearchOutlined } from '@ant-design/icons';
 import { useRequest } from 'ahooks';
@@ -10,7 +10,7 @@ import {
 } from './Styled';
 import PersonalInfo from '../../PersonalInfo';
 import { querySignList, createPollRecord } from '../../../data/api';
-import { getPicture } from '../../../util';
+import { getPicture, sortSignList } from '../../../util';
 import store from '../../../store';
 
 interface RankMapType {
@@ -30,7 +30,10 @@ const ParticipantsList: FC<ParticipantsListProps> = () => {
   // const [page, setPage] = useState<number>(1);
   const [size, setSize] = useState<number>(30);
   const [fuzzyQuery, setFuzzyQuery] = useState<string>('');
+  const [rankingBg, setRankingBg] = useState<string>('');
+  const [pollBtn, setPollBtn] = useState<string>('');
   const defaultRankingBg = getPicture(pollPicture || [], 'rankingBg') ?? '';
+  const defaultPollBtn = getPicture(pollPicture || [], 'pollBtn') ?? '';
 
   //  返回排名图片
   const getRankPicture = (rank: number) => {
@@ -39,9 +42,12 @@ const ParticipantsList: FC<ParticipantsListProps> = () => {
       2: 'second',
       3: 'third'
     };
-    return getPicture(pollPicture || [], rankMap[rank]) ?? '';
+    return (
+      getPicture(pollDetail?.picture || pollPicture || [], rankMap[rank]) ?? ''
+    );
   };
 
+  // 获取参赛选手列表数据
   const { data: signList, run: runQuerySignList, loading } = useRequest(
     () => querySignList(slug ?? '', { page: 1, size, fuzzy_query: fuzzyQuery }),
     {
@@ -51,7 +57,7 @@ const ParticipantsList: FC<ParticipantsListProps> = () => {
   );
 
   // 新建投票记录
-  const { loading: pollRecordLoading, run: runCreatePollRecord } = useRequest(
+  const { run: runCreatePollRecord } = useRequest(
     (sign_slug) => createPollRecord(slug ?? '', sign_slug),
     {
       ready: !!slug,
@@ -114,6 +120,13 @@ const ParticipantsList: FC<ParticipantsListProps> = () => {
     runQuerySignList();
   };
 
+  useEffect(() => {
+    if (pollDetail) {
+      setPollBtn(getPicture(pollDetail?.picture ?? [], 'pollBtn') ?? '');
+      setRankingBg(getPicture(pollDetail?.picture ?? [], 'rankingBg') ?? '');
+    }
+  }, [pollDetail]);
+
   return (
     <ParticipantsListWrapper>
       <Input
@@ -136,10 +149,10 @@ const ParticipantsList: FC<ParticipantsListProps> = () => {
       >
         <List
           grid={{ gutter: 10, column: 2 }}
-          dataSource={signList}
+          dataSource={sortSignList(signList)}
           renderItem={(item) => (
             <List.Item>
-              <RankingBgWrapper backgroundImage={defaultRankingBg}>
+              <RankingBgWrapper backgroundImage={rankingBg || defaultRankingBg}>
                 {item?.player_rank <= 3 ? (
                   <img src={getRankPicture(item?.player_rank)} />
                 ) : (
@@ -163,14 +176,15 @@ const ParticipantsList: FC<ParticipantsListProps> = () => {
                     {item.player_poll_num}票
                   </span>
                 </ParticipantsInfoWrapper>
-                <Button
-                  type='primary'
-                  style={{ width: '100%' }}
-                  loading={pollRecordLoading}
+                <img
+                  src={pollBtn || defaultPollBtn}
+                  style={{
+                    width: '100%',
+                    height: '30px',
+                    backgroundSize: '100% 100%'
+                  }}
                   onClick={() => onPollClick(item.slug)}
-                >
-                  投票
-                </Button>
+                />
               </Card>
             </List.Item>
           )}

@@ -6,7 +6,7 @@ instance.defaults.headers = {
   'Content-type': 'application/x-www-form-urlencoded'
 };
 
-const portal_url = '/v3/api/poll/';
+const portal_url = '/v3/api/apps/poll/';
 
 // ** 投票应用详情接口
 // ** ---------------------------------------------------------------------------------------------------------

@@ -31,6 +31,7 @@ const CalendarPage: FC<CalendarPageProps> = (props) => {
   const [isShowBackground, setIsShowBackground] = useState<boolean>(true);
   const [isShowDefaultText, setIsShowDefaultText] = useState<boolean>(true);
   const [background, setBackground] = useState<string>('');
+  console.log(props);
   const defaultBackground = getPicture(pictureCalendarPic, 'background');
   const CalendarComponent = getCalendarComponent(calendarType);
 
@@ -61,6 +62,9 @@ const CalendarPage: FC<CalendarPageProps> = (props) => {
       setIsShowDefaultText(calendarDetail?.show_default_text ?? true);
     }
   }, [loading]);
+
+  console.log(background);
+  console.log(defaultBackground);
 
   return (
     <Wrapper

@@ -17,14 +17,12 @@ const EnrollButton: FC<EnrollButtonProps> = () => {
 
   // 点击立即参与
   const onClick = () => {
-    if (pollDetail?.status) {
-      if (pollDetail.status === 1) {
-        message.error('活动未开始，请稍后再试');
-      } else if (pollDetail.status === 2) {
-        setIsModalShow(true);
-      } else if (pollDetail.status === 3) {
-        message.error('活动已结束，谢谢参与');
-      }
+    if (pollDetail?.status === 1) {
+      message.error('活动未开始，请稍后再试');
+    } else if (pollDetail?.status === 2) {
+      setIsModalShow(true);
+    } else if (pollDetail?.status === 3) {
+      message.error('活动已结束，谢谢参与');
     }
   };
 

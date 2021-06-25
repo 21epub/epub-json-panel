@@ -11,6 +11,7 @@ export const RecordListWrapper = styled.div`
   overflow-y: scroll;
   .ant-list-item-meta {
     align-items: center;
+    text-align: left;
   }
   .ant-list-item {
     padding-left: 20px;
@@ -53,6 +54,7 @@ export const ParticipantsListWrapper = styled.div`
       bottom: 0px;
       width: 100%;
       height: 24px;
+      font-weight: bold;
       text-align: center;
       background: rgba(101, 101, 101, 0.3);
     }

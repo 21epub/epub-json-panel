@@ -14,7 +14,7 @@ export const Wrapper = styled.div<WrapperProps>`
   flex-direction: column;
   .newYear_year {
     position: absolute;
-    top: 109px;
+    top: 102px;
     left: 142px;
     color: #ffffff;
     font-weight: bold;
@@ -23,7 +23,7 @@ export const Wrapper = styled.div<WrapperProps>`
 
   .newYear_lunar_day {
     position: absolute;
-    top: 186px;
+    top: 176px;
     width: 58px;
     color: #ffffff;
     font-weight: bold;
@@ -33,7 +33,7 @@ export const Wrapper = styled.div<WrapperProps>`
 
   .newYearDayWrapper {
     position: absolute;
-    top: 109px;
+    top: 102px;
     left: 238px;
     color: #ffffff;
     font-weight: bold;
@@ -41,7 +41,7 @@ export const Wrapper = styled.div<WrapperProps>`
   }
   .newYearZodiacWrapper {
     position: absolute;
-    top: 98px;
+    top: 92px;
     left: 222px;
     color: #b82425;
     font-weight: bold;

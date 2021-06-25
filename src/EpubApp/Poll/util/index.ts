@@ -173,3 +173,13 @@ export function translateTitle(name: string) {
       return name;
   }
 }
+
+// 对参赛选手列表进行降序排序
+export const sortSignList = (signList?: ParticipantsType[]) => {
+  return signList?.sort((a, b) => {
+    if (a.player_poll_num && b.player_poll_num) {
+      return a.player_rank - b.player_rank;
+    }
+    return 0;
+  });
+};

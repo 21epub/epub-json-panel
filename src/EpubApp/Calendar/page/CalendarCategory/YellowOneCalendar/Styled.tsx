@@ -12,7 +12,7 @@ export const Wrapper = styled.div<WrapperProps>`
   display: flex;
   align-items: center;
   flex-direction: column;
-  .yellow_year {
+  .yellowOne_year {
     position: absolute;
     top: 74px;
     color: #ddbb83;
@@ -20,21 +20,21 @@ export const Wrapper = styled.div<WrapperProps>`
     font-size: 40px;
   }
 
-  .yellowDayWrapper {
+  .yellowOneDayWrapper {
     position: absolute;
     top: 164px;
     color: #d60020;
     font-size: 30px;
-    .yellow_month {
+    .yellowOne_month {
       font-weight: bold;
     }
-    .yellow_day {
+    .yellowOne_day {
       font-weight: bold;
       font-size: 100px;
     }
   }
 
-  .yellowLunarDayWrapper {
+  .yellowOneLunarDayWrapper {
     position: absolute;
     top: 174px;
     left: 58px;
@@ -44,7 +44,7 @@ export const Wrapper = styled.div<WrapperProps>`
     font-size: 16px;
   }
 
-  .yellowZodiacWrapper {
+  .yellowOneZodiacWrapper {
     position: absolute;
     top: 184px;
     left: 345px;
@@ -54,7 +54,7 @@ export const Wrapper = styled.div<WrapperProps>`
     font-size: 16px;
   }
 
-  .yellow_week {
+  .yellowOne_week {
     position: absolute;
     top: 340px;
     color: #d60020;

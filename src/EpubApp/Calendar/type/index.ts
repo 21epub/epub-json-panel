@@ -1,6 +1,10 @@
 // 投票类型
 export type CalendarType =
-  | 'YellowCalendar'
+  | 'YellowOneCalendar'
+  | 'YellowTwoCalendar'
+  | 'YellowThreeCalendar'
+  | 'YellowFourCalendar'
+  | 'YellowFiveCalendar'
   | 'NewYearCalendar'
   | 'NoteCalendar'
   | 'RefreshingCalendar'
@@ -15,7 +19,11 @@ export interface CalendarImageType {
 
 // 不同主题图片
 export interface CalendarPictureType {
-  yellowCalendarPic: CalendarImageType[];
+  yellowOneCalendarPic: CalendarImageType[];
+  yellowTwoCalendarPic: CalendarImageType[];
+  yellowThreeCalendarPic: CalendarImageType[];
+  yellowFourCalendarPic: CalendarImageType[];
+  yellowFiveCalendarPic: CalendarImageType[];
   newYearCalendarPic: CalendarImageType[];
   noteCalendarPic: CalendarImageType[];
   refreshingCalendarPic: CalendarImageType[];
@@ -37,7 +45,7 @@ export interface CalendarDetailType {
   // 作品slug
   book_slug?: string;
   // 日历活动类型
-  calendar_type?: number;
+  calendar_type?: string;
   // 投票活动名称
   title?: string;
   // 图片
@@ -62,6 +70,10 @@ export interface CalendarDetailType {
   second?: number;
   // 阳历-星期
   week?: string;
+  // 英文-阳历-月
+  en_month?: string;
+  // 英文-阳历-星期
+  en_week?: string;
   // 农历-年
   lunar_year?: string;
   // 农历-月

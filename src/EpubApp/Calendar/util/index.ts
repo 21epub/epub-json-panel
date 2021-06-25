@@ -22,3 +22,18 @@ export const getPicture = (
 ) => {
   return pictureList?.find((item) => item.name === pictureName)?.picture;
 };
+
+export const getDaysSuffix = (day?: number) => {
+  // 获取日期最后一个数字
+  const lastNumber = String(day)?.charAt(length - 1);
+  switch (lastNumber) {
+    case '1':
+      return 'st';
+    case '2':
+      return 'nd';
+    case '3':
+      return 'tr';
+    default:
+      return 'th';
+  }
+};
