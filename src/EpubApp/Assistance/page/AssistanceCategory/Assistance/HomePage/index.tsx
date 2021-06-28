@@ -2,7 +2,7 @@ import React, { FC, useEffect } from 'react';
 import { useRequest } from 'ahooks';
 import { QueryObjectiveList } from '../../../../data/api';
 import store from '../../../../store';
-import { setPrevPageType } from '../../../../util';
+import { setPrevPageType, getPicture } from '../../../../util';
 import {
   HeadImage,
   CountDown,
@@ -34,7 +34,9 @@ const HomePage: FC<HomePageProps> = () => {
   return (
     ((ObjectiveListValue && AssistanceDetail) || null) && (
       <Wrapper>
-        <HeadImage picture={AssistanceDetail?.picture} />
+        <HeadImage
+          picture={getPicture(AssistanceDetail?.picture ?? [], 'background')}
+        />
         <div className='block-wrap c-div DIV_tzilQM'>
           <CountDown end_time={AssistanceDetail?.end_time} />
           <ObjectiveList

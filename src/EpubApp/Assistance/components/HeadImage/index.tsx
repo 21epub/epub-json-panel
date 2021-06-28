@@ -1,8 +1,7 @@
 import React, { FC } from 'react';
-import type { AssistanceDetailType } from '../../type';
 
 interface HeadImageProps {
-  picture?: AssistanceDetailType['picture'];
+  picture?: string;
 }
 
 const HeadImage: FC<HeadImageProps> = (props) => {

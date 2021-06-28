@@ -91,7 +91,7 @@ export interface AssistanceDetailType {
   // 传给接口的助力时间
   assistanceTime?: string[];
   // 助力首页大图Url
-  picture: string;
+  picture: AssistanceImageType[];
   // 传给后台的图片值
   _picture?: string;
   // 助力首页富文本规则html字符串
