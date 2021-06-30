@@ -19,15 +19,15 @@ export interface CalendarImageType {
 
 // 不同主题图片
 export interface CalendarPictureType {
-  yellowOneCalendarPic: CalendarImageType[];
-  yellowTwoCalendarPic: CalendarImageType[];
-  yellowThreeCalendarPic: CalendarImageType[];
-  yellowFourCalendarPic: CalendarImageType[];
-  yellowFiveCalendarPic: CalendarImageType[];
-  newYearCalendarPic: CalendarImageType[];
-  noteCalendarPic: CalendarImageType[];
-  refreshingCalendarPic: CalendarImageType[];
-  [key: string]: CalendarImageType[];
+  yellowOneCalendarPic?: CalendarImageType[];
+  yellowTwoCalendarPic?: CalendarImageType[];
+  yellowThreeCalendarPic?: CalendarImageType[];
+  yellowFourCalendarPic?: CalendarImageType[];
+  yellowFiveCalendarPic?: CalendarImageType[];
+  newYearCalendarPic?: CalendarImageType[];
+  noteCalendarPic?: CalendarImageType[];
+  refreshingCalendarPic?: CalendarImageType[];
+  [key: string]: CalendarImageType[] | undefined;
 }
 
 // api参数

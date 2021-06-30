@@ -32,10 +32,10 @@ const AssistanceInfo: FC<AssistanceInfoProps> = (props) => {
 
   const [state] = store.useRxjsStore();
   const {
-    PictureList = [],
+    AssistancePicture = [],
     AssistanceEvent = {} as AssistanceEventType
   } = state;
-  const defaultObjectivePic = getPicture(PictureList, 'objective');
+  const defaultObjectivePic = getPicture(AssistancePicture, 'objective');
 
   // 是否可以创建助力活动和帮他人助力
   const [canInitOrSupport, setCanInitOrSupport] = useState(

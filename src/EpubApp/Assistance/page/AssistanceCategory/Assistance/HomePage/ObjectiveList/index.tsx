@@ -19,8 +19,8 @@ interface ObjectiveListProps {
 const ObjectiveList: FC<ObjectiveListProps> = (props) => {
   const { ObjectiveListValue, aslug } = props;
   const [state] = store.useRxjsStore();
-  const { PictureList = [] } = state;
-  const defaultObjectivePic = getPicture(PictureList, 'objective');
+  const { AssistancePicture = [] } = state;
+  const defaultObjectivePic = getPicture(AssistancePicture, 'objective');
 
   // 查询当前目标商品详情接口
   const { run: RunObjectiveDetail } = useRequest(QueryObjectiveDetail, {

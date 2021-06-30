@@ -1,4 +1,4 @@
-import React, { FC, useEffect } from 'react';
+import React, { FC, useEffect, useState } from 'react';
 import { useRequest } from 'ahooks';
 import { QueryObjectiveList } from '../../../../data/api';
 import store from '../../../../store';
@@ -16,7 +16,9 @@ export interface HomePageProps {}
 
 const HomePage: FC<HomePageProps> = () => {
   const [state] = store.useRxjsStore();
-  const { AssistanceDetail } = state;
+  const { AssistanceDetail, AssistancePicture } = state;
+  const [titlePicture, setTitlePicture] = useState('');
+  const defaultTitlePicture = getPicture(AssistancePicture ?? [], 'background');
 
   // 请求奖品列表
   const { data: ObjectiveListValue } = useRequest(
@@ -30,13 +32,19 @@ const HomePage: FC<HomePageProps> = () => {
     setPrevPageType('HomePage');
   }, []);
 
+  useEffect(() => {
+    if (AssistanceDetail) {
+      setTitlePicture(
+        getPicture(AssistanceDetail?.picture ?? [], 'background') || ''
+      );
+    }
+  }, [AssistanceDetail]);
+
   // 首页内容
   return (
     ((ObjectiveListValue && AssistanceDetail) || null) && (
       <Wrapper>
-        <HeadImage
-          picture={getPicture(AssistanceDetail?.picture ?? [], 'background')}
-        />
+        <HeadImage picture={titlePicture || defaultTitlePicture} />
         <div className='block-wrap c-div DIV_tzilQM'>
           <CountDown end_time={AssistanceDetail?.end_time} />
           <ObjectiveList

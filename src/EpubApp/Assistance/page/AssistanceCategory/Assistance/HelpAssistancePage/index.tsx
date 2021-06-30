@@ -17,7 +17,7 @@ import {
 } from '../../../../components';
 import AssistanceInfo from './AssistanceInfo';
 import store from '../../../../store';
-import { setPrevPageType } from '../../../../util';
+import { setPrevPageType, getPicture } from '../../../../util';
 import { Wrapper } from './Styled';
 
 export interface HelpAssistancePage {
@@ -28,10 +28,12 @@ export interface HelpAssistancePage {
 // 帮忙助力页
 const HelpAssistancePage: FC<HelpAssistancePage> = (props) => {
   const [state] = store.useRxjsStore();
-  const { AssistanceDetail } = state;
+  const { AssistanceDetail, AssistancePicture } = state;
   const [isPopUp, setIsPopUp] = useState(false);
   const oslug = state.ObjectiveDetail?.slug || props.oslug;
   const acslug = state.ActivityDetail?.slug || props.acslug;
+  const [titlePicture, setTitlePicture] = useState('');
+  const defaultTitlePicture = getPicture(AssistancePicture ?? [], 'background');
 
   // 查询当前活动的助力者列表信息
   const { data: ObjectiveDetail } = useRequest(
@@ -67,10 +69,18 @@ const HelpAssistancePage: FC<HelpAssistancePage> = (props) => {
     setPrevPageType('HelpAssistancePage', state.PrevPageType);
   }, []);
 
+  useEffect(() => {
+    if (AssistanceDetail) {
+      setTitlePicture(
+        getPicture(AssistanceDetail?.picture ?? [], 'background') || ''
+      );
+    }
+  }, [AssistanceDetail]);
+
   return (
     <Fragment>
       <Wrapper>
-        <HeadImage picture={AssistanceDetail?.picture} />
+        <HeadImage picture={titlePicture || defaultTitlePicture} />
         <div className='block-wrap c-div DIV_tzilQM'>
           <CountDown end_time={AssistanceDetail?.end_time} />
           {AssistanceDetail &&

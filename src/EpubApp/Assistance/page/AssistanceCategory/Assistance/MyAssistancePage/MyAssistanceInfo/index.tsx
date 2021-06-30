@@ -30,8 +30,8 @@ const MyAssistanceInfo: FC<MyAssistanceInfoProps> = (
   } = props;
 
   const [state] = store.useRxjsStore();
-  const { PictureList = [], AssistanceEvent, AssistanceApiProps } = state;
-  const defaultObjectivePic = getPicture(PictureList, 'objective');
+  const { AssistancePicture = [], AssistanceEvent, AssistanceApiProps } = state;
+  const defaultObjectivePic = getPicture(AssistancePicture, 'objective');
 
   // 点击邀请好友
   const onInvitation = () => {
@@ -48,6 +48,7 @@ const MyAssistanceInfo: FC<MyAssistanceInfoProps> = (
       args,
       AssistanceApiProps?.message_link
     );
+    console.log(message_link);
     AssistanceEvent?.setShareLink && AssistanceEvent.setShareLink(message_link);
     AssistanceEvent?.share && AssistanceEvent.share();
     // 打开分享提示弹框

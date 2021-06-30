@@ -13,8 +13,8 @@ interface ObjectiveDetailProps {
 const ObjectiveDetail: FC<ObjectiveDetailProps> = (props) => {
   const { onPartake } = props;
   const [state] = store.useRxjsStore();
-  const { PictureList = [] } = state;
-  const defaultObjectivePic = getPicture(PictureList, 'objective');
+  const { AssistancePicture = [] } = state;
+  const defaultObjectivePic = getPicture(AssistancePicture, 'objective');
 
   return (
     <Wrapper>

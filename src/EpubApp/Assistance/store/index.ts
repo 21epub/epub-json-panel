@@ -18,7 +18,7 @@ interface State {
   ActivityDetail?: ActivityDetailType;
   AssistanceApiProps?: AssistanceApiPropsType;
   AssistanceEvent?: AssistanceEventType;
-  PictureList?: AssistanceImageType[];
+  AssistancePicture: AssistanceImageType[];
 }
 
 // 初始值
@@ -30,7 +30,7 @@ const initState: State = {
   ActivityDetail: undefined,
   AssistanceApiProps: undefined,
   AssistanceEvent: undefined,
-  PictureList: undefined
+  AssistancePicture: []
 };
 
 // Reducers Types definition (Recommanded)
@@ -42,7 +42,7 @@ interface Reducers<S> extends RxjsStoreReducerParams<S> {
   setActivityDetail: (state: S, payload?: ActivityDetailType) => S;
   setAssistanceApiProps: (state: S, payload?: AssistanceApiPropsType) => S;
   setAssistanceEvent: (state: S, payload?: AssistanceEventType) => S;
-  setPictureList: (state: S, payload?: AssistanceImageType[]) => S;
+  setAssistancePicture: (state: S, payload?: AssistanceImageType[]) => S;
 }
 
 const reducers: Reducers<State> = {
@@ -76,8 +76,8 @@ const reducers: Reducers<State> = {
     return { ...state, AssistanceEvent: payload };
   },
   // 保存助力活动图片
-  setPictureList(state, payload) {
-    return { ...state, PictureList: payload };
+  setAssistancePicture(state, payload = []) {
+    return { ...state, AssistancePicture: payload };
   }
 };
 

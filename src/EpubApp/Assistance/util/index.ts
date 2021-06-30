@@ -11,8 +11,8 @@ export interface TheRequestType {
 }
 
 // 解析URL链接
-export const GetUrlRequest = () => {
-  const url = decodeURI(location.search);
+export const GetUrlRequest = (urlLink?: string) => {
+  const url = decodeURI(urlLink || location.search);
   const theRequest: TheRequestType = {};
   if (url.indexOf('?') !== -1) {
     const str = url.substr(1);

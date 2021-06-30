@@ -1,6 +1,6 @@
 import React, { FC, useEffect, useState } from 'react';
 import { useRequest, useUpdateEffect } from 'ahooks';
-import { getAssistanceComponent } from '../AssistanceCategory/';
+import { getAssistanceComponent } from '../AssistanceCategory';
 import type {
   AssistanceApiPropsType,
   AssistancePictureType,
@@ -56,8 +56,11 @@ const AssistancePage: FC<AssistancePageProps> = (props) => {
       store.reducers.setAssistanceDetail(AssistanceDetail);
       store.reducers.setAssistanceApiProps(assistanceApiProps);
       store.reducers.setAssistanceEvent(assistanceEvent);
-      store.reducers.setPictureList(pictureList);
+      store.reducers.setAssistancePicture(pictureList);
     }
+    console.log(GetUrlRequest());
+    console.log(decodeURIComponent(GetUrlRequest()[urlKey]));
+    console.log(GetRequest(decodeURIComponent(GetUrlRequest()[urlKey])));
 
     if (GetUrlRequest()[urlKey]) {
       setOslug(

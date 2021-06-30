@@ -11,7 +11,7 @@ export const getPictureList = (
 ) => {
   // 把抽奖类型。首字母转为小写 再拼上Pic。组成图片的key值
   const pictureType: string =
-    calendarType?.charAt(0).toLowerCase() + calendarType?.slice(1) + 'Pic';
+    calendarType?.charAt(0)?.toLowerCase() + calendarType?.slice(1) + 'Pic';
   return calendarPicture?.[pictureType];
 };
 
@@ -25,7 +25,7 @@ export const getPicture = (
 
 export const getDaysSuffix = (day?: number) => {
   // 获取日期最后一个数字
-  const lastNumber = String(day)?.charAt(length - 1);
+  const lastNumber = String(day)?.charAt(String(day).length - 1);
   switch (lastNumber) {
     case '1':
       return 'st';
