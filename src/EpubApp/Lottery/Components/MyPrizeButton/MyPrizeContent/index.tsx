@@ -52,7 +52,7 @@ const MyPrizeContent: FC<MyPrizeContentProps> = (props) => {
                   </div>
                   <div>
                     {String(item.received) &&
-                      `已领取：${item.received === 0 ? '是' : '否'}`}
+                      `已领取：${item.received === 1 ? '是' : '否'}`}
                   </div>
                   <div>{item.created && `中奖时间：${item.created}`}</div>
                   <Space size='large'>
