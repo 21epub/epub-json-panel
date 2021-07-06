@@ -1,5 +1,5 @@
 import React, { FC, useCallback, useEffect, useMemo } from 'react';
-import { useInViewport } from 'ahooks';
+import { useInViewport, useUpdateEffect } from 'ahooks';
 import { DataClient } from '@21epub/epub-data-client';
 import { isEmpty } from 'lodash';
 import {
@@ -111,6 +111,15 @@ const LotteryPage: FC<LotteryPageProps> = (props) => {
       }
     }
   }, [userInfo, lotteryDetail]);
+
+  useUpdateEffect(() => {
+    // 通过lotteryEvent属性来间接判断，是否在编辑器中。为空则表示在编辑器中，禁止点击操作
+    if (lotteryEvent) {
+      store.reducers.setIsClickable(true);
+    } else {
+      store.reducers.setIsClickable(false);
+    }
+  }, [lotteryEvent]);
 
   return (
     <div

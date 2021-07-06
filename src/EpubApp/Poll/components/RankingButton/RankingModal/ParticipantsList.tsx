@@ -131,7 +131,6 @@ const ParticipantsList: FC<ParticipantsListProps> = () => {
     <ParticipantsListWrapper>
       <Input
         placeholder='请输入选手姓名或编号'
-        allowClear
         size='small'
         onChange={onInputChange}
         style={{ width: '90%' }}

@@ -143,7 +143,7 @@ export interface LotteryDetailType {
   // 抽奖活动开始时间
   start_time: string;
   // 抽奖活动名称
-  title?: string;
+  title: string;
   // 总计每人可抽奖次数
   total_draw_num_each_one: number | null;
   // 总计每人可中奖次数

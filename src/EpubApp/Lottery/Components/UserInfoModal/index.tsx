@@ -52,7 +52,8 @@ const UserInfoModal: FC<UserInfoModalProps> = (props) => {
             message.success('提交信息成功');
             // 成功则清除内容
           })
-          .catch(() => {
+          .catch((err) => {
+            message.error(err.response.data[0]);
             setConfirmLoading(false);
           });
       } else {
