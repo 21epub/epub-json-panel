@@ -2,8 +2,8 @@ import React, { FC, useState, useEffect, Fragment } from 'react';
 import store from '../../store';
 import { getPicture } from '../../util';
 import { Wrapper } from './Styled';
-import PersonalInfo from '../PersonalInfo/';
-import PersonalSign from '../PersonalSign/';
+import PersonalInfo from '../PersonalInfo';
+import PersonalSign from '../PersonalSign';
 import { message } from 'antd';
 
 interface EnrollButtonProps {}

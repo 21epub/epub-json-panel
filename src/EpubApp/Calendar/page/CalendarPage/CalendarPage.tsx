@@ -31,7 +31,7 @@ const CalendarPage: FC<CalendarPageProps> = (props) => {
   const [isShowBackground, setIsShowBackground] = useState<boolean>(true);
   const [isShowDefaultText, setIsShowDefaultText] = useState<boolean>(true);
   const [background, setBackground] = useState<string>('');
-  const defaultBackground = getPicture(pictureCalendarPic, 'background');
+  const defaultBackground = getPicture(pictureCalendarPic ?? [], 'background');
   const CalendarComponent = getCalendarComponent(calendarType);
 
   // 查询投票详情接口
