@@ -34,7 +34,7 @@ const CalendarPage: FC<CalendarPageProps> = (props) => {
   const defaultBackground = getPicture(pictureCalendarPic ?? [], 'background');
   const CalendarComponent = getCalendarComponent(calendarType);
 
-  // 查询投票详情接口
+  // 查询应用详情接口
   const {
     data: calendarDetail,
     loading,
@@ -69,7 +69,7 @@ const CalendarPage: FC<CalendarPageProps> = (props) => {
           isShowBackground ? background || defaultBackground : ''
         }
       >
-        {isShowDefaultText && <CalendarComponent />}
+        {isShowDefaultText && calendarDetail && <CalendarComponent />}
       </Wrapper>
     )
   );

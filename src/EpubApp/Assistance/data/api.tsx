@@ -1,5 +1,6 @@
 import axios from 'axios';
 import qs from 'qs';
+import { message } from 'antd';
 import type { UserInfo } from '../components/SignUpInfo';
 import type {
   AssistanceInitialValueType,
@@ -27,6 +28,10 @@ const portal_url = '/v3/api/apps/assistance/';
 // **-------------------------------------------------------------------------------------------助力活动接口'api/assistance/'
 // 新建助力，并设置初始值；
 export const AddAssistance = (value: AssistanceInitialValueType) => {
+  if (!value) {
+    message.error('新建应用，value不能为空');
+    return;
+  }
   return new Promise<AssistanceDetailType>((resolve, reject) => {
     axios
       .post(portal_url, qs.stringify(value))
@@ -41,6 +46,10 @@ export const AddAssistance = (value: AssistanceInitialValueType) => {
 
 // 删除某助力
 export const DeleteAssistance = (aslug: string) => {
+  if (!aslug) {
+    message.error('删除应用，slug不能为空');
+    return;
+  }
   return new Promise<null>((resolve, reject) => {
     axios
       .delete(portal_url + aslug)

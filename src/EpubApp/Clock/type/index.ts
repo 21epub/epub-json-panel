@@ -119,7 +119,7 @@ export interface ClockDetailType {
   // 签到类型
   clock_type: number;
   // 签到活动名称
-  title: string;
+  title?: string;
   // 累计签到目标次数
   total_clock_target_num?: number;
   // 连续签到目标次数

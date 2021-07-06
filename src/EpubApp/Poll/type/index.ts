@@ -39,7 +39,7 @@ export interface PollDetailType {
   // 投票类型
   poll_type: number;
   // 投票活动名称
-  title: string;
+  title?: string;
   // 投票规则，0总计 1每天
   poll_rule?: number;
   // 每人最多投票次数

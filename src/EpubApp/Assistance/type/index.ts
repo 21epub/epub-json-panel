@@ -31,7 +31,7 @@ export interface AssistanceImageType {
 // 新增助力初始值类型
 export interface AssistanceInitialValueType {
   // 助力标题
-  title: string;
+  title?: string;
   // 助力类型数字标记
   type: number;
   // 当前作品slug

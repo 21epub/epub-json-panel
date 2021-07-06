@@ -1,23 +1,18 @@
 import axios from 'axios';
-import { message } from 'antd';
-import type { CalendarDetailType } from '../type';
+import type { TaskListDetailType } from '../type';
 
 const instance = axios.create();
 instance.defaults.headers = {
   'Content-type': 'application/x-www-form-urlencoded'
 };
 
-const portal_url = '/v3/api/apps/calendar/';
+const portal_url = '/v3/api/apps/taskList/';
 
 // ** 日历应用详情接口
 // ** ---------------------------------------------------------------------------------------------------------
 // 查询日历活动详情
-export const queryCalendarDetail = (slug: string) => {
-  if (!slug) {
-    message.error('查询应用，slug不能为空');
-    return;
-  }
-  return new Promise<CalendarDetailType>((resolve, reject) => {
+export const queryTaskListDetail = (slug: string) => {
+  return new Promise<TaskListDetailType>((resolve, reject) => {
     instance
       .get(portal_url + slug + '/')
       .then((response) => {
