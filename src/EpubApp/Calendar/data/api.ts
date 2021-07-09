@@ -1,5 +1,4 @@
 import axios from 'axios';
-import { message } from 'antd';
 import type { CalendarDetailType } from '../type';
 
 const instance = axios.create();
@@ -13,10 +12,6 @@ const portal_url = '/v3/api/apps/calendar/';
 // ** ---------------------------------------------------------------------------------------------------------
 // 查询日历活动详情
 export const queryCalendarDetail = (slug: string) => {
-  if (!slug) {
-    message.error('查询应用，slug不能为空');
-    return;
-  }
   return new Promise<CalendarDetailType>((resolve, reject) => {
     instance
       .get(portal_url + slug + '/')

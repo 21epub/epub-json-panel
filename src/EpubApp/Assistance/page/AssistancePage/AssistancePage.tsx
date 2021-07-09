@@ -58,9 +58,6 @@ const AssistancePage: FC<AssistancePageProps> = (props) => {
       store.reducers.setAssistanceEvent(assistanceEvent);
       store.reducers.setAssistancePicture(pictureList);
     }
-    console.log(GetUrlRequest());
-    console.log(decodeURIComponent(GetUrlRequest()[urlKey]));
-    console.log(GetRequest(decodeURIComponent(GetUrlRequest()[urlKey])));
 
     if (GetUrlRequest()[urlKey]) {
       setOslug(

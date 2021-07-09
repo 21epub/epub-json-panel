@@ -192,5 +192,5 @@ export interface LotteryActionsType {
   onLotteryEmpty: () => void;
 }
 
-// 助力里需要用到的事件，方法，触发器等
+// 应用里需要用到的事件，方法，触发器等
 export interface LotteryEventType extends LotteryActionsType {}

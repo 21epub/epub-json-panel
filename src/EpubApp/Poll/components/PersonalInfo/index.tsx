@@ -10,7 +10,7 @@ import {
   message
 } from 'antd';
 import { UserOutlined } from '@ant-design/icons';
-import { useRequest } from 'ahooks';
+import { useRequest, useUpdateEffect } from 'ahooks';
 import { PersonalInfoWrapper } from './Styled';
 import { querySignDetail, createPollRecord } from '../../data/api';
 import store from '../../store';
@@ -62,6 +62,10 @@ const PersonalInfo: FC<PersonalInfoProps> = (props) => {
       }
     }
   );
+
+  useUpdateEffect(() => {
+    runQuerySignDetail();
+  }, [sign_slug]);
 
   return (
     <Modal

@@ -130,7 +130,7 @@ const ParticipantsList: FC<ParticipantsListProps> = () => {
   return (
     <ParticipantsListWrapper>
       <Input
-        placeholder='请输入选手姓名或编号'
+        placeholder='请输入作品名称或编号'
         size='small'
         onChange={onInputChange}
         style={{ width: '90%' }}

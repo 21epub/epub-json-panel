@@ -1,50 +1,58 @@
-import RxjsStore, { RxjsStoreReducerParams } from '@21epub/react-rxjs-store';
+// import RxjsStore, { RxjsStoreReducerParams } from '@21epub/react-rxjs-store';
+import { Reducer, createStore } from 'redux';
 import {
   TaskListImageType,
   TaskListDetailType,
-  TaskListApiPropsType
+  TaskListApiPropsType,
+  TaskListEventType
 } from '../type';
 
 // 管理的状态数据
-export interface StateType {
+export type StateType = {
   // 默认图片
-  taskListPicture: TaskListImageType[];
-  // 当前签到应用详情
+  taskListPicture?: TaskListImageType[];
+  // 当前应用详情
   taskListDetail?: TaskListDetailType;
-  // 抽奖接口Url列表
+  // 接口Url列表
   taskListApiProps?: TaskListApiPropsType;
+  // 外部传来的事件
+  taskListEvent?: TaskListEventType;
+};
+
+export type State = StateType | undefined;
+
+export interface ActionType {
+  type:
+    | 'taskListPicture'
+    | 'taskListDetail'
+    | 'taskListApiProps'
+    | 'taskListEvent';
+  payload: any;
 }
 
 // 初始值
-const initState: StateType = {
+export const initState: StateType = {
   taskListPicture: [],
   taskListDetail: undefined,
-  taskListApiProps: undefined
+  taskListApiProps: undefined,
+  taskListEvent: undefined
 };
 
-// Reducers Types definition (Recommanded)
-interface Reducers<S> extends RxjsStoreReducerParams<S> {
-  setTaskListPicture: (state: S, payload?: TaskListImageType[]) => S;
-  setTaskListDetail: (state: S, payload?: TaskListDetailType) => S;
-  setTaskListApiProps: (state: S, payload?: TaskListApiPropsType) => S;
-}
-
-const reducers: Reducers<StateType> = {
-  setTaskListPicture(state, payload = []) {
-    return { ...state, taskListPicture: payload };
-  },
-  setTaskListDetail(state, payload) {
-    return { ...state, taskListDetail: payload };
-  },
-  setTaskListRecord(state, payload) {
-    return { ...state, taskListRecord: payload };
-  },
-  setTaskListApiProps(state, payload) {
-    return { ...state, taskListApiProps: payload };
+export const reducer: Reducer<State, ActionType> = (state, action) => {
+  switch (action.type) {
+    case 'taskListPicture':
+      return { ...state, taskListPicture: action.payload };
+    case 'taskListDetail':
+      return { ...state, taskListDetail: action.payload };
+    case 'taskListApiProps':
+      return { ...state, taskListApiProps: action.payload };
+    case 'taskListEvent':
+      return { ...state, taskListEvent: action.payload };
+    default:
+      return state;
   }
 };
 
-export default new RxjsStore<StateType, Reducers<StateType>>(
-  initState,
-  reducers
-);
+// 全局共享的store
+const store = createStore(reducer, initState);
+export default store;

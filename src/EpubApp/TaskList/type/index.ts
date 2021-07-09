@@ -56,7 +56,7 @@ export interface TaskListDetailType {
   // 背景颜色
   background_color?: string;
   // 字体颜色
-  font_color?: FontColorType;
+  font_color?: FontColorType | string;
   // 配置面板用到的字段
   taskListTime?: string[];
   font_color_title?: string;
@@ -67,7 +67,7 @@ export interface TaskListDetailType {
 // 任务详情类型
 export interface TaskDetailType {
   // 活动slug
-  task_slug: string;
+  slug?: string;
   // 任务名称
   task_title?: string;
   // 任务描述
@@ -76,28 +76,39 @@ export interface TaskDetailType {
   task_tag?: string;
   // 任务类型
   task_type?: string;
+  // 任务图片
+  task_img?: TaskListImageType[] | string;
   // 初始按钮图片
-  initial_button_img?: TaskListImageType;
+  initial_button_img?: TaskListImageType[] | string;
   // 激活按钮图片
-  active_button_img?: TaskListImageType;
+  active_button_img?: TaskListImageType[] | string;
   // 初始按钮链接
   initial_button_link?: string;
   // 激活按钮链接
   active_button_link?: string;
   // 任务绑定的变量eid
   bind?: string;
+  // 配置面板表格记录key用到的属性
+  key?: number;
 }
 
 // 任务浏览记录详情
 export interface TaskRecordType {
   // 浏览记录slug
-  record_slug: string;
+  slug: string;
   // 浏览记录创建时间
-  create: string;
+  created: string;
   // 任务标题
   task_title: string;
   // 用户头像
   avatar: string;
   // 用户昵称
   username: string;
+}
+
+export interface TaskListActionsType {}
+
+// 应用里需要用到的事件，方法，触发器等
+export interface TaskListEventType extends TaskListActionsType {
+  getVariableValue: (eid: string) => number | string;
 }

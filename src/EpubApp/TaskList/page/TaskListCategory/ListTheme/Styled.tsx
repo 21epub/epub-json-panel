@@ -1,64 +1,89 @@
 import styled from 'styled-components';
+import type { FontColorType } from '../../../type';
 
 export interface WrapperProps {
-  backgroundImage?: string;
+  font_color?: FontColorType;
 }
 
 export const Wrapper = styled.div<WrapperProps>`
   width: 100%;
   height: 100%;
-  padding: 60px 36px 10px;
+  padding: 0px 16px;
   position: relative;
   display: flex;
   align-items: center;
   flex-direction: column;
-  .yellowOne_year {
-    position: absolute;
-    top: 74px;
-    color: #ddbb83;
-    font-weight: bold;
-    font-size: 40px;
+  overflow-y: scroll;
+
+  .taskRecordBtn {
+    width: 100%;
+    height: 24px;
+    color: #909090;
+    text-align: right;
+    text-decoration: underline;
   }
 
-  .yellowOneDayWrapper {
-    position: absolute;
-    top: 164px;
-    color: #d60020;
-    font-size: 30px;
-    .yellowOne_month {
-      font-weight: bold;
+  .ant-list {
+    width: 100%;
+
+    .ant-list-items {
+      margin: 0;
+
+      .ant-list-item {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+
+        .ant-list-item-meta-title {
+          margin: 0px;
+          overflow-wrap: break-word;
+        }
+
+        & > div {
+          margin: 0px 4px;
+        }
+
+        .taskImg {
+          width: 80px;
+          height: 80px;
+        }
+
+        .taskDetail {
+          width: 50%;
+          .ant-list-item-meta-title {
+            color: ${(props) => props.font_color?.title};
+          }
+          .ant-list-item-meta-description {
+            color: ${(props) => props.font_color?.description};
+          }
+          .ant-space-item {
+            color: ${(props) => props.font_color?.tag};
+          }
+        }
+
+        .taskBtnImg {
+          width: 60px;
+          height: 30px;
+        }
+
+        img {
+          width: 100%;
+          height: 100%;
+          object-fit: contain;
+        }
+      }
     }
-    .yellowOne_day {
-      font-weight: bold;
-      font-size: 100px;
-    }
   }
+`;
 
-  .yellowOneLunarDayWrapper {
-    position: absolute;
-    top: 174px;
-    left: 58px;
-    width: 20px;
-    color: #d60020;
-    font-weight: bold;
-    font-size: 16px;
+export const RecordListWrapper = styled.div`
+  height: 100%;
+  overflow-y: scroll;
+  .ant-list-item-meta {
+    align-items: center;
+    text-align: left;
   }
-
-  .yellowOneZodiacWrapper {
-    position: absolute;
-    top: 184px;
-    left: 345px;
-    width: 20px;
-    color: #d60020;
-    font-weight: bold;
-    font-size: 16px;
-  }
-
-  .yellowOne_week {
-    position: absolute;
-    top: 340px;
-    color: #d60020;
-    font-weight: bold;
-    font-size: 20px;
+  .ant-list-item {
+    padding-left: 20px;
   }
 `;

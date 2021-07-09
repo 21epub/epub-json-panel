@@ -1,13 +1,15 @@
 import React, { FC, useState } from 'react';
+import { useDispatch } from 'react-redux';
 import { useRequest, useUpdateEffect } from 'ahooks';
 import type {
   TaskListApiPropsType,
   TaskListPictureType,
-  TaskListType
+  TaskListType,
+  TaskListEventType
 } from '../../type';
 import { getPictureList } from '../../util';
 import { queryTaskListDetail } from '../../data/api';
-import store from '../../store';
+import { ActionType } from '../../store';
 import { getTaskListComponent } from '../TaskListCategory';
 import { Wrapper } from './Styled';
 
@@ -15,6 +17,7 @@ export interface TaskListPageProps {
   taskListType: TaskListType;
   taskListApiProps: TaskListApiPropsType;
   taskListPicture: TaskListPictureType;
+  taskListEvent?: TaskListEventType;
   isDataChanged?: boolean;
 }
 
@@ -23,9 +26,11 @@ const TaskListPage: FC<TaskListPageProps> = (props) => {
   const {
     taskListApiProps,
     taskListPicture,
-    taskListType,
+    taskListType = 'ListTheme',
+    taskListEvent,
     isDataChanged
   } = props;
+  const dispatch = useDispatch<(state: ActionType) => void>();
   const pictureTaskListPic = getPictureList(taskListPicture, taskListType);
   const { slug } = taskListApiProps;
   const [backgroundColor, setBackgroundColor] = useState<string>('');
@@ -47,11 +52,12 @@ const TaskListPage: FC<TaskListPageProps> = (props) => {
 
   // 请求接口数据
   useUpdateEffect(() => {
-    store.reducers.setTaskListApiProps(taskListApiProps);
-    store.reducers.setTaskListPicture(pictureTaskListPic);
+    dispatch({ type: 'taskListPicture', payload: pictureTaskListPic });
+    dispatch({ type: 'taskListApiProps', payload: pictureTaskListPic });
+    dispatch({ type: 'taskListEvent', payload: taskListEvent });
     if (!loading && taskListDetail) {
-      store.reducers.setTaskListDetail(taskListDetail);
-      setBackgroundColor('');
+      dispatch({ type: 'taskListDetail', payload: taskListDetail });
+      setBackgroundColor(taskListDetail.background_color || '');
     }
   }, [loading]);
 

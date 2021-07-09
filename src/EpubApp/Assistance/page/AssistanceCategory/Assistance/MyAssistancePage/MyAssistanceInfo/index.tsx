@@ -48,7 +48,6 @@ const MyAssistanceInfo: FC<MyAssistanceInfoProps> = (
       args,
       AssistanceApiProps?.message_link
     );
-    console.log(message_link);
     AssistanceEvent?.setShareLink && AssistanceEvent.setShareLink(message_link);
     AssistanceEvent?.share && AssistanceEvent.share();
     // 打开分享提示弹框
