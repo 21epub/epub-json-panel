@@ -53,7 +53,7 @@ const TaskListPage: FC<TaskListPageProps> = (props) => {
   // 请求接口数据
   useUpdateEffect(() => {
     dispatch({ type: 'taskListPicture', payload: pictureTaskListPic });
-    dispatch({ type: 'taskListApiProps', payload: pictureTaskListPic });
+    dispatch({ type: 'taskListApiProps', payload: taskListApiProps });
     dispatch({ type: 'taskListEvent', payload: taskListEvent });
     if (!loading && taskListDetail) {
       dispatch({ type: 'taskListDetail', payload: taskListDetail });

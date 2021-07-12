@@ -16,7 +16,14 @@ const ListTheme: FC<ListThemeProps> = () => {
     (state: StateType) => state
   );
   // console.log(store.getState());
-  const { slug, picture, font_color } = taskListDetail ?? {};
+  const {
+    slug,
+    picture,
+    font_color,
+    show_task_image,
+    show_task_description,
+    show_task_tag
+  } = taskListDetail ?? {};
   const { getVariableValue } = taskListEvent ?? {};
   const [isShowRecordModal, setIsShowRecordModal] = useState<boolean>(false);
   const defaultTaskImg = getPicture(picture || [], 'taskImg');
@@ -45,9 +52,10 @@ const ListTheme: FC<ListThemeProps> = () => {
     task_slug?: string,
     link?: string
   ) => {
-    if (type === 'initial' && link && slug && task_slug) {
+    if (link && slug && task_slug) {
       addTaskRecord(slug, task_slug).then(() => {
-        window.open(link);
+        const url = link?.includes('//') ? link : `//${link}`;
+        window.open(url);
       });
     }
   };
@@ -73,23 +81,27 @@ const ListTheme: FC<ListThemeProps> = () => {
           dataSource={taskRecordList}
           renderItem={(item) => (
             <List.Item>
-              <div className='taskImg'>
-                <img
-                  src={
-                    (item?.task_img as TaskListImageType[])?.[0]?.picture ||
-                    defaultTaskImg
-                  }
-                />
-              </div>
+              {show_task_image && (
+                <div className='taskImg'>
+                  <img
+                    src={
+                      (item?.task_img as TaskListImageType[])?.[0]?.picture ||
+                      defaultTaskImg
+                    }
+                  />
+                </div>
+              )}
               <div className='taskDetail'>
                 <List.Item.Meta
                   title={item?.task_title}
-                  description={item?.task_description}
+                  description={show_task_description && item?.task_description}
                 />
-                <Space size='small'>
-                  <span>{item.task_type}</span>
-                  <span>{item.task_tag}</span>
-                </Space>
+                {show_task_tag && (
+                  <Space size='small'>
+                    <span>{item.task_type}</span>
+                    <span>{item.task_tag}</span>
+                  </Space>
+                )}
               </div>
               <div className='taskBtnImg'>
                 {getBtnState(item.bind) ? (
