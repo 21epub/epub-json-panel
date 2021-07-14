@@ -17,6 +17,7 @@ const Pointer: FC<PointerProps> = (props) => {
   const [state] = store.useRxjsStore();
   // 获取保存的状态
   const {
+    lotteryEvent,
     lotteryDetail,
     shouldUserInfoModalShow,
     isClickable,
@@ -76,7 +77,10 @@ const Pointer: FC<PointerProps> = (props) => {
   }, [isClickable]);
 
   return (
-    <div className={styles.pointer} style={{ pointerEvents: pointerEvents }}>
+    <div
+      className={styles.pointer}
+      style={{ pointerEvents: lotteryEvent ? pointerEvents : 'none' }}
+    >
       {isClickable ? (
         <img
           className='point'

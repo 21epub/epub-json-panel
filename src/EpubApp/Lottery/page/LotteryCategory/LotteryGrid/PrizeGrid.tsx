@@ -163,7 +163,7 @@ const PrizeGrid: FC<PrizeGridProps> = (props) => {
     return (
       <div
         className={styles.prizeGridWrap}
-        style={{ pointerEvents: pointerEvents }}
+        style={{ pointerEvents: lotteryEvent ? pointerEvents : 'none' }}
       >
         <div
           className='gridBg'

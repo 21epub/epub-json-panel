@@ -121,7 +121,7 @@ const GoldenEggs: FC<GoldenEggsProps> = (props) => {
   return (
     <div
       className='eggFrenzyContainer'
-      style={{ pointerEvents: pointerEvents }}
+      style={{ pointerEvents: lotteryEvent ? pointerEvents : 'none' }}
     >
       <div className='egg1'>
         <SmashEgg {...SmashEggProps} />
