@@ -66,24 +66,30 @@ const TurntableCenter: FC<TurntableCenterProps> = (props) => {
       };
 
       // 获取随机圈数
-      const turns = getRandomInt(5, 15);
+      const turns = getRandomInt(3, 5);
 
       // 将总旋转度数切割为多少份
-      const frame = getRandomInt(100, 400);
+      const frame = getRandomInt(200, 400);
 
-      for (let i = 1; i <= frame; i += 1) {
-        // target为目标角度， 2 * Math.PI 为一圈 ，获取每份度数的大小
-        const interval = (target + 2 * Math.PI * turns) / frame;
-        const timeId = setTimeout(() => {
-          // 设定每次相对原点的旋转度数
-          setStartRadian(interval * i);
-          // 当到达目标度数时返回结果
-          if (i === frame) {
-            resolve(result);
-            clearTimeout(timeId);
-          }
-        }, 100);
+      const interval = (target + 2 * Math.PI * turns) / frame;
+
+      let i = 1;
+      // 回调函数
+      function animloop() {
+        i += 1; // 修改图像的位置
+        setStartRadian(interval * i);
+
+        if (i < frame) {
+          // 在动画没有结束前，递归渲染
+          window.requestAnimationFrame(animloop);
+        }
+
+        if (i === frame) {
+          resolve(result);
+        }
       }
+      // 第一帧渲染
+      window.requestAnimationFrame(animloop);
     });
   };
 
