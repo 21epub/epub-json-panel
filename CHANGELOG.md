@@ -2,6 +2,53 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.6.8-alpha.0](https://github.com/icey0126/epub-app-lib/compare/v0.0.3-alpha.68...v0.6.8-alpha.0) (2021-07-16)
+
+### Features
+
+- add calendar ([606d28a](https://github.com/icey0126/epub-app-lib/commit/606d28a222f55bd74cdde9fec814235e5cfcc3f0))
+- update 0.3.20 ([1ead489](https://github.com/icey0126/epub-app-lib/commit/1ead48913d8464b775f91862ce65787eb1690910))
+- 使用 rxjs 替换 redux ([fea9711](https://github.com/icey0126/epub-app-lib/commit/fea9711cf011a25aba7edab66acf150179a987e0))
+- 修复助力部分触发器报错 ([f882117](https://github.com/icey0126/epub-app-lib/commit/f882117c442eb7d8f3d4022eb23db34b4114ff0f))
+- 修复部分投票问题,更新版本 0.5.2 ([bdb09dc](https://github.com/icey0126/epub-app-lib/commit/bdb09dc06dcaa31a8de6d681c3723630f2c57f04))
+- 升级版本 0.3.2,助力刷新功能优化 ([1b357c0](https://github.com/icey0126/epub-app-lib/commit/1b357c079db46ee996f0952ff11a286e36ad01ec))
+- 增加投票应用 ([89870d7](https://github.com/icey0126/epub-app-lib/commit/89870d7b21962813194535c85c3b3e2bb8483863))
+- 增加接口报错处理 ([49a8094](https://github.com/icey0126/epub-app-lib/commit/49a8094c70727ceba1500d266da2d014c05f4901))
+- 增加触发器 ([fbafeb9](https://github.com/icey0126/epub-app-lib/commit/fbafeb9ce7f0fdfeddf9d12f3c4a840731ad64e9))
+- 抽奖,签到添加触发器支持 ([2835339](https://github.com/icey0126/epub-app-lib/commit/283533991c2b78a43a528867fda3968810e2894c))
+- 接入助力与签到应用 ([dddfd55](https://github.com/icey0126/epub-app-lib/commit/dddfd55e5c64463d54fed4b983606f25da27d583))
+- 新增任务列表应用 ([223f5c5](https://github.com/icey0126/epub-app-lib/commit/223f5c5b1feeaf460d8993b8e1cf5e2544db59c4))
+- 新增任务列表应用框架 ([ae90e26](https://github.com/icey0126/epub-app-lib/commit/ae90e2626213dd0e693e2c4066b1c9600667a5e9))
+- 更新投票应用,修复签到应用部分 bug ([965ddfa](https://github.com/icey0126/epub-app-lib/commit/965ddfadef96bf2d80962a8130d6f4d1f8fd091d))
+- 更新版本 0,3,3 ([c2add40](https://github.com/icey0126/epub-app-lib/commit/c2add40f259109c338587b0e40272a84d800b1f3))
+- 更新版本 0.3.10 ([2469b6b](https://github.com/icey0126/epub-app-lib/commit/2469b6b60a27bb7461b9224483ea6872107d780e))
+- 更新版本 0.3.9 ([24125e8](https://github.com/icey0126/epub-app-lib/commit/24125e8f69137692561fbeaf1c1c9733368d8f10))
+- 更新版本 0.4.3 ([731e7d9](https://github.com/icey0126/epub-app-lib/commit/731e7d9b169870f7e41c73138babc0b6c6b1a671))
+- 更新版本 69 ([c2bc81a](https://github.com/icey0126/epub-app-lib/commit/c2bc81acb017ca64b90ec1c7571b465578dbaa7f))
+- 添加简单测试 ([c236989](https://github.com/icey0126/epub-app-lib/commit/c236989c5b1bf6751dd805418509a144d5e8a78e))
+- 签到应用接口联调 ([c1cdc11](https://github.com/icey0126/epub-app-lib/commit/c1cdc115dcb3e5560f1316db4d7d10ae217e088b))
+- 统一管理图片和 api 的 Url ([b985ef2](https://github.com/icey0126/epub-app-lib/commit/b985ef2507cbb90a17c7999901401670494fb72f))
+- 联调日历应用,更新版本 0.5.3 ([2446091](https://github.com/icey0126/epub-app-lib/commit/24460911eb23f91972a6786ddb5bd32610f9adb3))
+- 调整助理 api 接口 ([8a28c5d](https://github.com/icey0126/epub-app-lib/commit/8a28c5d5d2ee639e2ed4166a7201ed26ccab8a95))
+- 调整扭蛋机抽奖逻辑 ([ccac12a](https://github.com/icey0126/epub-app-lib/commit/ccac12ae985170b0e83eb3bbb1daab3820078312))
+
+### Bug Fixes
+
+- 🐛 fix lottery received ([7741191](https://github.com/icey0126/epub-app-lib/commit/774119154d9f0a7dcf5e3caf7d09a03f16deb6e6))
+- 🐛 fix turntable angle ([e2bf69f](https://github.com/icey0126/epub-app-lib/commit/e2bf69fba9148b1764726226e7907f7c1c9d07c4))
+- 🐛 fix turntable turning ([0ffe99d](https://github.com/icey0126/epub-app-lib/commit/0ffe99d05c4084daa821f1fda84d11229ddb6326))
+- 优化 poll 活动时间显示 ([8f94ee1](https://github.com/icey0126/epub-app-lib/commit/8f94ee17d9e45d519332aa2af5bcc619597db83b))
+- 修复不在活动时间任可参加活动的 bug ([66bdaf4](https://github.com/icey0126/epub-app-lib/commit/66bdaf42eb2010be383c138257a462cb08bd903c))
+- 修复任务列表部分 bug ([871b306](https://github.com/icey0126/epub-app-lib/commit/871b306be416ea55b953e956237a7edadcbabfbe))
+- 修复助力首页图片显示异常的问题 ([2a2ec3e](https://github.com/icey0126/epub-app-lib/commit/2a2ec3ec17017fb62a48557140a6bb8abf9f5a7d))
+- 修复在编辑器可以点击抽奖的 bug ([2fa2cb2](https://github.com/icey0126/epub-app-lib/commit/2fa2cb23085e27d9beb07bf95db3d4a71599a378))
+- 修复抽奖与日历迭代 7-1 部分 bug ([d17444a](https://github.com/icey0126/epub-app-lib/commit/d17444a0c7eb12bf0486aa683e547cca60010b6f))
+- 修复抽奖部分 bug ([2446a87](https://github.com/icey0126/epub-app-lib/commit/2446a87fe4129b6a56512292062a8504c291c869))
+- 修复日历报错 ([9b4e2c8](https://github.com/icey0126/epub-app-lib/commit/9b4e2c8a29ce8d2b62be0ec706eaaad1406be9a5))
+- 修复签到样式问题 ([544ee62](https://github.com/icey0126/epub-app-lib/commit/544ee62bad9979bc560e1f38fc8f2279b2954403))
+- 修复部分抽奖 bug ([7f6b8b9](https://github.com/icey0126/epub-app-lib/commit/7f6b8b9218ef3b42725afc956dead410323fce5d))
+- 增加手机号,邮箱验证 ([a920df8](https://github.com/icey0126/epub-app-lib/commit/a920df870a9377f06070f01f933024a87c488c9b))
+
 ### [0.0.3-alpha.68](https://github.com/icey0126/epub-app-lib/compare/v0.0.3-alpha.67...v0.0.3-alpha.68) (2021-04-16)
 
 ### Bug Fixes
