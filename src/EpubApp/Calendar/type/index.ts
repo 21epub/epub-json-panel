@@ -57,17 +57,17 @@ export interface CalendarDetailType {
   // 显示默认文本
   show_default_text?: boolean;
   // 阳历-年
-  year?: number;
+  year?: string;
   // 阳历-月
-  month?: number;
+  month?: string;
   // 阳历-日
-  day?: number;
+  day?: string;
   // 阳历-小时
-  hours?: number;
+  hours?: string;
   // 阳历-分钟
-  minute?: number;
+  minute?: string;
   // 阳历-秒
-  second?: number;
+  second?: string;
   // 阳历-星期
   week?: string;
   // 英文-阳历-月

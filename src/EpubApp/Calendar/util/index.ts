@@ -23,7 +23,7 @@ export const getPicture = (
   return pictureList?.find((item) => item.name === pictureName)?.picture;
 };
 
-export const getDaysSuffix = (day?: number) => {
+export const getDaysSuffix = (day?: string) => {
   // 获取日期最后一个数字
   const lastNumber = String(day)?.charAt(String(day).length - 1);
   switch (lastNumber) {
