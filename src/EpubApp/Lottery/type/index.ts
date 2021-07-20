@@ -100,6 +100,16 @@ export interface LotteryContactInfoType {
   name?: string;
 }
 
+export interface InfoFieldsListType {
+  name?: string;
+  email?: string;
+  phone?: string;
+  address?: string;
+  custom_field_1?: string;
+  custom_field_2?: string;
+  // [key: string]: string;
+}
+
 // 单个抽奖活动参数
 export interface LotteryDetailType {
   // 作品slug
@@ -124,7 +134,7 @@ export interface LotteryDetailType {
   // 用户填写的信息
   info_fields: string;
   // 用户填写信息列表
-  info_fields_list?: string[];
+  info_fields_list?: InfoFieldsListType;
   // 是否需要填写用户信息
   need_user_info: boolean;
   // 抽奖应用图片集合
@@ -135,11 +145,19 @@ export interface LotteryDetailType {
   // 抽奖活动规则
   rules: string;
   // 是否显示背景图片
-  show_background_image: boolean;
+  show_background_image?: boolean;
   // 是否显示举办方信息
-  show_contact_info: boolean;
+  show_contact_info?: boolean;
   // 是否显示中奖轮播
-  show_rolling_list: boolean;
+  show_rolling_list?: boolean;
+  // 是否显示活动时间
+  show_activity?: boolean;
+  // 是否显示剩余次数
+  show_remain_time?: boolean;
+  // 是否显示我的奖品按钮
+  show_self_prize?: boolean;
+  // 是否显示活动规则按钮
+  show_activity_rule?: boolean;
   // 抽奖活动开始时间
   start_time: string;
   // 抽奖活动名称
@@ -160,6 +178,18 @@ export interface LotteryDetailType {
   contact_info_0?: string;
   // 抽奖时间范围
   lotteryTime?: string[];
+  // 姓名
+  name?: string;
+  // 邮箱
+  email?: string;
+  // 电话
+  phone?: string;
+  // 地址
+  address?: string;
+  // 自定义表单字段1
+  custom_field_1?: string;
+  // 自定义表单字段2
+  custom_field_2?: string;
   [key: string]: any;
 }
 
