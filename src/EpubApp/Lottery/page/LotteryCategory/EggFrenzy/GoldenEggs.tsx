@@ -20,92 +20,141 @@ const GoldenEggs: FC<GoldenEggsProps> = (props) => {
   const [isLotterySuccess, setIsLotterySuccess] = useState<boolean>(false);
   // 记录当前时候已有抽奖
   const [pointerEvents, setPointerEvents] = useState<'none' | 'auto'>('auto');
-  const { lotteryDetail, shouldUserInfoModalShow } = state;
+  const { lotteryDetail } = state;
+  const [lotteryState, setLotteryState] = useState<string | undefined>();
 
-  const lottery = async () => {
-    // 先判断是否需要填写信息
-    if (
-      userInfo?.user_id === null &&
-      lotteryDetail?.need_user_info &&
-      shouldUserInfoModalShow
-    ) {
-      store.reducers.setIsUserInfoModalShow(true);
-    } else if (
-      prizeUrl &&
-      (lotteryDetail?.remain_times === null ||
-        lotteryDetail?.remain_times === undefined ||
-        lotteryDetail?.remain_times > 0)
-    ) {
-      store.reducers.setIsClickable(false);
-      // 抽奖
-      try {
-        const response = await getLotteryResult(prizeUrl);
-        const prize = response?.data?.data?.results[0];
-        setIsLotterySuccess(true);
-        // 延时1000毫秒弹出获奖结果
-        setTimeout(() => {
+  const getState = async () => {
+    switch (lotteryState) {
+      case 'checkTime':
+        if (state.betweenActiviyTime) {
+          setLotteryState('checkRemainTimes');
+        } else {
+          store.reducers.setIsActivityTimeModalShow(true);
+          setLotteryState(undefined);
+        }
+        break;
+      case 'checkRemainTimes':
+        if (
+          lotteryDetail?.remain_times === null ||
+          lotteryDetail?.remain_times === undefined ||
+          lotteryDetail?.remain_times > 0
+        ) {
+          setLotteryState('checkNeedUserInfo');
+        } else {
           Modal.info({
-            title: prize.objective.ranking,
-            visible: isLotterySuccess,
+            title: '抽奖次数用完啦',
             content: (
-              <Space
-                size='large'
-                align='center'
-                style={{ marginLeft: '-38px' }}
-              >
-                <img
-                  src={formatPictureUrl(
-                    prize?.objective.picture,
-                    lotteryUrlList?.web_url
-                  )}
-                  style={{ width: '100px' }}
-                />
-                <span>奖项名:{prize?.objective.title}</span>
-              </Space>
+              <div>
+                <hr />
+                <p>您的抽奖次数用完啦！</p>
+                <p>无法抽奖，感谢您的参与！</p>
+              </div>
             ),
-            onOk() {
-              if (lotteryEvent) {
-                if (prize?.objective?.prize_type === 0) {
-                  // 抽中空奖时触发
-                  lotteryEvent.onLotteryEmpty();
-                } else if (prize?.objective?.prize_type === 1) {
-                  // 抽中奖品时触发
-                  lotteryEvent.onLotterySuccess();
+            onOk() {}
+          });
+        }
+        break;
+      case 'checkNeedUserInfo':
+        if (lotteryDetail?.need_user_info) {
+          setLotteryState('checkIsUserInfoFilled');
+        } else {
+          setLotteryState('lottery');
+        }
+        break;
+      case 'checkIsUserInfoFilled':
+        if (userInfo?.user_id === null) {
+          setLotteryState('checkUserInfoFillRules');
+        } else {
+          setLotteryState('lottery');
+        }
+        break;
+      case 'checkUserInfoFillRules':
+        if (lotteryDetail?.fill_rules === 0) {
+          // 先填写后抽奖
+          store.reducers.setIsUserInfoModalShow(true);
+        } else {
+          // 先抽奖后填写
+          store.reducers.setShowUserModalAfterLottery(true);
+          setLotteryState('lottery');
+        }
+        break;
+      case 'lottery':
+        store.reducers.setIsClickable(false);
+        // 抽奖
+        try {
+          const response = await getLotteryResult(prizeUrl);
+          const prize = response?.data?.data?.results[0];
+          setIsLotterySuccess(true);
+          // 延时1000毫秒弹出获奖结果
+          setTimeout(() => {
+            Modal.info({
+              title: prize.objective.ranking,
+              visible: isLotterySuccess,
+              content: (
+                <Space
+                  size='large'
+                  align='center'
+                  style={{ marginLeft: '-38px' }}
+                >
+                  <img
+                    src={formatPictureUrl(
+                      prize?.objective.picture,
+                      lotteryUrlList?.web_url
+                    )}
+                    style={{ width: '100px' }}
+                  />
+                  <span>奖项名:{prize?.objective.title}</span>
+                </Space>
+              ),
+              onOk() {
+                if (lotteryEvent) {
+                  if (prize?.objective?.prize_type === 0) {
+                    // 抽中空奖时触发
+                    lotteryEvent.onLotteryEmpty();
+                  } else if (prize?.objective?.prize_type === 1) {
+                    // 抽中奖品时触发
+                    lotteryEvent.onLotterySuccess();
+                  }
                 }
+                // 重新获取后台的值
+                setPointerEvents('auto');
+
+                setIsLotterySuccess(false);
+                if (
+                  prize?.objective?.prize_type &&
+                  state.showUserModalAfterLottery
+                ) {
+                  store.reducers.setIsUserInfoModalShow(true);
+                }
+
+                store.reducers.setIsClickable(true);
+                getData();
               }
-              // 重新获取后台的值
-              setPointerEvents('auto');
-              getData();
-              store.reducers.setIsClickable(true);
-              setIsLotterySuccess(false);
-              if (prize?.objective?.prize_type && shouldUserInfoModalShow) {
-                store.reducers.setIsUserInfoModalShow(true);
-              }
+            });
+          }, 500);
+        } catch (error) {
+          Modal.info({
+            title: error.response.data,
+            okText: '查看我的奖品',
+            onOk() {
+              store.reducers.setIsPrizeModalShow(true);
             }
           });
-        }, 500);
-      } catch (error) {
-        Modal.info({
-          title: error.response.data,
-          okText: '查看我的奖品',
-          onOk() {
-            store.reducers.setIsPrizeModalShow(true);
-          }
-        });
-      }
-    } else {
-      Modal.info({
-        title: '抽奖次数用完啦',
-        content: (
-          <div>
-            <hr />
-            <p>您的抽奖次数用完啦！</p>
-            <p>无法抽奖，感谢您的参与！</p>
-          </div>
-        ),
-        onOk() {}
-      });
+        }
+        break;
+      default:
+        break;
     }
+  };
+
+  useEffect(() => {
+    if (lotteryState) {
+      getState();
+    }
+  }, [lotteryState]);
+
+  const lottery = async () => {
+    setLotteryState('checkTime');
   };
 
   const SmashEggProps = {

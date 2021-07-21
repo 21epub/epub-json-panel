@@ -21,7 +21,6 @@ const GashaponMachine: FC<TreasureBoxProps> = (props) => {
   const {
     lotteryDetail,
     pictureList,
-    shouldUserInfoModalShow,
     isClickable,
     lotteryUrlList,
     lotteryEvent
@@ -36,59 +35,103 @@ const GashaponMachine: FC<TreasureBoxProps> = (props) => {
   const [playExport, setPlayExport] = useState(false);
   const [pointerEvents, setPointerEvents] = useState<'none' | 'auto'>('auto');
   const [prize, setPrize] = useState<WinnerType>();
+  const [lotteryState, setLotteryState] = useState<string | undefined>();
 
   const onPlayEgg = () => {
     setPlayEgg(true);
   };
 
-  const lottery = async () => {
-    // 先判断是否需要填写信息
-    if (
-      userInfo?.user_id === null &&
-      lotteryDetail?.need_user_info &&
-      shouldUserInfoModalShow
-    ) {
-      store.reducers.setIsUserInfoModalShow(true);
-    } else if (
-      prizeUrl &&
-      (lotteryDetail?.remain_times === null ||
-        lotteryDetail?.remain_times === undefined ||
-        lotteryDetail?.remain_times > 0)
-    ) {
-      store.reducers.setIsClickable(false);
-      // 抽奖
-      try {
-        const response = await getLotteryResult(prizeUrl);
-        setPrize(response?.data?.data?.results[0]);
-        // 开始播放扭蛋机动画
-        onPlayEgg();
-      } catch (error) {
-        Modal.info({
-          title: error.response.data,
-          okText: '查看我的奖品',
-          onOk() {
-            setPlayEgg(false);
-            setPlayExport(false);
-            store.reducers.setIsPrizeModalShow(true);
-          }
-        });
-      }
-    } else {
-      Modal.info({
-        title: '抽奖次数用完啦',
-        content: (
-          <div>
-            <hr />
-            <p>您的抽奖次数用完啦！</p>
-            <p>无法抽奖，感谢您的参与！</p>
-          </div>
-        ),
-        onOk() {
-          setPlayEgg(false);
-          setPlayExport(false);
+  const getState = async () => {
+    switch (lotteryState) {
+      case 'checkTime':
+        if (state.betweenActiviyTime) {
+          setLotteryState('checkRemainTimes');
+        } else {
+          store.reducers.setIsActivityTimeModalShow(true);
+          setLotteryState(undefined);
         }
-      });
+        break;
+      case 'checkRemainTimes':
+        if (
+          lotteryDetail?.remain_times === null ||
+          lotteryDetail?.remain_times === undefined ||
+          lotteryDetail?.remain_times > 0
+        ) {
+          setLotteryState('checkNeedUserInfo');
+        } else {
+          Modal.info({
+            title: '抽奖次数用完啦',
+            content: (
+              <div>
+                <hr />
+                <p>您的抽奖次数用完啦！</p>
+                <p>无法抽奖，感谢您的参与！</p>
+              </div>
+            ),
+            onOk() {
+              setPlayEgg(false);
+              setPlayExport(false);
+            }
+          });
+        }
+        break;
+      case 'checkNeedUserInfo':
+        if (lotteryDetail?.need_user_info) {
+          setLotteryState('checkIsUserInfoFilled');
+        } else {
+          setLotteryState('lottery');
+        }
+        break;
+      case 'checkIsUserInfoFilled':
+        if (userInfo?.user_id === null) {
+          setLotteryState('checkUserInfoFillRules');
+        } else {
+          setLotteryState('lottery');
+        }
+        break;
+      case 'checkUserInfoFillRules':
+        if (lotteryDetail?.fill_rules === 0) {
+          // 先填写后抽奖
+          store.reducers.setIsUserInfoModalShow(true);
+        } else {
+          // 先抽奖后填写
+          store.reducers.setShowUserModalAfterLottery(true);
+          setLotteryState('lottery');
+        }
+        break;
+      case 'lottery':
+        store.reducers.setIsClickable(false);
+        // 抽奖
+        try {
+          const response = await getLotteryResult(prizeUrl);
+          setPrize(response?.data?.data?.results[0]);
+          // 开始播放扭蛋机动画
+          onPlayEgg();
+        } catch (error) {
+          Modal.info({
+            title: error.response.data,
+            okText: '查看我的奖品',
+            onOk() {
+              setPlayEgg(false);
+              setPlayExport(false);
+              store.reducers.setIsPrizeModalShow(true);
+            }
+          });
+        }
+        break;
+      default:
+        break;
     }
+  };
+
+  useEffect(() => {
+    if (lotteryState) {
+      getState();
+    }
+  }, [lotteryState]);
+
+  const lottery = async () => {
+    setLotteryState('checkTime');
   };
 
   const onComplete = () => {
@@ -126,15 +169,18 @@ const GashaponMachine: FC<TreasureBoxProps> = (props) => {
               lotteryEvent.onLotterySuccess();
             }
           }
-          // 重新获取后台的值
-          getData();
-          store.reducers.setIsClickable(true);
-          if (prize?.objective?.prize_type && shouldUserInfoModalShow) {
+
+          if (prize?.objective?.prize_type && state.showUserModalAfterLottery) {
             store.reducers.setIsUserInfoModalShow(true);
           }
+
           // 重置动画状态
           setPlayEgg(false);
           setPlayExport(false);
+
+          store.reducers.setIsClickable(true);
+          // 重新获取后台的值
+          getData();
         }
       });
     }, 500);

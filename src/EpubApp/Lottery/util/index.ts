@@ -127,6 +127,21 @@ export const getDate = (days: number) => {
   return moment().add(days, 'days').locale('zh-cn').format('YYYY-MM-DD');
 };
 
+export const translateTitle = (name: string) => {
+  switch (name) {
+    case 'name':
+      return '姓名';
+    case 'email':
+      return '邮箱';
+    case 'phone':
+      return '电话';
+    case 'address':
+      return '地址';
+    default:
+      return 'err';
+  }
+};
+
 // 验证用户信息表单数据
 export const validateValues = (values: AnyObject) => {
   const errorMsg: string[] = [];

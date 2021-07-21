@@ -31,13 +31,7 @@ const TurntableCenter: FC<TurntableCenterProps> = (props) => {
   const [startRadian, setStartRadian] = useState(0); // 定义圆的角度
   const [state] = store.useRxjsStore();
   // 获取保存的状态
-  const {
-    lotteryDetail,
-    pictureList,
-    shouldUserInfoModalShow,
-    lotteryUrlList,
-    lotteryEvent
-  } = state;
+  const { lotteryDetail, pictureList, lotteryUrlList, lotteryEvent } = state;
   const turntablePic = getPicture(lotteryDetail?.picture ?? [], 'turntable');
   const defaultTurntablePic = getPicture(pictureList, 'turntable');
 
@@ -131,7 +125,7 @@ const TurntableCenter: FC<TurntableCenterProps> = (props) => {
                 }
                 if (
                   res?.prize?.objective?.prize_type &&
-                  shouldUserInfoModalShow
+                  state.showUserModalAfterLottery
                 ) {
                   store.reducers.setIsUserInfoModalShow(true);
                 }

@@ -9,11 +9,11 @@ import styles from './index.module.less';
 interface ActivityTimeModalProps {
   startTime: string | null;
   endTime: string | null;
+  isModalShow: boolean;
 }
 
 const ActivityTimeModal: FC<ActivityTimeModalProps> = (props) => {
-  const { startTime, endTime } = props;
-  const [isModalShow, setIsModalShow] = useState(false);
+  const { startTime, endTime, isModalShow } = props;
   const [content, setContent] = useState('');
 
   const format = 'YYYY-MM-DD hh:mm:ss';
@@ -26,18 +26,16 @@ const ActivityTimeModal: FC<ActivityTimeModalProps> = (props) => {
     if (startTime && endTime) {
       if (now.isBefore(beforeTime)) {
         setContent('活动未开始，请耐心等待！');
-        store.reducers.setIsClickable(false);
-        setIsModalShow(true);
+        store.reducers.setBetweenActiviyTime(false);
       } else if (now.isAfter(afterTime)) {
         setContent('活动已结束，感谢参与！');
-        store.reducers.setIsClickable(false);
-        setIsModalShow(true);
+        store.reducers.setBetweenActiviyTime(false);
       }
     }
   }, [startTime, endTime]);
 
   const handleOk = () => {
-    setIsModalShow(false);
+    store.reducers.setIsActivityTimeModalShow(false);
   };
 
   return (
