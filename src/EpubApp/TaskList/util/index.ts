@@ -1,3 +1,4 @@
+import moment from 'moment';
 import type {
   TaskListImageType,
   TaskListPictureType,
@@ -21,4 +22,28 @@ export const getPicture = (
   pictureName: string
 ) => {
   return pictureList?.find((item) => item.name === pictureName)?.picture;
+};
+
+export const isInActivityTime = (start_time: string, end_time: string) => {
+  // 判断是否在活动时间内
+  const beforeTime = moment(start_time, 'YYYY-MM-DD hh:mm:ss');
+  const afterTime = moment(end_time, 'YYYY-MM-DD hh:mm:ss');
+  const now = moment(
+    moment().locale('zh-cn').format('YYYY-MM-DD HH:mm'),
+    'YYYY-MM-DD hh:mm:ss'
+  );
+  if (now.isBefore(beforeTime)) {
+    return {
+      value: false,
+      msg: '活动未开始，请耐心等待！'
+    };
+  } else if (now.isAfter(afterTime)) {
+    return {
+      value: false,
+      msg: '活动已结束，感谢参与！'
+    };
+  }
+  return {
+    value: true
+  };
 };

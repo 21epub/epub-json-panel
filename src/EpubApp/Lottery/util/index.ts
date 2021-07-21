@@ -1,6 +1,11 @@
 import moment from 'moment';
 import { message } from 'antd';
-import { LotteryType, LotteryPictureType, LotteryImageType } from '../type';
+import type {
+  LotteryType,
+  LotteryPictureType,
+  LotteryImageType,
+  InfoFieldsListType
+} from '../type';
 
 export function getLineTextList(
   context: CanvasRenderingContext2D,
@@ -128,10 +133,14 @@ export const getDate = (days: number) => {
 };
 
 // 验证用户信息表单数据
-export const validateValues = (values: AnyObject) => {
+export const validateValues = (
+  values: AnyObject,
+  info_fields_list: InfoFieldsListType
+) => {
   const errorMsg: string[] = [];
   // 手机号验证
   if (
+    info_fields_list.phone &&
     !/^1((3[0-9])|(4[1579])|(5[0-9])|(6[6])|(7[0-9])|(8[0-9])|(9[0-9]))\d{8}$/.test(
       values.phone
     )
@@ -139,7 +148,10 @@ export const validateValues = (values: AnyObject) => {
     errorMsg.push('请输入正确的手机号');
   }
   // 邮箱验证
-  if (!/^([a-z0-9_.-]+)@([\da-z.-]+).([a-z.]{2,6})$/.test(values.email)) {
+  if (
+    info_fields_list.email &&
+    !/^([a-z0-9_.-]+)@([\da-z.-]+).([a-z.]{2,6})$/.test(values.email)
+  ) {
     errorMsg.push('请输入正确的邮箱');
   }
   return errorMsg;

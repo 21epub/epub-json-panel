@@ -30,7 +30,8 @@ const UserInfoModal: FC<UserInfoModalProps> = (props) => {
 
   // 点击确定时，提交用户信息
   const handleOk = () => {
-    const errorMsgList = validateValues(info);
+    if (!info_fields_list) return;
+    const errorMsgList = validateValues(info, info_fields_list);
     if (isEmpty(errorMsgList)) {
       setConfirmLoading(true);
       // 判断内容是否填写完整

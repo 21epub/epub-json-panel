@@ -1,5 +1,6 @@
 import React, { FC, useState } from 'react';
 import { useDispatch } from 'react-redux';
+import { message } from 'antd';
 import { useRequest, useUpdateEffect } from 'ahooks';
 import type {
   TaskListApiPropsType,
@@ -7,7 +8,7 @@ import type {
   TaskListType,
   TaskListEventType
 } from '../../type';
-import { getPictureList } from '../../util';
+import { getPictureList, isInActivityTime } from '../../util';
 import { queryTaskListDetail } from '../../data/api';
 import { ActionType } from '../../store';
 import { getTaskListComponent } from '../TaskListCategory';
@@ -52,6 +53,25 @@ const TaskListPage: FC<TaskListPageProps> = (props) => {
 
   // 请求接口数据
   useUpdateEffect(() => {
+    if (
+      taskListEvent &&
+      taskListDetail &&
+      taskListDetail.start_time &&
+      taskListDetail.end_time
+    ) {
+      // 判断是否在活动时间内
+      if (
+        !isInActivityTime(taskListDetail.start_time, taskListDetail.end_time)
+          .value
+      ) {
+        const msg = isInActivityTime(
+          taskListDetail.start_time,
+          taskListDetail.end_time
+        ).msg;
+        message.error(msg || '不在活动时间内，请确认活动时间！');
+      }
+    }
+
     dispatch({ type: 'taskListPicture', payload: pictureTaskListPic });
     dispatch({ type: 'taskListApiProps', payload: taskListApiProps });
     dispatch({ type: 'taskListEvent', payload: taskListEvent });
