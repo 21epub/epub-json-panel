@@ -182,6 +182,13 @@ const PrizeGrid: FC<PrizeGridProps> = (props) => {
     }
   }, [lotteryState]);
 
+  useEffect(() => {
+    if (state.filledUserInfo && userInfo?.id) {
+      setLotteryState('checkTime');
+      store.reducers.setFilledUserInfo(false);
+    }
+  }, [state.filledUserInfo, userInfo]);
+
   const lottery = async () => {
     setLotteryState('checkTime');
   };

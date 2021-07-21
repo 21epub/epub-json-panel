@@ -30,6 +30,8 @@ export interface StateType {
   betweenActivityTime: boolean;
   // 是否需要在抽奖结束后展示用户信息填写弹窗
   showUserModalAfterLottery: boolean;
+  // 用户是否已经填写信息
+  filledUserInfo: boolean;
 }
 
 // 初始值
@@ -44,7 +46,8 @@ const initState: StateType = {
   lotteryEvent: undefined,
   isActivityTimeModalShow: false,
   betweenActivityTime: true,
-  showUserModalAfterLottery: false
+  showUserModalAfterLottery: false,
+  filledUserInfo: false
 };
 
 // Reducers Types definition (Recommanded)
@@ -60,6 +63,7 @@ interface Reducers<S> extends RxjsStoreReducerParams<S> {
   setIsActivityTimeModalShow: (state: S, payload: boolean) => S;
   setBetweenActivityTime: (state: S, payload: boolean) => S;
   setShowUserModalAfterLottery: (state: S, payload: boolean) => S;
+  setFilledUserInfo: (state: S, payload: boolean) => S;
 }
 
 const reducers: Reducers<StateType> = {
@@ -96,6 +100,9 @@ const reducers: Reducers<StateType> = {
   },
   setShowUserModalAfterLottery(state, payload) {
     return { ...state, showUserModalAfterLottery: payload };
+  },
+  setFilledUserInfo(state, payload) {
+    return { ...state, filledUserInfo: payload };
   }
 };
 
