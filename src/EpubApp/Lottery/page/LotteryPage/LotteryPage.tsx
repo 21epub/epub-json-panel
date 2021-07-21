@@ -44,7 +44,7 @@ const LotteryPage: FC<LotteryPageProps> = (props) => {
     winnersUrl
   } = lotteryUrlList;
   const [state] = store.useRxjsStore();
-  const { shouldUserInfoModalShow, IsUserInfoModalShow, isClickable } = state;
+  const { isUserInfoModalShow, isClickable, isActivityTimeModalShow } = state;
   const LotteryComponent = getLotteryComponent(lotteryType);
   const pictureList = getPictureList(lotteryPicture, lotteryType);
 
@@ -102,13 +102,6 @@ const LotteryPage: FC<LotteryPageProps> = (props) => {
       store.reducers.setLotteryDetail(lotteryDetail);
       store.reducers.setPictureList(pictureList);
       store.reducers.setLotteryEvent(lotteryEvent);
-      if (userInfo?.user_id === null && lotteryDetail?.need_user_info) {
-        store.reducers.setIsUserInfoModalShow(true);
-      } else if (userInfo?.user_id === null) {
-        store.reducers.setShouldUserInfoModalShow(true);
-      } else if (userInfo?.user_id !== null && shouldUserInfoModalShow) {
-        store.reducers.setShouldUserInfoModalShow(false);
-      }
     }
   }, [userInfo, lotteryDetail]);
 
@@ -132,11 +125,15 @@ const LotteryPage: FC<LotteryPageProps> = (props) => {
       {userInfoUrl && inViewPort && (
         <div>
           <UserInfoModal
-            isModalShow={IsUserInfoModalShow && isClickable}
+            isModalShow={isUserInfoModalShow && isClickable}
             addUserInfoUrl={userInfoUrl}
             getUser={getUser}
           />
-          <ActivityTimeModal startTime={start_time} endTime={end_time} />
+          <ActivityTimeModal
+            isModalShow={isActivityTimeModalShow && isClickable}
+            startTime={start_time}
+            endTime={end_time}
+          />
         </div>
       )}
     </div>

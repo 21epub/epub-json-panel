@@ -32,21 +32,29 @@ const LotteryGrid: FC<LotteryGridProps> = (props) => {
     show_contact_info,
     show_rolling_list,
     contact_info,
-    rules
+    rules,
+    show_activity,
+    show_remain_time,
+    show_self_prize,
+    show_activity_rule
   } = lotteryDetail ?? {};
 
   return (
     <div className={styles.lotteryGridWrap}>
-      <ActivityTime startTime={start_time} endTime={end_time} />
+      <ActivityTime
+        startTime={start_time}
+        endTime={end_time}
+        isShow={show_activity}
+      />
       <PrizeGrid
         prizeList={prizeList}
         userInfo={userInfo}
         prizeUrl={prizeUrl}
         getData={getData}
       />
-      <RemainTime remainTimes={remain_times} />
-      <MyPrizeButton myPrizeListUrl={prizeUrl} />
-      <RulesButton rules={rules} />
+      <RemainTime remainTimes={remain_times} isShow={show_remain_time} />
+      <MyPrizeButton myPrizeListUrl={prizeUrl} isShow={show_self_prize} />
+      <RulesButton rules={rules} isShow={show_activity_rule} />
       <RollingList
         winnerList={winnerList}
         isShow={show_rolling_list}
