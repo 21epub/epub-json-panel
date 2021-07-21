@@ -67,11 +67,7 @@ const MyPrizeButton: FC<MyPrizeButtonProps> = (props) => {
             }
             visible={isPrizeModalShow}
             footer={[
-              <Button
-                onClick={() => handleOk(myPrizeList)}
-                type='primary'
-                key='myPrizeButtonPic'
-              >
+              <Button onClick={handleOk} type='primary' key='myPrizeButtonPic'>
                 确定
               </Button>
             ]}

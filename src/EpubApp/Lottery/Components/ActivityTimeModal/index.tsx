@@ -26,10 +26,10 @@ const ActivityTimeModal: FC<ActivityTimeModalProps> = (props) => {
     if (startTime && endTime) {
       if (now.isBefore(beforeTime)) {
         setContent('活动未开始，请耐心等待！');
-        store.reducers.setBetweenActiviyTime(false);
+        store.reducers.setBetweenActivityTime(false);
       } else if (now.isAfter(afterTime)) {
         setContent('活动已结束，感谢参与！');
-        store.reducers.setBetweenActiviyTime(false);
+        store.reducers.setBetweenActivityTime(false);
       }
     }
   }, [startTime, endTime]);

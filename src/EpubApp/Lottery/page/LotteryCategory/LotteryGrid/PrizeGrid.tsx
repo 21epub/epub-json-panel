@@ -40,10 +40,11 @@ const PrizeGrid: FC<PrizeGridProps> = (props) => {
   const defaultPrizePic = getPicture(pictureList, 'prize');
   const [pointerEvents, setPointerEvents] = useState<'none' | 'auto'>('auto');
   const [lotteryState, setLotteryState] = useState<string | undefined>();
+
   const getState = async () => {
     switch (lotteryState) {
       case 'checkTime':
-        if (state.betweenActiviyTime) {
+        if (state.betweenActivityTime) {
           setLotteryState('checkRemainTimes');
         } else {
           store.reducers.setIsActivityTimeModalShow(true);
@@ -97,6 +98,7 @@ const PrizeGrid: FC<PrizeGridProps> = (props) => {
         break;
       case 'lottery':
         try {
+          if (!prizeUrl) return false;
           const response = await getLotteryResult(prizeUrl);
           const prize = response?.data?.data?.results[0];
           if (prize) {
@@ -171,6 +173,7 @@ const PrizeGrid: FC<PrizeGridProps> = (props) => {
       default:
         break;
     }
+    return true;
   };
 
   useEffect(() => {

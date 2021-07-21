@@ -25,7 +25,7 @@ const Pointer: FC<PointerProps> = (props) => {
   const getState = async () => {
     switch (lotteryState) {
       case 'checkTime':
-        if (state.betweenActiviyTime) {
+        if (state.betweenActivityTime) {
           setLotteryState('checkRemainTimes');
         } else {
           store.reducers.setIsActivityTimeModalShow(true);
@@ -81,6 +81,7 @@ const Pointer: FC<PointerProps> = (props) => {
         store.reducers.setIsClickable(false);
         // 抽奖
         try {
+          if (!prizeUrl) return false;
           const response = await getLotteryResult(prizeUrl);
           const prize = response?.data?.data?.results[0];
           // 通知旋转
@@ -98,6 +99,7 @@ const Pointer: FC<PointerProps> = (props) => {
       default:
         break;
     }
+    return true;
   };
 
   useEffect(() => {

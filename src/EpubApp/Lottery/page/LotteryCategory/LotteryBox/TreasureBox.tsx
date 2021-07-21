@@ -32,7 +32,7 @@ const TreasureBox: FC<TreasureBoxProps> = (props) => {
   const getState = async () => {
     switch (lotteryState) {
       case 'checkTime':
-        if (state.betweenActiviyTime) {
+        if (state.betweenActivityTime) {
           setLotteryState('checkRemainTimes');
         } else {
           store.reducers.setIsActivityTimeModalShow(true);
@@ -88,6 +88,7 @@ const TreasureBox: FC<TreasureBoxProps> = (props) => {
         store.reducers.setIsClickable(false);
         // 抽奖
         try {
+          if (!prizeUrl) return false;
           const response = await getLotteryResult(prizeUrl);
           const prize = response?.data?.data?.results[0];
           setModalVisible(true);
@@ -150,6 +151,7 @@ const TreasureBox: FC<TreasureBoxProps> = (props) => {
       default:
         break;
     }
+    return true;
   };
 
   useEffect(() => {

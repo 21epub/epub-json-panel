@@ -26,7 +26,7 @@ const GoldenEggs: FC<GoldenEggsProps> = (props) => {
   const getState = async () => {
     switch (lotteryState) {
       case 'checkTime':
-        if (state.betweenActiviyTime) {
+        if (state.betweenActivityTime) {
           setLotteryState('checkRemainTimes');
         } else {
           store.reducers.setIsActivityTimeModalShow(true);
@@ -82,6 +82,7 @@ const GoldenEggs: FC<GoldenEggsProps> = (props) => {
         store.reducers.setIsClickable(false);
         // 抽奖
         try {
+          if (!prizeUrl) return false;
           const response = await getLotteryResult(prizeUrl);
           const prize = response?.data?.data?.results[0];
           setIsLotterySuccess(true);
@@ -145,6 +146,7 @@ const GoldenEggs: FC<GoldenEggsProps> = (props) => {
       default:
         break;
     }
+    return true;
   };
 
   useEffect(() => {
