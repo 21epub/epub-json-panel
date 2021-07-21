@@ -194,7 +194,7 @@ const GashaponMachine: FC<TreasureBoxProps> = (props) => {
 
   return (
     <div
-      className={styles.gashaponWrap}
+      className={styles.gashaponMachine}
       style={{ pointerEvents: lotteryEvent ? pointerEvents : 'none' }}
     >
       <img src={glassPic || defaultGlassPic} className='glass' />

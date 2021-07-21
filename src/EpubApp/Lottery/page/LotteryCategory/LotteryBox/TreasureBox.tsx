@@ -173,7 +173,6 @@ const TreasureBox: FC<TreasureBoxProps> = (props) => {
       className={styles.lotteryBoxPic}
       style={{ pointerEvents: lotteryEvent ? pointerEvents : 'none' }}
     >
-      {console.log(openBoxPic, defaultOpenBoxPic)}
       {modalVisible ? (
         <img className='lotteryBoxPic' src={openBoxPic || defaultOpenBoxPic} />
       ) : (
