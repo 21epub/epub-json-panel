@@ -10,18 +10,13 @@ import store from '../../store';
 
 interface MyPrizeButtonProps {
   myPrizeListUrl?: string;
+  isShow?: boolean;
 }
 
 const MyPrizeButton: FC<MyPrizeButtonProps> = (props) => {
-  const { myPrizeListUrl = '' } = props;
+  const { myPrizeListUrl = '', isShow } = props;
   const [state] = store.useRxjsStore();
-  const {
-    lotteryDetail,
-    pictureList,
-    shouldUserInfoModalShow,
-    isPrizeModalShow,
-    isCopySuccess
-  } = state;
+  const { lotteryDetail, pictureList, isPrizeModalShow, isCopySuccess } = state;
   const defaultMyPrizePic = getPicture(pictureList, 'myPrize');
   const myPrizePic = getPicture(lotteryDetail?.picture ?? [], 'myPrize');
 
@@ -40,51 +35,52 @@ const MyPrizeButton: FC<MyPrizeButtonProps> = (props) => {
     store.reducers.setIsPrizeModalShow(true);
   };
 
-  const handleOk = (myPrizeList: WinnerType[]) => {
+  const handleOk = () => {
     store.reducers.setIsPrizeModalShow(false);
-    if (shouldUserInfoModalShow && myPrizeList?.length) {
-      store.reducers.setIsUserInfoModalShow(true);
-    }
   };
 
   return (
     <div className={styles.myPrize}>
-      <img
-        className='prizeButton'
-        src={myPrizePic || defaultMyPrizePic}
-        onClick={getMyPrize}
-      />
-      <Modal
-        title={
-          <Row style={{ height: '20px' }}>
-            <Col span={10}>我的奖品</Col>
-            <Col>
-              {isCopySuccess && (
-                <Button
-                  type='primary'
-                  size='small'
-                  style={{ cursor: 'default' }}
-                >
-                  复制成功！
-                </Button>
-              )}
-            </Col>
-          </Row>
-        }
-        visible={isPrizeModalShow}
-        footer={[
-          <Button
-            onClick={() => handleOk(myPrizeList)}
-            type='primary'
-            key='myPrizeButtonPic'
+      {isShow && (
+        <div>
+          <img
+            className='prizeButton'
+            src={myPrizePic || defaultMyPrizePic}
+            onClick={getMyPrize}
+          />
+          <Modal
+            title={
+              <Row style={{ height: '20px' }}>
+                <Col span={10}>我的奖品</Col>
+                <Col>
+                  {isCopySuccess && (
+                    <Button
+                      type='primary'
+                      size='small'
+                      style={{ cursor: 'default' }}
+                    >
+                      复制成功！
+                    </Button>
+                  )}
+                </Col>
+              </Row>
+            }
+            visible={isPrizeModalShow}
+            footer={[
+              <Button
+                onClick={() => handleOk(myPrizeList)}
+                type='primary'
+                key='myPrizeButtonPic'
+              >
+                确定
+              </Button>
+            ]}
+            closable={false}
           >
-            确定
-          </Button>
-        ]}
-        closable={false}
-      >
-        <MyPrizeContent myPrizeList={myPrizeList} />
-      </Modal>
+            <MyPrizeContent myPrizeList={myPrizeList} />
+          </Modal>
+        </div>
+      )}
     </div>
   );
 };

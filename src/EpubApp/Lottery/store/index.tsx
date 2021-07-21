@@ -9,17 +9,13 @@ import {
 // 管理的状态数据
 export interface StateType {
   // 是否显示用户窗
-  IsUserInfoModalShow: boolean;
-  // 是否中奖
-  IsWin: boolean;
+  isUserInfoModalShow: boolean;
   // 抽奖按钮是否可以点击
   isClickable: boolean;
   // 是否复制成功
   isCopySuccess: boolean;
   // 我的奖品窗口
   isPrizeModalShow: boolean;
-  // 是否应该显示用户窗
-  shouldUserInfoModalShow: boolean;
   // 默认图片
   pictureList: LotteryImageType[];
   // 当前抽奖应用详情
@@ -28,49 +24,51 @@ export interface StateType {
   lotteryUrlList?: LotteryUrlListType;
   // 事件及触发器
   lotteryEvent?: LotteryEventType;
+  // 是否展示活动时间段提示
+  isActivityTimeModalShow: boolean;
+  // 是否在活动时间段
+  betweenActiviyTime: boolean;
+  // 是否需要在抽奖结束后展示用户信息填写弹窗
+  showUserModalAfterLottery: boolean;
 }
 
 // 初始值
 const initState: StateType = {
-  IsUserInfoModalShow: false,
+  isUserInfoModalShow: false,
   isClickable: true,
-  shouldUserInfoModalShow: false,
-  IsWin: false,
   isCopySuccess: false,
   isPrizeModalShow: false,
   pictureList: [],
   lotteryDetail: undefined,
   lotteryUrlList: undefined,
-  lotteryEvent: undefined
+  lotteryEvent: undefined,
+  isActivityTimeModalShow: false,
+  betweenActiviyTime: true,
+  showUserModalAfterLottery: false
 };
 
 // Reducers Types definition (Recommanded)
 interface Reducers<S> extends RxjsStoreReducerParams<S> {
   setIsUserInfoModalShow: (state: S, payload?: boolean) => S;
   setIsClickable: (state: S, payload?: boolean) => S;
-  setShouldUserInfoModalShow: (state: S, payload?: boolean) => S;
-  setIsWin: (state: S, payload?: boolean) => S;
   setIsCopySuccess: (state: S, payload?: boolean) => S;
   setIsPrizeModalShow: (state: S, payload?: boolean) => S;
   setPictureList: (state: S, payload?: LotteryImageType[]) => S;
   setLotteryDetail: (state: S, payload?: LotteryDetailType) => S;
   setLotteryUrlList: (state: S, payload?: LotteryUrlListType) => S;
   setLotteryEvent: (state: S, payload?: LotteryEventType) => S;
+  setIsActivityTimeModalShow: (state: S, payload: boolean) => S;
+  setBetweenActiviyTime: (state: S, payload: boolean) => S;
+  setShowUserModalAfterLottery: (state: S, payload: boolean) => S;
 }
 
 const reducers: Reducers<StateType> = {
   // Sync state management
   setIsUserInfoModalShow(state, payload = false) {
-    return { ...state, IsUserInfoModalShow: payload };
+    return { ...state, isUserInfoModalShow: payload };
   },
   setIsClickable(state, payload = true) {
     return { ...state, isClickable: payload };
-  },
-  setShouldUserInfoModalShow(state, payload = false) {
-    return { ...state, shouldUserInfoModalShow: payload };
-  },
-  setIsWin(state, payload = false) {
-    return { ...state, IsWin: payload };
   },
   setIsCopySuccess(state, payload = false) {
     return { ...state, isCopySuccess: payload };
@@ -89,6 +87,15 @@ const reducers: Reducers<StateType> = {
   },
   setLotteryEvent(state, payload) {
     return { ...state, lotteryEvent: payload };
+  },
+  setIsActivityTimeModalShow(state, payload) {
+    return { ...state, isActivityTimeModalShow: payload };
+  },
+  setBetweenActiviyTime(state, payload) {
+    return { ...state, betweenActiviyTime: payload };
+  },
+  setShowUserModalAfterLottery(state, payload) {
+    return { ...state, showUserModalAfterLottery: payload };
   }
 };
 
