@@ -2,6 +2,21 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.6.12-alpha.0](https://github.com/icey0126/epub-app-lib/compare/v0.6.8-alpha.0...v0.6.12-alpha.0) (2021-07-21)
+
+### Features
+
+- 🎸 change lottery process ([45b4441](https://github.com/icey0126/epub-app-lib/commit/45b4441f5a0f54ade0dee18be1acb1787d552147))
+- 抽奖应用迭代升级 ([6121b8e](https://github.com/icey0126/epub-app-lib/commit/6121b8e0c7ed4d7cee407f11e87cf06aa4ccb3ec))
+- 调整日历组件字段类型 ([1d14703](https://github.com/icey0126/epub-app-lib/commit/1d14703cdf6aa7ca4961a9a04d7c70aeb5d7dc1c))
+- 调整用户信息填写弹框 ([552ad4d](https://github.com/icey0126/epub-app-lib/commit/552ad4d994189247d8765f0226a09a6d8ac92fdd))
+
+### Bug Fixes
+
+- 🐛 fix lottery button ([6e8415f](https://github.com/icey0126/epub-app-lib/commit/6e8415ffed330e7602093b272a0c54a9f0c3a472))
+- 🐛 merge master ([a5de3c2](https://github.com/icey0126/epub-app-lib/commit/a5de3c28be6b230869807912554acc00da5cacec))
+- 修复用户信息面板 bug 及任务列表提醒 ([33bd251](https://github.com/icey0126/epub-app-lib/commit/33bd251ffeee670954a8fdec81845af98f143382))
+
 ### [0.6.8-alpha.0](https://github.com/icey0126/epub-app-lib/compare/v0.0.3-alpha.68...v0.6.8-alpha.0) (2021-07-16)
 
 ### Features
