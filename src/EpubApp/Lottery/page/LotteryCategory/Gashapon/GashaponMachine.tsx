@@ -83,10 +83,10 @@ const GashaponMachine: FC<TreasureBoxProps> = (props) => {
         }
         break;
       case 'checkIsUserInfoFilled':
-        if (userInfo?.user_id === null) {
-          setLotteryState('checkUserInfoFillRules');
-        } else {
+        if (userInfo?.user_id) {
           setLotteryState('lottery');
+        } else {
+          setLotteryState('checkUserInfoFillRules');
         }
         break;
       case 'checkUserInfoFillRules':
