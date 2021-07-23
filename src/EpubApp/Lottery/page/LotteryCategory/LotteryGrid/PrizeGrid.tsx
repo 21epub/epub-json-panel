@@ -81,6 +81,9 @@ const PrizeGrid: FC<PrizeGridProps> = (props) => {
         break;
       case 'checkIsUserInfoFilled':
         if (userInfo?.user_id) {
+          if (state.showUserModalAfterLottery) {
+            store.reducers.setShowUserModalAfterLottery(false);
+          }
           setLotteryState('lottery');
         } else {
           setLotteryState('checkUserInfoFillRules');
@@ -183,8 +186,23 @@ const PrizeGrid: FC<PrizeGridProps> = (props) => {
   }, [lotteryState]);
 
   useEffect(() => {
-    if (state.filledUserInfo && userInfo?.id) {
+    // 处理先填写后抽奖，填写信息后的逻辑
+    if (
+      state.filledUserInfo &&
+      userInfo?.id &&
+      !state.showUserModalAfterLottery
+    ) {
       setLotteryState('checkTime');
+      store.reducers.setFilledUserInfo(false);
+    }
+
+    // 处理先抽奖后填写，填写信息后的逻辑
+    if (
+      state.filledUserInfo &&
+      userInfo?.id &&
+      state.showUserModalAfterLottery
+    ) {
+      setLotteryState(undefined);
       store.reducers.setFilledUserInfo(false);
     }
   }, [state.filledUserInfo, userInfo]);
