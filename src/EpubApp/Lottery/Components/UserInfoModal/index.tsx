@@ -46,6 +46,7 @@ const UserInfoModal: FC<UserInfoModalProps> = (props) => {
             setConfirmLoading(false);
             getUser();
             store.reducers.setIsUserInfoModalShow(false);
+            store.reducers.setFilledUserInfo(true);
             form.resetFields();
             message.success('提交信息成功');
             // 成功则清除内容
