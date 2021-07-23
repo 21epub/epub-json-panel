@@ -2,6 +2,12 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.6.12-alpha.4](https://github.com/icey0126/epub-app-lib/compare/v0.6.12-alpha.3...v0.6.12-alpha.4) (2021-07-23)
+
+### Bug Fixes
+
+- 🐛 fix lottery ([d2ee7bb](https://github.com/icey0126/epub-app-lib/commit/d2ee7bb24de4ef86a23417652bd027b4a82a88de))
+
 ### [0.6.12-alpha.3](https://github.com/icey0126/epub-app-lib/compare/v0.6.12-alpha.2...v0.6.12-alpha.3) (2021-07-23)
 
 ### Bug Fixes
