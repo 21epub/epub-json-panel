@@ -2,6 +2,12 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.6.12-alpha.5](https://github.com/icey0126/epub-app-lib/compare/v0.6.12-alpha.4...v0.6.12-alpha.5) (2021-07-27)
+
+### Bug Fixes
+
+- 🐛 make userinfo modal non-closable ([05361df](https://github.com/icey0126/epub-app-lib/commit/05361df51030040c1e0b3318aabc49b112195d5d))
+
 ### [0.6.12-alpha.4](https://github.com/icey0126/epub-app-lib/compare/v0.6.12-alpha.3...v0.6.12-alpha.4) (2021-07-23)
 
 ### Bug Fixes
