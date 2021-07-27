@@ -24,10 +24,6 @@ const UserInfoModal: FC<UserInfoModalProps> = (props) => {
   const [form] = Form.useForm(); // 用户信息
   const [info, setInfo] = useState<InfoFieldsListType>({});
 
-  const handleCancel = () => {
-    store.reducers.setIsUserInfoModalShow(false);
-  };
-
   // 点击确定时，提交用户信息
   const handleOk = () => {
     if (!info_fields_list) return;
@@ -78,16 +74,9 @@ const UserInfoModal: FC<UserInfoModalProps> = (props) => {
         className={styles.userInfoModal}
         title='请填写信息'
         visible={isModalShow}
-        onCancel={handleCancel}
+        closable={false}
         destroyOnClose
         footer={[
-          <Button
-            onClick={handleCancel}
-            type='default'
-            key='userInfoCancelButton'
-          >
-            取消
-          </Button>,
           <Button onClick={handleOk} type='primary' key='userInfoOkButton'>
             确定
           </Button>
