@@ -75,7 +75,7 @@ export interface AssistanceContactInfoType {
 export interface AssistanceDetailType {
   id?: string;
   // 助力标题
-  title: string;
+  title?: string;
   // 助力类型
   assist_type: string;
   // 助力类型数字标记
