@@ -1,4 +1,4 @@
-import { TaskListType } from '../../type';
+import type { TaskListType } from '../../type';
 import ListTask from './ListTheme';
 
 // 获取对应类型的投票应用

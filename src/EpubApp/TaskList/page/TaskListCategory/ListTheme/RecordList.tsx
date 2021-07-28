@@ -1,5 +1,4 @@
-import React, { FC, useEffect } from 'react';
-import { useSelector } from 'react-redux';
+import React, { useEffect } from 'react';
 import InfiniteScroll from 'react-infinite-scroller';
 import { List, Avatar, Modal } from 'antd';
 import { UserOutlined } from '@ant-design/icons';
@@ -7,44 +6,43 @@ import type { TableProps } from 'antd/lib/table';
 import type { ModalProps } from 'antd/lib/modal';
 import { useRequest, useInViewport } from 'ahooks';
 import { queryTaskRecord } from '../../../data/api';
-import { StateType } from '../../../store';
+import type { TaskListApiPropsType } from '../../../type';
 import { RecordListWrapper } from './Styled';
 
-interface RecordProps extends ModalProps {}
-
-type RecordListProps = TableProps<any> & RecordProps;
+type RecordListProps = TableProps<any> &
+  ModalProps & {
+    taskListApiProps: TaskListApiPropsType;
+  };
 
 // 浏览记录列表
-const RecordList: FC<RecordListProps> = (props) => {
-  const { ...rest } = props;
-  const { taskListApiProps } = useSelector((state: StateType) => state);
+const RecordList: React.FC<RecordListProps> = (props) => {
+  const { taskListApiProps, ...rest } = props;
   const { slug } = taskListApiProps ?? {};
-  // const [hasMore, setHasMore] = useState<boolean>(false);
   const inViewPort = useInViewport(() =>
     document.querySelector('#TaskRecordListPage')
   );
 
-  const { data: taskListRecord, run: runQueryPollRecordList } = useRequest(
-    () => queryTaskRecord(slug ?? ''),
-    {
-      manual: true,
-      ready: !!slug,
-      throwOnError: true
-    }
-  );
+  const {
+    data: taskListRecord,
+    loading,
+    run: runQueryPollRecordList
+  } = useRequest((page) => queryTaskRecord(slug ?? '', page), {
+    manual: true,
+    ready: !!slug,
+    throwOnError: true
+  });
 
   // 请求数据接口
   const loadMore = (page: number) => {
-    // console.log('加载更多');
-    // runQueryPollRecordList();
+    runQueryPollRecordList(page * 10);
   };
 
   useEffect(() => {
     if (inViewPort) {
       // 每次进入当前页时，请求最新数据
-      runQueryPollRecordList();
+      runQueryPollRecordList(10);
     }
-  }, [inViewPort]);
+  }, [inViewPort, runQueryPollRecordList]);
 
   return (
     <Modal
@@ -58,9 +56,9 @@ const RecordList: FC<RecordListProps> = (props) => {
       <RecordListWrapper id='TaskRecordListPage'>
         <InfiniteScroll
           initialLoad={false}
-          pageStart={0}
+          pageStart={1}
           loadMore={loadMore}
-          hasMore
+          hasMore={!loading}
           useWindow={false}
         >
           <List

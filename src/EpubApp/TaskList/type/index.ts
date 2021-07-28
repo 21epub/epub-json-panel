@@ -110,5 +110,6 @@ export interface TaskListActionsType {}
 
 // 应用里需要用到的事件，方法，触发器等
 export interface TaskListEventType extends TaskListActionsType {
+  // 通过eid获取epub编辑器变量的值
   getVariableValue: (eid: string) => number | string;
 }

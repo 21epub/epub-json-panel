@@ -43,10 +43,15 @@ export const addTaskRecord = (task_list_slug: string, task_slug: string) => {
 };
 
 // 查询浏览记录
-export const queryTaskRecord = (task_list_slug: string) => {
+export const queryTaskRecord = (task_list_slug: string, size: number) => {
   return new Promise<TaskRecordType[]>((resolve, reject) => {
     instance
-      .get(portal_url + task_list_slug + '/record/')
+      .get(portal_url + task_list_slug + '/record/', {
+        params: {
+          page: 1,
+          size: size ?? 20
+        }
+      })
       .then((response) => {
         resolve(response?.data?.data?.results);
       })

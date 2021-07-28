@@ -1,6 +1,6 @@
-// import RxjsStore, { RxjsStoreReducerParams } from '@21epub/react-rxjs-store';
-import { Reducer, createStore } from 'redux';
-import {
+import { createStore } from 'redux';
+import type { Reducer } from 'redux';
+import type {
   TaskListImageType,
   TaskListDetailType,
   TaskListApiPropsType,
@@ -56,3 +56,6 @@ export const reducer: Reducer<State, ActionType> = (state, action) => {
 // 全局共享的store
 const store = createStore(reducer, initState);
 export default store;
+
+// const dispatch = useDispatch<(state: ActionType) => void>();
+// dispatch({ type: 'taskListDetail', payload: taskListDetail });

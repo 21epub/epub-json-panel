@@ -1,5 +1,4 @@
-import React, { FC, useState } from 'react';
-import { useDispatch } from 'react-redux';
+import React, { useState } from 'react';
 import { message } from 'antd';
 import { useRequest, useUpdateEffect } from 'ahooks';
 import type {
@@ -10,11 +9,12 @@ import type {
 } from '../../type';
 import { getPictureList, isInActivityTime } from '../../util';
 import { queryTaskListDetail } from '../../data/api';
-import { ActionType } from '../../store';
 import { getTaskListComponent } from '../TaskListCategory';
 import { Wrapper } from './Styled';
 
 export interface TaskListPageProps {
+  // epub编辑器传来的实例，用于将任务列表应用数据及状态保存到epub中
+  model: any;
   taskListType: TaskListType;
   taskListApiProps: TaskListApiPropsType;
   taskListPicture: TaskListPictureType;
@@ -23,21 +23,21 @@ export interface TaskListPageProps {
 }
 
 // 日历应用页面
-const TaskListPage: FC<TaskListPageProps> = (props) => {
+const TaskListPage: React.FC<TaskListPageProps> = (props) => {
   const {
+    model,
     taskListApiProps,
     taskListPicture,
     taskListType = 'ListTheme',
     taskListEvent,
     isDataChanged
   } = props;
-  const dispatch = useDispatch<(state: ActionType) => void>();
   const pictureTaskListPic = getPictureList(taskListPicture, taskListType);
   const { slug } = taskListApiProps;
   const [backgroundColor, setBackgroundColor] = useState<string>('');
   const TaskListComponent = getTaskListComponent(taskListType);
 
-  // 查询投票详情接口
+  // 查询详情接口
   const {
     data: taskListDetail,
     loading,
@@ -72,11 +72,9 @@ const TaskListPage: FC<TaskListPageProps> = (props) => {
       }
     }
 
-    dispatch({ type: 'taskListPicture', payload: pictureTaskListPic });
-    dispatch({ type: 'taskListApiProps', payload: taskListApiProps });
-    dispatch({ type: 'taskListEvent', payload: taskListEvent });
     if (!loading && taskListDetail) {
-      dispatch({ type: 'taskListDetail', payload: taskListDetail });
+      model.attributes.iDetail.taskListDetail = taskListDetail;
+      model.save();
       setBackgroundColor(taskListDetail.background_color || '');
     }
   }, [loading]);
@@ -84,7 +82,12 @@ const TaskListPage: FC<TaskListPageProps> = (props) => {
   return (
     (!loading || null) && (
       <Wrapper backgroundColor={backgroundColor || ''}>
-        <TaskListComponent />
+        <TaskListComponent
+          model={model}
+          taskListPicture={pictureTaskListPic}
+          taskListApiProps={taskListApiProps}
+          taskListEvent={taskListEvent}
+        />
       </Wrapper>
     )
   );

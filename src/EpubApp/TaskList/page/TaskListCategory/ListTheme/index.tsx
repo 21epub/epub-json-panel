@@ -1,21 +1,27 @@
-import React, { FC, useState } from 'react';
-import { useSelector } from 'react-redux';
+import React, { useState } from 'react';
 import { List, Space } from 'antd';
 import { useRequest } from 'ahooks';
 import { queryTask, addTaskRecord } from '../../../data/api';
 import { getPicture } from '../../../util';
-import type { TaskListImageType, FontColorType } from '../../../type';
-import { StateType } from '../../../store';
+import type {
+  TaskListImageType,
+  FontColorType,
+  TaskListApiPropsType,
+  TaskListPictureType,
+  TaskListEventType
+} from '../../../type';
 import RecordList from './RecordList';
 import { Wrapper } from './Styled';
 
-export interface ListThemeProps {}
+interface ListThemeType {
+  model: any;
+  taskListApiProps: TaskListApiPropsType;
+  taskListPicture: TaskListPictureType;
+  taskListEvent?: TaskListEventType;
+}
 
-const ListTheme: FC<ListThemeProps> = () => {
-  const { taskListDetail, taskListEvent } = useSelector(
-    (state: StateType) => state
-  );
-  // console.log(store.getState());
+const ListTheme: React.FC<ListThemeType> = (props) => {
+  const { model, taskListEvent, taskListApiProps } = props;
   const {
     slug,
     picture,
@@ -23,7 +29,7 @@ const ListTheme: FC<ListThemeProps> = () => {
     show_task_image,
     show_task_description,
     show_task_tag
-  } = taskListDetail ?? {};
+  } = model.attributes.iDetail.taskListDetail ?? {};
   const { getVariableValue } = taskListEvent ?? {};
   const [isShowRecordModal, setIsShowRecordModal] = useState<boolean>(false);
   const defaultTaskImg = getPicture(picture || [], 'taskImg');
@@ -35,7 +41,8 @@ const ListTheme: FC<ListThemeProps> = () => {
     () => queryTask(slug ?? ''),
     {
       ready: !!slug,
-      throwOnError: true
+      throwOnError: true,
+      debounceInterval: 500
     }
   );
 
@@ -47,15 +54,22 @@ const ListTheme: FC<ListThemeProps> = () => {
     return false;
   };
 
-  const onButtonClick = (
-    type: 'initial' | 'active',
-    task_slug?: string,
-    link?: string
-  ) => {
+  const onButtonClick = (task_slug?: string, link?: string) => {
+    // 打开一个新页面，等接口请求成功后，再设置新页面的url
+    const url = link?.includes('//') ? link : `//${link}`;
     if (link && slug && task_slug) {
       addTaskRecord(slug, task_slug).then(() => {
-        const url = link?.includes('//') ? link : `//${link}`;
-        window.open(url);
+        // 新建a标签，模拟a标签跳转新页面。绕过ios系统对window.open的拦截
+        const a = document.createElement('a');
+        a.setAttribute('href', url);
+        a.setAttribute('target', '_blank');
+        a.setAttribute('id', 'newPageBtn');
+        // 防止反复添加
+        if (document.getElementById('newPageBtn')) {
+          document.body.removeChild(document.getElementById('newPageBtn')!);
+        }
+        document.body.appendChild(a);
+        a.click();
       });
     }
   };
@@ -111,11 +125,7 @@ const ListTheme: FC<ListThemeProps> = () => {
                         ?.picture || defaultActiveButton
                     }
                     onClick={() =>
-                      onButtonClick(
-                        'active',
-                        item.slug,
-                        item?.active_button_link
-                      )
+                      onButtonClick(item.slug, item?.active_button_link)
                     }
                   />
                 ) : (
@@ -125,11 +135,7 @@ const ListTheme: FC<ListThemeProps> = () => {
                         ?.picture || defaultInitialBtn
                     }
                     onClick={() =>
-                      onButtonClick(
-                        'initial',
-                        item.slug,
-                        item?.initial_button_link
-                      )
+                      onButtonClick(item.slug, item?.initial_button_link)
                     }
                   />
                 )}
@@ -139,7 +145,11 @@ const ListTheme: FC<ListThemeProps> = () => {
         />
       )}
       {isShowRecordModal && (
-        <RecordList visible={isShowRecordModal} onCancel={onCloseModal} />
+        <RecordList
+          visible={isShowRecordModal}
+          taskListApiProps={taskListApiProps}
+          onCancel={onCloseModal}
+        />
       )}
     </Wrapper>
   );

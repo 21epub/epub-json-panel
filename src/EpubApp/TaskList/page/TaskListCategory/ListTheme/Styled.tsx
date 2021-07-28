@@ -21,6 +21,7 @@ export const Wrapper = styled.div<WrapperProps>`
     color: #909090;
     text-align: right;
     text-decoration: underline;
+    margin-top: 10px;
   }
 
   .ant-list {
