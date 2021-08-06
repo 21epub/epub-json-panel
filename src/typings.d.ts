@@ -21,8 +21,6 @@ declare module '*.less' {
 
 interface SvgrComponent {}
 
-declare module 'rc-tween-one/*';
-
 declare module '*.svg' {
   const svgUrl: string;
   const svgComponent: SvgrComponent;

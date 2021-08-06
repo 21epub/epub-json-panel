@@ -1,0 +1,16 @@
+import styled from 'styled-components';
+
+export const Wrapper = styled.div`
+  .SettingPanel {
+    position: absolute;
+    right: 0;
+    width: 50%;
+    height: 100%;
+  }
+  .MonacoEditorWidget {
+    position: absolute;
+    left: 0;
+    width: 50%;
+    height: 100%;
+  }
+`;
