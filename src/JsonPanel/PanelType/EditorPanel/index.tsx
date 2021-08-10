@@ -12,7 +12,13 @@ export interface EditorPanelProps extends PanelBaseProps {
 
 // 配置面板
 const EditorPanel: FC<EditorPanelProps> = (props) => {
-  const { panelData, panelConfig, onEditorChange } = props;
+  const {
+    panelData,
+    panelConfig,
+    monacoLanguage,
+    componentMap,
+    onEditorChange
+  } = props;
   const [returnValue, setReturnValue] = useState<AnyObject>();
   const [editorValue, setEditorValue] = useState<Any>(panelConfig);
   const [initialValues, setInitialValues] = useState<AnyObject>(
@@ -34,12 +40,14 @@ const EditorPanel: FC<EditorPanelProps> = (props) => {
     <Wrapper>
       <MonacoEditorWidget
         height='88%'
+        language={monacoLanguage}
         value={formatJson(JSON.stringify(editorValue))}
         onChange={onMonacoChange}
       />
       <SettingPanel
         panelData={initialValues}
         panelConfig={editorValue}
+        componentMap={componentMap}
         onSettingChange={onValuesChange}
       />
     </Wrapper>

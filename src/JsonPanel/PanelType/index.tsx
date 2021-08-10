@@ -18,11 +18,13 @@ export interface JsonPanelProps {
   panelType: PanelType;
   // 面板参数
   panelProps: PanelPropsType;
+  // monaco编辑器使用的语言
+  monacoLanguage: string;
 }
 
 // 根据类型返回对应的面板
 export const JsonPanel: React.FC<JsonPanelProps> = (props) => {
-  const { panelType, panelProps } = props;
+  const { panelType, panelProps, monacoLanguage } = props;
   const {
     onBig,
     onSmall,
@@ -68,14 +70,16 @@ export const JsonPanel: React.FC<JsonPanelProps> = (props) => {
             <EditorPanel
               panelData={panelData}
               panelConfig={panelConfig}
+              monacoLanguage={monacoLanguage}
+              componentMap={componentMap}
               onEditorChange={onEditorChange}
             />
           ) : (
             <SettingPanel
               panelData={panelData}
               panelConfig={panelConfig}
-              onSettingChange={onSettingChange}
               componentMap={componentMap}
+              onSettingChange={onSettingChange}
             />
           )}
         </Content>

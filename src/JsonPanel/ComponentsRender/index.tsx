@@ -29,11 +29,11 @@ export const ComponentsRender: FC<ComponentsRenderProps> = (props) => {
   // 递归渲染页面
   const render = (
     // 需要渲染的组件列表
-    componentList: ComponentType[],
+    components: ComponentType[],
     // 递归的层级
     count: number
   ): React.ReactNode => {
-    return componentList?.map((component: ComponentType) => {
+    return components?.map((component: ComponentType) => {
       const Component =
         Reflect.get(componentMap, component.type) ||
         getComponent(component.type);
