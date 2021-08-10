@@ -1,6 +1,6 @@
 import React, { FC } from 'react';
 import { Layout, Button } from 'antd';
-import { Wrapper } from './styled';
+import { Wrapper } from './Styled';
 
 interface PanelFooterProps {
   onSubmit?: () => void;

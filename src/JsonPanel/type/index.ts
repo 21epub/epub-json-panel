@@ -58,25 +58,36 @@ export interface ComponentType {
 }
 
 // 配置面板json子节点接口
-export interface SettingTabsType {
+export interface PanelTabsType {
   // 唯一标识id
   id: string;
   // 配置面板左侧导航名称
   tabsName: string;
   // 下一级导航
-  childTabs?: SettingTabsType[];
+  childTabs?: PanelTabsType[];
   // 当前导航页的组件
   componentList: ComponentType[];
 }
 
 // 配置面板Json数据结构
-export interface SettingConfigType {
+export interface PanelConfigType {
   // 唯一标识id
   id: string;
   // 类型
   type: string;
   // 导航节点
-  tabs: SettingTabsType[];
+  tabs: PanelTabsType[];
 }
 
 export type PanelType = 'EditorPanel' | 'SettingPanel';
+
+export interface ComponentMapType {
+  [type: string]: React.FC<any>;
+}
+
+export interface PanelBaseProps {
+  panelData?: AnyObject;
+  panelConfig?: PanelConfigType;
+  onChange?: (panelData: any) => void;
+  componentMap?: ComponentMapType;
+}

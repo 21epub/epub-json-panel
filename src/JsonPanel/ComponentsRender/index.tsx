@@ -1,22 +1,26 @@
 import React, { FC, Fragment } from 'react';
 import { Form } from 'antd';
 import { getComponent } from '../components';
-import type { ComponentType } from '../type';
-import { Wrapper } from './styled';
-
+import type { ComponentMapType, ComponentType } from '../type';
+import { Wrapper } from './Styled';
 interface ComponentsRenderProps {
-  initialValues?: AnyObject;
+  initialValues?: any;
   componentList: ComponentType[];
-  onValuesChange: (changedValues: AnyObject, values: AnyObject) => void;
+  componentMap?: ComponentMapType;
+  onValuesChange: (changedValues: any, values: any) => void;
 }
 
 // 渲染组件
 export const ComponentsRender: FC<ComponentsRenderProps> = (props) => {
-  const { componentList, initialValues = {}, onValuesChange } = props;
+  const {
+    componentList,
+    initialValues = {},
+    componentMap = {},
+    onValuesChange
+  } = props;
   const [form] = Form.useForm();
 
   // 初始化初始值，将组件中的value值，赋值到initialValues中
-  // 格式化初始值，使之符合组件的格式
   const formatInitialValues = (component: ComponentType) => {
     // 默认返回传进来的初始值
     return initialValues?.[component.name] ?? component.value;
@@ -30,7 +34,9 @@ export const ComponentsRender: FC<ComponentsRenderProps> = (props) => {
     count: number
   ): React.ReactNode => {
     return componentList?.map((component: ComponentType) => {
-      const Component = getComponent(component.type);
+      const Component =
+        Reflect.get(componentMap, component.type) ||
+        getComponent(component.type);
       return (
         <Fragment key={component.id}>
           <Form.Item

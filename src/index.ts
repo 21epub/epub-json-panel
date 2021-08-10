@@ -1,1 +1,1 @@
-export * from './FormJsonPanel';
+export * from './JsonPanel';

@@ -2,55 +2,55 @@ import React, { useState } from 'react';
 import { Layout } from 'antd';
 import EditorPanel from './EditorPanel';
 import SettingPanel from './SettingPanel';
-import type { PanelType, SettingConfigType } from '../type';
+import type { PanelType, PanelBaseProps } from '../type';
 import PanelHeader from './components/PanelHeader';
 import PanelFooter from './components/PanelFooter';
 import { Wrapper } from './Styled';
+
+export interface PanelPropsType extends PanelBaseProps {
+  onSmall?: () => void;
+  onBig?: () => void;
+  onClose?: () => void;
+}
 
 export interface JsonPanelProps {
   // 面板类型
   panelType: PanelType;
   // 面板参数
-  panelProps: {
-    settingData?: AnyObject;
-    settingConfig?: SettingConfigType;
-    onChange: (settingData: AnyObject) => void;
-    onSmall?: () => void;
-    onBig?: () => void;
-    onClose?: () => void;
-  };
+  panelProps: PanelPropsType;
 }
 
 // 根据类型返回对应的面板
-const JsonPanel: React.FC<JsonPanelProps> = (props) => {
+export const JsonPanel: React.FC<JsonPanelProps> = (props) => {
   const { panelType, panelProps } = props;
   const {
     onBig,
     onSmall,
     onClose,
     onChange,
-    settingData,
-    settingConfig
+    panelData,
+    panelConfig,
+    componentMap
   } = panelProps;
-  const [returnValue, setReturnValue] = useState<AnyObject>({});
+  const [returnValue, setReturnValue] = useState<any>({});
   const { Content } = Layout;
 
   const onSubmit = () => {
     if (panelType === 'EditorPanel') {
-      onChange({});
+      onChange && onChange({});
     } else if (panelType === 'SettingPanel') {
-      onChange(returnValue);
+      onChange && onChange(returnValue);
     }
     onClose && onClose();
   };
 
   // 编辑面板数据改变时
-  const onEditorChange = (value: AnyObject | string) => {
+  const onEditorChange = (value: any | string) => {
     // setReturnValue({ ...returnValue, ...value });
   };
 
   // 配置面板数据改变时
-  const onSettingChange = (value: AnyObject) => {
+  const onSettingChange = (value: any) => {
     setReturnValue({ ...returnValue, ...value });
   };
 
@@ -66,15 +66,16 @@ const JsonPanel: React.FC<JsonPanelProps> = (props) => {
         <Content>
           {panelType === 'EditorPanel' ? (
             <EditorPanel
-              settingData={settingData}
-              settingConfig={settingConfig}
+              panelData={panelData}
+              panelConfig={panelConfig}
               onEditorChange={onEditorChange}
             />
           ) : (
             <SettingPanel
-              settingData={settingData}
-              settingConfig={settingConfig}
+              panelData={panelData}
+              panelConfig={panelConfig}
               onSettingChange={onSettingChange}
+              componentMap={componentMap}
             />
           )}
         </Content>
@@ -83,5 +84,3 @@ const JsonPanel: React.FC<JsonPanelProps> = (props) => {
     </Wrapper>
   );
 };
-
-export default JsonPanel;

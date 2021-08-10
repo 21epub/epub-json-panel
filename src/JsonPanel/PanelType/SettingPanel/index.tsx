@@ -1,29 +1,28 @@
 import React, { FC } from 'react';
 import { Tabs } from 'antd';
 import { ComponentsRender } from '../../ComponentsRender';
-import { SettingConfigType, SettingTabsType } from '../../type';
-import { Wrapper } from './styled';
+import { PanelBaseProps, PanelTabsType } from '../../type';
+import { Wrapper } from './Styled';
 
-export interface SettingPanelProps {
-  settingData?: AnyObject;
-  settingConfig?: SettingConfigType;
+export interface SettingPanelProps extends PanelBaseProps {
   onSettingChange: (changedValues: AnyObject, values: AnyObject) => void;
 }
 
 // 渲染Tabs页
 const SettingPanel: FC<SettingPanelProps> = (props) => {
-  const { settingData, settingConfig, onSettingChange } = props;
+  const { panelData, panelConfig, componentMap, onSettingChange } = props;
   const { TabPane } = Tabs;
 
   // 渲染每个Tabs的面板
-  const TabPaneRender = (tabsList?: SettingTabsType[]) => {
+  const TabPaneRender = (tabsList?: PanelTabsType[]) => {
     return tabsList?.map((tabs) => {
       return (
         <TabPane key={tabs.id} tab={tabs.tabsName}>
           <ComponentsRender
-            initialValues={settingData}
+            initialValues={panelData}
             componentList={tabs.componentList}
             onValuesChange={onSettingChange}
+            componentMap={componentMap}
           />
         </TabPane>
       );
@@ -32,7 +31,7 @@ const SettingPanel: FC<SettingPanelProps> = (props) => {
 
   return (
     <Wrapper className='SettingPanel'>
-      <Tabs tabPosition='left'>{TabPaneRender(settingConfig?.tabs)}</Tabs>
+      <Tabs tabPosition='left'>{TabPaneRender(panelConfig?.tabs)}</Tabs>
     </Wrapper>
   );
 };

@@ -7,7 +7,7 @@ import {
   MinusOutlined
 } from '@ant-design/icons';
 import type { PanelType } from '../../../type';
-import { Wrapper } from './styled';
+import { Wrapper } from './Styled';
 
 export interface PanelHeaderProps {
   panelType?: PanelType;

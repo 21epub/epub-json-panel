@@ -1,8 +1,9 @@
 import styled from 'styled-components';
 
 export const Wrapper = styled.div`
-  height: 80%;
-  width: 80%;
+  height: 100%;
+  width: 100%;
+  min-height: 600px;
   background-color: rgb(255, 255, 255);
   position: relative;
   display: flex;

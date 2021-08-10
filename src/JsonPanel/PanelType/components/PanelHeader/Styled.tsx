@@ -19,5 +19,8 @@ export const Wrapper = styled.div`
       width: 50px;
       height: 100%;
     }
+    .anticon {
+      cursor: pointer;
+    }
   }
 `;
