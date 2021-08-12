@@ -1,7 +1,7 @@
 import React, { FC, useState } from 'react';
 import 'antd/dist/antd.css';
 import { MonacoEditorWidget } from '@21epub/epub-form-components';
-import { PanelBaseProps } from '../../type';
+import type { PanelBaseProps, PanelConfigType } from '../../type';
 import SettingPanel from '../SettingPanel';
 import { formatJson, toJson } from './util';
 import { Wrapper } from './Styled';
@@ -20,7 +20,9 @@ const EditorPanel: FC<EditorPanelProps> = (props) => {
     onEditorChange
   } = props;
   const [returnValue, setReturnValue] = useState<AnyObject>();
-  const [editorValue, setEditorValue] = useState<Any>(panelConfig);
+  const [editorValue, setEditorValue] = useState<PanelConfigType | string>(
+    panelConfig || ''
+  );
   const [initialValues, setInitialValues] = useState<AnyObject>(
     panelData ?? {}
   );
@@ -32,7 +34,7 @@ const EditorPanel: FC<EditorPanelProps> = (props) => {
   };
 
   const onMonacoChange = (value: string) => {
-    onEditorChange(value);
+    onEditorChange(toJson(value));
     setEditorValue(toJson(value));
   };
 
@@ -46,7 +48,7 @@ const EditorPanel: FC<EditorPanelProps> = (props) => {
       />
       <SettingPanel
         panelData={initialValues}
-        panelConfig={editorValue}
+        panelConfig={toJson(formatJson(JSON.stringify(editorValue)))}
         componentMap={componentMap}
         onSettingChange={onValuesChange}
       />

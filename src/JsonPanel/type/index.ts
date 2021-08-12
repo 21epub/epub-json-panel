@@ -87,7 +87,7 @@ export interface ComponentMapType {
 
 export interface PanelBaseProps {
   panelData?: AnyObject;
-  panelConfig?: PanelConfigType;
+  panelConfig?: PanelConfigType | string;
   componentMap?: ComponentMapType;
   monacoLanguage?: string;
   onChange?: (panelData: any) => void;

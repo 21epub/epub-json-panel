@@ -1,7 +1,7 @@
 import React, { FC } from 'react';
 import { Tabs } from 'antd';
 import { ComponentsRender } from '../../ComponentsRender';
-import { PanelBaseProps, PanelTabsType } from '../../type';
+import { PanelBaseProps, PanelTabsType, PanelConfigType } from '../../type';
 import { Wrapper } from './Styled';
 
 export interface SettingPanelProps extends PanelBaseProps {
@@ -31,7 +31,9 @@ const SettingPanel: FC<SettingPanelProps> = (props) => {
 
   return (
     <Wrapper className='SettingPanel'>
-      <Tabs tabPosition='left'>{TabPaneRender(panelConfig?.tabs)}</Tabs>
+      <Tabs tabPosition='left'>
+        {TabPaneRender((panelConfig as PanelConfigType)?.tabs)}
+      </Tabs>
     </Wrapper>
   );
 };

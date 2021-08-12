@@ -34,12 +34,13 @@ export const JsonPanel: React.FC<JsonPanelProps> = (props) => {
     panelConfig,
     componentMap
   } = panelProps;
+  const [panelJson, setPanelJson] = useState<string>('');
   const [returnValue, setReturnValue] = useState<any>({});
   const { Content } = Layout;
 
   const onSubmit = () => {
     if (panelType === 'EditorPanel') {
-      onChange && onChange({});
+      onChange && onChange(panelJson);
     } else if (panelType === 'SettingPanel') {
       onChange && onChange(returnValue);
     }
@@ -47,8 +48,8 @@ export const JsonPanel: React.FC<JsonPanelProps> = (props) => {
   };
 
   // 编辑面板数据改变时
-  const onEditorChange = (value: any | string) => {
-    // setReturnValue({ ...returnValue, ...value });
+  const onEditorChange = (value: string) => {
+    setPanelJson(value);
   };
 
   // 配置面板数据改变时
