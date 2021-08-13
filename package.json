@@ -1,6 +1,6 @@
 {
   "name": "@21epub/epub-json-panel",
-  "version": "0.0.4",
+  "version": "0.0.6",
   "description": "epub-json-panel",
   "author": "dxsixpc",
   "license": "MIT",
@@ -59,7 +59,7 @@
     "react-dom": "^16.8.6"
   },
   "dependencies": {
-    "@21epub/epub-form-components": "^0.3.7",
+    "@21epub/epub-form-components": "^0.3.8",
     "ahooks": "^2.10.0",
     "axios": "^0.21.1",
     "install-peers": "^1.0.3",

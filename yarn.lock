@@ -2,11 +2,12 @@
 # yarn lockfile v1
 
 
-"@21epub/epub-form-components@^0.3.5":
-  version "0.3.5"
-  resolved "https://registry.yarnpkg.com/@21epub/epub-form-components/-/epub-form-components-0.3.5.tgz#d2ead75076783f4fa269cd4ea2d6c3189c7c355d"
-  integrity sha512-+8rDqxPEv6iyNQkB077jRixbXewckVpG5mOSnP5NkThoG9DlEW36pepoig+s2DgsNYgOs4USe3fTfQms8f0QjQ==
+"@21epub/epub-form-components@^0.3.7", "@21epub/epub-form-components@^0.3.8":
+  version "0.3.8"
+  resolved "https://registry.yarnpkg.com/@21epub/epub-form-components/-/epub-form-components-0.3.8.tgz#f25f2e17b26a2fc5cbbef030b700a2379c30be84"
+  integrity sha512-if99fos+53U47T9BRaEJm0vvXtO/WqdBO9Y/Lh4kUgDnJgdEc+HeTJxd7ubUYn1ltkjHycO220BLYLXg4CdJ/w==
   dependencies:
+    "@21epub/epub-json-panel" "0.0.5"
     "@21epub/react-rxjs-store" "^0.2.0"
     ahooks "^2.10.0"
     axios "^0.21.1"
@@ -22,6 +23,20 @@
     sortablejs "^1.12.0"
     styled-components "^5.2.1"
     stylelint-order "^4.1.0"
+
+"@21epub/epub-json-panel@0.0.5":
+  version "0.0.5"
+  resolved "https://registry.yarnpkg.com/@21epub/epub-json-panel/-/epub-json-panel-0.0.5.tgz#78e0096d50605f873eb297071e180de869b29c09"
+  integrity sha512-quMNzpt7J1+X4HAw/m03go8BrVfzvmjfSh1TSj3+hL4LnIn4vkHvXW2CFkFlxX2CYLtjaTA5dlMlqSc0NlZWUw==
+  dependencies:
+    "@21epub/epub-form-components" "^0.3.7"
+    ahooks "^2.10.0"
+    axios "^0.21.1"
+    install-peers "^1.0.3"
+    lodash "^4.17.20"
+    monaco-editor-webpack-plugin "^4.1.1"
+    react-use "^17.2.1"
+    styled-components "^5.2.1"
 
 "@21epub/react-rxjs-store@^0.2.0":
   version "0.2.0"
@@ -11162,6 +11177,13 @@ monaco-editor-nls@^2.0.0:
   version "2.0.0"
   resolved "https://registry.yarnpkg.com/monaco-editor-nls/-/monaco-editor-nls-2.0.0.tgz#2643f44b3b2309ef83b17836dca5d200a81a9713"
   integrity sha512-gQy0LxyUkvmGFRfjRaFHFDdv3UjCX2DfjoL4Dy6mhcq94r6pu2mzcCWIxJz+y7FCrQwpj+xXXUpy0ynOrmONoQ==
+
+monaco-editor-webpack-plugin@^4.1.1:
+  version "4.1.1"
+  resolved "https://registry.yarnpkg.com/monaco-editor-webpack-plugin/-/monaco-editor-webpack-plugin-4.1.1.tgz#b44127910c8f4a29bde72859a1c4107c2960a939"
+  integrity sha512-daa+k3rytb7Jf8bcSSsbrnMsCPR7+kiHUGt08Bvqxdws3tGMPMzsiiRgCyckpKY4XChIXWoasDav3idHhrooEQ==
+  dependencies:
+    loader-utils "^2.0.0"
 
 monaco-editor@^0.26.1:
   version "0.26.1"

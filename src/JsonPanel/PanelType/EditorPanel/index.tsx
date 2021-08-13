@@ -24,7 +24,7 @@ const EditorPanel: FC<EditorPanelProps> = (props) => {
     panelConfig || ''
   );
   const [initialValues, setInitialValues] = useState<AnyObject>(
-    panelData ?? {}
+    panelData || {}
   );
 
   // 每次组件改变时，格式化数据

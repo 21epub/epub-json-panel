@@ -23,7 +23,7 @@ export const ComponentsRender: FC<ComponentsRenderProps> = (props) => {
   // 初始化初始值，将组件中的value值，赋值到initialValues中
   const formatInitialValues = (component: ComponentType) => {
     // 默认返回传进来的初始值
-    return initialValues?.[component.name] ?? component.value;
+    return initialValues?.[component.name] || component.value;
   };
 
   // 递归渲染页面
@@ -48,7 +48,7 @@ export const ComponentsRender: FC<ComponentsRenderProps> = (props) => {
             style={{ position: 'relative', marginLeft: `${count * 50}px` }}
           >
             <Component
-              slug={initialValues?.slug ?? initialValues?.id}
+              slug={initialValues?.slug || initialValues?.id}
               picture={initialValues?.picture}
               {...component.props}
             />
