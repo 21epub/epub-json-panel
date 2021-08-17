@@ -26,6 +26,10 @@ export interface ImageType {
   picture: string;
   // 图片描述
   description?: string;
+  // id
+  id?: string;
+  // 自定义属性
+  [key: string]: any;
 }
 
 // 每个组件的类型Í
