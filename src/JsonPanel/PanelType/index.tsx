@@ -36,6 +36,9 @@ export const JsonPanel: React.FC<JsonPanelProps> = (props) => {
   } = panelProps;
   const [panelJson, setPanelJson] = useState<string>('');
   const [returnValue, setReturnValue] = useState<any>({});
+  const [initialValues, setInitialValues] = useState<AnyObject>(
+    panelData || {}
+  );
   const { Content } = Layout;
 
   const onSubmit = () => {
@@ -55,6 +58,7 @@ export const JsonPanel: React.FC<JsonPanelProps> = (props) => {
   // 配置面板数据改变时
   const onSettingChange = (value: any) => {
     setReturnValue({ ...returnValue, ...value });
+    setInitialValues({ ...initialValues, ...value });
   };
 
   return (
@@ -77,7 +81,7 @@ export const JsonPanel: React.FC<JsonPanelProps> = (props) => {
             />
           ) : (
             <SettingPanel
-              panelData={panelData}
+              panelData={initialValues}
               panelConfig={panelConfig}
               componentMap={componentMap}
               onSettingChange={onSettingChange}
