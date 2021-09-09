@@ -2,6 +2,7 @@ import styled from 'styled-components';
 
 export const Wrapper = styled.div`
   height: 100%;
+  min-height: 500px;
   overflow: hidden;
   .ant-tabs {
     height: 100%;

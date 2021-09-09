@@ -19,9 +19,10 @@ export const Wrapper = styled.div`
       width: 100%;
       height: 100%;
       background: #fff;
-      .ant-tabs-content-holder {
+      min-height: 500px;
+      /* .ant-tabs-content-holder {
         padding-bottom: 20px;
-      }
+      } */
     }
   }
 `;

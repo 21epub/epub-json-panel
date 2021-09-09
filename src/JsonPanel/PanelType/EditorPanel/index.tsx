@@ -41,7 +41,7 @@ const EditorPanel: FC<EditorPanelProps> = (props) => {
   return (
     <Wrapper>
       <MonacoEditorWidget
-        height='88%'
+        height='100%'
         language={monacoLanguage}
         value={formatJson(JSON.stringify(editorValue))}
         onChange={onMonacoChange}

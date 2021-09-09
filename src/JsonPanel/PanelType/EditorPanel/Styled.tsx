@@ -1,6 +1,9 @@
 import styled from 'styled-components';
 
 export const Wrapper = styled.div`
+  height: 100%;
+  position: relative;
+  min-height: 500px;
   .SettingPanel {
     position: absolute;
     right: 0;
