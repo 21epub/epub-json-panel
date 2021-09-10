@@ -3,6 +3,7 @@ import { Form } from 'antd';
 import { getComponent } from '../components';
 import type { ComponentMapType, ComponentType } from '../type';
 import { Wrapper } from './Styled';
+import { isBoolean } from 'lodash';
 interface ComponentsRenderProps {
   initialValues?: any;
   componentList: ComponentType[];
@@ -19,12 +20,6 @@ export const ComponentsRender: FC<ComponentsRenderProps> = (props) => {
     onValuesChange
   } = props;
   const [form] = Form.useForm();
-
-  // 初始化初始值，将组件中的value值，赋值到initialValues中
-  const formatInitialValues = (component: ComponentType) => {
-    // 默认返回传进来的初始值
-    return initialValues?.[component.name] || component.value;
-  };
 
   // 递归渲染页面
   const render = (
@@ -44,7 +39,7 @@ export const ComponentsRender: FC<ComponentsRenderProps> = (props) => {
             name={component.name}
             label={component.label}
             className={count ? 'FormItemRender' : ''}
-            initialValue={formatInitialValues(component)}
+            initialValue={initialValues?.[component.name]}
             style={{ position: 'relative', marginLeft: `${count * 50}px` }}
           >
             <Component
@@ -54,7 +49,8 @@ export const ComponentsRender: FC<ComponentsRenderProps> = (props) => {
             />
           </Form.Item>
           {component.children &&
-            !!formatInitialValues(component) &&
+            isBoolean(initialValues?.[component.name]) &&
+            initialValues?.[component.name] &&
             render(component.children, count + 1)}
         </Fragment>
       );
