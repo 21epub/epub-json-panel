@@ -13,41 +13,16 @@ export const jsonPanelSetting: PanelConfigType = {
           label: '活动标题',
           name: 'title',
           type: 'FormInput',
-          value: '',
           props: {
             placeholder: '请输入活动标题'
-          },
-          condition: '',
-          children: [
-            {
-              id: 'rules',
-              label: '活动规则说明',
-              name: 'rules',
-              type: 'FormRichText',
-              value: '',
-              selector: '#id',
-              props: {
-                placeholder: '请输入活动规则'
-              }
-            },
-            {
-              id: 'rules',
-              label: '活动规则说明',
-              name: 'rules',
-              type: 'FormRichText',
-              value: '',
-              props: {
-                placeholder: '请输入活动规则'
-              }
-            }
-          ]
+          }
         },
         {
           id: 'rules',
           label: '活动规则说明',
           name: 'rules',
           type: 'FormRichText',
-          value: '',
+
           props: {
             placeholder: '请输入活动规则'
           }
@@ -63,9 +38,8 @@ export const jsonPanelSetting: PanelConfigType = {
           label: '抽奖规则',
           name: 'draw_rule',
           type: 'FormSelect',
-          value: '',
           props: {
-            placeholder: '请选择抽奖规则',
+            placeholder: '请选择规则',
             optionsConfig: {
               type: 'Radio',
               defaultValue: 'total',
@@ -91,7 +65,6 @@ export const jsonPanelSetting: PanelConfigType = {
           label: '每人最多抽中次数',
           name: 'win_num_each_one',
           type: 'FormSelect',
-          value: '',
           props: {
             placeholder: '请选择每人最多抽中次数',
             optionsConfig: {
@@ -117,8 +90,7 @@ export const jsonPanelSetting: PanelConfigType = {
           id: 'show_activity',
           label: '显示活动时间',
           name: 'show_activity',
-          type: 'FormSwitch',
-          value: ''
+          type: 'FormSwitch'
         }
       ]
     },
@@ -159,54 +131,43 @@ export const jsonPanelSetting: PanelConfigType = {
               label: '个人简介',
               name: 'introduction',
               type: 'FormTextArea'
-            },
-            {
-              id: 'custom_field_2',
-              label: '自定义二',
-              name: 'custom_field_2',
-              type: 'FormInput',
-              value: ''
-            },
-            {
-              id: 'fill_rules',
-              label: '提交规则',
-              name: 'fill_rules',
-              type: 'FormSelect',
-              props: {
-                placeholder: '表单提交规则',
-                optionsConfig: {
-                  type: 'Radio',
-                  defaultValue: '',
-                  options: [
-                    {
-                      label: '先填写，再抽奖',
-                      value: '0',
-                      checked: false,
-                      index: 0
-                    },
-                    {
-                      label: '先抽奖，中奖后再填写',
-                      value: '1',
-                      checked: false,
-                      index: 1
-                    }
-                  ]
-                }
-              }
             }
           ]
         }
       ]
     },
     {
-      id: 'prizeSetting',
-      tabsName: '奖项设置',
+      id: 'tableSetting',
+      tabsName: '表格设置',
       componentList: [
         {
           id: 'CommonTable',
           label: '奖项列表',
-          name: 'CommonTable',
-          type: 'CommonTable'
+          name: 'Table',
+          type: 'Table',
+          props: {
+            columns: [
+              {
+                title: '序号',
+                dataIndex: 'key',
+                width: '100px',
+                align: 'center'
+              },
+              {
+                title: '贺词内容',
+                dataIndex: 'message',
+                align: 'center'
+              }
+            ],
+            componentList: [
+              {
+                id: 'message',
+                label: '贺词内容',
+                name: 'message',
+                type: 'FormTextArea'
+              }
+            ]
+          }
         }
       ]
     }

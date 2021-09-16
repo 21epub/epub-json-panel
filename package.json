@@ -60,7 +60,7 @@
     "react-dom": "^16.8.6"
   },
   "dependencies": {
-    "@21epub/epub-form-components": "^0.3.8",
+    "@21epub/epub-form-components": "^0.3.9",
     "ahooks": "^2.10.0",
     "axios": "^0.21.1",
     "install-peers": "^1.0.3",
